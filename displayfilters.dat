@@ -387,6 +387,48 @@ DisplayFilter
 	Parent = NoEdit
 End	
 DisplayFilter
+	ID = "LightTemplate"
+	DisplayName = "Light Template"
+	RecName = LGTM
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Light"
+	DisplayName = "Light"
+	RecName = LIGH
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "LoadScreen"
+	DisplayName = "Load Screen"
+	RecName = LSCR
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "LandTexture"
+	DisplayName = "Land Texture"
+	RecName = LTEX
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "LeveledItem"
+	DisplayName = "Leveled Item"
+	RecName = LVLI
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "LeveledActor"
+	DisplayName = "Leveled Actor"
+	RecName = LVLN
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "LeveledSpell"
+	DisplayName = "Leveled Spell"
+	RecName = LVSP
+	Parent = NoEdit
+End	
+DisplayFilter
 	ID = "FormList"
 	DisplayName = "Non-Levelled List"
 	RecName = FLST
