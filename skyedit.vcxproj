@@ -2108,7 +2108,10 @@
     <ClInclude Include="sreditDoc.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="displayfilters.dat" />
     <None Include="res\skyedit.rc2" />
+    <None Include="skyedit.ini" />
+    <None Include="skyedit.log" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

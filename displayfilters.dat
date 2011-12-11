@@ -292,6 +292,60 @@ DisplayFilter
 	Parent = NoEdit
 End	
 DisplayFilter
+	ID = "Hazard"
+	DisplayName = "Hazard"
+	RecName = HAZD
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "HeadPart"
+	DisplayName = "HeadPart"
+	RecName = HDPT
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "IdleAnimation"
+	DisplayName = "Idle Animation"
+	RecName = IDLE
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "IdleForm"
+	DisplayName = "Idle Form"
+	RecName = IDLM
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "ImageSpaceMod"
+	DisplayName = "Image Space Mod"
+	RecName = IMAD
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "ImageSpace"
+	DisplayName = "Image Space"
+	RecName = IMGS
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "DialogInfo"
+	DisplayName = "Dialog Info"
+	RecName = INFO
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "ImpactData"
+	DisplayName = "Impact Data"
+	RecName = IPCT
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "ImpactDataSet"
+	DisplayName = "Impact Data Set"
+	RecName = IPDS
+	Parent = NoEdit
+End	
+DisplayFilter
 	ID = "FormList"
 	DisplayName = "Non-Levelled List"
 	RecName = FLST

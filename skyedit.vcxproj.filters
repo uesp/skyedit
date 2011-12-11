@@ -105,6 +105,9 @@
     <Filter Include="Source Files\ESP\Common">
       <UniqueIdentifier>{f1c2678a-c0f5-453e-bdbd-fe2546a98f9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{3d8f5774-364e-4b7b-bbe0-b613c3e7334d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ColorStatic.cpp">
@@ -1530,6 +1533,15 @@
   <ItemGroup>
     <None Include="res\skyedit.rc2">
       <Filter>Source Files\Misc</Filter>
+    </None>
+    <None Include="displayfilters.dat">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="skyedit.ini">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="skyedit.log">
+      <Filter>Data</Filter>
     </None>
   </ItemGroup>
 </Project>
