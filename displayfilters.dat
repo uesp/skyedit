@@ -346,6 +346,12 @@ DisplayFilter
 	Parent = NoEdit
 End	
 DisplayFilter
+	ID = "Key"
+	DisplayName = "Key"
+	RecName = KEYM
+	Parent = NoEdit
+End	
+DisplayFilter
 	ID = "FormList"
 	DisplayName = "Non-Levelled List"
 	RecName = FLST
