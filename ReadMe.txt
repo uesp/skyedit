@@ -1,4 +1,4 @@
-
+ 
 	   Package: SkyEdit v0.01alpha, 10 December 2011
 	    Author: Dave Humphrey, dave@uesp.net
 	   Website: www.uesp.net/wiki/Tes5Mod:SkyEdit
@@ -141,4 +141,6 @@ SkyEdit uses several libraries which has sped up development considerably.
   - zLib (http://www.zlib.net/) for loading/saving compressed data.
   - Resizable Control Bars (http://www.datamekanix.com/) for the dockable error/undo 
     control bars in the main view.
+  - Tes5Lib (http://github.com/uesp/tes5lib)
+
 
