@@ -1,4 +1,25 @@
 #
+# This file controls the record tree on the left side of the main SkyEdit form. Any 
+# number of different filters can be added to control what is displayed where. Basic
+# format is as follows:
+#
+# DisplayFilter
+#	ID = "IdString"             # Use this to refer to filters in the "Parent" fields
+#	DisplayName = "String"		# Name as seen in the display
+#	RecName = XXXX				# The 4 character record type for records in the filter
+#	Parent = NULL				# Parent ID of the filter (this filter will be placed as a child to this ID) or NULL for top level items
+#	Material = Name				# Filter all records matching the given material name
+#	WeaponType = Type			# Filter records matching the given weapon type
+#	Field = Name, Value			# Filter records that have the given exact value for the given FieldName
+#	FieldStarts = Name, Value	# Filter records that have the given field start with the specified value
+#	FieldContains = Name, Value # Filter records that contain the value for the given field
+#	FieldNot = Name, Value		# Logical opposite of the previous three
+#	FieldStartsNot = Name, Value
+#	FieldContainsNot = Name, Value
+#	Empty = Value				# Specifies the filter shouldn't have any records (true/false)#	
+# End
+#
+#
 # Start top level filters
 #
 DisplayFilter
@@ -41,12 +62,14 @@ DisplayFilter
 	DisplayName = "Not Editable"
 	RecName = NULL
 	Parent = NULL
+	Empty = true
 End	
 DisplayFilter
 	ID = "NoEditRef"
 	DisplayName = "Not Editable Refs"
 	RecName = NULL
 	Parent = NULL
+	Empty = true
 End	
 #
 # NoEdit Records
