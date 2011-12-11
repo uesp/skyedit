@@ -375,6 +375,18 @@ DisplayFilter
 	Parent = NoEdit
 End	
 DisplayFilter
+	ID = "LocationRef"
+	DisplayName = "Loc Ref Type"
+	RecName = LCRT
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Location"
+	DisplayName = "Location"
+	RecName = LCTN
+	Parent = NoEdit
+End	
+DisplayFilter
 	ID = "FormList"
 	DisplayName = "Non-Levelled List"
 	RecName = FLST
