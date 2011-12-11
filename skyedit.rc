@@ -1,0 +1,1364 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\skyedit.ico"
+IDR_SRVIEWTYPE          ICON                    "res\\idr_main.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR 16, 15
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+    SEPARATOR
+    BUTTON      ID_HELP
+    BUTTON      ID_HELP_UESPWIKI
+    BUTTON      ID_HELP_CSWIKI
+    SEPARATOR
+    BUTTON      ID_VIEW_RESOURCEVIEWER
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 0,0,1,0
+ PRODUCTVERSION 0,0,1,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "UESP"
+            VALUE "FileDescription", "SkyEdit, alternate editor for Skyrim"
+            VALUE "FileVersion", "0.0.1.0"
+            VALUE "InternalName", "SkyEdit"
+            VALUE "LegalCopyright", "Copyright (C) 2011"
+            VALUE "OriginalFilename", "Skyedit.EXE"
+            VALUE "ProductName", "SkyEdit"
+            VALUE "ProductVersion", "0.0.1.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_KEYWORD_VIEW DIALOGEX 0, 0, 290, 93
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    RTEXT           "Form ID",-1,15,11,47,9
+    EDITTEXT        IDC_FORMID,65,8,64,12,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "Editor ID",-1,29,26,32,9
+    EDITTEXT        IDC_EDITORID,65,24,156,12,ES_AUTOHSCROLL
+    RTEXT           "CName",-1,18,42,42,9
+    EDITTEXT        IDC_CNAME,65,40,64,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Save",ID_SAVE_BUTTON,233,8,50,14
+    PUSHBUTTON      "Apply",ID_APPLY_BUTTON,233,26,50,14
+    PUSHBUTTON      "Cancel",ID_CANCEL_BUTTON,233,43,50,14
+END
+
+IDD_WEAP_VIEW DIALOGEX 0, 0, 283, 171
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    RTEXT           "Form ID",IDC_STATIC,20,9,32,9
+    EDITTEXT        IDC_FORMID,56,7,64,12,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "Editor ID",IDC_STATIC,25,24,27,9
+    EDITTEXT        IDC_EDITORID,56,22,156,12,ES_AUTOHSCROLL
+    RTEXT           "Name",IDC_STATIC,27,40,25,9
+    EDITTEXT        IDC_NAME,56,38,156,12,ES_AUTOHSCROLL
+    RTEXT           "Enchantment",IDC_STATIC,4,57,48,9
+    EDITTEXT        IDC_ENCHANTMENT,56,55,133,12,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "...",IDC_EDIT_ENCHANTMENT,190,55,10,12
+    PUSHBUTTON      ">",IDC_SELECTENCHANT_BUTTON,202,55,10,12
+    CONTROL         "Quest Item",IDC_QUESTITEM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,220,72,52,11
+    RTEXT           "Charge",IDC_STATIC,15,73,37,9
+    EDITTEXT        IDC_ENCHANTCHARGE,56,71,55,12,ES_AUTOHSCROLL
+    RTEXT           "Weight",IDC_STATIC,134,73,28,9
+    EDITTEXT        IDC_WEIGHT,166,71,46,12,ES_AUTOHSCROLL
+    RTEXT           "Value",IDC_STATIC,139,90,23,9
+    EDITTEXT        IDC_VALUE,166,88,46,12,ES_AUTOHSCROLL
+    RTEXT           "Damage",IDC_STATIC,22,89,30,9
+    EDITTEXT        IDC_DAMAGE,56,88,55,12,ES_AUTOHSCROLL
+    RTEXT           "Model",IDC_STATIC,33,153,19,9
+    EDITTEXT        IDC_MODEL,56,151,145,12,ES_AUTOHSCROLL
+    PUSHBUTTON      ">",IDC_SELECT_MODEL,202,151,10,12
+    PUSHBUTTON      "Save",ID_SAVE_BUTTON,220,7,50,14
+    PUSHBUTTON      "Apply",ID_APPLY_BUTTON,220,24,50,14
+    PUSHBUTTON      "Cancel",ID_CANCEL_BUTTON,220,42,50,14
+    RTEXT           "Keywords",IDC_STATIC,14,106,38,9
+    LISTBOX         IDC_KEYWORDS,56,106,115,41,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Add",IDC_ADDKEYWORD_BUTTON,175,106,30,12
+    PUSHBUTTON      "Edit",IDC_EDITKEYWORD_BUTTON,175,121,30,12
+    PUSHBUTTON      "Del",IDC_DELKEYWORD_BUTTON,175,136,30,12
+END
+
+IDD_MGEF_VIEW DIALOGEX 0, 0, 290, 176
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    RTEXT           "Form ID",IDC_STATIC,12,11,47,9
+    EDITTEXT        IDC_FORMID,65,8,64,12,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "Editor ID",IDC_STATIC,28,26,32,9
+    EDITTEXT        IDC_EDITORID,65,24,156,12,ES_AUTOHSCROLL
+    RTEXT           "Item Name",IDC_STATIC,18,42,42,9
+    EDITTEXT        IDC_ITEMNAME,65,40,156,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Save",ID_SAVE_BUTTON,233,8,50,14
+    PUSHBUTTON      "Apply",ID_APPLY_BUTTON,233,26,50,14
+    PUSHBUTTON      "Cancel",ID_CANCEL_BUTTON,233,43,50,14
+    RTEXT           "Description",IDC_STATIC,18,76,42,9
+    EDITTEXT        IDC_DNAME,65,74,156,12,ES_AUTOHSCROLL
+    RTEXT           "Keywords",IDC_STATIC,22,92,38,9
+    LISTBOX         IDC_KEYWORDS,65,92,123,41,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Add",IDC_ADDKEYWORD_BUTTON,192,92,30,12
+    PUSHBUTTON      "Edit",IDC_EDITKEYWORD_BUTTON,192,107,30,12
+    PUSHBUTTON      "Del",IDC_DELKEYWORD_BUTTON,192,121,30,12
+    RTEXT           "School",IDC_STATIC,18,59,42,9
+    COMBOBOX        IDC_SCHOOLLIST,65,57,55,78,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Type",IDC_STATIC,132,59,18,9
+    COMBOBOX        IDC_TYPELIST,153,57,67,78,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Conditions",IDC_STATIC,18,142,42,9
+    PUSHBUTTON      "0 Conditions",IDC_CONDITION_BUTTON,65,139,157,15,BS_LEFT
+END
+
+IDD_FUNCTION_DLG DIALOGEX 0, 0, 316, 231
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Skyrim Function Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    RTEXT           "Previous Value",IDC_STATIC,7,9,49,8
+    EDITTEXT        IDC_PREVIOUS_TEXT,61,7,130,12,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "Current Value",IDC_STATIC,7,24,49,8
+    EDITTEXT        IDC_CURRENT_TEXT,61,22,130,12,ES_AUTOHSCROLL
+    RTEXT           "Filter",IDC_STATIC,7,40,49,8
+    EDITTEXT        IDC_FILTER_TEXT,61,38,94,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Reset",ID_CLEAR_FILTER,155,38,36,12
+    CONTROL         "",IDC_FUNCTION_LIST,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,54,302,170
+    DEFPUSHBUTTON   "OK",IDOK,259,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,259,26,50,14
+END
+
+IDD_CONDITION_DLG DIALOGEX 0, 0, 528, 190
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Skyrim Condition Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_CONDITION_LIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,514,86
+    RTEXT           "Reference",IDC_STATIC,8,101,57,9
+    EDITTEXT        IDC_REFERENCE_TEXT,71,99,152,12,ES_AUTOHSCROLL
+    PUSHBUTTON      ">",IDC_SELECTREFERENCE_BUTTON,224,99,10,12,NOT WS_VISIBLE
+    LTEXT           "(Required)",IDC_REFERENCE_LABEL,238,100,57,9
+    RTEXT           "Function",IDC_STATIC,18,118,47,9
+    EDITTEXT        IDC_FUNCTION_TEXT,71,116,152,12,ES_AUTOHSCROLL
+    PUSHBUTTON      ">",IDC_SELECTFUNCTION_BUTTON,224,116,10,12
+    LTEXT           "(Required)",IDC_FUNCTION_LABEL,238,118,57,9
+    RTEXT           "Param 1",IDC_STATIC,17,136,47,9
+    EDITTEXT        IDC_PARAM1_TEXT,71,134,152,12,ES_AUTOHSCROLL
+    PUSHBUTTON      ">",IDC_SELECTPARAM1_BUTTON,223,134,10,12,NOT WS_VISIBLE
+    LTEXT           "(Required)",IDC_PARAM1_LABEL,237,136,57,9
+    RTEXT           "Param 2",IDC_STATIC,17,154,47,9
+    EDITTEXT        IDC_PARAM2_TEXT,71,152,152,12,ES_AUTOHSCROLL
+    PUSHBUTTON      ">",IDC_SELECTPARAM2_BUTTON,223,152,10,12,NOT WS_VISIBLE
+    LTEXT           "(Required)",IDC_PARAM2_LABEL,237,154,57,9
+    RTEXT           "Value",IDC_STATIC,17,172,47,9
+    EDITTEXT        IDC_VALUE_TEXT,71,170,152,12,ES_AUTOHSCROLL
+    LTEXT           "(Required)",IDC_VALUE_LABEL,237,172,57,9
+    COMBOBOX        IDC_OPERATOR_LIST,331,99,58,84,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Or",IDC_OR_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,331,115,73,11
+    CONTROL         "Run On Target",IDC_RUNTARGET_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,331,128,73,11
+    CONTROL         "Use Global",IDC_USEGLOBAL_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,331,141,73,11
+    PUSHBUTTON      "^",ID_MOVEUP_BUTTON,415,93,14,14
+    PUSHBUTTON      "v",ID_MOVEDOWN_BUTTON,430,93,14,14
+    PUSHBUTTON      "Add",ID_ADD_BUTTON,449,93,33,14
+    PUSHBUTTON      "Delete",ID_DELETE_BUTTON,488,93,33,14
+    DEFPUSHBUTTON   "OK",IDOK,471,150,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,471,169,50,14
+    RTEXT           "Operator",IDC_STATIC,296,101,31,9
+END
+
+IDD_GLOB_VIEW DIALOGEX 0, 0, 290, 76
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    RTEXT           "Form ID",-1,12,11,47,9
+    EDITTEXT        IDC_FORMID,65,8,64,12,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "Editor ID",-1,28,26,32,9
+    EDITTEXT        IDC_EDITORID,65,24,156,12,ES_AUTOHSCROLL
+    RTEXT           "Value",-1,18,42,42,9
+    EDITTEXT        IDC_VALUE,65,40,64,12,ES_AUTOHSCROLL
+    RTEXT           "Type",-1,18,59,42,9
+    COMBOBOX        IDC_TYPELIST,65,57,64,78,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Save",ID_SAVE_BUTTON,233,8,50,14
+    PUSHBUTTON      "Apply",ID_APPLY_BUTTON,233,26,50,14
+    PUSHBUTTON      "Cancel",ID_CANCEL_BUTTON,233,43,50,14
+END
+
+IDD_GMST_VIEW DIALOGEX 0, 0, 290, 76
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    RTEXT           "Form ID",-1,12,11,47,9
+    EDITTEXT        IDC_FORMID,65,8,64,12,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "Editor ID",-1,28,26,32,9
+    EDITTEXT        IDC_EDITORID,65,24,156,12,ES_AUTOHSCROLL
+    RTEXT           "Value",-1,18,42,42,9
+    EDITTEXT        IDC_VALUE,65,40,156,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Save",ID_SAVE_BUTTON,233,8,50,14
+    PUSHBUTTON      "Apply",ID_APPLY_BUTTON,233,26,50,14
+    PUSHBUTTON      "Cancel",ID_CANCEL_BUTTON,233,43,50,14
+END
+
+IDD_COBJ_VIEW DIALOGEX 0, 0, 290, 230
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    RTEXT           "Form ID",IDC_STATIC,12,11,47,9
+    EDITTEXT        IDC_FORMID,65,8,64,12,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "Editor ID",IDC_STATIC,28,26,32,9
+    EDITTEXT        IDC_EDITORID,65,24,156,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Save",ID_SAVE_BUTTON,233,8,50,14
+    PUSHBUTTON      "Apply",ID_APPLY_BUTTON,233,26,50,14
+    PUSHBUTTON      "Cancel",ID_CANCEL_BUTTON,233,43,50,14
+    RTEXT           "Result Item",IDC_STATIC,18,58,42,9
+    RTEXT           "Result Count",IDC_STATIC,18,74,42,9
+    RTEXT           "Conditions",IDC_STATIC,18,91,42,9
+    PUSHBUTTON      "0 Conditions",IDC_CONDITION_BUTTON,65,88,157,15,BS_LEFT
+    EDITTEXT        IDC_RESULTITEM,65,56,133,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_EDIT_RESULTITEM,199,56,10,12
+    PUSHBUTTON      ">",IDC_SELECTRESULTITEM_BUTTON,211,56,10,12
+    EDITTEXT        IDC_RESULTCOUNT,65,72,52,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_COMPONENT_LIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,116,276,69
+    LTEXT           "Components",IDC_STATIC,12,107,42,9
+    RTEXT           "Craft Station",IDC_STATIC,17,41,42,9
+    EDITTEXT        IDC_CRAFTSTATION,65,40,133,12,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "...",IDC_EDIT_CRAFTSTATION,199,40,10,12
+    PUSHBUTTON      ">",IDC_SELECTCRAFTSTATION_BUTTON,211,40,10,12
+    RTEXT           "Component",IDC_STATIC,17,193,42,9
+    EDITTEXT        IDC_COMPONENT,65,191,133,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_EDIT_COMPONENT,199,191,10,12
+    PUSHBUTTON      ">",IDC_SELECTCOMPONENT_BUTTON,211,191,10,12
+    RTEXT           "Count",IDC_STATIC,18,209,42,9
+    EDITTEXT        IDC_COMPONENTCOUNT,65,207,52,12,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "Add",ID_ADD_BUTTON,250,186,33,14
+    PUSHBUTTON      "Delete",ID_DELETE_BUTTON2,250,205,33,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_CONDITION_MENU MENU
+BEGIN
+    POPUP "Condition"
+    BEGIN
+        MENUITEM "Insert Before",               ID_COND_INSERTBEFORE
+        MENUITEM "Insert After",                ID_COND_INSERTAFTER
+        MENUITEM SEPARATOR
+        MENUITEM "Copy Conditon",               ID_COND_COPYCONDITION
+        MENUITEM SEPARATOR
+        MENUITEM "Move Up",                     ID_COND_MOVEUP
+        MENUITEM "Move Down",                   ID_COND_MOVEDOWN
+        MENUITEM SEPARATOR
+        MENUITEM "Delete",                      ID_COND_DELETE
+    END
+END
+
+IDR_COMPONENT_MENU MENU
+BEGIN
+    POPUP "Component"
+    BEGIN
+        MENUITEM "Add",                         ID_COMPONENT_ADD
+        MENUITEM SEPARATOR
+        MENUITEM "Delete",                      ID_COMPONENT_DELETE
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_KEYWORD_VIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 283
+        VERTGUIDE, 65
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 86
+    END
+
+    IDD_WEAP_VIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 276
+        VERTGUIDE, 52
+        VERTGUIDE, 56
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 163
+    END
+
+    IDD_MGEF_VIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 283
+        VERTGUIDE, 60
+        VERTGUIDE, 65
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 169
+    END
+
+    IDD_FUNCTION_DLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 309
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 224
+    END
+
+    IDD_CONDITION_DLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 521
+        VERTGUIDE, 66
+        VERTGUIDE, 71
+        VERTGUIDE, 238
+        VERTGUIDE, 327
+        VERTGUIDE, 331
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 183
+    END
+
+    IDD_GLOB_VIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 283
+        VERTGUIDE, 60
+        VERTGUIDE, 65
+        VERTGUIDE, 129
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 69
+    END
+
+    IDD_GMST_VIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 283
+        VERTGUIDE, 60
+        VERTGUIDE, 65
+        VERTGUIDE, 129
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 69
+    END
+
+    IDD_COBJ_VIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 283
+        VERTGUIDE, 60
+        VERTGUIDE, 65
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 223
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_COMPONENT_ACCEL ACCELERATORS
+BEGIN
+    VK_SUBTRACT,    ID_COMPONENT_DECREASE,  VIRTKEY, NOINVERT
+    VK_ADD,         ID_COMPONENT_INCREASE,  VIRTKEY, NOINVERT
+    VK_ESCAPE,      ID_CANCEL_BUTTON,       VIRTKEY, NOINVERT
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    "A",            ID_EDIT_SELECTALL,      VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDR_MAINFRAME           "SkyEdit v0.01 Alpha"
+    IDR_SREDITTYPE          "\nSkyEdit\nSkyEdit\nPlugin Files (*.esp)\n.esp\nSkyEdit.DocumentkyEdit Document"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_APP_TITLE       "skyedit"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_FILE_PRINT           "Print the active document\nPrint"
+    ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
+END
+
+STRINGTABLE
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_TT_ENCHANTMENT      "The optional enchantment applied to the object."
+    IDS_TT_SCRIPT           "The optional script attached to the object."
+    IDS_TT_PLAYABLE         "If false the object cannot be worn by the player and it does not appear in the inventory of dead actors."
+    IDS_TT_HIDERINGS        "If set to true the ring model will not be shown on the actor when worn."
+    IDS_TT_HIDEAMULET       "If set to true the amulet model will not be shown on the actor when worn."
+    IDS_TT_MALEICON         "The inventory icon for the object as seen by a male player."
+    IDS_TT_FEMALEICON       "The inventory icon for the object as seen by a female player."
+    IDS_TT_BIPED            "Specifies which body parts are used for the piece of armor or clothing."
+    IDS_TT_QUESTITEM        "If set to true the item will always be available, even if not in the same cell as the player (persistent)."
+    IDS_TT_MODEL            "The model file used to display the object in the world."
+    IDS_TT_MALEWORLDMODEL   "The model file used for the object in the world when seen by a male player."
+    IDS_TT_FEMALEWORLDMODEL "The model file used for the object in the world when seen by a female player."
+    IDS_TT_MALEBIPEDMODEL   "The model file used to display a worn object when used by a male actor."
+    IDS_TT_FEMALEBIPEDMODEL "The model file used to display a worn object when used by a male actor."
+    IDS_TT_SAVE             "Attempt to save any record changes and close the dialog on success."
+    IDS_TT_APPLY            "Attempt to save any changes to the record and will keep the dialog open."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_TT_CANCEL           "Cancels all changes to the record since last applied and closes the dialog."
+    IDS_TT_EDITBIPED        "Displays a modal dialog for editing the biped parts of the current object."
+    IDS_TT_EDITSCRIPT       "Opens a dialog to edit the displayed script."
+    IDS_TT_SELECTSCRIPT     "Displays a modal dialog to select the script for the current object."
+    IDS_TT_EDITENCHANT      "Opens a dialog to edit the displayed enchantment."
+    IDS_TT_SELECTENCHANT    "Displays a modal dialog to select the enchantment for the current object."
+    IDS_TT_SOUND            "Specifies the sound associated with the object."
+    IDS_TT_DANGEROUS        "If set to true the object is considered dangerous to any nearby actors."
+    IDS_TT_FOODITEM         "If set to true the item will be eaten by NPCs."
+    IDS_TT_AUTOCALC         "When set to true some properties of the object are automatically calculated."
+    IDS_TT_DAMAGE           "The base weapon damage with higher values indicating a more powerful weapon."
+    IDS_TT_SPEED            "The speed of the weapon with a value of 1.0 meaning average and larger values meaning slower."
+    IDS_TT_ENCHANTPOINTS    "The initial enchantment charge of the object. Larger values will allow it to be used more times."
+    IDS_TT_IGNORERESIST     "If set to true the weapon ignores any normal weapon resistance of the target."
+    IDS_TT_QUALITY          "The quality of the object with higher values indicating a better instrument."
+    IDS_TT_APPATYPE         "The basic type of alchemical apparatus."
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+    ID_FILE_MRU_FILE5       "Open this document"
+    ID_FILE_MRU_FILE6       "Open this document"
+    ID_FILE_MRU_FILE7       "Open this document"
+    ID_FILE_MRU_FILE8       "Open this document"
+    ID_FILE_MRU_FILE9       "Open this document"
+    ID_FILE_MRU_FILE10      "Open this document"
+    ID_FILE_MRU_FILE11      "Open this document"
+    ID_FILE_MRU_FILE12      "Open this document"
+    ID_FILE_MRU_FILE13      "Open this document"
+    ID_FILE_MRU_FILE14      "Open this document"
+    ID_FILE_MRU_FILE15      "Open this document"
+    ID_FILE_MRU_FILE16      "Open this document"
+END
+
+STRINGTABLE
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE
+BEGIN
+    ID_WINDOW_NEW           "Open another window for the active document\nNew Window"
+    ID_WINDOW_ARRANGE       "Arrange icons at the bottom of the window\nArrange Icons"
+    ID_WINDOW_CASCADE       "Arrange windows so they overlap\nCascade Windows"
+    ID_WINDOW_TILE_HORZ     "Arrange windows as non-overlapping tiles\nTile Windows"
+    ID_WINDOW_TILE_VERT     "Arrange windows as non-overlapping tiles\nTile Windows"
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_TT_EDITORID         "A string that uniquely identifies the object. Editorids can be any combination of letters and numbers but not any other characters."
+    IDS_TT_FULLNAME         "The full name of the object for display in the world or player's inventory."
+    IDS_TT_FORMID           "A unique 32-bit integer which identifies the record. The top byte is the modindex which can change depending on which master/plugin files are loaded."
+    IDS_TT_ARMORTYPE        "Specifies the type of armor, light or heavy."
+    IDS_TT_ARMOR            "The base AC of the armor piece."
+    IDS_TT_VALUE            "The value of the object in game units."
+    IDS_TT_WEIGHT           "The weight of the object in game units."
+    IDS_TT_HEALTH           "The maximum health, or condition, of the object."
+END
+
+STRINGTABLE
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+    AFX_IDS_MDICHILD        "Activate this window"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_IMPORT_CSV      "Import records from a CSV file.\nCSV"
+    ID_FILE_EXPORT_SELECTEDITEMS "Expo"
+    ID_FILE_EXPORTCSV_SELECTEDITEMS 
+                            "Export currently selected items to a CSV file.\nCSV: Selected Items..."
+    ID_FILE_EXPORTCSV_ALLITEMS 
+                            "Export all items of a specific type to a CSV file.\nCSV: Item Type..."
+    ID_FILE_EXPORTCSV_SELECTEDITEMS2 
+                            "Export all currently selected items to a CSV file.\nExport to CSV..."
+    ID_RECORDTREE_RELOAD    "Reload the display filters from the original file.\n&Reload"
+    ID_RECORDTREE_EXPORTTOCSV 
+                            "Export all items matching this filter to a CSV file.\nExport to CSV..."
+    ID_VIEW_FILESTRUCTURE   "Display the file structure tree.\nFile Structure..."
+    ID_FILE_EXPORT_CSVEXTERIORLOCATIONS 
+                            "Export all exterior locations to a CSV file.\nExterior Locations..."
+    ID_FILE_EXPORT_CSVEXTMAPMARKERS 
+                            "Export all exterior map markers to a CSV file.\nExterior Map Markers..."
+    ID_FILE_EXPORT_CSVEXPORTEXTERIORPLANTS 
+                            "Export locations of exterior plants.\nCSV: Export Exterior Plants"
+END
+
+STRINGTABLE
+BEGIN
+    ID_EDIT_FINDBINARYDATA  "Search for binary data in the currently loaded files.\nFind Binary Data..."
+    ID_EDIT_SELECTALL       "Select all text in the current window.\nSelect &All"
+    ID_VIEW_ERROR_BAR       "Show or Hide the Error Bar\nError Bar"
+    ID_MENU_CLEAN           "Remove the selected records from the active plugin.\nClean Record(s)"
+    ID_RECORD_CLEAN         "Removes the selected records from the active plugin.\nClean"
+    ID_RECORD_MOVEACTIVE    "Ensure the selected records exist in the active plugin.\nMove To Active"
+    ID_MENU_EDITRECORD      "Edits the record.\nEdit Record"
+    ID_MENU_NEWRECORD       "Create a new record of the current type.\nNew Record"
+    ID_EDIT_NEWRECORD       "Create a new record in the current list.\nNew"
+    ID_RECORD_TOGGLEDELETE  "Toggle the delete flag on the selected record(s).\nToggle Delete"
+    ID_MENU_TOGGLEIGNORE    "Toggle the ignore flag on the selected record(s).\nToggle Ignore"
+END
+
+STRINGTABLE
+BEGIN
+    ID_RECORD_TOGGLEIGNORE  "Toggle the ignore flag on the selected record(s).\nToggle Ignore"
+    ID_MENU_TOGGLEQUEST     "Toggle the ignore flag on the selected record(s).\nToggle Ignore"
+    ID_RECORD_TOGGLEQUEST   "Toggle the quest object flag on the selected record(s).\nToggle Quest Object"
+    ID_VIEW_UNDOBAR         "Show or Hide the Undo Bar\nUndo Bar"
+    ID_RECORD_RENAME        "Rename the selected record's editorid.\nRename"
+    ID_RECORD_CREATECOPY    "Creates a new copy of the selected record.\nCreate Copy"
+    ID_RECORD_BATCHEDIT     "Batch edit the selected records.\nBatch Edit..."
+    ID_LVLOLIST_DELETE      "Deletes the selected leveled items"
+    ID_LVLLIST_DELETE       "Deletes the selected leveled records.\nDelete"
+    ID_LVLLIST_ADD          "Add a new leveled record to the list.\nAdd"
+    ID_LVLLIST_EDIT         "Edit the selected leveled record.\nEdit"
+END
+
+STRINGTABLE
+BEGIN
+    ID_LVL_EDITRECORD       "Edits the base record of the leveled object.\nEdit Base Record"
+    ID_LVLLIST_EDITRECORD   "Edits the base record of the leveled object.\nEdit Base Record"
+    ID_EFFECTLIST_EDIT      "Edit the selected effect.\nEdit"
+    ID_EFFECTLIST_ADD       "Add a new effect to the list.\nAdd"
+    ID_EFFECTLIST_DELETE    "Deletes the selected effects.\nDelete"
+    ID_EFFECTLIST_EDITSCRIPT 
+                            "Edits the script record for a script effect.\nEdit Script"
+    ID_VIEW_RESOURCEVIEWER  "Display the resource view window."
+    ID_HELP_UESPWIKI        "Opens a web page to the SkyEdit article on the UESP."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_TT_SCROLL           "If set to true and has an enchantment the book text is not displayed."
+    IDS_TT_NOTAKE           "If set to true the book cannot be picked up."
+    IDS_TT_TEACHES          "Optionally specifies the skill the player learns when they read the book."
+    IDS_TT_CONTRESPAWNS     "If set to true the container contents respawns at some interval."
+    IDS_TT_OPENSOUND        "The sound the object makes when opened."
+    IDS_TT_CLOSESOUND       "The sound the object makes when closed."
+    IDS_TT_ENCHTYPE         "The type of enchantment. This value effects what type of items the enchantment can be used on."
+    IDS_TT_COST             "The per use cost of the enchantment or spell."
+    IDS_TT_CHARGE           "The maximum charge of the item the enchantment is applied on. This is only valid for weapon or staff types."
+    IDS_TT_INGREDIENT       "The ingredient the plant produces."
+    IDS_TT_SPRING           "The percent chance the plant will produce an ingrediant during the spring."
+    IDS_TT_SUMMER           "The percent chance the plant will produce an ingrediant during the summer."
+    IDS_TT_FALL             "The percent chance the plant will produce an ingrediant during the fall."
+    IDS_TT_WINTER           "The percent chance the plant will produce an ingrediant during the winter."
+    IDS_TT_CALCEACH         "If set to true a new object is generated for each count greater than 1. If false the same item will be generated for each count greater than 1."
+    IDS_TT_CALCALL          "If set to true the all objects in the list less than the player's level will be used. If false, only one object closest to the player's level will be used."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_TT_CHANCENONE       "The percent chance that the leveled list produces nothing at all."
+    IDS_TT_CREATURETEMPLATE "If set the script and AI packages from the template creature will be copied onto any actor generated from this list."
+    IDS_TT_USEALLSPELLS     "If set to true all spells in the list will be returned."
+    IDS_TT_SCPTTYPE         "The script type which effects where it can be used."
+    IDS_TT_USES             "For weapons this will be the number of uses. For armor this value is used for the approximate magnitude."
+    IDS_TT_CAPACITY         "The largest soul that will fit into the soul gem."
+    IDS_TT_SOUL             "The optional soul size which currently occupies the soul gem."
+    IDS_TT_SOUNDFILE        "The sound resource file for the sound."
+    IDS_TT_MINATTENUATION   "The distance, in game units, where the sound begins to fall off. Inside this distance the sound will be at maximum volume."
+    IDS_TT_MAXATTENUATION   "The distance, in game units, that the sound can first be heard at its minimum volume."
+    IDS_TT_STATICATTENUATION 
+                            "Reduces the overall sound volume from that in the sound file."
+    IDS_TT_FREQADJUSTMENT   "Adjusts the sound frequency of the base file, up or down, by the given percentage."
+    IDS_TT_STARTTIME        "Specifies the starting time during the day that the sound will be heard. If the same as the stop time the sound will be heard all the time."
+    IDS_TT_STOPTIME         "Specifies the stop time during the day that the sound will be heard. If the same as the start time the sound will be heard all the time."
+    IDS_TT_RANDOMFREQSHIFT  "If set to true the freq adjustment parameter specifies how much the sound's frequency will be randomly shifted."
+    IDS_TT_RANDOMPLAY       "Not currently supported."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_TT_RANDOMLOCATION   "Not currently supported."
+    IDS_TT_LOOP             "Forces the sound to loop continuously."
+    IDS_TT_MENUSOUND        "Not currently supported."
+    IDS_TT_IGNOREENVIRONMENT "Not currently supported."
+    IDS_TT_2DSOUND          "If set to true the sound is considered a simple 2D sound and does not have a specific source. Any radius settings are ignored."
+    IDS_TT_360LFE           "If set to false no LFE (Low End Information) audio information will be sent to the XBox360's audio output."
+    IDS_TT_SPELTYPE         "The basic type of the spell."
+    IDS_TT_LEVEL            "The skill rank needed to cast this spell."
+    IDS_TT_IGNORELOS        "If set to true an area effect spell will ignore line-of-sight and hit all actors within range."
+    IDS_TT_NOABSORBREFLECT  "If set to true this spell cannot be absorbed or reflected."
+    IDS_TT_PCSTARTSPELL     "If set to true this spell will be added to the player's spell list when a new game is started."
+    IDS_TT_SCRIPTALWAYSAPPLIES 
+                            "If set to true a script effect will be applied the full duration of the spell, ignoring the resistance of the target."
+    IDS_TT_SILENCEIMMUNE    "If set to true the spell can still be cast when the caster is silenced."
+    IDS_TT_WEAPTYPE         "The basic type of weapon."
+    IDS_TT_REACH            "The reach of the weapon with a value of 1.0 being average and larger values meaning the weapon will hit targets farther from the attacker."
+    IDS_TT_ICON             "The inventory icon for the object."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_TT_SELECTCREATURE   "Displays a modal dialog to select the creature template."
+    IDS_TT_EDITCREATURE     "Opens a record dialog to edit the given creature."
+    IDS_TT_EDITSOUND        "Opens a record dialog to edit the given sound."
+    IDS_TT_SELECTSOUND      "Opens a modal dialog to select the sound."
+    IDS_TT_EDITINGREDIENT   "Opens a record dialog to edit the given ingredient."
+    IDS_TT_SELECTINGREDIENT "Opens a modal dialog to select the ingredient."
+    IDS_TT_FADE             "How fast the light fades over distance?"
+    IDS_TT_REDCOLOR         "Red component of the light's color."
+    IDS_TT_GREENCOLOR       "Green component of the light's color."
+    IDS_TT_BLUECOLOR        "Blue component of the light's color."
+    IDS_TT_TIME             "Burn time of the light in minutes? -1 indicates an infinite time."
+    IDS_TT_OFFBYDEFAULT     "Light is initially off when this value is checked."
+    IDS_TT_FLICKER          "Sets the type of light flicker (random variation in brightness)."
+    IDS_TT_SPOTLIGHT        "Light is a spot light rather than an omnidirectional light?"
+    IDS_TT_SPOTSHADOW       "Light is a spot shadow rather than omnidirectional?"
+    IDS_TT_DYNAMIC          "Light brightness dynamically effects its surroundings."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_TT_NEGATIVE         "When checked the light actually adds darkness instead of light."
+    IDS_TT_COLORBOX         "Click to edit the light's color."
+    IDS_TT_CARRIED          "When checked the light can be picked up and carried as a regular inventory item."
+    IDS_TT_FLICKERTYPE      "Sets the type of light flicker (random variation in brightness)."
+    IDS_TT_FOV              "The light's field of view in degrees."
+    IDS_TT_FALLOFF          "How quickly the light's brightness falls off over distance."
+    IDS_TT_RADIUS           "Maximum distance the light reaches."
+END
+
+STRINGTABLE
+BEGIN
+    ID_HELP_CSWIKI          "Opens a web page to the official Construction Set Wiki."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_TT_CNAME            "Unknown"
+    IDS_TT_KEYWORDS         "List of Keywrods assigned to the record"
+    IDS_TT_DESCRIPTION      "Object description."
+    IDS_TT_SCHOOL           "The magic school for the effect."
+    IDS_TT_EFFECTTYPE       "The type of magic effect."
+    IDS_TT_TYPE             "Basic type of record data."
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (Canada) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENC)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_CAN
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ARMOR               ICON                    "res\\armor.ico"
+IDI_FIND                ICON                    "res\\find_dlg.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_FILE                BITMAP                  "res\\file.bmp"
+IDB_FOLDER              BITMAP                  "res\\folder.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 281, 154
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About SkyEdit"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,7,14,20,20
+    LTEXT           "SkyEdit v0.01-Alpha,  10 December 2011",IDC_STATIC,40,10,134,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2011",IDC_STATIC,40,30,64,8
+    DEFPUSHBUTTON   "OK",IDOK,224,7,50,14,WS_GROUP
+    LTEXT           "by Dave Humphrey",IDC_STATIC,39,19,91,8
+    CONTROL         "",IDC_CREDITS,"RICHEDIT",TCS_VERTICAL | TCS_RAGGEDRIGHT | TCS_MULTISELECT | WS_VSCROLL | WS_TABSTOP,7,42,267,106,WS_EX_STATICEDGE
+END
+
+IDD_SREDIT_FORM DIALOGEX 0, 0, 424, 251
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CONTROL         "Tree1",IDC_RECORDTREE,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | WS_HSCROLL | WS_TABSTOP,0,0,125,251
+    CONTROL         "List1",IDC_RECORDLIST,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | LVS_OWNERDATA | WS_TABSTOP,127,0,297,251
+    CONTROL         "",IDC_VEDGE,"Static",SS_BLACKRECT | SS_SUNKEN,125,0,2,251
+END
+
+IDD_LOAD_DLG DIALOGEX 0, 0, 389, 202
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Load Plugin"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,332,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,332,24,50,14
+    CONTROL         "List1",IDC_FILE_LIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_TABSTOP,7,43,375,152,WS_EX_CLIENTEDGE
+    LTEXT           "",IDC_STATIC,7,7,240,13
+    PUSHBUTTON      "Set Active",IDC_SETACTIVE,7,26,68,14
+END
+
+IDD_PROGRESS_DLG DIALOGEX 0, 0, 313, 106
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Load Progress"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CTEXT           "Loading filename.esp....",IDC_FILE_LABEL,7,21,300,20,SS_CENTERIMAGE
+    CTEXT           "90%",IDC_FILE_PERCENT,141,62,25,9
+    CONTROL         "Progress1",IDC_FILE_PROGRESS,"msctls_progress32",PBS_SMOOTH | WS_BORDER,15,45,284,13
+    PUSHBUTTON      "Cancel",IDCANCEL,256,7,50,14,NOT WS_VISIBLE
+END
+
+IDD_SRERROR_DLG DIALOG 0, 0, 288, 124
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Error"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,231,7,50,14
+    EDITTEXT        IDC_MESSAGE,7,7,218,27,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    LTEXT           "Error Details",IDC_STATIC,7,38,45,8
+    EDITTEXT        IDC_DETAILS,7,48,274,68,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY
+END
+
+IDD_FILETREE_DLG DIALOGEX 0, 0, 321, 274
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "SkyEdit: File Structure"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,264,7,50,14
+    CONTROL         "Tree1",IDC_TREECTRL,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_TABSTOP,7,7,251,260,WS_EX_CLIENTEDGE
+END
+
+IDD_FINDBINARY_DLG DIALOG 0, 0, 241, 102
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,184,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,184,24,50,14
+    LTEXT           "Enter the binary data to find in the below text box in hexadecimal format:\r\n                          eg: 12AB03C3",IDC_STATIC,7,7,165,30
+    EDITTEXT        IDC_BINARYDATA_TEXT,25,44,148,12,ES_AUTOHSCROLL
+    LTEXT           "The current version outputs results to the MWEdit.log text file.",IDC_STATIC,7,86,227,9
+END
+
+IDD_ERRORBAR DIALOG 0, 0, 266, 53
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "MS Sans Serif"
+BEGIN
+END
+
+IDD_SELECTRECORD_DLG DIALOGEX 0, 0, 314, 234
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    RTEXT           "Previous Value",IDC_STATIC,7,9,49,8
+    EDITTEXT        IDC_PREVIOUS_TEXT,61,7,130,12,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_PREVIOUS_FORMID,191,7,53,12,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "Type Filter",IDC_TYPEFILTER_STATIC,7,27,49,8
+    COMBOBOX        IDC_TYPEFILTER_LIST,61,24,94,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Current Value",IDC_STATIC,7,44,49,8
+    EDITTEXT        IDC_CURRENT_TEXT,61,42,130,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_CURRENT_FORMID,191,42,53,12,ES_AUTOHSCROLL | ES_READONLY
+    CONTROL         "List1",IDC_RECORDLIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_TABSTOP,7,61,300,166,WS_EX_CLIENTEDGE
+    DEFPUSHBUTTON   "OK",IDOK,257,7,50,14
+    PUSHBUTTON      "Delete",ID_CLEAR_BUTTON,257,24,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,257,42,50,14
+END
+
+IDD_PROMPT_DLG DIALOG 0, 0, 228, 79
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "Button1",ID_BUTTON1,21,48,50,14
+    PUSHBUTTON      "Button2",ID_BUTTON2,89,48,50,14
+    PUSHBUTTON      "Button3",ID_BUTTON3,157,48,50,14
+    LTEXT           "Label",IDC_LABEL,7,7,214,33
+END
+
+IDD_UNDOBAR DIALOG 0, 0, 91, 46
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "MS Sans Serif"
+BEGIN
+END
+
+IDD_INPUT_DLG DIALOG 0, 0, 241, 103
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,184,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,184,24,50,14
+    EDITTEXT        IDC_INPUTTEXT,23,55,193,12,ES_AUTOHSCROLL
+    LTEXT           "Static",IDC_LABEL,7,7,173,32
+END
+
+IDD_BATCHEDIT_DLG DIALOGEX 0, 0, 325, 216
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_BATCH_EDIT,274,57,44,13,ES_AUTOHSCROLL
+    CONTROL         "List1",IDC_FIELD_LIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_TABSTOP,7,7,253,198,WS_EX_CLIENTEDGE
+    LTEXT           "Only checked fields will be saved. Some fields expect a specific format.",IDC_STATIC,7,207,311,9
+    PUSHBUTTON      "Save",ID_SAVE_BUTTON,268,7,50,14
+    PUSHBUTTON      "Apply",ID_APPLY_BUTTON,268,24,50,14
+    PUSHBUTTON      "Cancel",ID_CANCEL_BUTTON,268,42,50,14
+    PUSHBUTTON      "Check All",ID_CHECKALL_BUTTON,268,166,50,13
+    PUSHBUTTON      "Uncheck All",ID_UNCHECKALL_BUTTON,268,182,50,13
+END
+
+IDD_FIND_DLG DIALOGEX 0, 0, 369, 185
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    LTEXT           "Search For",IDC_STATIC,7,9,38,8
+    COMBOBOX        IDC_SEARCH_COMBO,48,7,153,113,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Binary Search",IDC_BINARY_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,210,9,68,10
+    CONTROL         "Case Sensitive",IDC_CASESENSITIVE_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,210,26,68,10
+    LTEXT           "Found 0 matches in 0 records.",IDC_FIND_LABEL,7,39,355,8
+    CONTROL         "List1",IDC_FIND_LIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_OWNERDATA | WS_TABSTOP,7,49,355,129,WS_EX_CLIENTEDGE
+    DEFPUSHBUTTON   "Search",ID_FIND_BUTTON,312,7,50,14
+    PUSHBUTTON      "Close",ID_CANCEL_BUTTON,312,24,50,14
+END
+
+IDD_RESOURCE_VIEW DIALOGEX 0, 0, 420, 200
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    CONTROL         "Tree1",IDC_RESOURCE_TREE,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_TABSTOP,0,0,142,200,WS_EX_STATICEDGE
+    LTEXT           "",IDC_HBAR,196,52,185,8,SS_SUNKEN | NOT WS_GROUP
+    RTEXT           "Filename",IDC_STATIC,200,6,27,8
+    EDITTEXT        IDC_FILENAME,231,4,175,12,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "Size",IDC_STATIC,210,22,17,8
+    EDITTEXT        IDC_FILESIZE,231,20,100,12,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "Date",IDC_STATIC,208,38,19,8
+    EDITTEXT        IDC_FILETIME,231,36,100,12,ES_AUTOHSCROLL | ES_READONLY
+    CONTROL         "",IDC_PREVIEW_RICHEDIT,"RICHEDIT",TCS_VERTICAL | TCS_RAGGEDRIGHT | TCS_MULTISELECT | NOT WS_VISIBLE | WS_BORDER | WS_VSCROLL | WS_TABSTOP,195,63,149,60
+    CONTROL         "Custom1",IDC_PREVIEW_IMAGE,"PreviewImageClass",WS_TABSTOP,226,139,123,30
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM "Error Bar",                   ID_VIEW_ERROR_BAR
+        MENUITEM "Undo Bar",                    ID_VIEW_UNDOBAR
+        MENUITEM SEPARATOR
+        MENUITEM "Resource Viewer",             ID_VIEW_RESOURCEVIEWER
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About SkyEdit...",           ID_APP_ABOUT
+        MENUITEM SEPARATOR
+        MENUITEM "UESP Wiki",                   ID_HELP_UESPWIKI
+        MENUITEM "Official CS Wiki",            ID_HELP_CSWIKI
+    END
+END
+
+IDR_SREDITTYPE MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Close",                      ID_FILE_CLOSE
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        POPUP "&Import"
+        BEGIN
+            MENUITEM "From CSV...",                 ID_FILE_IMPORT_CSV
+        END
+        POPUP "Export CSV"
+        BEGIN
+            MENUITEM "Selected Items...",           ID_FILE_EXPORTCSV_SELECTEDITEMS
+            MENUITEM "Item Type...",                ID_FILE_EXPORTCSV_ITEMTYPE
+            MENUITEM "Exterior Locations...",       ID_FILE_EXPORT_CSVEXTERIORLOCATIONS
+            MENUITEM "Exterior Map Markers...",     ID_FILE_EXPORT_CSVEXTMAPMARKERS
+            MENUITEM "Exterior Plants...",          ID_FILE_EXPORT_CSVEXPORTEXTERIORPLANTS
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT, GRAYED
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY, GRAYED
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "Find...",                     ID_EDIT_FIND
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM "Error Bar",                   ID_VIEW_ERROR_BAR
+        MENUITEM "Undo Bar",                    ID_VIEW_UNDOBAR
+        MENUITEM SEPARATOR
+        MENUITEM "File Structure...",           ID_VIEW_FILESTRUCTURE
+        MENUITEM "Reset List State",            ID_VIEW_RESETLISTS
+        MENUITEM SEPARATOR
+        MENUITEM "Resource Viewer",             ID_VIEW_RESOURCEVIEWER
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&New Window",                 ID_WINDOW_NEW
+        MENUITEM "&Cascade",                    ID_WINDOW_CASCADE
+        MENUITEM "&Tile",                       ID_WINDOW_TILE_HORZ
+        MENUITEM "&Arrange Icons",              ID_WINDOW_ARRANGE
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About SkyEdit...",           ID_APP_ABOUT
+        MENUITEM SEPARATOR
+        MENUITEM "UESP Wiki",                   ID_HELP_UESPWIKI
+        MENUITEM "Official CS Wiki",            ID_HELP_CSWIKI
+        MENUITEM SEPARATOR
+        MENUITEM "Test Field Lookup",           ID_HELP_TESTFIELDLOOKUP
+        MENUITEM "Test Find FormID",            ID_HELP_TESTFINDFORMID
+        MENUITEM "Test Memory Speed",           ID_TEST_MEMORYSPEED
+        MENUITEM "Test Tokenize Scripts",       ID_TEST_TOKENSCRIPTS
+        MENUITEM "Test Output Effects",         ID_HELP_TESTOUTPUTEFFECTS
+        MENUITEM "Test Record Size",            ID_HELP_TESTRECORDSIZE
+        MENUITEM "Test Clean Recompile All Scripts", ID_TEST_CLEANRECOMPILEALL, INACTIVE
+        MENUITEM "Test Recompile Active Scripts", ID_TEST_RECOMPILEALL
+        MENUITEM "Test Compare Scripts",        ID_HELP_TESTCOMPARESCRIPTS
+    END
+END
+
+IDR_RECORDTREE_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "&Reload",                     ID_RECORDTREE_RELOAD, GRAYED
+        MENUITEM "Export to CSV...",            ID_RECORDTREE_EXPORTTOCSV
+    END
+END
+
+IDR_RECORDLIST_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "New...",                      ID_EDIT_NEWRECORD
+        MENUITEM "Edit...",                     ID_MENU_EDITRECORD
+        MENUITEM "Rename...",                   ID_RECORD_RENAME
+        MENUITEM "Create Copy...",              ID_RECORD_CREATECOPY
+        MENUITEM SEPARATOR
+        MENUITEM "Batch Edit...",               ID_RECORD_BATCHEDIT
+        MENUITEM "Export to CSV...",            ID_FILE_EXPORTCSV_SELECTEDITEMS
+        MENUITEM SEPARATOR
+        MENUITEM "Clean",                       ID_RECORD_CLEAN
+        MENUITEM "Move To Active",              ID_RECORD_MOVEACTIVE
+        MENUITEM SEPARATOR
+        POPUP "Flags"
+        BEGIN
+            MENUITEM "Toggle Quest Item",           ID_RECORD_TOGGLEQUEST
+            MENUITEM "Toggle Ignore",               ID_RECORD_TOGGLEIGNORE
+            MENUITEM "Toggle Delete",               ID_RECORD_TOGGLEDELETE
+        END
+    END
+END
+
+IDR_LVLITEMLIST_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "New",                         ID_LVLLIST_ADD
+        MENUITEM "Edit",                        ID_LVLLIST_EDIT
+        MENUITEM "Delete",                      ID_LVLLIST_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "Edit Base Record",            ID_LVLLIST_EDITRECORD
+    END
+END
+
+IDR_EFFECTLIST_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "New",                         ID_EFFECTLIST_ADD
+        MENUITEM "Edit",                        ID_EFFECTLIST_EDIT
+        MENUITEM "Delete",                      ID_EFFECTLIST_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "Edit Script",                 ID_EFFECTLIST_EDITSCRIPT
+    END
+END
+
+IDR_BOOK_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM SEPARATOR
+        MENUITEM "Select &All\tCtrl+A",         ID_EDIT_SELECTALL
+    END
+END
+
+IDR_SCRIPT_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM SEPARATOR
+        MENUITEM "Select &All\tCtrl+A",         ID_EDIT_SELECTALL
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 274
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 148
+    END
+
+    IDD_SREDIT_FORM, DIALOG
+    BEGIN
+    END
+
+    IDD_LOAD_DLG, DIALOG
+    BEGIN
+    END
+
+    IDD_PROGRESS_DLG, DIALOG
+    BEGIN
+        RIGHTMARGIN, 241
+    END
+
+    IDD_SELECTRECORD_DLG, DIALOG
+    BEGIN
+        VERTGUIDE, 56
+    END
+
+    IDD_FIND_DLG, DIALOG
+    BEGIN
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS
+BEGIN
+    "A",            ID_EDIT_SELECTALL,      VIRTKEY, CONTROL, NOINVERT
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+END
+
+IDR_DEFAULT_RECORD_ACCEL ACCELERATORS
+BEGIN
+    "A",            ID_EDIT_SELECTALL,      VIRTKEY, CONTROL, NOINVERT
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_ESCAPE,      ID_CANCEL_BUTTON,       VIRTKEY, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\skyedit.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#include ""afxprint.rc""       // printing/print preview resources\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    ID_VIEW_RESOURCEVIEWER  "Display the resource view window.\nResource Viewer"
+    ID_HELP_UESPWIKI        "Open a web page to the SkyEdit article on the UESP wiki."
+END
+
+STRINGTABLE
+BEGIN
+    ID_HELP_CSWIKI          "Open a web page to the official Construction Set wiki."
+    ID_VIEW_RESETLISTS      "Resets the saved state of all lists to their default values.\nReset List State"
+END
+
+STRINGTABLE
+BEGIN
+    ID_APP_ABOUT            "Display the application about box dialog."
+END
+
+#endif    // English (Canada) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\skyedit.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#include "afxprint.rc"       // printing/print preview resources
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

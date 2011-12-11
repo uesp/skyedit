@@ -59,6 +59,7 @@ obj/
 [Dd]ebug*/
 [Rr]elease*/
 Ankh.NoLoad
+*.opensdf
 
 #InstallShield
 [Ss]ingle[Ii]mage/

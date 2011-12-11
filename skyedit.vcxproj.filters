@@ -1,0 +1,1535 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{367148a9-e0d8-4e33-bb1a-63942b2e25b2}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Forms">
+      <UniqueIdentifier>{d5dc539a-3a6c-4e9b-a222-106368b66460}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Forms\Dialogs">
+      <UniqueIdentifier>{573ec1f7-37f4-4f93-95f9-ad606188ab74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Forms\Base">
+      <UniqueIdentifier>{2e8484ec-5658-4f15-a5c1-f6087fd78c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Forms\CommonDlg">
+      <UniqueIdentifier>{4c8448d8-1475-4726-bc22-0242b17333ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Misc">
+      <UniqueIdentifier>{2c4883ad-127f-45ef-9fc8-342fa7806aad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common">
+      <UniqueIdentifier>{e9c80932-2d8c-43d4-b111-ece96d60a49e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common\Devil">
+      <UniqueIdentifier>{5de7113c-e854-4d4d-a17f-74de3ecc3e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ESP">
+      <UniqueIdentifier>{d326fc5c-e4cf-465c-9d57-acb87c188b6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ESP\Records">
+      <UniqueIdentifier>{903fd7cc-f9ff-4f61-9bea-da5155bbd8a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ESP\Subrecords">
+      <UniqueIdentifier>{f53a3294-cbeb-4c98-bf91-389c35e5301b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ESP\Groups">
+      <UniqueIdentifier>{10946ec1-7d3e-4be9-8ef7-add88e0390e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ESP\Handler">
+      <UniqueIdentifier>{4ebd559f-283d-499c-bf0c-438ef2d9934a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ESP\Events">
+      <UniqueIdentifier>{36b6fe63-b2dd-4669-8868-97ac6058ae26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ESP\Bsa">
+      <UniqueIdentifier>{156e452e-dbd0-4751-bd92-41af7654ff1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{cd0373e2-edbb-4a16-9cbb-7c9a944d25d7}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Forms.">
+      <UniqueIdentifier>{e6a93c05-fa00-4b1f-b10b-0a88668c8a69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Forms.\Dialogs.">
+      <UniqueIdentifier>{9c19e711-92fc-4ba2-a468-0f4e3ca06a1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Forms.\Base.">
+      <UniqueIdentifier>{da8394e4-8309-4215-bcd1-091de2ca3fed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Forms.\CommonDlg.">
+      <UniqueIdentifier>{1c11ab7d-db7a-4f4d-8f63-8507c72a4e7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Misc.">
+      <UniqueIdentifier>{a2bb9c6f-92fc-401e-b56e-345e6d7da0e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ESP.">
+      <UniqueIdentifier>{7adfa2d4-c121-4d45-929e-b6c07022bf73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ESP.\Records.">
+      <UniqueIdentifier>{f39f8e91-d6fd-4fc2-bcaa-7a17cd7b2c83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ESP.\Subrecords.">
+      <UniqueIdentifier>{a15e6683-43f0-41fc-9ca1-364bfd624005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ESP.\Groups.">
+      <UniqueIdentifier>{39bb4ea2-9925-4909-bb28-f86d5027fdc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ESP.\Handler.">
+      <UniqueIdentifier>{9aad9084-14a8-4232-8c10-4cfec71fea6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ESP.\Events.">
+      <UniqueIdentifier>{fcc18c99-83ad-4e36-93bd-60d938889eef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ESP.\Bsa.">
+      <UniqueIdentifier>{3eeab3f6-428c-4abc-a891-f4926633ae20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common.">
+      <UniqueIdentifier>{998508c6-f425-4ce2-a9de-f3bbae49c261}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common.\Devil.">
+      <UniqueIdentifier>{5c38750e-ca0e-4170-ae1d-47b22022e173}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ESP\Strings">
+      <UniqueIdentifier>{d2170e88-b4d4-43a3-9d14-f391f85fd9f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ESP.\Strings">
+      <UniqueIdentifier>{c7e368b8-c7ac-4fa5-816d-17befd472853}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ESP.\Common">
+      <UniqueIdentifier>{8686b46e-0cd8-4d97-aa04-06c0c1e9822f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ESP\Common">
+      <UniqueIdentifier>{f1c2678a-c0f5-453e-bdbd-fe2546a98f9f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ColorStatic.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="ErrorBar.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="UndoBar.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="aboutdlg.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ChildFrm.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="ChildFrmFix.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\common\csvfile.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\common\filebuffer.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\common\srcallback.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\common\srconfigentry.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\common\srconfigfile.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\common\srerror.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\common\srerrorhandler.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\common\srfile.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\common\srlogfile.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\common\srmemfile.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\common\srptrarray.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\common\srtime.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\common\srutils.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\common\sstring.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\common\textutils.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\bsafile\srbsafile.cpp">
+      <Filter>Source Files\ESP\Bsa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\bsafile\srbsafilerecord.cpp">
+      <Filter>Source Files\ESP\Bsa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\bsafile\srbsafolder.cpp">
+      <Filter>Source Files\ESP\Bsa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\bsafile\srresourcefile.cpp">
+      <Filter>Source Files\ESP\Bsa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\bsafile\srresourcefolder.cpp">
+      <Filter>Source Files\ESP\Bsa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\bsafile\srresourcehandler.cpp">
+      <Filter>Source Files\ESP\Bsa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\bsafile\srresourceinstance.cpp">
+      <Filter>Source Files\ESP\Bsa</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\sreventhandler.cpp">
+      <Filter>Source Files\ESP\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\groups\srfilegroup.cpp">
+      <Filter>Source Files\ESP\Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\groups\srgroup.cpp">
+      <Filter>Source Files\ESP\Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\groups\srgrupcont.cpp">
+      <Filter>Source Files\ESP\Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\groups\srtypegroup.cpp">
+      <Filter>Source Files\ESP\Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\srsimplerecordhandler.cpp">
+      <Filter>Source Files\ESP\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\srmultirecordhandler.cpp">
+      <Filter>Source Files\ESP\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\srundoitem.cpp">
+      <Filter>Source Files\ESP\Handler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\srtes4record.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srdatasubrecord.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srhedrsubrecord.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srstringsubrecord.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srsubrecord.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srsubreccont.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\srespfile.cpp">
+      <Filter>Source Files\ESP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\srmoddefs.cpp">
+      <Filter>Source Files\ESP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\srrectype.cpp">
+      <Filter>Source Files\ESP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\srrecordcreate.cpp">
+      <Filter>Source Files\ESP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\srimport.cpp">
+      <Filter>Source Files\ESP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\srfields.cpp">
+      <Filter>Source Files\ESP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\srcheckrecord.cpp">
+      <Filter>Source Files\ESP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\srexport.cpp">
+      <Filter>Source Files\ESP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\windows\srrecordfilter.cpp">
+      <Filter>Source Files\ESP</Filter>
+    </ClCompile>
+    <ClCompile Include="sredit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sreditDoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="srresourceview.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="srprogressdlg.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="SrLoadDlg.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="SrFindBinaryDlg.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="SrFileTreeDlg.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="SrErrorDlg.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="SreditView.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="dialogs\Sreditdlghandler.cpp">
+      <Filter>Source Files\Forms\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="dialogs\Srrecorddialog.cpp">
+      <Filter>Source Files\Forms\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="SrSelectRecordDlg.cpp">
+      <Filter>Source Files\Forms\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="SrImageCtrl.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="Srbatchlistctrl.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="SrInputDialog.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="SrPromptDlg.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\windows\srrecordlistctrl.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\windows\srrecordvirtuallistctrl.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\windows\srrecordtreectrl.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\windows\scbarcf.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\windows\scbarg.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\windows\sizecbar.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\windows\tabctrlsheet.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\srweaprecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\srkywdrecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="SrKywdView.cpp">
+      <Filter>Source Files\Forms\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srformidarraysubrecord.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
+    <ClCompile Include="SrWeapView.cpp">
+      <Filter>Source Files\Forms\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srlstringsubrecord.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\strings\SrStringFile.cpp">
+      <Filter>Source Files\ESP\Strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\srmgefrecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="SrMgefView.cpp">
+      <Filter>Source Files\Forms\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srctdasubrecord.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\SrFunctions.cpp">
+      <Filter>Source Files\ESP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\srbasereccont.cpp">
+      <Filter>Source Files\ESP\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\sritem1record.cpp">
+      <Filter>Source Files\ESP\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\srbaserecord.cpp">
+      <Filter>Source Files\ESP\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\sridrecord.cpp">
+      <Filter>Source Files\ESP\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\sritem2record.cpp">
+      <Filter>Source Files\ESP\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\srreccont.cpp">
+      <Filter>Source Files\ESP\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\srrecord.cpp">
+      <Filter>Source Files\ESP\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrAactRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrAchrRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrActiRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrAddnRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrAlchRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrAmmoRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrAnioRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrAppaRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrArmaRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrArmoRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrArtoRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrAspcRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrAstpRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrAvifRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrBookRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrBptdRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrCamsRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrCellRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrClasRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrClfmRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrClmtRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrCobjRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrCollRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrContRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrCpthRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrCstyRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrDebrRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrDialRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrDlbrRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrDlvwRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrDobjRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrDoorRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrDualRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrEcznRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrEfshRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrEnchRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrEqupRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrExplRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrEyesRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrFactRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrFlorRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrFlstRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrFstpRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrFstsRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrFurnRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrGlobRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrGmstRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrGrasRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrHazdRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrHdptRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrIdleRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrIdlmRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrImadRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrImgsRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrInfoRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrIngrRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrIpctRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrIpdsRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrKeymRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrLandRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrLcrtRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrLctnRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrLgtmRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrLighRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrLscrRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrLtexRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrLvliRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrLvlnRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrLvspRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrMatoRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrMattRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrMesgRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrMiscRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrMovtRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrMsttRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrMuscRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrMustRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrNaviRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrNavmRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrNpc_Record.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrOtftRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrPackRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrPerkRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrPgreRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrPhzdRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrProjRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrQustRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrRaceRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrRefrRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrRegnRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrRelaRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrRevbRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrRfctRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrScenRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrScrlRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrShouRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrSlgmRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrSmbnRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrSmenRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrSmqnRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrSnctRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrSndrRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrSopmRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrSounRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrSpelRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrSpgdRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrStatRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrTactRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrTreeRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrTxstRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrVtypRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrWatrRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrWoopRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrWrldRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\SrWthrRecord.cpp">
+      <Filter>Source Files\ESP\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\records\sridkeyrecord.cpp">
+      <Filter>Source Files\ESP\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="SrGlobView.cpp">
+      <Filter>Source Files\Forms\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srgmstdatasubrecord.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
+    <ClCompile Include="SrGmstView.cpp">
+      <Filter>Source Files\Forms\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="SrCobjView.cpp">
+      <Filter>Source Files\Forms\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srcntosubrecord.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
+    <ClCompile Include="SrFindDlg.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="SrBatchEditDlg.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="SrConditionDlg.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="SrFunctionDlg.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="devil\lib\DevIL.lib">
+      <Filter>Source Files\Common\Devil</Filter>
+    </Library>
+    <Library Include="devil\lib\ILU.lib">
+      <Filter>Source Files\Common\Devil</Filter>
+    </Library>
+    <Library Include="devil\lib\ILUT.lib">
+      <Filter>Source Files\Common\Devil</Filter>
+    </Library>
+    <Library Include="..\tes5lib\common\zlib\zdll.lib">
+      <Filter>Source Files\Common</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ColorStatic.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorBar.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="UndoBar.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="aboutdlg.h">
+      <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="ChildFrm.h">
+      <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="ChildFrmFix.h">
+      <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files\Misc.</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Header Files\Misc.</Filter>
+    </ClInclude>
+    <ClInclude Include="devil\include\IL\config.h">
+      <Filter>Header Files\Common.\Devil.</Filter>
+    </ClInclude>
+    <ClInclude Include="devil\include\IL\il.h">
+      <Filter>Header Files\Common.\Devil.</Filter>
+    </ClInclude>
+    <ClInclude Include="devil\include\IL\ilu.h">
+      <Filter>Header Files\Common.\Devil.</Filter>
+    </ClInclude>
+    <ClInclude Include="devil\include\IL\ilut.h">
+      <Filter>Header Files\Common.\Devil.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\csvfile.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\dl_map.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\filebuffer.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srarray.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srblockallocator.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srcallback.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srconfigentry.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srconfigfile.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srerror.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srerrorhandler.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srfile.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srlogfile.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srmemfile.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srptrarray.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srplatform.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srsimplemap.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srstringvaluemap.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srtime.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srtypes.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srutils.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srversion.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\sstring.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\textutils.h">
+      <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\bsafile\srbsafile.h">
+      <Filter>Header Files\ESP.\Bsa.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\bsafile\srbsafilerecord.h">
+      <Filter>Header Files\ESP.\Bsa.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\bsafile\srbsafolder.h">
+      <Filter>Header Files\ESP.\Bsa.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\bsafile\srresourcebase.h">
+      <Filter>Header Files\ESP.\Bsa.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\bsafile\srresourcefile.h">
+      <Filter>Header Files\ESP.\Bsa.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\bsafile\srresourcefolder.h">
+      <Filter>Header Files\ESP.\Bsa.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\bsafile\srresourcehandler.h">
+      <Filter>Header Files\ESP.\Bsa.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\bsafile\srresourceinstance.h">
+      <Filter>Header Files\ESP.\Bsa.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\sreventhandler.h">
+      <Filter>Header Files\ESP.\Events.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\srlistener.h">
+      <Filter>Header Files\ESP.\Events.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\srlistenevent.h">
+      <Filter>Header Files\ESP.\Events.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\groups\srblockgroup.h">
+      <Filter>Header Files\ESP.\Groups.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\groups\srfilegroup.h">
+      <Filter>Header Files\ESP.\Groups.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\groups\srformidgroup.h">
+      <Filter>Header Files\ESP.\Groups.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\groups\srgridgroup.h">
+      <Filter>Header Files\ESP.\Groups.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\groups\srgroup.h">
+      <Filter>Header Files\ESP.\Groups.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\groups\srgrupcont.h">
+      <Filter>Header Files\ESP.\Groups.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\groups\srtypegroup.h">
+      <Filter>Header Files\ESP.\Groups.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\srmultirecordhandler.h">
+      <Filter>Header Files\ESP.\Handler.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\srrecordhandler.h">
+      <Filter>Header Files\ESP.\Handler.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\srsimplerecordhandler.h">
+      <Filter>Header Files\ESP.\Handler.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\srundoitem.h">
+      <Filter>Header Files\ESP.\Handler.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\srtes4record.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srdatasubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srdwordsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srfloatsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srformidsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srhedrsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srint64subrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srlongsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srstringsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srsubreccont.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srwordsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\srespfile.h">
+      <Filter>Header Files\ESP.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\srmoddefs.h">
+      <Filter>Header Files\ESP.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\srrectype.h">
+      <Filter>Header Files\ESP.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\srimport.h">
+      <Filter>Header Files\ESP.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\srfields.h">
+      <Filter>Header Files\ESP.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\srcheckrecord.h">
+      <Filter>Header Files\ESP.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\srexport.h">
+      <Filter>Header Files\ESP.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\windows\srrecordfilter.h">
+      <Filter>Header Files\ESP.</Filter>
+    </ClInclude>
+    <ClInclude Include="sredit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sreditDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SreditView.h">
+      <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrErrorDlg.h">
+      <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrFileTreeDlg.h">
+      <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrFindBinaryDlg.h">
+      <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrLoadDlg.h">
+      <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="Srprogressdlg.h">
+      <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="Srresourceview.h">
+      <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="dialogs\Sreditdlghandler.h">
+      <Filter>Header Files\Forms.\Base.</Filter>
+    </ClInclude>
+    <ClInclude Include="dialogs\Srrecorddialog.h">
+      <Filter>Header Files\Forms.\Base.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrSelectRecordDlg.h">
+      <Filter>Header Files\Forms.\Base.</Filter>
+    </ClInclude>
+    <ClInclude Include="Srbatchlistctrl.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrImageCtrl.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrInputDialog.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrPromptDlg.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\windows\srrecordlistctrl.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\windows\srrecordtreectrl.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\windows\srrecordvirtuallistctrl.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="SRBatchEditDlg.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrFindDlg.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\windows\scbarcf.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\windows\scbarg.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\windows\sizecbar.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\windows\tabctrlsheet.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\srweaprecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srweapdatasubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrKywdView.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srformidarraysubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrWeapView.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srlstringsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\strings\SrStringFile.h">
+      <Filter>Header Files\ESP.\Strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\srmgefrecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srmgefdatasubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrMgefView.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srctdasubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\SrFunctions.h">
+      <Filter>Header Files\ESP.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrConditionDlg.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrFunctionDlg.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\srbasereccont.h">
+      <Filter>Header Files\ESP.\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\sritem2record.h">
+      <Filter>Header Files\ESP.\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\srbaserecord.h">
+      <Filter>Header Files\ESP.\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\sridrecord.h">
+      <Filter>Header Files\ESP.\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\sritem1record.h">
+      <Filter>Header Files\ESP.\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\srreccont.h">
+      <Filter>Header Files\ESP.\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\srrecord.h">
+      <Filter>Header Files\ESP.\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\srrecordfield.h">
+      <Filter>Header Files\ESP.\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\srrecordmap.h">
+      <Filter>Header Files\ESP.\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrAactRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrAchrRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrActiRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrAddnRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrAlchRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrAmmoRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrAnioRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrAppaRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrArmaRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrArmoRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrArtoRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrAspcRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrAstpRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrAvifRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrBookRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrBptdRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrCamsRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrCellRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrClasRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrClfmRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrClmtRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrCobjRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrCollRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrContRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrCpthRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrCstyRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrDebrRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrDialRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrDlbrRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrDlvwRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrDobjRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrDoorRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrDualRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrEcznRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrEfshRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrEnchRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrEqupRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrExplRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrEyesRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrFactRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrFlorRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrFlstRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrFstpRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrFstsRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrFurnRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrGlobRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrGmstRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrGrasRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrHazdRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrHdptRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrIdleRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrIdlmRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrImadRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrImgsRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrInfoRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrIngrRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrIpctRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrIpdsRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrKeymRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\srkywdrecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrLandRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrLcrtRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrLctnRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrLgtmRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrLighRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrLscrRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrLtexRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrLvliRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrLvlnRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrLvspRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrMatoRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrMattRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrMesgRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrMiscRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrMovtRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrMsttRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrMuscRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrMustRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrNaviRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrNavmRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrNpc_Record.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrOtftRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrPackRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrPerkRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrPgreRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrPhzdRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrProjRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrQustRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrRaceRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrRefrRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrRegnRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrRelaRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrRevbRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrRfctRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrScenRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrScrlRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrShouRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrSlgmRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrSmbnRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrSmenRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrSmqnRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrSnctRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrSndrRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrSopmRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrSounRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrSpelRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrSpgdRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrStatRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrTactRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrTreeRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrTxstRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrVtypRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrWatrRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrWoopRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrWrldRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\SrWthrRecord.h">
+      <Filter>Header Files\ESP.\Records.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srbytesubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrGlobView.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srgmstdatasubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrGmstView.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrCobjView.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="skyedit.rc">
+      <Filter>Source Files\Misc</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\skyedit.rc2">
+      <Filter>Source Files\Misc</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,669 @@
+#
+# Start top level filters
+#
+DisplayFilter
+	ID = "Global"
+	DisplayName = "Global"
+	RecName = GLOB
+	Parent = NULL
+End	
+DisplayFilter
+	ID = "GameSetting"
+	DisplayName = "Game Setting"
+	RecName = GMST
+	Parent = NULL
+End	
+DisplayFilter
+	ID = "Keywords"
+	DisplayName = "Keywords"
+	RecName = KYWD
+	Parent = NULL
+End	
+DisplayFilter
+	ID = "MagicEffects"
+	DisplayName = "Magic Effects"
+	RecName = MGEF
+	Parent = NULL
+End
+DisplayFilter
+	ID = "Recipes"
+	DisplayName = "Recipes"
+	RecName = COBJ
+	Parent = NULL
+End
+DisplayFilter
+	ID = "Weapons"
+	RecName = WEAP
+	Parent = NULL
+End	
+DisplayFilter
+	ID = "NoEdit"
+	DisplayName = "Not Editable"
+	RecName = NULL
+	Parent = NULL
+End	
+DisplayFilter
+	ID = "NoEditRef"
+	DisplayName = "Not Editable Refs"
+	RecName = NULL
+	Parent = NULL
+End	
+#
+# NoEdit Records
+#
+DisplayFilter
+	ID = "Actions"
+	DisplayName = "Actions"
+	RecName = AACT
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Activators"
+	DisplayName = "Activators"
+	RecName = ACTI
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "AddonNodes"
+	DisplayName = "Add-On Nodes"
+	RecName = ADDN
+	Parent = NoEdit
+End
+DisplayFilter
+	ID = "Ammo"
+	DisplayName = "Ammo"
+	RecName = AMMO
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "AnimatedObj"
+	DisplayName = "Animated Object"
+	RecName = ANIO
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Apparatus"
+	DisplayName = "Apparatus"
+	RecName = APPA
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "ArmAddOn"
+	DisplayName = "Arm Add-On"
+	RecName = ARMA
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Armor"
+	DisplayName = "Armor"
+	RecName = ARMO
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "ArtObject"
+	DisplayName = "Art Object"
+	RecName = ARTO
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "AcousticSpace"
+	DisplayName = "Acoustic Space"
+	RecName = ASPC
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Association"
+	DisplayName = "Association"
+	RecName = ASTP
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "ActorValue"
+	DisplayName = "Actor Value"
+	RecName = AVIF
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Book"
+	DisplayName = "Book"
+	RecName = BOOK
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "BodyPart"
+	DisplayName = "Body Part"
+	RecName = BPTD
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "CameraShot"
+	DisplayName = "Camera Shot"
+	RecName = CAMS
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Class"
+	DisplayName = "Class"
+	RecName = CLAS
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Color"
+	DisplayName = "Color"
+	RecName = CLFM
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Climate"
+	DisplayName = "Climate"
+	RecName = CLMT
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "CollisionLayer"
+	DisplayName = "Collision Layer"
+	RecName = COLL
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Container"
+	DisplayName = "Container"
+	RecName = CONT
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "CameraPath"
+	DisplayName = "Camera Path"
+	RecName = CPTH
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "CombatStyle"
+	DisplayName = "Combat Style"
+	RecName = CSTY
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Debris"
+	DisplayName = "Debris"
+	RecName = DEBR
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "DialogTopic"
+	DisplayName = "Dialog Topic"
+	RecName = DIAL
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "DialogBranch"
+	DisplayName = "Dialog Branch"
+	RecName = DLBR
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "DialogView"
+	DisplayName = "Dialog View"
+	RecName = DLVW
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "DOBJ"
+	DisplayName = "DOBJ"
+	RecName = DOBJ
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Door"
+	DisplayName = "Door"
+	RecName = DOOR
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "DualCast"
+	DisplayName = "Dual Cast"
+	RecName = DUAL
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "EncounterZone"
+	DisplayName = "Encounter Zone"
+	RecName = ECZN
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "EffectShader"
+	DisplayName = "Effect Shader"
+	RecName = EFSH
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Enchant"
+	DisplayName = "Enchantment"
+	RecName = ENCH
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "EquipSlot"
+	DisplayName = "Equipment Slot"
+	RecName = EQUP
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Explosion"
+	DisplayName = "Explosion"
+	RecName = EXPL
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Faction"
+	DisplayName = "Faction"
+	RecName = FACT
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Flora"
+	DisplayName = "Flora"
+	RecName = FLOR
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Footstep"
+	DisplayName = "Footstep"
+	RecName = FSTP
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "FootStepSet"
+	DisplayName = "Footstep Set"
+	RecName = FSTS
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Furniture"
+	DisplayName = "Furniture"
+	RecName = FURN
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Grass"
+	DisplayName = "Grass"
+	RecName = GRAS
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "FormList"
+	DisplayName = "Non-Levelled List"
+	RecName = FLST
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Potions"
+	DisplayName = "Potions"
+	RecName = ALCH
+	Parent = NoEdit
+End	
+#
+# NoEdit Refs
+#
+DisplayFilter
+	ID = "Actors"
+	DisplayName = "Actors"
+	RecName = ACHR
+	Parent = NoEditRef
+End	
+DisplayFilter
+	ID = "Cell"
+	DisplayName = "Cell"
+	RecName = CELL
+	Parent = NoEditRef
+End	
+#
+# Magic Effect Types
+#
+DisplayFilter
+	ID = "MagicEffectAlteration"
+	DisplayName = "Alteration"
+	RecName = MGEF
+	Field = School, Alteration
+	Parent = MagicEffects
+End	
+DisplayFilter
+	ID = "MagicEffectConjuration"
+	DisplayName = "Conjuration"
+	RecName = MGEF
+	Field = School, Conjuration
+	Parent = MagicEffects
+End	
+DisplayFilter
+	ID = "MagicEffectDestruction"
+	DisplayName = "Destruction"
+	RecName = MGEF
+	Field = School, Destruction
+	Parent = MagicEffects
+End	
+DisplayFilter
+	ID = "MagicEffectIllusion"
+	DisplayName = "Illusion"
+	RecName = MGEF
+	Field = School, Illusion
+	Parent = MagicEffects
+End	
+DisplayFilter
+	ID = "MagicEffectRestoration"
+	DisplayName = "Restoration"
+	RecName = MGEF
+	Field = School, Restoration
+	Parent = MagicEffects
+End	
+DisplayFilter
+	ID = "MagicEffectDrain"
+	DisplayName = "Drain"
+	RecName = MGEF
+	Field = EffectType, Drain
+	Parent = MagicEffects
+End	
+DisplayFilter
+	ID = "MagicEffectExtra"
+	DisplayName = "ExtraDmg"
+	RecName = MGEF
+	Field = EffectType, Extra Damage
+	Parent = MagicEffects
+End	
+DisplayFilter
+	ID = "MagicEffectFire"
+	DisplayName = "Fire"
+	RecName = MGEF
+	Field = EffectType, Fire
+	Parent = MagicEffects
+End	
+DisplayFilter
+	ID = "MagicEffectFrost"
+	DisplayName = "Frost"
+	RecName = MGEF
+	Field = EffectType, Frost
+	Parent = MagicEffects
+End	
+DisplayFilter
+	ID = "MagicEffectPoison"
+	DisplayName = "Poison"
+	RecName = MGEF
+	Field = EffectType, Poison
+	Parent = MagicEffects
+End	
+DisplayFilter
+	ID = "MagicEffectShock"
+	DisplayName = "Shock"
+	RecName = MGEF
+	Field = EffectType, Shock
+	Parent = MagicEffects
+End	
+#
+# Keyword Filters
+#
+DisplayFilter
+	ID = "KeyWordActTypes"
+	DisplayName = Actor Types
+	RecName = KYWD
+	Parent = Keywords
+	FieldStarts = EditorID, ActorType
+End
+DisplayFilter
+	ID = "KeyWordArmoMaterials"
+	DisplayName = Armor Materials
+	RecName = KYWD
+	Parent = Keywords
+	FieldStarts = EditorID, ArmorMaterial
+End
+DisplayFilter
+	ID = "KeyWordClotTypes"
+	DisplayName = Clothing Types
+	RecName = KYWD
+	Parent = Keywords
+	FieldStarts = EditorID, Clothing
+End
+DisplayFilter
+	ID = "KeyWordCraftTypes"
+	DisplayName = Crafting Types
+	RecName = KYWD
+	Parent = Keywords
+	FieldStarts = EditorID, Crafting
+End
+DisplayFilter
+	ID = "KeyWordJobTypes"
+	DisplayName = Job Types
+	RecName = KYWD
+	Parent = Keywords
+	FieldStarts = EditorID, Job
+End
+DisplayFilter
+	ID = "KeyWordLocTypes"
+	DisplayName = Location Types
+	RecName = KYWD
+	Parent = Keywords
+	FieldStarts = EditorID, LocType
+End
+DisplayFilter
+	ID = "KeyWordMagic"
+	DisplayName = Magic
+	RecName = KYWD
+	Parent = Keywords
+	FieldStarts = EditorID, Magic
+End
+DisplayFilter
+	ID = "KeyWordAlchTypes"
+	DisplayName = Alchemy Types
+	RecName = KYWD
+	Parent = KeyWordMagic
+	FieldStarts = EditorID, MagicAlch
+End
+DisplayFilter
+	ID = "KeyWordEnchTypes"
+	DisplayName = Enchantment Types
+	RecName = KYWD
+	Parent = KeyWordMagic
+	FieldStarts = EditorID, MagicEnch
+End
+DisplayFilter
+	ID = "KeyWordEnchTypes"
+	DisplayName = Vendor Items
+	RecName = KYWD
+	Parent = KeyWords
+	FieldStarts = EditorID, VendorItem
+End
+DisplayFilter
+	ID = "KeyWordWeapMaterials"
+	DisplayName = Weapon Materials
+	RecName = KYWD
+	Parent = Keywords
+	FieldStarts = EditorID, WeapMaterial
+End
+DisplayFilter
+	ID = "KeyWordWeapTypes"
+	DisplayName = Weapon Types
+	RecName = KYWD
+	Parent = Keywords
+	FieldStarts = EditorID, WeapType
+End
+#
+# Recipe Filters
+#
+DisplayFilter
+	ID = "RecipeArmor"
+	DisplayName = "Armor Table"
+	RecName = COBJ
+	Field = CraftStation, CraftingSmithingArmorTable
+	Parent = Recipes
+End	
+DisplayFilter
+	ID = "RecipeCooking"
+	DisplayName = "Cooking"
+	RecName = COBJ
+	Field = CraftStation, CraftingCookpot
+	Parent = Recipes
+End	
+DisplayFilter
+	ID = "RecipeForge"
+	DisplayName = "Forge"
+	RecName = COBJ
+	Field = CraftStation, CraftingSmithingForge
+	Parent = Recipes
+End	
+DisplayFilter
+	ID = "RecipeSharpen"
+	DisplayName = "Sharpening Wheel"
+	RecName = COBJ
+	Field = CraftStation, CraftingSmithingSharpeningWheel
+	Parent = Recipes
+End	
+DisplayFilter
+	ID = "RecipeSkyforge"
+	DisplayName = "Skyforge"
+	RecName = COBJ
+	Field = CraftStation, CraftingSmithingSkyforge
+	Parent = Recipes
+End	
+DisplayFilter
+	ID = "RecipeSmelter"
+	DisplayName = "Smelting"
+	RecName = COBJ
+	Field = CraftStation, CraftingSmelter
+	Parent = Recipes
+End	
+DisplayFilter
+	ID = "RecipeTanning"
+	DisplayName = "Tanning Rack"
+	RecName = COBJ
+	Field = CraftStation, CraftingTanningRack
+	Parent = Recipes
+End	
+
+#
+# Start Weapon Filters
+#
+DisplayFilter
+	ID = "WeapBattleaxe"
+	DisplayName = Battleaxe
+	RecName = WEAP
+	Parent = Weapons
+	WeaponType = Battleaxe
+End
+DisplayFilter
+	ID = "WeapBow"
+	DisplayName = Bow
+	RecName = WEAP
+	Parent = Weapons
+	WeaponType = Bow
+End
+DisplayFilter
+	ID = "WeapDagger"
+	DisplayName = Dagger
+	RecName = WEAP
+	Parent = Weapons
+	WeaponType = Dagger
+End
+DisplayFilter
+	ID = "WeapGreatsword"
+	DisplayName = Greatsword
+	RecName = WEAP
+	Parent = Weapons
+	WeaponType = Greatsword
+End
+DisplayFilter
+	ID = "WeapMace"
+	DisplayName = Mace
+	RecName = WEAP
+	Parent = Weapons
+	WeaponType = Mace
+End
+DisplayFilter
+	ID = "WeapStaff"
+	DisplayName = Staff
+	RecName = WEAP
+	Parent = Weapons
+	WeaponType = Staff
+End
+DisplayFilter
+	ID = "WeapSword"
+	DisplayName = Sword
+	RecName = WEAP
+	Parent = Weapons
+	WeaponType = Sword
+End
+DisplayFilter
+	ID = "WeapWarAxe"
+	DisplayName = WarAxe
+	RecName = WEAP
+	Parent = Weapons
+	WeaponType = WarAxe
+End
+DisplayFilter
+	ID = "WeapWarhammer"
+	DisplayName = Warhammer
+	RecName = WEAP
+	Parent = Weapons
+	WeaponType = Warhammer
+End
+DisplayFilter
+	ID = "WeapDaedric"
+	DisplayName = Daedric
+	RecName = WEAP
+	Parent = Weapons
+	Material = Daedric
+End
+DisplayFilter
+	ID = "WeapDraugr"
+	DisplayName = Draugr
+	RecName = WEAP
+	Parent = Weapons
+	Material = Draugr
+End
+DisplayFilter
+	ID = "WeapDwarven"
+	DisplayName = Dwarven
+	RecName = WEAP
+	Parent = Weapons
+	Material = Dwarven
+End
+DisplayFilter
+	ID = "WeapEbony"
+	DisplayName = Ebony
+	RecName = WEAP
+	Parent = Weapons
+	Material = Ebony
+End
+DisplayFilter
+	ID = "WeapElven"
+	DisplayName = Elven
+	RecName = WEAP
+	Parent = Weapons
+	Material = Elven
+End
+DisplayFilter
+	ID = "WeapGlass"
+	DisplayName = Glass
+	RecName = WEAP
+	Parent = Weapons
+	Material = Glass
+End
+DisplayFilter
+	ID = "WeapIron"
+	DisplayName = Iron
+	RecName = WEAP
+	Parent = Weapons
+	Material = Iron
+End
+DisplayFilter
+	ID = "WeapOrcish"
+	DisplayName = Orcish
+	RecName = WEAP
+	Parent = Weapons
+	Material = Orcish
+End
+DisplayFilter
+	ID = "WeapSteel"
+	DisplayName = Steel
+	RecName = WEAP
+	Parent = Weapons
+	Material = Steel
+End
