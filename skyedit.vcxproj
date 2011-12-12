@@ -2109,7 +2109,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="displayfilters.dat" />
+    <None Include="res\armor.ico" />
+    <None Include="res\file.bmp" />
+    <None Include="res\find_dlg.ico" />
+    <None Include="res\folder.bmp" />
+    <None Include="res\idr_main.ico" />
+    <None Include="res\skyedit.ico" />
     <None Include="res\skyedit.rc2" />
+    <None Include="res\Toolbar.bmp" />
     <None Include="skyedit.ini" />
     <None Include="skyedit.log" />
   </ItemGroup>

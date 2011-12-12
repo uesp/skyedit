@@ -1543,5 +1543,12 @@
     <None Include="skyedit.log">
       <Filter>Data</Filter>
     </None>
+    <None Include="res\skyedit.ico" />
+    <None Include="res\idr_main.ico" />
+    <None Include="res\Toolbar.bmp" />
+    <None Include="res\armor.ico" />
+    <None Include="res\find_dlg.ico" />
+    <None Include="res\file.bmp" />
+    <None Include="res\folder.bmp" />
   </ItemGroup>
 </Project>

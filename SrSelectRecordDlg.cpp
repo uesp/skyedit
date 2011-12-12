@@ -199,6 +199,29 @@ static srselrecdlginfo_t s_ComponentRecordSelDlg =
 
 /*===========================================================================
  *
+ * Begin Equip Slot Dialog Data
+ *
+ *=========================================================================*/
+static srreclistcolinit_t s_EquipSlotListInit[] = {
+	{ SR_FIELD_EDITORID,	200,	LVCFMT_LEFT },
+	{ SR_FIELD_FORMID,		75,		LVCFMT_LEFT },
+	{ SR_FIELD_RECORDTYPE,	75,		LVCFMT_CENTER },
+	{ SR_FIELD_FLAGS,		50,		LVCFMT_CENTER },
+	{ SR_FIELD_NONE, 0, 0 }
+  };
+
+
+static srselrecdlginfo_t s_EquipSlotRecordSelDlg = 
+{ 
+	&SR_NAME_EQUP, NULL,  _T("Select Equipment Slot Record..."), s_EquipSlotListInit, &CSrEqupRecord::s_FieldMap, SR_FIELD_EDITORID, NULL, 0 
+};
+/*===========================================================================
+ *		End of Equip Slot Data
+ *=========================================================================*/
+
+
+/*===========================================================================
+ *
  * Begin Actor Dialog Data
  *
  *=========================================================================*/
@@ -976,6 +999,24 @@ bool SrSelectComponent (CString& EditorID, CSrRecordHandler* pRecordHandler)
 	Dlg.SetInitialEditorID(EditorID);
 	Dlg.SetRecordHandler(pRecordHandler);
 	Dlg.SetDlgInfo(s_ComponentRecordSelDlg);
+	Dlg.SetAllowNull(false);
+
+	Result = Dlg.DoModal();
+	if (Result != IDOK) return (false);
+
+	EditorID = Dlg.GetCurrentEditorID();
+  	return true;
+}
+
+
+bool SrSelectEquipSlot (CString& EditorID, CSrRecordHandler* pRecordHandler)
+{
+	CSrSelectRecordDlg	Dlg;
+	int					Result;
+
+	Dlg.SetInitialEditorID(EditorID);
+	Dlg.SetRecordHandler(pRecordHandler);
+	Dlg.SetDlgInfo(s_EquipSlotRecordSelDlg);
 	Dlg.SetAllowNull(false);
 
 	Result = Dlg.DoModal();

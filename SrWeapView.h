@@ -17,7 +17,8 @@
  *
  *=========================================================================*/
   #include "dialogs/srrecorddialog.h"
-/*===========================================================================
+#include "afxwin.h"
+ /*===========================================================================
  *		End of Required Includes
  *=========================================================================*/
 
@@ -86,6 +87,9 @@ protected:
 
 public:
 
+	CEdit m_EquipSlot;
+	afx_msg void OnBnClickedEditEquipslot();
+	afx_msg void OnBnClickedSelectequipslotButton();
 };
 /*===========================================================================
  *		End of Class CSrWeapView Definition

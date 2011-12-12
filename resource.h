@@ -108,7 +108,9 @@
 #define IDC_ENCHANTCHARGE               1080
 #define IDC_NAME                        1081
 #define IDC_ENCHANTMENT                 1095
+#define IDC_EQUIPSLOT                   1096
 #define IDC_EDIT_ENCHANTMENT            1103
+#define IDC_EDIT_EQUIPSLOT              1104
 #define IDC_CNAME                       1113
 #define IDC_MODEL                       1113
 #define IDC_CREDITS                     1120
@@ -136,6 +138,8 @@
 #define IDC_SELECTPARAM1_BUTTON         1136
 #define IDC_CONDITION_BUTTON            1137
 #define IDC_PARAM1_LABEL                1137
+#define IDC_SELECTENCHANT_BUTTON2       1137
+#define IDC_SELECTEQUIPSLOT_BUTTON      1137
 #define IDC_PARAM2_TEXT                 1138
 #define IDC_SELECTPARAM2_BUTTON         1139
 #define IDC_PARAM2_LABEL                1140

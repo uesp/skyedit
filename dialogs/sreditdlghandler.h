@@ -228,6 +228,7 @@ public:
   bool SelectKeyword		(CString& EditorID);
   bool SelectKeyword        (CString& EditorID, const char* pFilter);
   bool SelectComponent      (CString& EditorID);
+  bool SelectEquipSlot      (CString& EditorID);
 
 	/* Resource selection */
   bool SelectModel     (const char* pString);

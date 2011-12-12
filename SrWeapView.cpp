@@ -41,6 +41,8 @@
 BEGIN_MESSAGE_MAP(CSrWeapView, CSrRecordDialog)
 	//{{AFX_MSG_MAP(CSrWeapView)
 	//}}AFX_MSG_MAP	
+	ON_BN_CLICKED(IDC_EDIT_EQUIPSLOT, &CSrWeapView::OnBnClickedEditEquipslot)
+	ON_BN_CLICKED(IDC_SELECTEQUIPSLOT_BUTTON, &CSrWeapView::OnBnClickedSelectequipslotButton)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrWeapView Message Map
@@ -64,6 +66,7 @@ BEGIN_SRRECUIFIELDS(CSrWeapView)
 	ADD_SRRECUIFIELDS( SR_FIELD_MODEL,			IDC_MODEL,	        256,	IDS_TT_MODEL)
 	ADD_SRRECUIFIELDS( SR_FIELD_QUESTITEM,		IDC_QUESTITEM,		0,		IDS_TT_QUESTITEM)
 	ADD_SRRECUIFIELDS( SR_FIELD_KEYWORDS,		IDC_KEYWORDS,		0,		IDS_TT_KEYWORDS)
+	ADD_SRRECUIFIELDS( SR_FIELD_EQUIPSLOT,		IDC_EQUIPSLOT,		128,	0)
 END_SRRECUIFIELDS()
 /*===========================================================================
  *		End of UI Field Map
@@ -107,7 +110,7 @@ CSrWeapView::~CSrWeapView()
  *=========================================================================*/
 void CSrWeapView::DoDataExchange (CDataExchange* pDX) 
 {
-  CSrRecordDialog::DoDataExchange(pDX);
+	CSrRecordDialog::DoDataExchange(pDX);
 
 	//{{AFX_DATA_MAP(CSrWeapView)
 	DDX_Control(pDX, IDC_MODEL, m_Model);
@@ -122,7 +125,8 @@ void CSrWeapView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_FORMID, m_FormID);
 	DDX_Control(pDX, IDC_KEYWORDS, m_Keywords);
 	//}}AFX_DATA_MAP
-}
+	DDX_Control(pDX, IDC_EQUIPSLOT, m_EquipSlot);
+ }
 /*===========================================================================
  *		End of Class Method CSrWeapView::DoDataExchange()
  *=========================================================================*/
@@ -166,3 +170,36 @@ void CSrWeapView::OnInitialUpdate (void)
  *=========================================================================*/
 
 
+ void CSrWeapView::OnBnClickedEditEquipslot()
+ {
+  CString    Buffer;
+  CSrRecord* pRecord;
+
+  if (m_pDlgHandler == NULL || m_pRecordHandler == NULL) return;
+  m_EquipSlot.GetWindowText(Buffer);
+
+  if (Buffer.IsEmpty()) 
+  {
+    m_pDlgHandler->EditNewRecord(SR_NAME_EQUP);
+  }
+  else 
+  {
+    pRecord = m_pRecordHandler->FindEditorID(Buffer);
+    if (pRecord != NULL) m_pDlgHandler->EditRecord(pRecord);
+  }
+
+ }
+
+
+ void CSrWeapView::OnBnClickedSelectequipslotButton()
+ {
+	CString    Buffer;
+
+	if (m_pDlgHandler == NULL) return;
+	m_EquipSlot.GetWindowText(Buffer);
+
+	bool Result = m_pDlgHandler->SelectEquipSlot(Buffer);
+	if (!Result) return;
+
+	m_EquipSlot.SetWindowText(Buffer);
+ }

@@ -835,6 +835,13 @@ bool CSrEditDlgHandler::SelectComponent (CString& EditorID)
 }
 
 
+bool CSrEditDlgHandler::SelectEquipSlot (CString& EditorID)
+{
+	if (m_pDocument == NULL) return (false);
+	return SrSelectEquipSlot(EditorID, &m_pDocument->GetRecordHandler()); 
+}
+
+
 /*===========================================================================
  *
  * Class CSrEditDlgHandler Method - bool SelectKeyword (EditorID);
