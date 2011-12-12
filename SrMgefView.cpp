@@ -13,7 +13,6 @@
 #include "sredit.h"
 #include "srmgefview.h"
 #include "dialogs/sreditdlghandler.h"
-#include "SrConditionDlg.h"
 
 
 /*===========================================================================
@@ -40,9 +39,6 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrMgefView, CSrRecordDialog)
-  //{{AFX_MSG_MAP(CSrMgefView)
-  //}}AFX_MSG_MAP
-	ON_BN_CLICKED(IDC_CONDITION_BUTTON, &CSrMgefView::OnBnClickedConditionButton)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrMgefView Message Map
@@ -168,15 +164,4 @@ void CSrMgefView::OnInitialUpdate (void)
  *		End of Class Event CSrMgefView::OnInitialUpdate()
  *=========================================================================*/
 
-
-void CSrMgefView::OnBnClickedConditionButton()
-{
-	CSrConditionDlg ConditionDlg;
-	int Result = ConditionDlg.DoModal(GetInputRecord(), &m_ConditionsCopy);
-	if (Result == IDOK) m_ConditionsChanged = true;
-
-	CString Buffer;
-	Buffer.Format("%d", m_ConditionsCopy.GetSize());
-	m_Conditions.SetWindowText(Buffer);
-}
 

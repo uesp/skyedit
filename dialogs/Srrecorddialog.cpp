@@ -18,6 +18,7 @@
 //#include "srbipedpartsdlg.h"
 //#include "srbipedpartslistdlg.h"
 #include "mainfrm.h"
+#include "SrConditionDlg.h"
 
 
 /*===========================================================================
@@ -109,6 +110,7 @@ BEGIN_MESSAGE_MAP(CSrRecordDialog, CFormView)
 	ON_LBN_SELCHANGE(IDC_KEYWORDS, OnLbnSelchangeKeywords)
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_EDIT_FIND, &CSrRecordDialog::OnEditFind)
+	ON_BN_CLICKED(IDC_CONDITION_BUTTON, &CSrRecordDialog::OnBnClickedConditionButton)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -190,6 +192,7 @@ CSrRecordDialog::CSrRecordDialog (const int ID) : CFormView(ID) {
   m_pModelField      = NULL;
   m_pIconField       = NULL;
   m_pSoundFileField  = NULL;
+  m_pConditionField  = NULL;
 
   m_pMaleWorldModelField   = NULL;
   m_pMaleBipedModelField   = NULL;
@@ -845,6 +848,7 @@ void CSrRecordDialog::SetUIFieldData (void) {
       case SR_FIELD_MODEL3:      m_pFemaleBipedModelField = pWnd; break;
       case SR_FIELD_MODEL4:      m_pFemaleWorldModelField = pWnd; break;
       case SR_FIELD_ICON2:       m_pFemaleIconField = pWnd; break;
+	  case SR_FIELD_CONDITIONCOUNT:   m_pConditionField   = pWnd; break;
     }
 
     Result = GetInputRecord()->GetField(Buffer, pFields[Index].FieldID);
@@ -2086,3 +2090,18 @@ void CSrRecordDialog::OnEditFind()
 {
 	if (m_pDlgHandler) m_pDlgHandler->OpenFind();	
 }
+
+
+void CSrRecordDialog::OnBnClickedConditionButton()
+{
+	if (m_pConditionField == NULL) return;
+
+	CSrConditionDlg ConditionDlg;
+	int Result = ConditionDlg.DoModal(GetInputRecord(), &m_ConditionsCopy);
+	if (Result == IDOK) m_ConditionsChanged = true;
+
+	CString Buffer;
+	Buffer.Format("%d", m_ConditionsCopy.GetSize());
+	m_pConditionField->SetWindowText(Buffer);
+}
+

@@ -97,6 +97,7 @@ protected:
   CWnd*			m_pEnchantField;
   dword			m_EnchantType;
   CWnd*			m_pSoundField;
+  CWnd*			m_pConditionField;
 
   CWnd*			m_pModelField;
   CWnd*			m_pIconField;
@@ -251,6 +252,7 @@ protected:
   afx_msg void OnBnClickedEditkeywordButton();
   afx_msg void OnBnClickedDelkeywordButton();
   afx_msg void OnLbnSelchangeKeywords();
+  afx_msg void OnBnClickedConditionButton();
   //}}AFX_MSG
 
   DECLARE_MESSAGE_MAP();

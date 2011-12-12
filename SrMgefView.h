@@ -85,7 +85,7 @@ protected:
 
 public:
 	
-	afx_msg void OnBnClickedConditionButton();
+	
 };
 /*===========================================================================
  *		End of Class CSrMgefView Definition

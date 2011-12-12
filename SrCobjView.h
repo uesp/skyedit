@@ -101,7 +101,6 @@ public:
 
 	virtual int  OnPreSaveRecord    (void);
 	afx_msg	HBRUSH OnCtlColor (CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-	afx_msg void OnBnClickedConditionButton();
 	afx_msg void OnBnClickedEditResultitem();
 	afx_msg void OnBnClickedSelectresultitemButton();
 	afx_msg void OnBnClickedEditCraftstation();

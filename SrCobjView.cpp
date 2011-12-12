@@ -42,7 +42,6 @@
 BEGIN_MESSAGE_MAP(CSrCobjView, CSrRecordDialog)
   //{{AFX_MSG_MAP(CSrCobjView)
   //}}AFX_MSG_MAP
-	ON_BN_CLICKED(IDC_CONDITION_BUTTON, &CSrCobjView::OnBnClickedConditionButton)
 	ON_BN_CLICKED(IDC_EDIT_RESULTITEM, &CSrCobjView::OnBnClickedEditResultitem)
 	ON_BN_CLICKED(IDC_SELECTRESULTITEM_BUTTON, &CSrCobjView::OnBnClickedSelectresultitemButton)
 	ON_BN_CLICKED(IDC_EDIT_CRAFTSTATION, &CSrCobjView::OnBnClickedEditCraftstation)
@@ -402,18 +401,6 @@ HBRUSH CSrCobjView::OnCtlColor (CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 /*===========================================================================
  *		End of Class Event CSrCobjView::OnCtlColor()
  *=========================================================================*/
-
-
-void CSrCobjView::OnBnClickedConditionButton()
-{
-	CSrConditionDlg ConditionDlg;
-	int Result = ConditionDlg.DoModal(GetInputRecord(), &m_ConditionsCopy);
-	if (Result == IDOK) m_ConditionsChanged = true;
-
-	CString Buffer;
-	Buffer.Format("%d", m_ConditionsCopy.GetSize());
-	m_Conditions.SetWindowText(Buffer);
-}
 
 
 void CSrCobjView::OnBnClickedEditResultitem()
