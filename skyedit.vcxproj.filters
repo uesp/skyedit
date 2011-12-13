@@ -767,6 +767,12 @@
     <ClCompile Include="SrFunctionDlg.cpp">
       <Filter>Source Files\Forms\CommonDlg</Filter>
     </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srenitsubrecord.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srefitsubrecord.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">
@@ -1523,6 +1529,12 @@
     </ClInclude>
     <ClInclude Include="SrCobjView.h">
       <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srenitsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srefitsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
