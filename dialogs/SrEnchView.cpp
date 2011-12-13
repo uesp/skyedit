@@ -1,8 +1,8 @@
 /*===========================================================================
  *
- * File:		SrWeapView.CPP
+ * File:		SrEnchView.CPP
  * Author:		Dave Humphrey (dave@uesp.net)
- * Created On:	27 November 2011
+ * Created On:	12 December 2011
  *
  * Description
  *
@@ -11,7 +11,7 @@
 	/* Include Files */
 #include "stdafx.h"
 #include "sredit.h"
-#include "srweapview.h"
+#include "srenchview.h"
 #include "dialogs/sreditdlghandler.h"
 
 
@@ -26,7 +26,7 @@
 //  static char THIS_FILE[] = __FILE__;
 //#endif
 
-  IMPLEMENT_DYNCREATE(CSrWeapView, CSrRecordDialog);
+  IMPLEMENT_DYNCREATE(CSrEnchView, CSrRecordDialog);
 
 /*===========================================================================
  *		End of Local Definitions
@@ -35,17 +35,17 @@
 
 /*===========================================================================
  *
- * Begin CSrWeapView Message Map
+ * Begin CSrEnchView Message Map
  *
  *=========================================================================*/
-BEGIN_MESSAGE_MAP(CSrWeapView, CSrRecordDialog)
-	//{{AFX_MSG_MAP(CSrWeapView)
-	//}}AFX_MSG_MAP	
-	ON_BN_CLICKED(IDC_EDIT_EQUIPSLOT, &CSrWeapView::OnBnClickedEditEquipslot)
-	ON_BN_CLICKED(IDC_SELECTEQUIPSLOT_BUTTON, &CSrWeapView::OnBnClickedSelectequipslotButton)
+BEGIN_MESSAGE_MAP(CSrEnchView, CSrRecordDialog)
+	ON_BN_CLICKED(IDC_EDIT_BASEENCHANT, &CSrEnchView::OnBnClickedEditBaseenchant)
+	ON_BN_CLICKED(IDC_SELECTBASEENCHANT_BUTTON, &CSrEnchView::OnBnClickedSelectbaseenchantButton)
+	ON_BN_CLICKED(IDC_EDIT_ITEMTYPES, &CSrEnchView::OnBnClickedEditItemtypes)
+	ON_BN_CLICKED(IDC_SELECTITEMTYPES_BUTTON, &CSrEnchView::OnBnClickedSelectitemtypesButton)
 END_MESSAGE_MAP()
 /*===========================================================================
- *		End of CSrWeapView Message Map
+ *		End of CSrEnchView Message Map
  *=========================================================================*/
 
 
@@ -54,19 +54,12 @@ END_MESSAGE_MAP()
  * Begin UI Field Map
  *
  *=========================================================================*/
-BEGIN_SRRECUIFIELDS(CSrWeapView)
-	ADD_SRRECUIFIELDS( SR_FIELD_EDITORID,		IDC_EDITORID,		128,	IDS_TT_EDITORID)
-	ADD_SRRECUIFIELDS( SR_FIELD_FORMID,			IDC_FORMID,			128,	IDS_TT_FORMID)
-	ADD_SRRECUIFIELDS( SR_FIELD_ITEMNAME,		IDC_NAME,			128,	IDS_TT_FULLNAME)
-	ADD_SRRECUIFIELDS( SR_FIELD_VALUE,			IDC_VALUE,			16,		IDS_TT_VALUE)
-	ADD_SRRECUIFIELDS( SR_FIELD_WEIGHT,			IDC_WEIGHT,			16,		IDS_TT_WEIGHT)
-	ADD_SRRECUIFIELDS( SR_FIELD_ENCHANTMENT,	IDC_ENCHANTMENT,	128,	IDS_TT_ENCHANTMENT)
-	ADD_SRRECUIFIELDS( SR_FIELD_ENCHANTPOINTS,	IDC_ENCHANTCHARGE,	8,		IDS_TT_ENCHANTPOINTS)
-	ADD_SRRECUIFIELDS( SR_FIELD_DAMAGE,			IDC_DAMAGE,	        8,		IDS_TT_DAMAGE)
-	ADD_SRRECUIFIELDS( SR_FIELD_MODEL,			IDC_MODEL,	        256,	IDS_TT_MODEL)
-	ADD_SRRECUIFIELDS( SR_FIELD_QUESTITEM,		IDC_QUESTITEM,		0,		IDS_TT_QUESTITEM)
-	ADD_SRRECUIFIELDS( SR_FIELD_KEYWORDS,		IDC_KEYWORDS,		0,		IDS_TT_KEYWORDS)
-	ADD_SRRECUIFIELDS( SR_FIELD_EQUIPSLOT,		IDC_EQUIPSLOT,		128,	0)
+BEGIN_SRRECUIFIELDS(CSrEnchView)
+	ADD_SRRECUIFIELDS( SR_FIELD_EDITORID,			IDC_EDITORID,			128,	IDS_TT_EDITORID)
+	ADD_SRRECUIFIELDS( SR_FIELD_FORMID,				IDC_FORMID,				128,	IDS_TT_FORMID)
+	ADD_SRRECUIFIELDS( SR_FIELD_ITEMNAME,			IDC_ITEMNAME,			128,	IDS_TT_FULLNAME)
+	ADD_SRRECUIFIELDS( SR_FIELD_BASEENCHANT,		IDC_BASEENCHANTMENT,	128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_ITEMTYPES,			IDC_ITEMTYPES,			128,	0)
 END_SRRECUIFIELDS()
 /*===========================================================================
  *		End of UI Field Map
@@ -75,116 +68,136 @@ END_SRRECUIFIELDS()
 
 /*===========================================================================
  *
- * Class CSrWeapView Constructor
+ * Class CSrEnchView Constructor
  *
  *=========================================================================*/
-CSrWeapView::CSrWeapView() : CSrRecordDialog(CSrWeapView::IDD) 
+CSrEnchView::CSrEnchView() : CSrRecordDialog(CSrEnchView::IDD) 
 {
-  //{{AFX_DATA_INIT(CSrWeapView)
-  //}}AFX_DATA_INIT
-
   m_InitialSetData = false;
 }
 /*===========================================================================
- *		End of Class CSrWeapView Constructor
+ *		End of Class CSrEnchView Constructor
  *=========================================================================*/
 
 
 /*===========================================================================
  *
- * Class CSrWeapView Destructor
+ * Class CSrEnchView Destructor
  *
  *=========================================================================*/
-CSrWeapView::~CSrWeapView() 
+CSrEnchView::~CSrEnchView() 
 {
 }
 /*===========================================================================
- *		End of Class CSrWeapView Destructor
+ *		End of Class CSrEnchView Destructor
  *=========================================================================*/
 
 
 /*===========================================================================
  *
- * Class CSrWeapView Method - void DoDataExchange (pDX);
+ * Class CSrEnchView Method - void DoDataExchange (pDX);
  *
  *=========================================================================*/
-void CSrWeapView::DoDataExchange (CDataExchange* pDX) 
+void CSrEnchView::DoDataExchange (CDataExchange* pDX) 
 {
 	CSrRecordDialog::DoDataExchange(pDX);
 
-	//{{AFX_DATA_MAP(CSrWeapView)
-	DDX_Control(pDX, IDC_MODEL, m_Model);
-	DDX_Control(pDX, IDC_DAMAGE, m_Damage);
-	DDX_Control(pDX, IDC_ENCHANTCHARGE, m_EnchantPoints);
-	DDX_Control(pDX, IDC_VALUE, m_Value);
-	DDX_Control(pDX, IDC_WEIGHT, m_Weight);
-	DDX_Control(pDX, IDC_QUESTITEM, m_QuestItem);
-	DDX_Control(pDX, IDC_ENCHANTMENT, m_Enchantment);
-	DDX_Control(pDX, IDC_NAME, m_Name);
+	DDX_Control(pDX, IDC_ITEMNAME, m_ItemName);
 	DDX_Control(pDX, IDC_EDITORID, m_EditorID);
 	DDX_Control(pDX, IDC_FORMID, m_FormID);
-	DDX_Control(pDX, IDC_KEYWORDS, m_Keywords);
-	//}}AFX_DATA_MAP
-	DDX_Control(pDX, IDC_EQUIPSLOT, m_EquipSlot);
- }
+	DDX_Control(pDX, IDC_BASEENCHANTMENT, m_BaseEnchantment);
+	DDX_Control(pDX, IDC_ITEMTYPES, m_ItemTypes);
+}
 /*===========================================================================
- *		End of Class Method CSrWeapView::DoDataExchange()
+ *		End of Class Method CSrEnchView::DoDataExchange()
  *=========================================================================*/
 
 
 /*===========================================================================
  *
- * Begin CSrWeapView Diagnostics
+ * Begin CSrEnchView Diagnostics
  *
  *=========================================================================*/
 #ifdef _DEBUG
 
-void CSrWeapView::AssertValid() const {
+void CSrEnchView::AssertValid() const {
   CSrRecordDialog::AssertValid();
 }
 
 
-void CSrWeapView::Dump(CDumpContext& dc) const {
+void CSrEnchView::Dump(CDumpContext& dc) const {
   CSrRecordDialog::Dump(dc);
 }
 
 #endif
 /*===========================================================================
- *		End of CSrWeapView Diagnostics
+ *		End of CSrEnchView Diagnostics
  *=========================================================================*/
 
 
 /*===========================================================================
  *
- * Class CSrWeapView Event - void OnInitialUpdate (void);
+ * Class CSrEnchView Event - void OnInitialUpdate (void);
  *
  *=========================================================================*/
-void CSrWeapView::OnInitialUpdate (void) 
+void CSrEnchView::OnInitialUpdate (void) 
 {
   CSrRecordDialog::OnInitialUpdate();
-
+  
   SetControlData();
 }
 /*===========================================================================
- *		End of Class Event CSrWeapView::OnInitialUpdate()
+ *		End of Class Event CSrEnchView::OnInitialUpdate()
  *=========================================================================*/
 
 
- void CSrWeapView::OnBnClickedEditEquipslot()
- {
-	 if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_EquipSlot, SR_NAME_EQUP);
- }
+void CSrEnchView::GetControlData (void)
+{
+	CSrRecordDialog::GetControlData();
+}
 
 
- void CSrWeapView::OnBnClickedSelectequipslotButton()
- {
+void CSrEnchView::SetControlData (void)
+{
+	CSrRecordDialog::SetControlData();
+}
+
+
+void CSrEnchView::OnBnClickedEditBaseenchant()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_BaseEnchantment, SR_NAME_ENCH);
+}
+
+
+void CSrEnchView::OnBnClickedSelectbaseenchantButton()
+{
 	CString    Buffer;
 
 	if (m_pDlgHandler == NULL) return;
-	m_EquipSlot.GetWindowText(Buffer);
+	m_BaseEnchantment.GetWindowText(Buffer);
 
-	bool Result = m_pDlgHandler->SelectEquipSlot(Buffer);
+	bool Result = m_pDlgHandler->SelectRecord(Buffer, SR_NAME_ENCH, &CSrEnchRecord::s_FieldMap);
 	if (!Result) return;
 
-	m_EquipSlot.SetWindowText(Buffer);
- }
+	m_BaseEnchantment.SetWindowText(Buffer);
+}
+
+
+void CSrEnchView::OnBnClickedEditItemtypes()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_ItemTypes, SR_NAME_FLST);
+}
+
+
+void CSrEnchView::OnBnClickedSelectitemtypesButton()
+{
+	CString    Buffer;
+
+	if (m_pDlgHandler == NULL) return;
+	m_ItemTypes.GetWindowText(Buffer);
+
+	bool Result = m_pDlgHandler->SelectRecord(Buffer, SR_NAME_FLST, &CSrFlstRecord::s_FieldMap);
+	if (!Result) return;
+
+	m_ItemTypes.SetWindowText(Buffer);
+}

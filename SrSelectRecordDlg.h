@@ -189,6 +189,7 @@ public:
   bool SrSelectKeyword        (CString& EditorID, CSrRecordHandler* pRecordHandler, const char* pFilter);
   bool SrSelectComponent      (CString& EditorID, CSrRecordHandler* pRecordHandler);
   bool SrSelectEquipSlot      (CString& EditorID, CSrRecordHandler* pRecordHandler);
+  bool SrSelectRecord         (CString& EditorID, CSrRecordHandler* pRecordHandler, const srrectype_t Type, const srrecfieldmap_t* pFieldMap);
 
 /*===========================================================================
  *		End of Function Prototypes

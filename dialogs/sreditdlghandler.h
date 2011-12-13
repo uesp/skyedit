@@ -31,6 +31,7 @@
   #include "srfinddlg.h"
 
   #include "srcobjview.h"
+  #include "srenchview.h"
   #include "srglobview.h"
   #include "srgmstview.h"
   #include "srkywdview.h"
@@ -182,6 +183,8 @@ public:
   bool EditRecord    (const srformid_t  FormID);
   bool EditNewRecord (const srrectype_t RecordType);
 
+  bool EditRecordHelper (CWnd* pWnd, const srrectype_t Type);
+
 	/* Get class members */
   CSrEditDoc*  GetDocument (void) { return (m_pDocument); }
   const TCHAR* GetTitle    (void); 
@@ -225,6 +228,7 @@ public:
   bool SelectSound          (CString& EditorID);
   bool SelectStaffEnchant   (CString& EditorID);
   bool SelectWeaponEnchant  (CString& EditorID);
+  bool SelectRecord         (CString& EditorID, const srrectype_t Type, const srrecfieldmap_t* pFieldMap);
   bool SelectKeyword		(CString& EditorID);
   bool SelectKeyword        (CString& EditorID, const char* pFilter);
   bool SelectComponent      (CString& EditorID);

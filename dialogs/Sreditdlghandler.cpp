@@ -38,6 +38,7 @@
  *
  *=========================================================================*/
 srdlgcreateinfo_t l_SrDlgCreateInfo[] = {
+	{ &SR_NAME_ENCH, "Enchantment",		 CSrEnchView::IDD,   RUNTIME_CLASS(CSrEnchView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Enchantment"),		_T("Enchantment") },
 	{ &SR_NAME_GLOB, "Global",		     CSrGlobView::IDD,   RUNTIME_CLASS(CSrGlobView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Global"),		_T("Global") },
 	{ &SR_NAME_GMST, "Game Setting",     CSrGmstView::IDD,   RUNTIME_CLASS(CSrGmstView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Game_Setting"),	_T("Game_Setting") },
 	{ &SR_NAME_KYWD, "Keyword",		     CSrKywdView::IDD,   RUNTIME_CLASS(CSrKywdView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Keyword"),		_T("Keyword") },
@@ -828,6 +829,12 @@ bool CSrEditDlgHandler::SelectWeaponEnchant (CString& EditorID) {
  *=========================================================================*/
 
 
+bool CSrEditDlgHandler::SelectRecord (CString& EditorID, const srrectype_t Type, const srrecfieldmap_t* pFieldMap) {
+  if (m_pDocument == NULL) return (false);
+  return SrSelectRecord(EditorID, &m_pDocument->GetRecordHandler(), Type, pFieldMap); 
+}
+
+
 bool CSrEditDlgHandler::SelectComponent (CString& EditorID)
 {
 	if (m_pDocument == NULL) return (false);
@@ -1053,6 +1060,29 @@ bool CSrEditDlgHandler::SelectSoundFile (const char* pString) {
 /*===========================================================================
  *		End of Class Method CSrEditDlgHandler::SelectSoundFile()
  *=========================================================================*/
+
+
+bool CSrEditDlgHandler::EditRecordHelper (CWnd* pWnd, const srrectype_t Type)
+{
+	CString    Buffer;
+	CSrRecord* pRecord;
+
+	if (m_pDocument == NULL || pWnd == NULL) return false;
+	pWnd->GetWindowText(Buffer);
+
+	if (Buffer.IsEmpty()) 
+	{
+	    EditNewRecord(Type);
+	}	
+	else 
+	{
+		pRecord = m_pDocument->GetRecordHandler().FindEditorID(Buffer);
+		if (pRecord == NULL) return false;
+		EditRecord(pRecord);
+	}
+
+	return true;
+}
 
 
 /*===========================================================================

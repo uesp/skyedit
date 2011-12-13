@@ -23,6 +23,12 @@
 # Start top level filters
 #
 DisplayFilter
+	ID = "Enchant"
+	DisplayName = "Enchantment"
+	RecName = ENCH
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Global"
 	DisplayName = "Global"
 	RecName = GLOB
@@ -258,12 +264,6 @@ DisplayFilter
 	ID = "EffectShader"
 	DisplayName = "Effect Shader"
 	RecName = EFSH
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "Enchant"
-	DisplayName = "Enchantment"
-	RecName = ENCH
 	Parent = NoEdit
 End	
 DisplayFilter

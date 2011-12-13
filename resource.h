@@ -60,6 +60,7 @@
 #define IDR_COMPONENT_MENU              187
 #define IDD_COBJ_VIEW                   188
 #define IDR_COMPONENT_ACCEL             188
+#define IDD_ENCH_VIEW                   189
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -165,12 +166,17 @@
 #define IDC_RECOVERCHECK                1153
 #define IDC_EDIT_COMPONENT              1154
 #define IDC_DETRIMENTALCHECK            1154
+#define IDC_BASEENCHANTMENT             1154
 #define IDC_SELECTCOMPONENT_BUTTON      1155
 #define IDC_PERCENTMAGCHECK             1155
+#define IDC_EDIT_BASEENCHANT            1155
+#define IDC_SELECTBASEENCHANT_BUTTON    1156
 #define IDC_SELFONLYCHECK               1157
+#define IDC_ITEMTYPES                   1157
 #define IDC_FXPERSISTCHECK              1158
-#define IDC_PERCENTMAGCHECK2            1159
+#define IDC_EDIT_ITEMTYPES              1158
 #define IDC_BOUNDCHECK                  1159
+#define IDC_SELECTITEMTYPES_BUTTON      1159
 #define IDC_SELECT_MODEL                1181
 #define IDC_FLICKER                     1190
 #define IDC_FLICKERSLOW                 1193
@@ -373,7 +379,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        189
 #define _APS_NEXT_COMMAND_VALUE         32859
-#define _APS_NEXT_CONTROL_VALUE         1154
+#define _APS_NEXT_CONTROL_VALUE         1160
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
