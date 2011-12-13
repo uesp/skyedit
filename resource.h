@@ -124,8 +124,10 @@
 #define IDC_TYPELIST                    1128
 #define IDC_CONDITION_LIST              1128
 #define IDC_REFERENCE_TEXT              1129
+#define IDC_BASECOST                    1129
 #define IDC_SELECTREFERENCE_BUTTON      1130
 #define IDC_REFERENCE_LABEL             1131
+#define IDC_SKILLLEVEL                  1131
 #define IDC_QUESTITEM                   1132
 #define IDC_FUNCTION_TEXT               1132
 #define IDC_SELECTENCHANT_BUTTON        1133
@@ -138,7 +140,6 @@
 #define IDC_SELECTPARAM1_BUTTON         1136
 #define IDC_CONDITION_BUTTON            1137
 #define IDC_PARAM1_LABEL                1137
-#define IDC_SELECTENCHANT_BUTTON2       1137
 #define IDC_SELECTEQUIPSLOT_BUTTON      1137
 #define IDC_PARAM2_TEXT                 1138
 #define IDC_SELECTPARAM2_BUTTON         1139
@@ -159,9 +160,17 @@
 #define IDC_EDIT_CRAFTSTATION           1151
 #define IDC_TYPEFILTER_LIST             1151
 #define IDC_SELECTCRAFTSTATION_BUTTON   1152
+#define IDC_HOSTILECHECK                1152
 #define IDC_COMPONENT                   1153
+#define IDC_RECOVERCHECK                1153
 #define IDC_EDIT_COMPONENT              1154
+#define IDC_DETRIMENTALCHECK            1154
 #define IDC_SELECTCOMPONENT_BUTTON      1155
+#define IDC_PERCENTMAGCHECK             1155
+#define IDC_SELFONLYCHECK               1157
+#define IDC_FXPERSISTCHECK              1158
+#define IDC_PERCENTMAGCHECK2            1159
+#define IDC_BOUNDCHECK                  1159
 #define IDC_SELECT_MODEL                1181
 #define IDC_FLICKER                     1190
 #define IDC_FLICKERSLOW                 1193
@@ -364,7 +373,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        189
 #define _APS_NEXT_COMMAND_VALUE         32859
-#define _APS_NEXT_CONTROL_VALUE         1152
+#define _APS_NEXT_CONTROL_VALUE         1154
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -58,7 +58,9 @@ BEGIN_SRRECUIFIELDS(CSrMgefView)
 	ADD_SRRECUIFIELDS( SR_FIELD_ITEMNAME,			IDC_ITEMNAME,			256,	IDS_TT_FULLNAME)
 	ADD_SRRECUIFIELDS( SR_FIELD_SCHOOL,				IDC_SCHOOLLIST,			64,		IDS_TT_SCHOOL)
 	ADD_SRRECUIFIELDS( SR_FIELD_EFFECTTYPE,			IDC_TYPELIST,			64,		IDS_TT_EFFECTTYPE)
-	ADD_SRRECUIFIELDS( SR_FIELD_CONDITIONCOUNT,		IDC_CONDITION_BUTTON,	64,		IDS_TT_EFFECTTYPE)
+	ADD_SRRECUIFIELDS( SR_FIELD_CONDITIONCOUNT,		IDC_CONDITION_BUTTON,	64,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_SKILLLEVEL,			IDC_SKILLLEVEL,			10,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_BASECOST,			IDC_BASECOST,			10,		0)
 END_SRRECUIFIELDS()
 /*===========================================================================
  *		End of UI Field Map
@@ -118,7 +120,16 @@ void CSrMgefView::DoDataExchange (CDataExchange* pDX) {
 	DDX_Control(pDX, IDC_SCHOOLLIST, m_SchoolList);
 	DDX_Control(pDX, IDC_TYPELIST, m_TypeList);
 	DDX_Control(pDX, IDC_CONDITION_BUTTON, m_Conditions);
- }
+	DDX_Control(pDX, IDC_BASECOST, m_BaseCost);
+	DDX_Control(pDX, IDC_SKILLLEVEL, m_SkillLevel);
+	DDX_Control(pDX, IDC_HOSTILECHECK, m_HostileCheck);
+	DDX_Control(pDX, IDC_RECOVERCHECK, m_RecoverCheck);
+	DDX_Control(pDX, IDC_DETRIMENTALCHECK, m_DetrimentalCheck);
+	DDX_Control(pDX, IDC_PERCENTMAGCHECK, m_PercentMagCheck);
+	DDX_Control(pDX, IDC_SELFONLYCHECK, m_SelfCheck);
+	DDX_Control(pDX, IDC_FXPERSISTCHECK, m_FXPersistCheck);
+	DDX_Control(pDX, IDC_BOUNDCHECK, m_BoundCheck);
+}
 /*===========================================================================
  *		End of Class Method CSrMgefView::DoDataExchange()
  *=========================================================================*/
@@ -165,3 +176,35 @@ void CSrMgefView::OnInitialUpdate (void)
  *=========================================================================*/
 
 
+void CSrMgefView::GetControlData (void)
+{
+	CSrRecordDialog::GetControlData();
+
+	CSrMgefRecord* pMgef = SrCastClassNull(CSrMgefRecord, GetOutputRecord());
+	if (pMgef == NULL) return;
+
+	FlipFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_HOSTILE,		m_HostileCheck.GetCheck() != 0);
+	FlipFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_RECOVER,		m_RecoverCheck.GetCheck() != 0);
+	FlipFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_DETRIMENTAL,	m_DetrimentalCheck.GetCheck() != 0);
+	FlipFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_PERCENTMAG,	m_PercentMagCheck.GetCheck() != 0);
+	FlipFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_SELF,		m_SelfCheck.GetCheck() != 0);
+	FlipFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_FXPERSIST,	m_FXPersistCheck.GetCheck() != 0);
+	FlipFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_BOUND,		m_BoundCheck.GetCheck() != 0);
+}
+
+
+void CSrMgefView::SetControlData (void)
+{
+	CSrRecordDialog::SetControlData();
+
+	CSrMgefRecord* pMgef = SrCastClassNull(CSrMgefRecord, GetInputRecord());
+	if (pMgef == NULL) return;
+
+	m_HostileCheck.SetCheck(CheckFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_HOSTILE));
+	m_RecoverCheck.SetCheck(CheckFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_RECOVER));
+	m_DetrimentalCheck.SetCheck(CheckFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_DETRIMENTAL));
+	m_PercentMagCheck.SetCheck(CheckFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_PERCENTMAG));
+	m_SelfCheck.SetCheck(CheckFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_SELF));
+	m_FXPersistCheck.SetCheck(CheckFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_FXPERSIST));
+	m_BoundCheck.SetCheck(CheckFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_BOUND));
+}

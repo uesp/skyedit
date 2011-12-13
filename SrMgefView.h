@@ -17,7 +17,8 @@
  *
  *=========================================================================*/
 	#include "dialogs/srrecorddialog.h"
-	//#include "afxwin.h"
+#include "afxwin.h"
+ //#include "afxwin.h"
  /*===========================================================================
  *		End of Required Includes
  *=========================================================================*/
@@ -62,6 +63,9 @@ public:
 
 public:
 
+	virtual void  GetControlData   (void);
+	virtual void  SetControlData   (void);
+
 	/* ClassWizard generated virtual function overrides */
   //{{AFX_VIRTUAL(CSrMgefView)
 protected:
@@ -86,6 +90,15 @@ protected:
 public:
 	
 	
+	CEdit m_BaseCost;
+	CEdit m_SkillLevel;
+	CButton m_HostileCheck;
+	CButton m_RecoverCheck;
+	CButton m_DetrimentalCheck;
+	CButton m_PercentMagCheck;
+	CButton m_SelfCheck;
+	CButton m_FXPersistCheck;
+	CButton m_BoundCheck;
 };
 /*===========================================================================
  *		End of Class CSrMgefView Definition
