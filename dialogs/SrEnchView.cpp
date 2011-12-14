@@ -408,7 +408,8 @@ void CSrEnchView::CreateEffectArray (void)
 		pEffectData = new srench_effectdata_t;
 		m_Effects.Add(pEffectData);
 
-		pEffectData->pEffect = SrCastClassNull(CSrFormidSubrecord, GetInputRecord()->CreateSubrecord(SR_NAME_EFID));
+		pSubrecord = GetInputRecord()->CreateSubrecord(SR_NAME_EFID);
+		pEffectData->pEffect = SrCastClassNull(CSrFormidSubrecord, pSubrecord);
 		if (pEffectData->pEffect == NULL) goto CreateEffectArray_EndLoop;
 		pEffectData->pEffect->InitializeNew();
 		pEffectData->pEffect->Copy(pEffectID);
@@ -422,7 +423,8 @@ void CSrEnchView::CreateEffectArray (void)
 
 			if (pSubrecord->GetRecordType() == SR_NAME_CTDA)
 			{
-				CSrCtdaSubrecord* pNewCond = SrCastClassNull(CSrCtdaSubrecord, GetInputRecord()->CreateSubrecord(SR_NAME_CTDA));
+				pSubrecord = GetInputRecord()->CreateSubrecord(SR_NAME_CTDA);
+				CSrCtdaSubrecord* pNewCond = SrCastClassNull(CSrCtdaSubrecord, pSubrecord);
 				if (pNewCond == NULL) goto CreateEffectArray_EndLoop;
 				pNewCond->InitializeNew();
 				pNewCond->Copy(pSubrecord);
@@ -433,7 +435,8 @@ void CSrEnchView::CreateEffectArray (void)
 				++EfitCount;
 				if (EfitCount > 1) SystemLog.Printf("WARNING: More than one EFIT per EFID found in ENCH 0x%08X!", pEnchant->GetFormID());
 
-				pEffectData->pEffectData = SrCastClassNull(CSrEfitSubrecord, GetInputRecord()->CreateSubrecord(SR_NAME_EFIT));
+				pSubrecord = GetInputRecord()->CreateSubrecord(SR_NAME_EFIT);
+				pEffectData->pEffectData = SrCastClassNull(CSrEfitSubrecord, pSubrecord);
 				if (pEffectData->pEffectData == NULL) goto CreateEffectArray_EndLoop;
 				pEffectData->pEffectData->InitializeNew();
 				pEffectData->pEffectData->Copy(pSubrecord);
@@ -627,9 +630,12 @@ int CSrEnchView::OnPreSaveRecord (void)
 void CSrEnchView::OnBnClickedAddButton()
 {
 	srench_effectdata_t* pNewEffect = new srench_effectdata_t;
+	CSrSubrecord* pSubrecord;
 
-	pNewEffect->pEffect     = SrCastClassNull(CSrFormidSubrecord, GetInputRecord()->CreateSubrecord(SR_NAME_EFID));
-	pNewEffect->pEffectData = SrCastClassNull(CSrEfitSubrecord,   GetInputRecord()->CreateSubrecord(SR_NAME_EFIT));
+	pSubrecord = GetInputRecord()->CreateSubrecord(SR_NAME_EFID);
+	pNewEffect->pEffect     = SrCastClassNull(CSrFormidSubrecord, pSubrecord);
+	pSubrecord = GetInputRecord()->CreateSubrecord(SR_NAME_EFIT);
+	pNewEffect->pEffectData = SrCastClassNull(CSrEfitSubrecord,   pSubrecord);
 
 	if (pNewEffect->pEffect == NULL || pNewEffect->pEffectData == NULL) 
 	{
