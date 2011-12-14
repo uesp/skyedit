@@ -120,13 +120,19 @@
 #define IDC_ITEMNAME                    1125
 #define IDC_DNAME                       1126
 #define IDC_RESULTCOUNT                 1126
+#define IDC_MAGNITUDE                   1126
 #define IDC_SCHOOLLIST                  1127
 #define IDC_COMPONENTCOUNT              1127
+#define IDC_AREA                        1127
 #define IDC_TYPELIST                    1128
 #define IDC_CONDITION_LIST              1128
+#define IDC_DURATION                    1128
 #define IDC_REFERENCE_TEXT              1129
 #define IDC_BASECOST                    1129
+#define IDC_CHARGE                      1129
 #define IDC_SELECTREFERENCE_BUTTON      1130
+#define IDC_CHARGE2                     1130
+#define IDC_COST                        1130
 #define IDC_REFERENCE_LABEL             1131
 #define IDC_SKILLLEVEL                  1131
 #define IDC_QUESTITEM                   1132
@@ -177,6 +183,10 @@
 #define IDC_EDIT_ITEMTYPES              1158
 #define IDC_BOUNDCHECK                  1159
 #define IDC_SELECTITEMTYPES_BUTTON      1159
+#define IDC_EFFECT_LIST                 1160
+#define IDC_EFFECTNAME                  1161
+#define IDC_EDIT_EFFECT                 1162
+#define IDC_SELECTEFFECT_BUTTON         1163
 #define IDC_SELECT_MODEL                1181
 #define IDC_FLICKER                     1190
 #define IDC_FLICKERSLOW                 1193
@@ -379,7 +389,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        189
 #define _APS_NEXT_COMMAND_VALUE         32859
-#define _APS_NEXT_CONTROL_VALUE         1160
+#define _APS_NEXT_CONTROL_VALUE         1161
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

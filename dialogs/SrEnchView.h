@@ -17,11 +17,34 @@
  *
  *=========================================================================*/
 	#include "dialogs/srrecorddialog.h"
-#include "afxwin.h"
- //#include "afxwin.h"
- /*===========================================================================
+	#include "windows/srrecordlistctrl.h"
+	#include "afxwin.h"
+	#include "afxcmn.h"
+/*===========================================================================
  *		End of Required Includes
  *=========================================================================*/
+
+
+struct srench_effectdata_t
+{
+	CSrFormidSubrecord*	pEffect;
+	CSrEfitSubrecord*	pEffectData;
+	CSrCtdaArray		Conditions;
+
+	srench_effectdata_t()
+	{
+		pEffect = NULL;
+		pEffectData = NULL;
+	}
+
+	~srench_effectdata_t()
+	{
+		delete pEffect;
+		delete pEffectData;
+	}
+};
+
+typedef CSrPtrArray<srench_effectdata_t> CSrEnchEffectArray;
 
 
 /*===========================================================================
@@ -36,6 +59,9 @@ class CSrEnchView : public CSrRecordDialog
 
   /*---------- Begin Protected Class Members ---------------------*/
 protected:
+	CSrEnchEffectArray		m_Effects;
+	srench_effectdata_t*	m_pCurrentEffect;
+	bool					m_IsInitialized;
 	
 
 
@@ -44,6 +70,16 @@ protected:
 
 	/* Protected constructor used by dynamic creation */
   CSrEnchView();
+
+  void CreateEffectArray (void);
+
+  void SetEffectList    (void);
+  int  AddEffectList    (srench_effectdata_t* pEffectData);
+  void UpdateEffectList (const int ListIndex, const bool Update);
+
+	void GetCurrentEffect (void);
+	void SetCurrentEffect (srench_effectdata_t* pEffectData);
+	void EnableEffectControls (const bool Enable);
   
 
   /*---------- Begin Public Class Methods ------------------------*/
@@ -60,6 +96,8 @@ public:
 
 	virtual void  GetControlData   (void);
 	virtual void  SetControlData   (void);
+
+	virtual int  OnPreSaveRecord   (void);
 
 	/* ClassWizard generated virtual function overrides */
   //{{AFX_VIRTUAL(CSrEnchView)
@@ -91,6 +129,22 @@ public:
 	afx_msg void OnBnClickedSelectbaseenchantButton();
 	afx_msg void OnBnClickedEditItemtypes();
 	afx_msg void OnBnClickedSelectitemtypesButton();
+	CSrRecordListCtrl m_EffectList;
+	afx_msg void OnLvnItemchangedEffectList(NMHDR *pNMHDR, LRESULT *pResult);
+	CEdit m_EffectName;
+	CButton m_SelectEffectButton;
+	CButton m_EditEffectButton;
+	CButton m_EffectConditions;
+	CEdit m_Magnitude;
+	CEdit m_Area;
+	CEdit m_Duration;
+	afx_msg void OnBnClickedConditionButton();
+	afx_msg void OnBnClickedEditEffect();
+	afx_msg void OnBnClickedSelecteffectButton();
+	afx_msg void OnBnClickedAddButton();
+	afx_msg void OnBnClickedDeleteButton2();
+	CEdit m_Charge;
+	CEdit m_Cost;
 };
 /*===========================================================================
  *		End of Class CSrEnchView Definition
