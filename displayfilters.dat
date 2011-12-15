@@ -440,6 +440,12 @@ DisplayFilter
 	RecName = ALCH
 	Parent = NoEdit
 End	
+DisplayFilter
+	ID = "Spells"
+	DisplayName = "Spells"
+	RecName = SPEL
+	Parent = NoEdit
+End	
 #
 # NoEdit Refs
 #
