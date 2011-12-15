@@ -317,6 +317,14 @@ LRESULT CMainFrame::OnUndoItems (WPARAM wParam, LPARAM lParam) {
   pDoc = GetActiveSrEditDoc();
   if (pDoc == NULL) return (0);
 
+  if (m_wndUndoBar.GetCurrentUndoItemCount() > 1)
+  {
+	  CString Buffer;
+	  Buffer.Format("This will permanently undo %d items!\n\rAre you sure you wish to continue?", m_wndUndoBar.GetCurrentUndoItemCount());
+	  int Result = AfxMessageBox(Buffer, MB_YESNO | MB_ICONEXCLAMATION);
+	  if (Result != IDYES) return 0;
+  }
+
   pDoc->GetRecordHandler().PerformUndoTo(pItem);
   
   pDoc->UpdateAllViews(NULL, SREDIT_DOC_HINT_UPDATEALL, NULL);

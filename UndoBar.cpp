@@ -148,6 +148,14 @@ CSrUndoItem* CSrUndoBar::GetCurrentUndoItem (void) {
   pItem = (CSrUndoItem *) m_wndChild.GetItemData(ListIndex);
   return (pItem);
 }
+
+
+int CSrUndoBar::GetCurrentUndoItemCount (void)
+{
+	int ListIndex = m_wndChild.GetCurSel();
+	if (ListIndex < 0) return 0;
+	return ListIndex + 1;
+}
 /*===========================================================================
  *		End of Class Method CSrUndoBar::GetCurrentUndoItem()
  *=========================================================================*/
