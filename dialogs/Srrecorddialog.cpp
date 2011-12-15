@@ -1052,24 +1052,26 @@ void CSrRecordDialog::OnSelectScript() {
  * Class CSrRecordDialog Event - void OnSelectEnchantment ();
  *
  *=========================================================================*/
-void CSrRecordDialog::OnSelectEnchantment() {
-/*
-  CString    Buffer;
-  bool       Result;
+void CSrRecordDialog::OnSelectEnchantment() 
+{
+	CString    Buffer;
+	bool       Result;
 
-  if (m_pEnchantField == NULL) return;
-  m_pEnchantField->GetWindowText(Buffer);
-  
-  switch (m_EnchantType) {
-    case SR_ENCHTYPE_APPAREL: Result = m_pDlgHandler->SelectApparelEnchant(Buffer); break;
-    case SR_ENCHTYPE_WEAPON:  Result = m_pDlgHandler->SelectWeaponEnchant(Buffer);  break;
-    case SR_ENCHTYPE_STAFF:   Result = m_pDlgHandler->SelectStaffEnchant(Buffer);  break;
-    case SR_ENCHTYPE_SCROLL:  Result = m_pDlgHandler->SelectScrollEnchant(Buffer); break;
-    default:                  Result = false; break;
-  }
+	if (m_pEnchantField == NULL) return;
+	m_pEnchantField->GetWindowText(Buffer);
 
-  if (Result) m_pEnchantField->SetWindowText(Buffer);
-*/
+	Result = m_pDlgHandler->SelectRecord(Buffer, SR_NAME_ENCH, &CSrEnchRecord::s_FieldMap);
+
+	/*
+	switch (m_EnchantType) {
+		case SR_ENCHTYPE_APPAREL: Result = m_pDlgHandler->SelectApparelEnchant(Buffer); break;
+		case SR_ENCHTYPE_WEAPON:  Result = m_pDlgHandler->SelectWeaponEnchant(Buffer);  break;
+		case SR_ENCHTYPE_STAFF:   Result = m_pDlgHandler->SelectStaffEnchant(Buffer);  break;
+		case SR_ENCHTYPE_SCROLL:  Result = m_pDlgHandler->SelectScrollEnchant(Buffer); break;
+		default:                  Result = false; break;
+	} */
+
+	if (Result) m_pEnchantField->SetWindowText(Buffer);
 }
 /*===========================================================================
  *		End of Class Event CSrRecordDialog::OnSelectEnchantment()

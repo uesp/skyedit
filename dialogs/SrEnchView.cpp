@@ -220,8 +220,9 @@ void CSrEnchView::GetControlData (void)
 	CSrSubrecord* pNewEffect;
 	CSrSubrecord* pNewEffectData;
 	CSrSubrecord* pNewCondition;
-
+	
 	CSrRecordDialog::GetControlData();
+	GetCurrentEffect();
 
 	CSrEnchRecord* pEnchant = SrCastClassNull(CSrEnchRecord, GetOutputRecord());
 	if (pEnchant == NULL) return;
