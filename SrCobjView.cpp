@@ -264,14 +264,20 @@ void CSrCobjView::GetControlData (void)
 
 	if (m_ComponentsChanged) 
 	{
-		GetOutputRecord()->DeleteSubrecords(SR_NAME_CNTO);
+		CSrRecord* pRecord = GetOutputRecord();
+		CSrCobjRecord* pRecipe = SrCastClassNull(CSrCobjRecord, pRecord);
+		if (pRecipe == NULL) return;
+
+		pRecipe->DeleteSubrecords(SR_NAME_CNTO);
 	
 		for (dword i = 0; i < m_Components.GetSize(); ++i)
 		{
 			CSrCntoSubrecord* pComponent = m_Components[i];
-			CSrSubrecord* pNewComp = GetOutputRecord()->AddNewSubrecord(SR_NAME_CNTO);
+			CSrSubrecord* pNewComp = pRecipe->AddNewSubrecord(SR_NAME_CNTO);
 			pNewComp->Copy(pComponent); 
 		}
+
+		pRecipe->UpdateComponentCount();		
 	}
 
 
