@@ -46,6 +46,7 @@ public:
 
 	/* Access the currently selected item */
   CSrUndoItem* GetCurrentUndoItem (void);
+  int GetCurrentUndoItemCount (void);
 
 	/* Prevent updates from being displayed immediately */
   void LockUpdates (const bool Lock);
