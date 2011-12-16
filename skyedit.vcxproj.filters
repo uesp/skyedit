@@ -108,6 +108,9 @@
     <Filter Include="Data">
       <UniqueIdentifier>{3d8f5774-364e-4b7b-bbe0-b613c3e7334d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{fef491d8-3968-4bf5-bc33-26975c8434fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ColorStatic.cpp">
@@ -1573,15 +1576,35 @@
     <None Include="skyedit.log">
       <Filter>Data</Filter>
     </None>
-    <None Include="res\skyedit.ico" />
-    <None Include="res\idr_main.ico" />
-    <None Include="res\Toolbar.bmp" />
-    <None Include="res\armor.ico" />
-    <None Include="res\find_dlg.ico" />
-    <None Include="res\file.bmp" />
-    <None Include="res\folder.bmp" />
-    <None Include="arrowcop.cur" />
-    <None Include="res\cursor1.cur" />
-    <None Include="nodrop.cur" />
+    <None Include="res\armor.ico">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="res\Toolbar.bmp">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="arrowcop.cur">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="res\cursor1.cur">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="res\file.bmp">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="res\find_dlg.ico">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="res\folder.bmp">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="res\idr_main.ico">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="nodrop.cur">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="res\skyedit.ico">
+      <Filter>Resources</Filter>
+    </None>
   </ItemGroup>
 </Project>
