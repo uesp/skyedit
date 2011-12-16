@@ -2130,8 +2130,11 @@
     <ClInclude Include="sreditDoc.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="arrowcop.cur" />
     <None Include="displayfilters.dat" />
+    <None Include="nodrop.cur" />
     <None Include="res\armor.ico" />
+    <None Include="res\cursor1.cur" />
     <None Include="res\file.bmp" />
     <None Include="res\find_dlg.ico" />
     <None Include="res\folder.bmp" />

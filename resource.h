@@ -20,6 +20,8 @@
 #define IDD_ABOUTBOX                    100
 #define IDD_SREDIT_FORM                 101
 #define IDD_ERRORBAR                    103
+#define IDC_POINTER_COPY                105
+#define IDC_NODROP_CURSOR               106
 #define IDR_MAINFRAME                   128
 #define IDR_SREDITTYPE                  129
 #define IDD_LOAD_DLG                    130
@@ -62,6 +64,7 @@
 #define IDR_COMPONENT_ACCEL             188
 #define IDD_ENCH_VIEW                   189
 #define IDD_SPEL_VIEW                   190
+#define IDC_GOODDROP_CURSOR             190
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -204,7 +207,6 @@
 #define IDC_UNKNOWN1                    1173
 #define IDC_TYPEB                       1173
 #define IDC_TYPEC                       1174
-#define IDC_TYPEA4                      1175
 #define IDC_TYPED                       1175
 #define IDC_SELECT_MODEL                1181
 #define IDC_FLICKER                     1190
@@ -406,7 +408,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        189
+#define _APS_NEXT_RESOURCE_VALUE        191
 #define _APS_NEXT_COMMAND_VALUE         32859
 #define _APS_NEXT_CONTROL_VALUE         1173
 #define _APS_NEXT_SYMED_VALUE           101

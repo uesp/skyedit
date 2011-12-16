@@ -1580,5 +1580,8 @@
     <None Include="res\find_dlg.ico" />
     <None Include="res\file.bmp" />
     <None Include="res\folder.bmp" />
+    <None Include="arrowcop.cur" />
+    <None Include="res\cursor1.cur" />
+    <None Include="nodrop.cur" />
   </ItemGroup>
 </Project>
