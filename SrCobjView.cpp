@@ -854,14 +854,7 @@ void CSrCobjView::OnDropResultItem (NMHDR* pNotifyStruct, LRESULT* pResult) {
     
   pIdRecord = SrCastClass(CSrIdRecord, pRecord);
   if (pIdRecord == NULL) return;
-
-  if (pIdRecord->GetRecordType() != SR_NAME_AMMO && 
-	  pIdRecord->GetRecordType() != SR_NAME_ARMO && 
-	  pIdRecord->GetRecordType() != SR_NAME_MISC && 
-	  pIdRecord->GetRecordType() != SR_NAME_INGR && 
-	  pIdRecord->GetRecordType() != SR_NAME_SCRL && 
-	  pIdRecord->GetRecordType() != SR_NAME_WEAP 
-	  ) return;
+  if (!SrIsRecipeResult(pIdRecord->GetRecordType())) return;
 
   if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
   {
@@ -894,14 +887,7 @@ void CSrCobjView::OnDropComponent (NMHDR* pNotifyStruct, LRESULT* pResult) {
     
   pIdRecord = SrCastClass(CSrIdRecord, pRecord);
   if (pIdRecord == NULL) return;
-
-  if (pIdRecord->GetRecordType() != SR_NAME_AMMO && 
-	  pIdRecord->GetRecordType() != SR_NAME_ARMO && 
-	  pIdRecord->GetRecordType() != SR_NAME_MISC && 
-	  pIdRecord->GetRecordType() != SR_NAME_INGR && 
-	  pIdRecord->GetRecordType() != SR_NAME_SCRL && 
-	  pIdRecord->GetRecordType() != SR_NAME_WEAP 
-	  ) return;
+  if (!SrIsRecipeComponent(pIdRecord->GetRecordType())) return;
 
   if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
   {
@@ -925,6 +911,7 @@ int CSrCobjView::OnDropCustomComponentData (srrldroprecords_t& DropItems)
   CSrCntoSubrecord*		pComponent;
   CSrCntoSubrecord*		pNewComponent;
   srrlcustomdata_t*		pCustomData;
+  CSrSubrecord*			pNewSubrecord; 
   dword					Index;
 
   GetCurrentComponent();
@@ -937,14 +924,14 @@ int CSrCobjView::OnDropCustomComponentData (srrldroprecords_t& DropItems)
     if (pCustomData->pRecord        == NULL) return (SRRL_DROPCHECK_ERROR);
     if (pCustomData->pSubrecords    == NULL) return (SRRL_DROPCHECK_ERROR);
 
-		/* Check for dragging another effect record */
+		/* Check for dragging another component subrecord */
     pComponent = SrCastClassNull(CSrCntoSubrecord, pCustomData->pSubrecords[0]);
-    if (pComponent == NULL) return (SRRL_DROPCHECK_ERROR);
-        
+    if (pComponent == NULL) return SRRL_DROPCHECK_ERROR;
+
 		/* If we're just checking */
     if (DropItems.Notify.code == ID_SRRECORDLIST_CHECKDROP) continue;
 
-	CSrSubrecord* pNewSubrecord = pCustomData->pRecord->CreateSubrecord(SR_NAME_CNTO);
+	pNewSubrecord = pCustomData->pRecord->CreateSubrecord(SR_NAME_CNTO);
 	pNewComponent = SrCastClassNull(CSrCntoSubrecord, pNewSubrecord);
 
 	if (pNewComponent == NULL) 
@@ -956,16 +943,66 @@ int CSrCobjView::OnDropCustomComponentData (srrldroprecords_t& DropItems)
 	m_Components.Add(pNewComponent);
 	pNewComponent->Copy(pComponent);
     AddComponentList(pNewComponent);
+	m_ComponentsChanged = true;
   }
 
-  return (SRRL_DROPCHECK_OK);
+  return SRRL_DROPCHECK_OK;
 }
 /*===========================================================================
  *		End of Class Event CSrCobjView::OnDropCustomComponentData()
  *=========================================================================*/
 
 
- /*===========================================================================
+/*===========================================================================
+ *
+ * Class CSrCobjView Event - int OnDropRecordComponentData (DropItems);
+ *
+ *=========================================================================*/
+int CSrCobjView::OnDropRecordComponentData (srrldroprecords_t& DropItems) 
+{
+  CSrCntoSubrecord*		pNewComponent;
+  CSrRecord*			pRecord;
+  CSrSubrecord*			pNewSubrecord; 
+  dword					Index;
+
+  GetCurrentComponent();
+
+	/* Check all record data dropped */
+  for (Index = 0; Index < DropItems.pRecords->GetSize(); ++Index) 
+  {
+	pRecord = DropItems.pRecords->GetAt(Index);
+    if (pRecord == NULL) continue;
+
+	if (!SrIsRecipeComponent(pRecord->GetRecordType())) return (SRRL_DROPCHECK_ERROR);
+
+	if (DropItems.Notify.code == ID_SRRECORDLIST_CHECKDROP) continue;
+
+	pNewSubrecord = GetInputRecord()->CreateSubrecord(SR_NAME_CNTO);
+	pNewComponent = SrCastClassNull(CSrCntoSubrecord, pNewSubrecord);
+
+	if (pNewComponent == NULL) 
+	{
+		delete pNewComponent;
+		continue;
+	}		
+
+	pNewComponent->InitializeNew();
+	pNewComponent->SetItemCount(1);
+	pNewComponent->SetItemFormID(pRecord->GetFormID());
+	m_Components.Add(pNewComponent);
+	
+	m_ComponentsChanged = true;
+	AddComponentList(pNewComponent);
+  }
+
+  return SRRL_DROPCHECK_OK;
+}
+/*===========================================================================
+ *		End of Class Event CSrCobjView::OnDropRecordComponentData()
+ *=========================================================================*/
+
+
+/*===========================================================================
  *
  * Class CSrCobjView Event - void OnDropComponentList (pNotifyStruct, pResult);
  *
@@ -982,7 +1019,7 @@ void CSrCobjView::OnDropComponentList (NMHDR* pNotifyStruct, LRESULT* pResult)
   }
   else if (pDropItems->pRecords != NULL) 
   {
-    *pResult = SRRL_DROPCHECK_ERROR;
+    *pResult =  OnDropRecordComponentData(*pDropItems);
   } 
 
 }
