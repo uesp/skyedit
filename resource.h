@@ -136,6 +136,7 @@
 #define IDC_REFERENCE_LABEL             1131
 #define IDC_SKILLLEVEL                  1131
 #define IDC_DESCRIPTION                 1131
+#define IDC_STAFFMOD                    1131
 #define IDC_QUESTITEM                   1132
 #define IDC_FUNCTION_TEXT               1132
 #define IDC_CASTTIME                    1132
@@ -199,8 +200,12 @@
 #define IDC_CASTTYPE                    1170
 #define IDC_AUTOCALC                    1171
 #define IDC_CASTANIM                    1172
-#define IDC_SPELLFLAGS2                 1173
+#define IDC_TYPEA                       1172
 #define IDC_UNKNOWN1                    1173
+#define IDC_TYPEB                       1173
+#define IDC_TYPEC                       1174
+#define IDC_TYPEA4                      1175
+#define IDC_TYPED                       1175
 #define IDC_SELECT_MODEL                1181
 #define IDC_FLICKER                     1190
 #define IDC_FLICKERSLOW                 1193
@@ -403,7 +408,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        189
 #define _APS_NEXT_COMMAND_VALUE         32859
-#define _APS_NEXT_CONTROL_VALUE         1172
+#define _APS_NEXT_CONTROL_VALUE         1173
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

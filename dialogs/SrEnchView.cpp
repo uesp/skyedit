@@ -98,6 +98,11 @@ BEGIN_SRRECUIFIELDS(CSrEnchView)
 	ADD_SRRECUIFIELDS( SR_FIELD_ITEMTYPES,			IDC_ITEMTYPES,			128,	0)
 	ADD_SRRECUIFIELDS( SR_FIELD_ENCHANTCOST,		IDC_COST,				8,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_CHARGE,				IDC_CHARGE,				8,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_TYPEA,				IDC_TYPEA,				8,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_TYPEB,				IDC_TYPEB,				8,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_TYPEC,				IDC_TYPEC,				8,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_TYPED,				IDC_TYPED,				8,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_STAFFMOD,			IDC_STAFFMOD,			8,		0)
 END_SRRECUIFIELDS()
 /*===========================================================================
  *		End of UI Field Map
@@ -157,7 +162,12 @@ void CSrEnchView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DURATION, m_Duration);
 	DDX_Control(pDX, IDC_CHARGE, m_Charge);
 	DDX_Control(pDX, IDC_COST, m_Cost);
-}
+	DDX_Control(pDX, IDC_STAFFMOD, m_StaffMod);
+	DDX_Control(pDX, IDC_TYPEA, m_TypeA);
+	DDX_Control(pDX, IDC_TYPEB, m_TypeB);
+	DDX_Control(pDX, IDC_TYPEC, m_TypeC);
+	DDX_Control(pDX, IDC_TYPED, m_TypeD);
+ }
 /*===========================================================================
  *		End of Class Method CSrEnchView::DoDataExchange()
  *=========================================================================*/
@@ -206,6 +216,11 @@ void CSrEnchView::OnInitialUpdate (void)
 	//m_ComponentList.SetActivateType(SR_RLACTIVATE_NONE);
 	
 	CreateEffectArray();
+
+	SrFillComboList(m_TypeA, s_SrEnchantTypeA, 0);
+	SrFillComboList(m_TypeB, s_SrEnchantTypeB, 0);
+	SrFillComboList(m_TypeC, s_SrEnchantTypeC, 0);
+	SrFillComboList(m_TypeD, s_SrEnchantTypeD, 0);
   
 	SetControlData();
 	m_IsInitialized = true;

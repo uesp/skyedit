@@ -145,6 +145,11 @@ public:
 	afx_msg void OnBnClickedDeleteButton2();
 	CEdit m_Charge;
 	CEdit m_Cost;
+	CEdit m_StaffMod;
+	CComboBox m_TypeA;
+	CComboBox m_TypeB;
+	CComboBox m_TypeC;
+	CComboBox m_TypeD;
 };
 /*===========================================================================
  *		End of Class CSrEnchView Definition
