@@ -61,6 +61,7 @@
 #define IDD_COBJ_VIEW                   188
 #define IDR_COMPONENT_ACCEL             188
 #define IDD_ENCH_VIEW                   189
+#define IDD_SPEL_VIEW                   190
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -131,14 +132,16 @@
 #define IDC_BASECOST                    1129
 #define IDC_CHARGE                      1129
 #define IDC_SELECTREFERENCE_BUTTON      1130
-#define IDC_CHARGE2                     1130
 #define IDC_COST                        1130
 #define IDC_REFERENCE_LABEL             1131
 #define IDC_SKILLLEVEL                  1131
+#define IDC_DESCRIPTION                 1131
 #define IDC_QUESTITEM                   1132
 #define IDC_FUNCTION_TEXT               1132
+#define IDC_CASTTIME                    1132
 #define IDC_SELECTENCHANT_BUTTON        1133
 #define IDC_SELECTFUNCTION_BUTTON       1133
+#define IDC_UNKNOWN2                    1133
 #define IDC_ADDKEYWORD_BUTTON           1134
 #define IDC_FUNCTION_LABEL              1134
 #define IDC_EDITKEYWORD_BUTTON          1135
@@ -187,6 +190,17 @@
 #define IDC_EFFECTNAME                  1161
 #define IDC_EDIT_EFFECT                 1162
 #define IDC_SELECTEFFECT_BUTTON         1163
+#define IDC_PERK                        1164
+#define IDC_EDIT_PERK                   1165
+#define IDC_SELECTPERK_BUTTON           1166
+#define IDC_SELECTEQUIPSLO_BUTTON       1167
+#define IDC_SPELLFLAGS                  1168
+#define IDC_SPELLTYPE                   1169
+#define IDC_CASTTYPE                    1170
+#define IDC_AUTOCALC                    1171
+#define IDC_CASTANIM                    1172
+#define IDC_SPELLFLAGS2                 1173
+#define IDC_UNKNOWN1                    1173
 #define IDC_SELECT_MODEL                1181
 #define IDC_FLICKER                     1190
 #define IDC_FLICKERSLOW                 1193
@@ -389,7 +403,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        189
 #define _APS_NEXT_COMMAND_VALUE         32859
-#define _APS_NEXT_CONTROL_VALUE         1161
+#define _APS_NEXT_CONTROL_VALUE         1172
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

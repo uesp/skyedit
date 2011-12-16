@@ -36,6 +36,7 @@
   #include "srgmstview.h"
   #include "srkywdview.h"
   #include "srmgefview.h"
+  #include "srspelview.h"
   #include "srweapview.h"
 /*===========================================================================
  *		End of Required Includes

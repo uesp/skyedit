@@ -779,6 +779,9 @@
     <ClCompile Include="..\tes5lib\modfile\subrecords\srspitsubrecord.cpp">
       <Filter>Source Files\ESP\Subrecords</Filter>
     </ClCompile>
+    <ClCompile Include="dialogs\SrSpelView.cpp">
+      <Filter>Source Files\Forms\Dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">
@@ -1547,6 +1550,9 @@
     </ClInclude>
     <ClInclude Include="..\tes5lib\modfile\subrecords\srspitsubrecord.h">
       <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="dialogs\SrSpelView.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

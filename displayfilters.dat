@@ -59,6 +59,12 @@ DisplayFilter
 	Parent = NULL
 End
 DisplayFilter
+	ID = "Spells"
+	DisplayName = "Spells"
+	RecName = SPEL
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Weapons"
 	RecName = WEAP
 	Parent = NULL
@@ -435,15 +441,15 @@ DisplayFilter
 	Parent = NoEdit
 End	
 DisplayFilter
-	ID = "Potions"
-	DisplayName = "Potions"
-	RecName = ALCH
+	ID = "Perks"
+	DisplayName = "Perks"
+	RecName = PERK
 	Parent = NoEdit
 End	
 DisplayFilter
-	ID = "Spells"
-	DisplayName = "Spells"
-	RecName = SPEL
+	ID = "Potions"
+	DisplayName = "Potions"
+	RecName = ALCH
 	Parent = NoEdit
 End	
 #
