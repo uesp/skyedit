@@ -80,6 +80,13 @@ protected:
 	void GetCurrentEffect (void);
 	void SetCurrentEffect (srspel_effectdata_t* pEffectData);
 	void EnableEffectControls (const bool Enable);
+		
+	void OnDropEffectList (NMHDR* pNotifyStruct, LRESULT* pResult);
+	int  OnDropCustomEffectData (srrldroprecords_t& DropItems);  
+
+	void OnDropEquipSlot (NMHDR* pNotifyStruct, LRESULT* pResult);
+	void OnDropPerk (NMHDR* pNotifyStruct, LRESULT* pResult);
+	void OnDropEffect (NMHDR* pNotifyStruct, LRESULT* pResult);
   
 
   /*---------- Begin Public Class Methods ------------------------*/

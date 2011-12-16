@@ -39,6 +39,8 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrMgefView, CSrRecordDialog)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_KEYWORDS, OnDropKeywords)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_KEYWORDS, OnDropKeywords)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrMgefView Message Map
@@ -208,3 +210,37 @@ void CSrMgefView::SetControlData (void)
 	m_FXPersistCheck.SetCheck(CheckFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_FXPERSIST));
 	m_BoundCheck.SetCheck(CheckFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_BOUND));
 }
+
+
+/*===========================================================================
+ *
+ * Class CSrMgefView Event - void OnDropKeywords (pNotifyStruct, pResult);
+ *
+ *=========================================================================*/
+void CSrMgefView::OnDropKeywords (NMHDR* pNotifyStruct, LRESULT* pResult) {
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  CSrRecord*	     pRecord;
+  CSrKywdRecord*     pKeyword;
+
+  *pResult = SRRL_DROPCHECK_ERROR;
+  if (pDropItems->pRecords == NULL) return;
+
+  for (dword i = 0; i < pDropItems->pRecords->GetSize(); ++i)
+  {
+	pRecord = pDropItems->pRecords->GetAt(i);
+
+	if (pRecord->GetRecordType() != SR_NAME_KYWD) return;
+    pKeyword = SrCastClass(CSrKywdRecord, pRecord);
+    if (pKeyword == NULL) return;
+
+    if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
+    {
+      m_Keywords.AddString(pKeyword->GetEditorID());
+    }
+  }
+
+  *pResult = SRRL_DROPCHECK_OK;
+}
+/*===========================================================================
+ *		End of Class Event CSrMgefView::OnDropKeywords()
+ *=========================================================================*/

@@ -60,6 +60,14 @@ BEGIN_MESSAGE_MAP(CSrCobjView, CSrRecordDialog)
 	ON_BN_CLICKED(ID_DELETE_BUTTON2, &CSrCobjView::OnBnClickedDeleteButton2)
 	ON_COMMAND(ID_COMPONENT_DECREASE, &CSrCobjView::OnComponentDecrease)
 	ON_COMMAND(ID_COMPONENT_INCREASE, &CSrCobjView::OnComponentIncrease)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_CRAFTSTATION, OnDropCraftStation)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_CRAFTSTATION, OnDropCraftStation)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_RESULTITEM, OnDropResultItem)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_RESULTITEM, OnDropResultItem)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_COMPONENT, OnDropComponent)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_COMPONENT, OnDropComponent)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_COMPONENT_LIST, OnDropComponentList)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_COMPONENT_LIST, OnDropComponentList)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrCobjView Message Map
@@ -215,7 +223,7 @@ void CSrCobjView::OnInitialUpdate (void)
 	m_ComponentList.SetColorEnable(false);
 	m_ComponentList.SetDragType(SR_RLDRAG_CUSTOM);
 	m_ComponentList.SetSortEnable(false);
-	//m_ComponentList.SetActivateType(SR_RLACTIVATE_NONE);
+	m_ComponentList.SetActivateType(SR_RLACTIVATE_NONE);
 
 	m_ComponentsChanged = false;
 	 
@@ -794,3 +802,190 @@ void CSrCobjView::OnComponentIncrease()
 	SetCurrentComponent(pComp);
 }
 
+
+/*===========================================================================
+ *
+ * Class CSrCobjView Event - void OnDropCraftStation (pNotifyStruct, pResult);
+ *
+ *=========================================================================*/
+void CSrCobjView::OnDropCraftStation (NMHDR* pNotifyStruct, LRESULT* pResult) {
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  CSrRecord*	     pRecord;
+  CSrKywdRecord*     pKeyword;
+
+  *pResult = SRRL_DROPCHECK_ERROR;
+  if (pDropItems->pRecords == NULL) return;
+  if (pDropItems->pRecords->GetSize() != 1) return;
+  
+  pRecord = pDropItems->pRecords->GetAt(0);
+
+  if (pRecord->GetRecordType() != SR_NAME_KYWD) return;
+  pKeyword = SrCastClass(CSrKywdRecord, pRecord);
+  if (pKeyword == NULL) return;
+  if (strnicmp(pKeyword->GetEditorID(), "Crafting", 8) == 0) return;
+
+  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
+  {
+    m_CraftStation.SetWindowText(pKeyword->GetEditorID());
+  }
+
+  *pResult = SRRL_DROPCHECK_OK;
+}
+/*===========================================================================
+ *		End of Class Event CSrCobjView::OnDropCraftStation()
+ *=========================================================================*/
+
+
+/*===========================================================================
+ *
+ * Class CSrCobjView Event - void OnDropResultItem (pNotifyStruct, pResult);
+ *
+ *=========================================================================*/
+void CSrCobjView::OnDropResultItem (NMHDR* pNotifyStruct, LRESULT* pResult) {
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  CSrRecord*	     pRecord;
+  CSrIdRecord*		 pIdRecord;
+
+  *pResult = SRRL_DROPCHECK_ERROR;
+  if (pDropItems->pRecords == NULL) return;
+  if (pDropItems->pRecords->GetSize() != 1) return;
+  
+  pRecord = pDropItems->pRecords->GetAt(0);
+    
+  pIdRecord = SrCastClass(CSrIdRecord, pRecord);
+  if (pIdRecord == NULL) return;
+
+  if (pIdRecord->GetRecordType() != SR_NAME_AMMO && 
+	  pIdRecord->GetRecordType() != SR_NAME_ARMO && 
+	  pIdRecord->GetRecordType() != SR_NAME_MISC && 
+	  pIdRecord->GetRecordType() != SR_NAME_INGR && 
+	  pIdRecord->GetRecordType() != SR_NAME_SCRL && 
+	  pIdRecord->GetRecordType() != SR_NAME_WEAP 
+	  ) return;
+
+  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
+  {
+    m_ResultItem.SetWindowText(pIdRecord->GetEditorID());
+  }
+
+  *pResult = SRRL_DROPCHECK_OK;
+}
+/*===========================================================================
+ *		End of Class Event CSrCobjView::OnDropResultItem()
+ *=========================================================================*/
+
+
+/*===========================================================================
+ *
+ * Class CSrCobjView Event - void OnDropComponent (pNotifyStruct, pResult);
+ *
+ *=========================================================================*/
+void CSrCobjView::OnDropComponent (NMHDR* pNotifyStruct, LRESULT* pResult) {
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  CSrRecord*	     pRecord;
+  CSrIdRecord*		 pIdRecord;
+
+  *pResult = SRRL_DROPCHECK_ERROR;
+  if (pDropItems->pRecords == NULL) return;
+  if (pDropItems->pRecords->GetSize() != 1) return;
+  if (m_pCurrentComponent == NULL) return;
+
+  pRecord = pDropItems->pRecords->GetAt(0);
+    
+  pIdRecord = SrCastClass(CSrIdRecord, pRecord);
+  if (pIdRecord == NULL) return;
+
+  if (pIdRecord->GetRecordType() != SR_NAME_AMMO && 
+	  pIdRecord->GetRecordType() != SR_NAME_ARMO && 
+	  pIdRecord->GetRecordType() != SR_NAME_MISC && 
+	  pIdRecord->GetRecordType() != SR_NAME_INGR && 
+	  pIdRecord->GetRecordType() != SR_NAME_SCRL && 
+	  pIdRecord->GetRecordType() != SR_NAME_WEAP 
+	  ) return;
+
+  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
+  {
+    m_Component.SetWindowText(pIdRecord->GetEditorID());
+  }
+
+  *pResult = SRRL_DROPCHECK_OK;
+}
+/*===========================================================================
+ *		End of Class Event CSrCobjView::OnDropComponent()
+ *=========================================================================*/
+
+
+/*===========================================================================
+ *
+ * Class CSrCobjView Event - int OnDropCustomComponentData (DropItems);
+ *
+ *=========================================================================*/
+int CSrCobjView::OnDropCustomComponentData (srrldroprecords_t& DropItems) 
+{
+  CSrCntoSubrecord*		pComponent;
+  CSrCntoSubrecord*		pNewComponent;
+  srrlcustomdata_t*		pCustomData;
+  dword					Index;
+
+  GetCurrentComponent();
+
+	/* Check all custom data dropped */
+  for (Index = 0; Index < DropItems.pCustomDatas->GetSize(); ++Index) 
+  {
+    pCustomData = DropItems.pCustomDatas->GetAt(Index);
+
+    if (pCustomData->pRecord        == NULL) return (SRRL_DROPCHECK_ERROR);
+    if (pCustomData->pSubrecords    == NULL) return (SRRL_DROPCHECK_ERROR);
+
+		/* Check for dragging another effect record */
+    pComponent = SrCastClassNull(CSrCntoSubrecord, pCustomData->pSubrecords[0]);
+    if (pComponent == NULL) return (SRRL_DROPCHECK_ERROR);
+        
+		/* If we're just checking */
+    if (DropItems.Notify.code == ID_SRRECORDLIST_CHECKDROP) continue;
+
+	CSrSubrecord* pNewSubrecord = pCustomData->pRecord->CreateSubrecord(SR_NAME_CNTO);
+	pNewComponent = SrCastClassNull(CSrCntoSubrecord, pNewSubrecord);
+
+	if (pNewComponent == NULL) 
+	{
+		delete pNewComponent;
+		continue;
+	}
+
+	m_Components.Add(pNewComponent);
+	pNewComponent->Copy(pComponent);
+    AddComponentList(pNewComponent);
+  }
+
+  return (SRRL_DROPCHECK_OK);
+}
+/*===========================================================================
+ *		End of Class Event CSrCobjView::OnDropCustomComponentData()
+ *=========================================================================*/
+
+
+ /*===========================================================================
+ *
+ * Class CSrCobjView Event - void OnDropComponentList (pNotifyStruct, pResult);
+ *
+ *=========================================================================*/
+void CSrCobjView::OnDropComponentList (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+
+  *pResult = SRRL_DROPCHECK_ERROR;
+  
+  if (pDropItems->pCustomDatas != NULL && pDropItems->pCustomDatas->GetSize() > 0) 
+  {
+    *pResult = OnDropCustomComponentData(*pDropItems);
+  }
+  else if (pDropItems->pRecords != NULL) 
+  {
+    *pResult = SRRL_DROPCHECK_ERROR;
+  } 
+
+}
+/*===========================================================================
+ *		End of Class Event CSrCobjView::OnDropEffectList()
+ *=========================================================================*/

@@ -43,6 +43,8 @@ protected:
 
 	/* Protected constructor used by dynamic creation */
   CSrMgefView();
+
+  void OnDropKeywords (NMHDR* pNotifyStruct, LRESULT* pResult);
   
 
   /*---------- Begin Public Class Methods ------------------------*/

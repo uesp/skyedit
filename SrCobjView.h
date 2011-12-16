@@ -82,6 +82,12 @@ public:
 	void SetCurrentComponent (CSrCntoSubrecord* pComponent);
 	void GetCurrentComponent (void);
 
+	void OnDropCraftStation (NMHDR* pNotifyStruct, LRESULT* pResult);
+	void OnDropResultItem (NMHDR* pNotifyStruct, LRESULT* pResult);
+	void OnDropComponent (NMHDR* pNotifyStruct, LRESULT* pResult);
+	int OnDropCustomComponentData (srrldroprecords_t& DropItems);
+	void OnDropComponentList (NMHDR* pNotifyStruct, LRESULT* pResult);
+
 	/* ClassWizard generated virtual function overrides */
 protected:
   virtual void OnInitialUpdate();

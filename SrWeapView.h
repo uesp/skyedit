@@ -90,6 +90,7 @@ public:
 	CEdit m_EquipSlot;
 	afx_msg void OnBnClickedEditEquipslot();
 	afx_msg void OnBnClickedSelectequipslotButton();
+	afx_msg void OnDropEquipSlot (NMHDR* pNotifyStruct, LRESULT* pResult);
 };
 /*===========================================================================
  *		End of Class CSrWeapView Definition

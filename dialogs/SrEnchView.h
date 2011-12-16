@@ -80,6 +80,12 @@ protected:
 	void GetCurrentEffect (void);
 	void SetCurrentEffect (srench_effectdata_t* pEffectData);
 	void EnableEffectControls (const bool Enable);
+
+	void OnDropEffectList (NMHDR* pNotifyStruct, LRESULT* pResult);
+	int  OnDropCustomEffectData (srrldroprecords_t& DropItems);
+	void OnDropEffect (NMHDR* pNotifyStruct, LRESULT* pResult);
+	void OnDropBaseEnchant (NMHDR* pNotifyStruct, LRESULT* pResult);
+	void OnDropItemTypes (NMHDR* pNotifyStruct, LRESULT* pResult);
   
 
   /*---------- Begin Public Class Methods ------------------------*/

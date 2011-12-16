@@ -49,7 +49,7 @@ BEGIN_MESSAGE_MAP(CSrRecordDialog, CFormView)
 	ON_COMMAND(ID_APPLY_BUTTON, OnApply)
 	ON_COMMAND(ID_CANCEL_BUTTON, OnCancel)
 	ON_COMMAND(ID_SAVE_BUTTON, OnSave)
-	//ON_EN_KILLFOCUS(IDC_EDITORID, OnKillfocusEditorid)
+	ON_EN_KILLFOCUS(IDC_EDITORID, OnKillfocusEditorid)
 	//ON_BN_CLICKED(IDC_BIPEDPARTS_BUTTON, OnBipedpartsButton)
 	//ON_BN_CLICKED(IDC_EDIT_SCRIPT, OnEditScript)
 	ON_BN_CLICKED(IDC_EDIT_ENCHANTMENT, OnEditEnchantment)
@@ -66,7 +66,7 @@ BEGIN_MESSAGE_MAP(CSrRecordDialog, CFormView)
 	ON_COMMAND(ID_EDIT_SELECTALL, OnEditSelectAll)
 	ON_COMMAND(ID_EDIT_UNDO, OnEditUndo)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_CUT, OnUpdateEditCopy)
-	//ON_UPDATE_COMMAND_UI(ID_EDIT_UNDO, OnUpdateEditCopy)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_UNDO, OnUpdateEditCopy)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_COPY, OnUpdateEditCopy)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_PASTE, OnUpdateEditPaste)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_SELECTALL, OnUpdateEditSelectAll)
@@ -1135,7 +1135,7 @@ LRESULT CSrRecordDialog::OnEditRecordMsg (WPARAM wParam, LPARAM lParam) {
  *=========================================================================*/
 void CSrRecordDialog::OnDropScript (NMHDR* pNotifyStruct, LRESULT* pResult) {
 /*
-  obrldroprecords_t* pDropItems = (obrldroprecords_t *) pNotifyStruct;
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
   CSrRecord*	     pRecord;
   CSrScptRecord*     pScript;
 
@@ -1169,8 +1169,7 @@ void CSrRecordDialog::OnDropScript (NMHDR* pNotifyStruct, LRESULT* pResult) {
  *
  *=========================================================================*/
 void CSrRecordDialog::OnDropEnchant (NMHDR* pNotifyStruct, LRESULT* pResult) {
-/*
-  obrldroprecords_t* pDropItems = (obrldroprecords_t *) pNotifyStruct;
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
   CSrRecord*	     pRecord;
   CSrEnchRecord*     pEnchant;
 
@@ -1181,17 +1180,17 @@ void CSrRecordDialog::OnDropEnchant (NMHDR* pNotifyStruct, LRESULT* pResult) {
 
   pRecord = pDropItems->pRecords->GetAt(0);
 
-	  if (pRecord->GetRecordType() != SR_NAME_ENCH) return;
+  if (pRecord->GetRecordType() != SR_NAME_ENCH) return;
   pEnchant = SrCastClass(CSrEnchRecord, pRecord);
   if (pEnchant == NULL) return;
-  if (pEnchant->GetType() != m_EnchantType) return;
+  //if (pEnchant->GetType() != m_EnchantType) return;
 
-  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) {
+  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
+  {
     m_pEnchantField->SetWindowText(pEnchant->GetEditorID());
   }
 
   *pResult = SRRL_DROPCHECK_OK;
-*/
 }
 /*===========================================================================
  *		End of Class Event CSrRecordDialog::OnDropEnchant()
@@ -1452,7 +1451,7 @@ void CSrRecordDialog::OnHelp (void)
  *
  *=========================================================================*/
 void CSrRecordDialog::OnDropModel (NMHDR* pNotifyStruct, LRESULT* pResult) {
-  obresourcedropinfo_t* pDropInfo = (obresourcedropinfo_t *) pNotifyStruct;
+  srresourcedropinfo_t* pDropInfo = (srresourcedropinfo_t *) pNotifyStruct;
 
   *pResult = SRRESOURCE_DROPCHECK_ERROR;
 
@@ -1479,7 +1478,7 @@ void CSrRecordDialog::OnDropModel (NMHDR* pNotifyStruct, LRESULT* pResult) {
  *
  *=========================================================================*/
 void CSrRecordDialog::OnDropMaleWorldModel (NMHDR* pNotifyStruct, LRESULT* pResult) {
-  obresourcedropinfo_t* pDropInfo = (obresourcedropinfo_t *) pNotifyStruct;
+  srresourcedropinfo_t* pDropInfo = (srresourcedropinfo_t *) pNotifyStruct;
 
   *pResult = SRRESOURCE_DROPCHECK_ERROR;
 
@@ -1506,7 +1505,7 @@ void CSrRecordDialog::OnDropMaleWorldModel (NMHDR* pNotifyStruct, LRESULT* pResu
  *
  *=========================================================================*/
 void CSrRecordDialog::OnDropMaleBipedModel (NMHDR* pNotifyStruct, LRESULT* pResult) {
-  obresourcedropinfo_t* pDropInfo = (obresourcedropinfo_t *) pNotifyStruct;
+  srresourcedropinfo_t* pDropInfo = (srresourcedropinfo_t *) pNotifyStruct;
 
   *pResult = SRRESOURCE_DROPCHECK_ERROR;
 
@@ -1534,7 +1533,7 @@ void CSrRecordDialog::OnDropMaleBipedModel (NMHDR* pNotifyStruct, LRESULT* pResu
  *
  *=========================================================================*/
 void CSrRecordDialog::OnDropFemaleWorldModel (NMHDR* pNotifyStruct, LRESULT* pResult) {
-  obresourcedropinfo_t* pDropInfo = (obresourcedropinfo_t *) pNotifyStruct;
+  srresourcedropinfo_t* pDropInfo = (srresourcedropinfo_t *) pNotifyStruct;
 
   *pResult = SRRESOURCE_DROPCHECK_ERROR;
 
@@ -1561,7 +1560,7 @@ void CSrRecordDialog::OnDropFemaleWorldModel (NMHDR* pNotifyStruct, LRESULT* pRe
  *
  *=========================================================================*/
 void CSrRecordDialog::OnDropFemaleBipedModel (NMHDR* pNotifyStruct, LRESULT* pResult) {
-  obresourcedropinfo_t* pDropInfo = (obresourcedropinfo_t *) pNotifyStruct;
+  srresourcedropinfo_t* pDropInfo = (srresourcedropinfo_t *) pNotifyStruct;
 
   *pResult = SRRESOURCE_DROPCHECK_ERROR;
 
@@ -1588,7 +1587,7 @@ void CSrRecordDialog::OnDropFemaleBipedModel (NMHDR* pNotifyStruct, LRESULT* pRe
  *
  *=========================================================================*/
 void CSrRecordDialog::OnDropIcon (NMHDR* pNotifyStruct, LRESULT* pResult) {
-  obresourcedropinfo_t* pDropInfo = (obresourcedropinfo_t *) pNotifyStruct;
+  srresourcedropinfo_t* pDropInfo = (srresourcedropinfo_t *) pNotifyStruct;
 
   *pResult = SRRESOURCE_DROPCHECK_ERROR;
 
@@ -1615,7 +1614,7 @@ void CSrRecordDialog::OnDropIcon (NMHDR* pNotifyStruct, LRESULT* pResult) {
  *
  *=========================================================================*/
 void CSrRecordDialog::OnDropMaleIcon (NMHDR* pNotifyStruct, LRESULT* pResult) {
-  obresourcedropinfo_t* pDropInfo = (obresourcedropinfo_t *) pNotifyStruct;
+  srresourcedropinfo_t* pDropInfo = (srresourcedropinfo_t *) pNotifyStruct;
 
   *pResult = SRRESOURCE_DROPCHECK_ERROR;
 
@@ -1642,7 +1641,7 @@ void CSrRecordDialog::OnDropMaleIcon (NMHDR* pNotifyStruct, LRESULT* pResult) {
  *
  *=========================================================================*/
 void CSrRecordDialog::OnDropFemaleIcon (NMHDR* pNotifyStruct, LRESULT* pResult) {
-  obresourcedropinfo_t* pDropInfo = (obresourcedropinfo_t *) pNotifyStruct;
+  srresourcedropinfo_t* pDropInfo = (srresourcedropinfo_t *) pNotifyStruct;
 
   *pResult = SRRESOURCE_DROPCHECK_ERROR;
 
@@ -1670,7 +1669,7 @@ void CSrRecordDialog::OnDropFemaleIcon (NMHDR* pNotifyStruct, LRESULT* pResult) 
  *
  *=========================================================================*/
 void CSrRecordDialog::OnDropSoundFile (NMHDR* pNotifyStruct, LRESULT* pResult) {
-  obresourcedropinfo_t* pDropInfo = (obresourcedropinfo_t *) pNotifyStruct;
+  srresourcedropinfo_t* pDropInfo = (srresourcedropinfo_t *) pNotifyStruct;
 
   *pResult = SRRESOURCE_DROPCHECK_ERROR;
 

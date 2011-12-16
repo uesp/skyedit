@@ -43,6 +43,8 @@ BEGIN_MESSAGE_MAP(CSrWeapView, CSrRecordDialog)
 	//}}AFX_MSG_MAP	
 	ON_BN_CLICKED(IDC_EDIT_EQUIPSLOT, &CSrWeapView::OnBnClickedEditEquipslot)
 	ON_BN_CLICKED(IDC_SELECTEQUIPSLOT_BUTTON, &CSrWeapView::OnBnClickedSelectequipslotButton)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EQUIPSLOT, OnDropEquipSlot)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EQUIPSLOT, OnDropEquipSlot)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrWeapView Message Map
@@ -112,7 +114,6 @@ void CSrWeapView::DoDataExchange (CDataExchange* pDX)
 {
 	CSrRecordDialog::DoDataExchange(pDX);
 
-	//{{AFX_DATA_MAP(CSrWeapView)
 	DDX_Control(pDX, IDC_MODEL, m_Model);
 	DDX_Control(pDX, IDC_DAMAGE, m_Damage);
 	DDX_Control(pDX, IDC_ENCHANTCHARGE, m_EnchantPoints);
@@ -124,7 +125,6 @@ void CSrWeapView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDITORID, m_EditorID);
 	DDX_Control(pDX, IDC_FORMID, m_FormID);
 	DDX_Control(pDX, IDC_KEYWORDS, m_Keywords);
-	//}}AFX_DATA_MAP
 	DDX_Control(pDX, IDC_EQUIPSLOT, m_EquipSlot);
  }
 /*===========================================================================
@@ -188,3 +188,35 @@ void CSrWeapView::OnInitialUpdate (void)
 
 	m_EquipSlot.SetWindowText(Buffer);
  }
+
+
+ /*===========================================================================
+ *
+ * Class CSrWeapView Event - void OnDropEquipSlot (pNotifyStruct, pResult);
+ *
+ *=========================================================================*/
+void CSrWeapView::OnDropEquipSlot (NMHDR* pNotifyStruct, LRESULT* pResult) {
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  CSrRecord*	     pRecord;
+  CSrEqupRecord*     pEquipSlot;
+
+  *pResult = SRRL_DROPCHECK_ERROR;
+  if (pDropItems->pRecords == NULL) return;
+  if (pDropItems->pRecords->GetSize() != 1) return;
+
+  pRecord = pDropItems->pRecords->GetAt(0);
+
+  if (pRecord->GetRecordType() != SR_NAME_EQUP) return;
+  pEquipSlot = SrCastClass(CSrEqupRecord, pRecord);
+  if (pEquipSlot == NULL) return;
+
+  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
+  {
+    m_EquipSlot.SetWindowText(pEquipSlot->GetEditorID());
+  }
+
+  *pResult = SRRL_DROPCHECK_OK;
+}
+/*===========================================================================
+ *		End of Class Event CSrWeapView::OnDropEquipSlot()
+ *=========================================================================*/

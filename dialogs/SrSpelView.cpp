@@ -50,6 +50,14 @@ BEGIN_MESSAGE_MAP(CSrSpelView, CSrRecordDialog)
 	ON_BN_CLICKED(ID_DELETE_BUTTON2, &CSrSpelView::OnBnClickedDeleteButton)
 	ON_BN_CLICKED(IDC_EDIT_PERK, &CSrSpelView::OnBnClickedEditPerk)
 	ON_BN_CLICKED(IDC_SELECTPERK_BUTTON, &CSrSpelView::OnBnClickedSelectperkButton)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EFFECT_LIST, OnDropEffectList)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EFFECT_LIST, OnDropEffectList)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EQUIPSLOT, OnDropEquipSlot)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EQUIPSLOT, OnDropEquipSlot)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_PERK, OnDropPerk)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_PERK, OnDropPerk)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EFFECTNAME, OnDropEffect)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EFFECTNAME, OnDropEffect)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrSpelView Message Map
@@ -219,7 +227,7 @@ void CSrSpelView::OnInitialUpdate (void)
 	m_EffectList.SetColorEnable(false);
 	m_EffectList.SetDragType(SR_RLDRAG_CUSTOM);
 	m_EffectList.SetSortEnable(false);
-	//m_ComponentList.SetActivateType(SR_RLACTIVATE_NONE);
+	m_EffectList.SetActivateType(SR_RLACTIVATE_NONE);
 	
 	CreateEffectArray();
 
@@ -700,3 +708,195 @@ void CSrSpelView::OnBnClickedSelectperkButton()
 
 	m_Perk.SetWindowText(Buffer);
 }
+
+
+/*===========================================================================
+ *
+ * Class CSrSpelView Event - int OnDropCustomEffectData (DropItems);
+ *
+ *=========================================================================*/
+int CSrSpelView::OnDropCustomEffectData (srrldroprecords_t& DropItems) 
+{
+  CSrFormidSubrecord*   pEffect;
+  CSrEfitSubrecord*     pEffectData;
+  srrlcustomdata_t*     pCustomData;
+  srspel_effectdata_t*  pEffectInfo;
+  dword					Index;
+
+  GetCurrentEffect();
+
+	/* Check all custom data dropped */
+  for (Index = 0; Index < DropItems.pCustomDatas->GetSize(); ++Index) 
+  {
+    pCustomData = DropItems.pCustomDatas->GetAt(Index);
+
+    if (pCustomData->pRecord        == NULL) return (SRRL_DROPCHECK_ERROR);
+    if (pCustomData->pSubrecords    == NULL) return (SRRL_DROPCHECK_ERROR);
+
+		/* Check for dragging another effect record */
+    pEffect = SrCastClassNull(CSrFormidSubrecord, pCustomData->pSubrecords[0]);
+    if (pEffect == NULL) return (SRRL_DROPCHECK_ERROR);
+    pEffectData = SrCastClassNull(CSrEfitSubrecord, pCustomData->pSubrecords[1]);
+    if (pEffectData == NULL) return (SRRL_DROPCHECK_ERROR);
+        
+		/* If we're just checking */
+    if (DropItems.Notify.code == ID_SRRECORDLIST_CHECKDROP) continue;
+
+	pEffectInfo = m_Effects.AddNew();
+	if (pEffectInfo == NULL) continue;
+
+	CSrSubrecord* pNewSubrecord = pCustomData->pRecord->CreateSubrecord(SR_NAME_EFID);
+	pEffectInfo->pEffect = SrCastClassNull(CSrFormidSubrecord, pNewSubrecord);
+
+	pNewSubrecord = pCustomData->pRecord->CreateSubrecord(SR_NAME_EFIT);
+	pEffectInfo->pEffectData = SrCastClassNull(CSrEfitSubrecord, pNewSubrecord);
+
+	if (pEffectInfo->pEffect == NULL || pEffectInfo->pEffectData == NULL)
+	{
+		m_Effects.Delete(pEffectInfo);
+		continue;
+	}
+
+	pEffectInfo->pEffect->Copy(pEffect);
+	pEffectInfo->pEffectData->Copy(pEffectData);
+
+	for (int i = 2; i < SR_RLMAX_SUBRECORDS; ++i)
+	{
+		if (pCustomData->pSubrecords[i] == NULL) continue;
+		if (pCustomData->pSubrecords[i]->GetRecordType() != SR_NAME_CTDA) continue;
+
+		CSrCtdaSubrecord* pNewCond = pEffectInfo->Conditions.AddNew();
+		pNewCond->Copy(pCustomData->pSubrecords[i]);
+	}
+    
+    AddEffectList(pEffectInfo);
+  }
+
+  return (SRRL_DROPCHECK_OK);
+}
+/*===========================================================================
+ *		End of Class Event CSrSpelView::OnDropCustomData()
+ *=========================================================================*/
+
+
+ /*===========================================================================
+ *
+ * Class CSrSpelView Event - void OnDropEffectList (pNotifyStruct, pResult);
+ *
+ *=========================================================================*/
+void CSrSpelView::OnDropEffectList (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+
+  *pResult = SRRL_DROPCHECK_ERROR;
+  
+  if (pDropItems->pCustomDatas != NULL && pDropItems->pCustomDatas->GetSize() > 0) 
+  {
+    *pResult = OnDropCustomEffectData(*pDropItems);
+  }
+  else if (pDropItems->pRecords != NULL) 
+  {
+    *pResult = SRRL_DROPCHECK_ERROR;
+  } 
+
+}
+/*===========================================================================
+ *		End of Class Event CSrSpelView::OnDropEffectList()
+ *=========================================================================*/
+
+
+ /*===========================================================================
+ *
+ * Class CSrSpelView Event - void OnDropEquipSlot (pNotifyStruct, pResult);
+ *
+ *=========================================================================*/
+void CSrSpelView::OnDropEquipSlot (NMHDR* pNotifyStruct, LRESULT* pResult) {
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  CSrRecord*	     pRecord;
+  CSrEqupRecord*     pEquipSlot;
+
+  *pResult = SRRL_DROPCHECK_ERROR;
+  if (pDropItems->pRecords == NULL) return;
+  if (pDropItems->pRecords->GetSize() != 1) return;
+
+  pRecord = pDropItems->pRecords->GetAt(0);
+
+  if (pRecord->GetRecordType() != SR_NAME_EQUP) return;
+  pEquipSlot = SrCastClass(CSrEqupRecord, pRecord);
+  if (pEquipSlot == NULL) return;
+
+  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
+  {
+    m_EquipSlot.SetWindowText(pEquipSlot->GetEditorID());
+  }
+
+  *pResult = SRRL_DROPCHECK_OK;
+}
+/*===========================================================================
+ *		End of Class Event CSrSpelView::OnDropEquipSlot()
+ *=========================================================================*/
+
+
+/*===========================================================================
+ *
+ * Class CSrSpelView Event - void OnDropPerk (pNotifyStruct, pResult);
+ *
+ *=========================================================================*/
+void CSrSpelView::OnDropPerk (NMHDR* pNotifyStruct, LRESULT* pResult) {
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  CSrRecord*	     pRecord;
+  CSrPerkRecord*     pPerk;
+
+  *pResult = SRRL_DROPCHECK_ERROR;
+  if (pDropItems->pRecords == NULL) return;
+  if (pDropItems->pRecords->GetSize() != 1) return;
+
+  pRecord = pDropItems->pRecords->GetAt(0);
+
+  if (pRecord->GetRecordType() != SR_NAME_PERK) return;
+  pPerk = SrCastClass(CSrPerkRecord, pRecord);
+  if (pPerk == NULL) return;
+
+  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
+  {
+    m_Perk.SetWindowText(pPerk->GetEditorID());
+  }
+
+  *pResult = SRRL_DROPCHECK_OK;
+}
+/*===========================================================================
+ *		End of Class Event CSrSpelView::OnDropPerk()
+ *=========================================================================*/
+
+
+/*===========================================================================
+ *
+ * Class CSrSpelView Event - void OnDropEffect (pNotifyStruct, pResult);
+ *
+ *=========================================================================*/
+void CSrSpelView::OnDropEffect (NMHDR* pNotifyStruct, LRESULT* pResult) {
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  CSrRecord*	     pRecord;
+  CSrMgefRecord*     pMgef;
+
+  *pResult = SRRL_DROPCHECK_ERROR;
+  if (pDropItems->pRecords == NULL) return;
+  if (pDropItems->pRecords->GetSize() != 1) return;
+  if (m_pCurrentEffect == NULL) return;
+
+  pRecord = pDropItems->pRecords->GetAt(0);
+
+  if (pRecord->GetRecordType() != SR_NAME_PERK) return;
+  pMgef = SrCastClass(CSrMgefRecord, pRecord);
+  if (pMgef == NULL) return;
+
+  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
+  {
+    m_EffectName.SetWindowText(pMgef->GetEditorID());
+  }
+
+  *pResult = SRRL_DROPCHECK_OK;
+}
+/*===========================================================================
+ *		End of Class Event CSrSpelView::OnDropEffect()
+ *=========================================================================*/

@@ -825,7 +825,7 @@ void CSrResourceView::OnMouseMove (UINT nFlags, CPoint Point) {
  *
  *=========================================================================*/
 int CSrResourceView::SendDropNotify (CPoint Point, const int MessageID) {
-  obresourcedropinfo_t NotifyData;
+  srresourcedropinfo_t NotifyData;
   CWnd*	               pDropWnd;
   CWnd*		       pParentWnd = NULL;
   int		       Result = 0;

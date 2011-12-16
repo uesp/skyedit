@@ -54,19 +54,21 @@
  *
  *=========================================================================*/
 
-  struct srrespreviewinfo_t {
+  struct srrespreviewinfo_t 
+  {
 	CSrResourceInstance*	pInstance;
-	CString			Filename;
-	int64			Filesize;
-	int64			StartOffset;
-	bool			PlainFile;
+	CString					Filename;
+	int64					Filesize;
+	int64					StartOffset;
+	bool					PlainFile;
   };
 
 	/* Used to test drop targets */
-  struct obresourcedropinfo_t {
-   	NMHDR			Notify;
+  struct srresourcedropinfo_t 
+  {
+   	NMHDR				Notify;
    	CSrResourceFile*	pResourceFile;
-	dword			ParentThread;
+	dword				ParentThread;
   };
 
 /*===========================================================================

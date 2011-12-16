@@ -50,6 +50,14 @@ BEGIN_MESSAGE_MAP(CSrEnchView, CSrRecordDialog)
 	ON_BN_CLICKED(IDC_SELECTEFFECT_BUTTON, &CSrEnchView::OnBnClickedSelecteffectButton)
 	ON_BN_CLICKED(ID_ADD_BUTTON, &CSrEnchView::OnBnClickedAddButton)
 	ON_BN_CLICKED(ID_DELETE_BUTTON2, &CSrEnchView::OnBnClickedDeleteButton2)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EFFECT_LIST, OnDropEffectList)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EFFECT_LIST, OnDropEffectList)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EFFECTNAME, OnDropEffect)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EFFECTNAME, OnDropEffect)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_ITEMTYPES, OnDropItemTypes)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_ITEMTYPES, OnDropItemTypes)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_BASEENCHANTMENT, OnDropBaseEnchant)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_BASEENCHANTMENT, OnDropBaseEnchant)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrEnchView Message Map
@@ -695,3 +703,197 @@ void CSrEnchView::OnBnClickedDeleteButton2()
 		SetCurrentEffect(m_Effects[Index]);	
 	}
 }
+
+
+
+/*===========================================================================
+ *
+ * Class CSrEnchView Event - int OnDropCustomEffectData (DropItems);
+ *
+ *=========================================================================*/
+int CSrEnchView::OnDropCustomEffectData (srrldroprecords_t& DropItems) 
+{
+  CSrFormidSubrecord*   pEffect;
+  CSrEfitSubrecord*     pEffectData;
+  srrlcustomdata_t*     pCustomData;
+  srench_effectdata_t*  pEffectInfo;
+  dword					Index;
+
+  GetCurrentEffect();
+
+	/* Check all custom data dropped */
+  for (Index = 0; Index < DropItems.pCustomDatas->GetSize(); ++Index) 
+  {
+    pCustomData = DropItems.pCustomDatas->GetAt(Index);
+
+    if (pCustomData->pRecord        == NULL) return (SRRL_DROPCHECK_ERROR);
+    if (pCustomData->pSubrecords    == NULL) return (SRRL_DROPCHECK_ERROR);
+
+		/* Check for dragging another effect record */
+    pEffect = SrCastClassNull(CSrFormidSubrecord, pCustomData->pSubrecords[0]);
+    if (pEffect == NULL) return (SRRL_DROPCHECK_ERROR);
+    pEffectData = SrCastClassNull(CSrEfitSubrecord, pCustomData->pSubrecords[1]);
+    if (pEffectData == NULL) return (SRRL_DROPCHECK_ERROR);
+        
+		/* If we're just checking */
+    if (DropItems.Notify.code == ID_SRRECORDLIST_CHECKDROP) continue;
+
+	pEffectInfo = m_Effects.AddNew();
+	if (pEffectInfo == NULL) continue;
+
+	CSrSubrecord* pNewSubrecord = pCustomData->pRecord->CreateSubrecord(SR_NAME_EFID);
+	pEffectInfo->pEffect = SrCastClassNull(CSrFormidSubrecord, pNewSubrecord);
+
+	pNewSubrecord = pCustomData->pRecord->CreateSubrecord(SR_NAME_EFIT);
+	pEffectInfo->pEffectData = SrCastClassNull(CSrEfitSubrecord, pNewSubrecord);
+
+	if (pEffectInfo->pEffect == NULL || pEffectInfo->pEffectData == NULL)
+	{
+		m_Effects.Delete(pEffectInfo);
+		continue;
+	}
+
+	pEffectInfo->pEffect->Copy(pEffect);
+	pEffectInfo->pEffectData->Copy(pEffectData);
+
+	for (int i = 2; i < SR_RLMAX_SUBRECORDS; ++i)
+	{
+		if (pCustomData->pSubrecords[i] == NULL) continue;
+		if (pCustomData->pSubrecords[i]->GetRecordType() != SR_NAME_CTDA) continue;
+
+		CSrCtdaSubrecord* pNewCond = pEffectInfo->Conditions.AddNew();
+		pNewCond->Copy(pCustomData->pSubrecords[i]);
+	}
+    
+    AddEffectList(pEffectInfo);
+  }
+
+  return (SRRL_DROPCHECK_OK);
+}
+/*===========================================================================
+ *		End of Class Event CSrEnchView::OnDropCustomData()
+ *=========================================================================*/
+
+
+ /*===========================================================================
+ *
+ * Class CSrEnchView Event - void OnDropEffectList (pNotifyStruct, pResult);
+ *
+ *=========================================================================*/
+void CSrEnchView::OnDropEffectList (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+
+  *pResult = SRRL_DROPCHECK_ERROR;
+  
+  if (pDropItems->pCustomDatas != NULL && pDropItems->pCustomDatas->GetSize() > 0) 
+  {
+    *pResult = OnDropCustomEffectData(*pDropItems);
+  }
+  else if (pDropItems->pRecords != NULL) 
+  {
+    *pResult = SRRL_DROPCHECK_ERROR;
+  } 
+
+}
+/*===========================================================================
+ *		End of Class Event CSrEnchView::OnDropEffectList()
+ *=========================================================================*/
+
+
+/*===========================================================================
+ *
+ * Class CSrEnchView Event - void OnDropEffect (pNotifyStruct, pResult);
+ *
+ *=========================================================================*/
+void CSrEnchView::OnDropEffect (NMHDR* pNotifyStruct, LRESULT* pResult) {
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  CSrRecord*	     pRecord;
+  CSrMgefRecord*     pMgef;
+
+  *pResult = SRRL_DROPCHECK_ERROR;
+  if (pDropItems->pRecords == NULL) return;
+  if (pDropItems->pRecords->GetSize() != 1) return;
+  if (m_pCurrentEffect == NULL) return;
+
+  pRecord = pDropItems->pRecords->GetAt(0);
+
+  if (pRecord->GetRecordType() != SR_NAME_PERK) return;
+  pMgef = SrCastClass(CSrMgefRecord, pRecord);
+  if (pMgef == NULL) return;
+
+  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
+  {
+    m_EffectName.SetWindowText(pMgef->GetEditorID());
+  }
+
+  *pResult = SRRL_DROPCHECK_OK;
+}
+/*===========================================================================
+ *		End of Class Event CSrEnchView::OnDropEffect()
+ *=========================================================================*/
+
+
+/*===========================================================================
+ *
+ * Class CSrEnchView Event - void OnDropBaseEnchant (pNotifyStruct, pResult);
+ *
+ *=========================================================================*/
+void CSrEnchView::OnDropBaseEnchant (NMHDR* pNotifyStruct, LRESULT* pResult) {
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  CSrRecord*	     pRecord;
+  CSrEnchRecord*     pEnch;
+
+  *pResult = SRRL_DROPCHECK_ERROR;
+  if (pDropItems->pRecords == NULL) return;
+  if (pDropItems->pRecords->GetSize() != 1) return;
+  
+  pRecord = pDropItems->pRecords->GetAt(0);
+
+  if (pRecord->GetRecordType() != SR_NAME_PERK) return;
+  pEnch = SrCastClass(CSrEnchRecord, pRecord);
+  if (pEnch == NULL) return;
+  if (pEnch == GetInputRecord()) return;
+
+  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
+  {
+    m_BaseEnchantment.SetWindowText(pEnch->GetEditorID());
+  }
+
+  *pResult = SRRL_DROPCHECK_OK;
+}
+/*===========================================================================
+ *		End of Class Event CSrEnchView::OnDropBaseEnchant()
+ *=========================================================================*/
+
+
+/*===========================================================================
+ *
+ * Class CSrEnchView Event - void OnDropItemTypes (pNotifyStruct, pResult);
+ *
+ *=========================================================================*/
+void CSrEnchView::OnDropItemTypes (NMHDR* pNotifyStruct, LRESULT* pResult) {
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  CSrRecord*	     pRecord;
+  CSrFlstRecord*     pFlst;
+
+  *pResult = SRRL_DROPCHECK_ERROR;
+  if (pDropItems->pRecords == NULL) return;
+  if (pDropItems->pRecords->GetSize() != 1) return;
+  
+  pRecord = pDropItems->pRecords->GetAt(0);
+
+  if (pRecord->GetRecordType() != SR_NAME_FLST) return;
+  pFlst = SrCastClass(CSrFlstRecord, pRecord);
+  if (pFlst == NULL) return;
+
+  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
+  {
+    m_ItemTypes.SetWindowText(pFlst->GetEditorID());
+  }
+
+  *pResult = SRRL_DROPCHECK_OK;
+}
+/*===========================================================================
+ *		End of Class Event CSrEnchView::OnDropItemTypes()
+ *=========================================================================*/
