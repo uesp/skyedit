@@ -18,6 +18,7 @@
  *=========================================================================*/
   #include "modfile/srespfile.h"
   #include "modfile/srmultirecordhandler.h"
+  #include "windows/srrecordlistctrl.h"
 /*===========================================================================
  *		End of Required Includes
  *=========================================================================*/
@@ -154,6 +155,8 @@ public:
 
 	/* Access the UI field array */
   //virtual sruirecfields_t* GetUIFields (void) { return (NULL); }
+
+  int  DropRecordHelper (srrldroprecords_t* pDropItems, CWnd* pWnd, const srrectype_t AllowedType, const int AllowedCount);
 
 	/* Access the dialog record object */
   virtual CSrRecord*       GetInputRecord  (void) { return (m_EditInfo.pOldRecord); }

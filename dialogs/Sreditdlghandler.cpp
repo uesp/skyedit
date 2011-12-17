@@ -1104,6 +1104,8 @@ bool CSrEditDlgHandler::EditRecordHelper (CWnd* pWnd, const srrectype_t Type)
 }
 
 
+
+
 /*===========================================================================
  *
  * Function - int FindListBoxItemData (ListBox, ItemData, SelectItem);

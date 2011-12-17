@@ -177,37 +177,12 @@ void CSrAmmoView::OnBnClickedSelectprojectileButton()
 }
 
 
-/*===========================================================================
- *
- * Class CSrAmmoView Event - void OnDropProjectile (pNotifyStruct, pResult);
- *
- *=========================================================================*/
-void CSrAmmoView::OnDropProjectile (NMHDR* pNotifyStruct, LRESULT* pResult) {
+void CSrAmmoView::OnDropProjectile (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
   srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
-  CSrRecord*	     pRecord;
-  CSrIdRecord*       pProjectile;
-
-  *pResult = SRRL_DROPCHECK_ERROR;
-  if (pDropItems->pRecords == NULL) return;
-  if (pDropItems->pRecords->GetSize() != 1) return;
-
-  pRecord = pDropItems->pRecords->GetAt(0);
-
-	/* Ignore any invalid record types */
-  if (pRecord->GetRecordType() != SR_NAME_PROJ) return;
-  pProjectile = SrCastClass(CSrIdRecord, pRecord);
-  if (pProjectile == NULL) return;
-
-	/* If we're just checking or not */
-  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
-  {
-    m_Projectile.SetWindowText(pProjectile->GetEditorID());
-  }
-
-  *pResult = SRRL_DROPCHECK_OK;
+  *pResult = DropRecordHelper(pDropItems, &m_Projectile, SR_NAME_PROJ, 1);
 }
-/*===========================================================================
- *		End of Class Event CSrAmmoView::OnDropProjectile()
- *=========================================================================*/
+
+
 
 

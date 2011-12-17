@@ -2219,3 +2219,37 @@ void CSrRecordDialog::OnBnClickedEditPickupsound()
 {
 	if (m_pDlgHandler && m_pPickupSoundField) m_pDlgHandler->EditRecordHelper(m_pPickupSoundField, SR_NAME_SOUN);
 }
+
+
+
+/*===========================================================================
+ *
+ * Class CSrRecordDialog Event - void DropRecordHelper ();
+ *
+ *=========================================================================*/
+int CSrRecordDialog::DropRecordHelper (srrldroprecords_t* pDropItems, CWnd* pWnd, const srrectype_t AllowedType, const int AllowedCount) {
+	CSrRecord*	     pRecord;
+	CSrIdRecord*     pIdRecord;
+  
+	if (pWnd == NULL || pDropItems == NULL) return SRRL_DROPCHECK_ERROR;
+	if (pDropItems->pRecords == NULL) return SRRL_DROPCHECK_ERROR;
+	if (pDropItems->pRecords->GetSize() > AllowedCount) return SRRL_DROPCHECK_ERROR;
+
+	pRecord = pDropItems->pRecords->GetAt(0);
+
+		/* Ignore any invalid record types */
+	if (pRecord->GetRecordType() != AllowedType) return SRRL_DROPCHECK_ERROR;
+	pIdRecord = SrCastClass(CSrIdRecord, pRecord);
+	if (pIdRecord == NULL) return SRRL_DROPCHECK_ERROR;
+
+		/* If we're just checking or not */
+	if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
+	{
+		pWnd->SetWindowText(pIdRecord->GetEditorID());
+	}
+	
+	return SRRL_DROPCHECK_OK;
+}
+/*===========================================================================
+ *		End of Class Event CSrRecordDialog::DropRecordHelper()
+ *=========================================================================*/
