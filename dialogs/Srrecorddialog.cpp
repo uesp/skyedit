@@ -2233,7 +2233,7 @@ int CSrRecordDialog::DropRecordHelper (srrldroprecords_t* pDropItems, CWnd* pWnd
   
 	if (pWnd == NULL || pDropItems == NULL) return SRRL_DROPCHECK_ERROR;
 	if (pDropItems->pRecords == NULL) return SRRL_DROPCHECK_ERROR;
-	if (pDropItems->pRecords->GetSize() > AllowedCount) return SRRL_DROPCHECK_ERROR;
+	if ((int) pDropItems->pRecords->GetSize() > AllowedCount) return SRRL_DROPCHECK_ERROR;
 
 	pRecord = pDropItems->pRecords->GetAt(0);
 

@@ -16,7 +16,7 @@
 #	FieldNot = Name, Value		# Logical opposite of the previous three
 #	FieldStartsNot = Name, Value
 #	FieldContainsNot = Name, Value
-#	Empty = Value				# Specifies the filter shouldn't have any records (true/false)#	
+#	Empty = Value				# Specifies the filter shouldn't have any records (true/false)
 # End
 #
 #
@@ -26,6 +26,12 @@ DisplayFilter
 	ID = "Ammo"
 	DisplayName = "Ammo"
 	RecName = AMMO
+	Parent = NULL
+End	
+DisplayFilter
+	ID = "Armor"
+	DisplayName = "Armor"
+	RecName = ARMO
 	Parent = NULL
 End	
 DisplayFilter
@@ -126,12 +132,6 @@ DisplayFilter
 	ID = "ArmAddOn"
 	DisplayName = "Arm Add-On"
 	RecName = ARMA
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "Armor"
-	DisplayName = "Armor"
-	RecName = ARMO
 	Parent = NoEdit
 End	
 DisplayFilter
