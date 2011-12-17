@@ -240,7 +240,7 @@ static const srrectype_t* s_ActorTypes[] = {
 
 static srselrecdlginfo_t s_ActorSelDlg = 
 {
-	NULL, s_ActorTypes, _T("Select Actor..."), s_ActorListInit, &CSrNpcRecord::s_FieldMap, SR_FIELD_EDITORID, NULL, 0 
+	NULL, s_ActorTypes, _T("Select Actor..."), s_ActorListInit, &CSrNpc_Record::s_FieldMap, SR_FIELD_EDITORID, NULL, 0 
 };
   
 /*===========================================================================
