@@ -23,6 +23,12 @@
 # Start top level filters
 #
 DisplayFilter
+	ID = "Ammo"
+	DisplayName = "Ammo"
+	RecName = AMMO
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Enchant"
 	DisplayName = "Enchantment"
 	RecName = ENCH
@@ -104,12 +110,6 @@ DisplayFilter
 	RecName = ADDN
 	Parent = NoEdit
 End
-DisplayFilter
-	ID = "Ammo"
-	DisplayName = "Ammo"
-	RecName = AMMO
-	Parent = NoEdit
-End	
 DisplayFilter
 	ID = "AnimatedObj"
 	DisplayName = "Animated Object"

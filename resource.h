@@ -65,6 +65,7 @@
 #define IDD_ENCH_VIEW                   189
 #define IDD_SPEL_VIEW                   190
 #define IDC_GOODDROP_CURSOR             190
+#define IDD_AMMO_VIEW                   191
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -206,9 +207,21 @@
 #define IDC_TYPEA                       1172
 #define IDC_UNKNOWN1                    1173
 #define IDC_TYPEB                       1173
+#define IDC_DROPSOUND                   1173
 #define IDC_TYPEC                       1174
 #define IDC_TYPED                       1175
+#define IDC_SELECTDROPSOUND_BUTTON      1175
+#define IDC_IGNORERESIST                1176
+#define IDC_VANISH                      1177
+#define IDC_PROJECTILE                  1178
+#define IDC_EDIT_PROJECTILE             1179
+#define IDC_SELECTPROJECTILE_BUTTON     1180
 #define IDC_SELECT_MODEL                1181
+#define IDC_PICKUPSOUND                 1182
+#define IDC_SELECTPICKUP_BUTTON         1184
+#define IDC_EDIT_DROPSOUND              1185
+#define IDC_EDIT_PROJECTILE3            1186
+#define IDC_EDIT_PICKUPSOUND            1186
 #define IDC_FLICKER                     1190
 #define IDC_FLICKERSLOW                 1193
 #define IDC_PULSE                       1194
@@ -410,7 +423,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        191
 #define _APS_NEXT_COMMAND_VALUE         32859
-#define _APS_NEXT_CONTROL_VALUE         1173
+#define _APS_NEXT_CONTROL_VALUE         1177
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

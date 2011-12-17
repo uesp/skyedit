@@ -102,6 +102,8 @@ protected:
   CWnd*			m_pModelField;
   CWnd*			m_pIconField;
   CWnd*			m_pSoundFileField;  
+  CWnd*			m_pDropSoundField;  
+  CWnd*			m_pPickupSoundField;  
   CWnd*			m_pMaleWorldModelField;
   CWnd*			m_pMaleBipedModelField;
   CWnd*			m_pFemaleWorldModelField;
@@ -178,22 +180,21 @@ public:
   virtual void OnSave			  (void);
   virtual void OnCancel			  (void);
 
-	/* Listener events */
+		/* Listener events */
   virtual int OnListenAddRecord       (CSrListenEvent* pEvent) { return (0); }
   virtual int OnListenCleanRecord     (CSrListenEvent* pEvent) { return (0); }
   virtual int OnListenUpdateRecord    (CSrListenEvent* pEvent) { return (0); }
   virtual int OnListenPreUpdateRecord (CSrListenEvent* pEvent) { return (0); }
   virtual int GetListenEvents         (void)                   { return (0); }
 
-  	/* Set class members */
+  		/* Set class members */
   virtual void SetEditInfo      (sreditrecinfo_t&       InputInfo);
   virtual void SetRecordHandler (CSrMultiRecordHandler* pHandler) { m_pRecordHandler = pHandler; }
   virtual void SetDlgHandler    (CSrEditDlgHandler*     pHandler) { m_pDlgHandler    = pHandler; }
   virtual void SetTitlePrefix   (const TCHAR*           pString)  { m_TitlePrefix    = pString; }
 
 
-	/* ClassWizard generated virtual function overrides */
-  //{{AFX_VIRTUAL(CSrRecordDialog)
+		/* ClassWizard generated virtual function overrides */
 public:
   virtual BOOL PreTranslateMessage(MSG* pMsg);
 protected:
@@ -201,12 +202,11 @@ protected:
   virtual void DoDataExchange(CDataExchange* pDX);
   virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
   virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
-  //}}AFX_VIRTUAL
+
 
 protected:
 
-	/* Generated message map functions */
-  //{{AFX_MSG(CSrRecordDialog)
+		/* Generated message map functions */
   afx_msg void OnDestroy();
   afx_msg void OnKillfocusEditorid();
   afx_msg void OnBipedpartsButton();
@@ -253,7 +253,12 @@ protected:
   afx_msg void OnBnClickedDelkeywordButton();
   afx_msg void OnLbnSelchangeKeywords();
   afx_msg void OnBnClickedConditionButton();
-  //}}AFX_MSG
+	afx_msg void OnBnClickedSelectdropsoundButton();
+	afx_msg void OnBnClickedSelectpickupButton();
+	afx_msg void OnBnClickedEditDropsound();
+	afx_msg void OnBnClickedEditPickupsound();
+	afx_msg void OnDropPickupSound (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnDropDropSound (NMHDR* pNotifyStruct, LRESULT* pResult);
 
   DECLARE_MESSAGE_MAP();
 

@@ -111,6 +111,14 @@ BEGIN_MESSAGE_MAP(CSrRecordDialog, CFormView)
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_EDIT_FIND, &CSrRecordDialog::OnEditFind)
 	ON_BN_CLICKED(IDC_CONDITION_BUTTON, &CSrRecordDialog::OnBnClickedConditionButton)
+	ON_BN_CLICKED(IDC_SELECTDROPSOUND_BUTTON, &CSrRecordDialog::OnBnClickedSelectdropsoundButton)
+	ON_BN_CLICKED(IDC_SELECTPICKUP_BUTTON, &CSrRecordDialog::OnBnClickedSelectpickupButton)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_DROPSOUND, OnDropDropSound)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_DROPSOUND, OnDropDropSound)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_PICKUPSOUND, OnDropPickupSound)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_PICKUPSOUND, OnDropPickupSound)
+	ON_BN_CLICKED(IDC_EDIT_DROPSOUND, &CSrRecordDialog::OnBnClickedEditDropsound)
+	ON_BN_CLICKED(IDC_EDIT_PICKUPSOUND, &CSrRecordDialog::OnBnClickedEditPickupsound)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -181,7 +189,8 @@ static obrdtooltip_t s_ToolTipInfo[] = {
  * Class CSrRecordDialog Constructor
  *
  *=========================================================================*/
-CSrRecordDialog::CSrRecordDialog (const int ID) : CFormView(ID) {
+CSrRecordDialog::CSrRecordDialog (const int ID) : CFormView(ID) 
+{
   m_pRecordHandler   = NULL;
   m_pDlgHandler      = NULL;
   m_pEditorIDField   = NULL;
@@ -193,6 +202,8 @@ CSrRecordDialog::CSrRecordDialog (const int ID) : CFormView(ID) {
   m_pIconField       = NULL;
   m_pSoundFileField  = NULL;
   m_pConditionField  = NULL;
+  m_pPickupSoundField = NULL;
+  m_pDropSoundField    = NULL;
 
   m_pMaleWorldModelField   = NULL;
   m_pMaleBipedModelField   = NULL;
@@ -225,7 +236,8 @@ CSrRecordDialog::CSrRecordDialog (const int ID) : CFormView(ID) {
  * Class CSrRecordDialog Method - void ClearControlData (void);
  *
  *=========================================================================*/
-void CSrRecordDialog::ClearControlData (void) {
+void CSrRecordDialog::ClearControlData (void) 
+{
   SetTitle(NULL);
 }
 /*===========================================================================
@@ -238,7 +250,8 @@ void CSrRecordDialog::ClearControlData (void) {
  * Class CSrRecordDialog Method - void Close (void);
  *
  *=========================================================================*/
-void CSrRecordDialog::Close (void) {
+void CSrRecordDialog::Close (void) 
+{
   GetParentFrame()->DestroyWindow();
 }
 /*===========================================================================
@@ -251,11 +264,9 @@ void CSrRecordDialog::Close (void) {
  * Class CSrRecordDialog Method - void DoDataExchange (pDX);
  *
  *=========================================================================*/
-void CSrRecordDialog::DoDataExchange(CDataExchange* pDX) {
+void CSrRecordDialog::DoDataExchange(CDataExchange* pDX) 
+{
   CFormView::DoDataExchange(pDX);
-
-  //{{AFX_DATA_MAP(CSrRecordDialog)
-  //}}AFX_DATA_MAP
 }
 /*===========================================================================
  *		End of Class Method CSrRecordDialog::DoDataExchange()
@@ -849,6 +860,8 @@ void CSrRecordDialog::SetUIFieldData (void) {
       case SR_FIELD_MODEL4:      m_pFemaleWorldModelField = pWnd; break;
       case SR_FIELD_ICON2:       m_pFemaleIconField = pWnd; break;
 	  case SR_FIELD_CONDITIONCOUNT:   m_pConditionField   = pWnd; break;
+	  case SR_FIELD_DROPSOUND:        m_pDropSoundField   = pWnd; break;
+	  case SR_FIELD_PICKUPSOUND:      m_pPickupSoundField = pWnd; break;
     }
 
     Result = GetInputRecord()->GetField(Buffer, pFields[Index].FieldID);
@@ -1662,7 +1675,6 @@ void CSrRecordDialog::OnDropFemaleIcon (NMHDR* pNotifyStruct, LRESULT* pResult) 
  *=========================================================================*/
 
 
-
 /*===========================================================================
  *
  * Class CSrRecordDialog Event - void OnDropSoundFile (pNotifyStruct, pResult);
@@ -1935,6 +1947,74 @@ void CSrRecordDialog::OnDropSound (NMHDR* pNotifyStruct, LRESULT* pResult) {
 
 /*===========================================================================
  *
+ * Class CSrRecordDialog Event - void OnDropDropSound (pNotifyStruct, pResult);
+ *
+ *=========================================================================*/
+void CSrRecordDialog::OnDropDropSound (NMHDR* pNotifyStruct, LRESULT* pResult) {
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  CSrRecord*	     pRecord;
+  CSrIdRecord*       pSound;
+
+  *pResult = SRRL_DROPCHECK_ERROR;
+  if (m_pDropSoundField == NULL) return;
+  if (pDropItems->pRecords == NULL) return;
+  if (pDropItems->pRecords->GetSize() != 1) return;
+
+  pRecord = pDropItems->pRecords->GetAt(0);
+
+	/* Ignore any invalid record types */
+  if (pRecord->GetRecordType() != SR_NAME_SOUN) return;
+  pSound = SrCastClass(CSrIdRecord, pRecord);
+  if (pSound == NULL) return;
+
+	/* If we're just checking or not */
+  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) {
+    m_pDropSoundField->SetWindowText(pSound->GetEditorID());
+  }
+
+  *pResult = SRRL_DROPCHECK_OK;
+}
+/*===========================================================================
+ *		End of Class Event CSrRecordDialog::OnDropDropSound()
+ *=========================================================================*/
+
+
+/*===========================================================================
+ *
+ * Class CSrRecordDialog Event - void OnDropPickupSound (pNotifyStruct, pResult);
+ *
+ *=========================================================================*/
+void CSrRecordDialog::OnDropPickupSound (NMHDR* pNotifyStruct, LRESULT* pResult) {
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  CSrRecord*	     pRecord;
+  CSrIdRecord*       pSound;
+
+  *pResult = SRRL_DROPCHECK_ERROR;
+  if (m_pPickupSoundField == NULL) return;
+  if (pDropItems->pRecords == NULL) return;
+  if (pDropItems->pRecords->GetSize() != 1) return;
+
+  pRecord = pDropItems->pRecords->GetAt(0);
+
+	/* Ignore any invalid record types */
+  if (pRecord->GetRecordType() != SR_NAME_SOUN) return;
+  pSound = SrCastClass(CSrIdRecord, pRecord);
+  if (pSound == NULL) return;
+
+	/* If we're just checking or not */
+  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) {
+    m_pPickupSoundField->SetWindowText(pSound->GetEditorID());
+  }
+
+  *pResult = SRRL_DROPCHECK_OK;
+}
+/*===========================================================================
+ *		End of Class Event CSrRecordDialog::OnDropPickupSound()
+ *=========================================================================*/
+
+
+/*===========================================================================
+ *
  * Class CSrRecordDialog Event - void OnBnClickedAddkeywordButton (void);
  *
  *=========================================================================*/
@@ -2106,3 +2186,36 @@ void CSrRecordDialog::OnBnClickedConditionButton()
 	m_pConditionField->SetWindowText(Buffer);
 }
 
+
+void CSrRecordDialog::OnBnClickedSelectdropsoundButton()
+{
+	if (m_pDlgHandler == NULL || m_pDropSoundField == NULL) return;
+	CString Buffer;
+
+	m_pDropSoundField->GetWindowText(Buffer);
+	if (!m_pDlgHandler->SelectSound(Buffer)) return;
+	m_pDropSoundField->SetWindowText(Buffer);
+}
+
+
+void CSrRecordDialog::OnBnClickedSelectpickupButton()
+{
+	if (m_pDlgHandler == NULL || m_pPickupSoundField == NULL) return;
+	CString Buffer;
+
+	m_pPickupSoundField->GetWindowText(Buffer);
+	if (!m_pDlgHandler->SelectSound(Buffer)) return;
+	m_pPickupSoundField->SetWindowText(Buffer);
+}
+
+
+void CSrRecordDialog::OnBnClickedEditDropsound()
+{
+	if (m_pDlgHandler && m_pDropSoundField) m_pDlgHandler->EditRecordHelper(m_pDropSoundField, SR_NAME_SOUN);
+}
+
+
+void CSrRecordDialog::OnBnClickedEditPickupsound()
+{
+	if (m_pDlgHandler && m_pPickupSoundField) m_pDlgHandler->EditRecordHelper(m_pPickupSoundField, SR_NAME_SOUN);
+}
