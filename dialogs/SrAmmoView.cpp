@@ -173,16 +173,7 @@ void CSrAmmoView::OnBnClickedEditProjectile()
 
 void CSrAmmoView::OnBnClickedSelectprojectileButton()
 {
-	CString Buffer;
-	bool Result;
-
-	if (m_pDlgHandler == NULL) return;
-	m_Projectile.GetWindowText(Buffer);
-
-	Result = m_pDlgHandler->SelectRecord(Buffer, SR_NAME_PROJ, &CSrProjRecord::s_FieldMap);
-	if (!Result) return;
-
-	m_Projectile.SetWindowText(Buffer);
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_Projectile, SR_NAME_PROJ, &CSrProjRecord::s_FieldMap);
 }
 
 
