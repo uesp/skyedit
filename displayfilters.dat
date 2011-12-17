@@ -65,6 +65,12 @@ DisplayFilter
 	Parent = NULL
 End
 DisplayFilter
+	ID = "Potions"
+	DisplayName = "Potions"
+	RecName = ALCH
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Recipes"
 	DisplayName = "Recipes"
 	RecName = COBJ
@@ -456,12 +462,6 @@ DisplayFilter
 	ID = "Projectile"
 	DisplayName = "Projectiles"
 	RecName = PROJ
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "Potions"
-	DisplayName = "Potions"
-	RecName = ALCH
 	Parent = NoEdit
 End	
 DisplayFilter
