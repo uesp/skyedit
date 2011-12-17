@@ -31,6 +31,7 @@
   #include "srfinddlg.h"
 
   #include "srammoview.h"
+  #include "srarmoview.h"
   #include "srcobjview.h"
   #include "srenchview.h"
   #include "srglobview.h"
