@@ -999,7 +999,6 @@ bool CSrEditDlgHandler::OnHelp (CSrRecordDialog* pDialog, HELPINFO* pHelpInfo) {
       Buffer = pDlgInfo->pCreateInfo->pCSPage;
     else
       Buffer = m_Options.DefaultCSPage;
-
   }
  
   GetSrEditApp().OpenWebHelp(Buffer);
@@ -1008,6 +1007,24 @@ bool CSrEditDlgHandler::OnHelp (CSrRecordDialog* pDialog, HELPINFO* pHelpInfo) {
 /*===========================================================================
  *		End of Class Event CSrEditDlgHandler::OnHelp()
  *=========================================================================*/
+
+
+bool CSrEditDlgHandler::SelectRecordHelper (CWnd* pWnd, const srrectype_t Type, const srrecfieldmap_t* pFieldMap)
+{
+	CString Buffer;
+	bool Result;
+
+	if (pWnd == NULL || pFieldMap == NULL) return false;
+
+	pWnd->GetWindowText(Buffer);
+
+	Result = SelectRecord(Buffer, Type, pFieldMap);
+	if (!Result) return false;
+
+	pWnd->SetWindowText(Buffer);
+	return true;
+}
+
 
 
 /*===========================================================================
