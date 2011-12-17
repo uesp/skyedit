@@ -447,9 +447,21 @@ DisplayFilter
 	Parent = NoEdit
 End	
 DisplayFilter
+	ID = "Projectile"
+	DisplayName = "Projectiles"
+	RecName = PROJ
+	Parent = NoEdit
+End	
+DisplayFilter
 	ID = "Potions"
 	DisplayName = "Potions"
 	RecName = ALCH
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Sound"
+	DisplayName = "Sounds"
+	RecName = SOUN
 	Parent = NoEdit
 End	
 #

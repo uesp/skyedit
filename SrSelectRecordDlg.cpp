@@ -238,9 +238,9 @@ static const srrectype_t* s_ActorTypes[] = {
 	&SR_NAME_NPC_, NULL  //&SR_NAME_CREA,
 };
 
-static srselrecdlginfo_t s_ActorSelDlg = {
-  //NULL, s_ActorTypes, _T("Select Actor..."), s_ActorListInit, &CSrNpcRecord::s_FieldMap, SR_FIELD_EDITORID, NULL, 0 
-	NULL, s_ActorTypes, _T("Select Actor..."), s_ActorListInit, NULL, SR_FIELD_EDITORID, NULL, 0 
+static srselrecdlginfo_t s_ActorSelDlg = 
+{
+	NULL, s_ActorTypes, _T("Select Actor..."), s_ActorListInit, &CSrNpcRecord::s_FieldMap, SR_FIELD_EDITORID, NULL, 0 
 };
   
 /*===========================================================================
@@ -261,9 +261,9 @@ static srreclistcolinit_t s_IngrediantListInit[] = {
 	{ SR_FIELD_NONE, 0, 0 }
   };
 
-static srselrecdlginfo_t s_IngrediantSelDlg = {
- // &SR_NAME_INGR, NULL, _T("Select Ingrediant..."), s_IngrediantListInit, &CSrIngrRecord::s_FieldMap, SR_FIELD_EDITORID, NULL, 0 
-	 &SR_NAME_INGR, NULL, _T("Select Ingrediant..."), s_IngrediantListInit, NULL, SR_FIELD_EDITORID, NULL, 0 
+static srselrecdlginfo_t s_IngrediantSelDlg = 
+{
+	&SR_NAME_INGR, NULL, _T("Select Ingrediant..."), s_IngrediantListInit, &CSrIngrRecord::s_FieldMap, SR_FIELD_EDITORID, NULL, 0 
 };
   
 /*===========================================================================
@@ -276,17 +276,18 @@ static srselrecdlginfo_t s_IngrediantSelDlg = {
  * Begin Sound Dialog Data
  *
  *=========================================================================*/
-static srreclistcolinit_t s_SoundListInit[] = {
+static srreclistcolinit_t s_SoundListInit[] = 
+{
 	{ SR_FIELD_EDITORID,	200,	LVCFMT_LEFT },
-	{ SR_FIELD_FORMID,	75,	LVCFMT_LEFT },
-	{ SR_FIELD_FLAGS,	60,	LVCFMT_CENTER },
+	{ SR_FIELD_FORMID,		75,		LVCFMT_LEFT },
+	{ SR_FIELD_FLAGS,		60,		LVCFMT_CENTER },
 	{ SR_FIELD_FULLNAME,	120,	LVCFMT_CENTER },
 	{ SR_FIELD_NONE, 0, 0 }
-  };
+};
 
-static srselrecdlginfo_t s_SoundSelDlg = {
-  //&SR_NAME_SOUN, NULL, _T("Select Sound..."), s_SoundListInit, &CSrIdRecord::s_FieldMap, SR_FIELD_EDITORID, NULL, 0 
-	&SR_NAME_SOUN, NULL, _T("Select Sound..."), s_SoundListInit, NULL, SR_FIELD_EDITORID, NULL, 0 
+static srselrecdlginfo_t s_SoundSelDlg = 
+{
+	&SR_NAME_SOUN, NULL, _T("Select Sound..."), s_SoundListInit,  &CSrSounRecord::s_FieldMap, SR_FIELD_EDITORID, NULL, 0 
 };
   
 /*===========================================================================
