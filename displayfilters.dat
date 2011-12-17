@@ -435,6 +435,12 @@ DisplayFilter
 	Parent = NoEdit
 End	
 DisplayFilter
+	ID = "Material"
+	DisplayName = "Materials"
+	RecName = MATT
+	Parent = NoEdit
+End	
+DisplayFilter
 	ID = "FormList"
 	DisplayName = "Non-Levelled List"
 	RecName = FLST
@@ -456,6 +462,12 @@ DisplayFilter
 	ID = "Potions"
 	DisplayName = "Potions"
 	RecName = ALCH
+	Parent = NoEdit
+End	
+DisplayFilter
+	ID = "Race"
+	DisplayName = "Races"
+	RecName = RACE
 	Parent = NoEdit
 End	
 DisplayFilter
