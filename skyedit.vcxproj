@@ -2133,6 +2133,7 @@
     <None Include="arrowcop.cur" />
     <None Include="displayfilters.dat" />
     <None Include="nodrop.cur" />
+    <None Include="ReadMe.txt" />
     <None Include="res\armor.ico" />
     <None Include="res\cursor1.cur" />
     <None Include="res\file.bmp" />

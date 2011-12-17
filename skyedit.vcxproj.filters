@@ -1606,5 +1606,8 @@
     <None Include="res\skyedit.ico">
       <Filter>Resources</Filter>
     </None>
+    <None Include="ReadMe.txt">
+      <Filter>Data</Filter>
+    </None>
   </ItemGroup>
 </Project>

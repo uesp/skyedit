@@ -65,8 +65,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,0,1,0
- PRODUCTVERSION 0,0,1,0
+ FILEVERSION 0,0,2,0
+ PRODUCTVERSION 0,0,2,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -83,12 +83,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "UESP"
             VALUE "FileDescription", "SkyEdit, alternate editor for Skyrim"
-            VALUE "FileVersion", "0.0.1.0"
+            VALUE "FileVersion", "0.0.2.0"
             VALUE "InternalName", "SkyEdit"
             VALUE "LegalCopyright", "Copyright (C) 2011"
             VALUE "OriginalFilename", "Skyedit.EXE"
             VALUE "ProductName", "SkyEdit"
-            VALUE "ProductVersion", "0.0.1.0"
+            VALUE "ProductVersion", "0.0.2.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -381,7 +381,7 @@ BEGIN
     EDITTEXT        IDC_FORMID,65,8,64,12,ES_AUTOHSCROLL | ES_READONLY
     RTEXT           "Editor ID",IDC_STATIC,28,26,32,9
     EDITTEXT        IDC_EDITORID,65,24,177,12,ES_AUTOHSCROLL
-    RTEXT           "Item Name",IDC_STATIC,18,42,42,9
+    RTEXT           "Spell Name",IDC_STATIC,18,42,42,9
     EDITTEXT        IDC_ITEMNAME,65,40,177,12,ES_AUTOHSCROLL
     PUSHBUTTON      "Save",ID_SAVE_BUTTON,251,8,50,14
     PUSHBUTTON      "Apply",ID_APPLY_BUTTON,251,26,50,14
@@ -622,7 +622,7 @@ IDC_GOODDROP_CURSOR     CURSOR                  "res\\cursor1.cur"
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "SkyEdit v0.01 Alpha"
+    IDR_MAINFRAME           "SkyEdit v0.02 Alpha"
     IDR_SREDITTYPE          "\nSkyEdit\nSkyEdit\nPlugin Files (*.esp)\n.esp\nSkyEdit.DocumentkyEdit Document"
 END
 
@@ -1006,7 +1006,7 @@ CAPTION "About SkyEdit"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,7,14,20,20
-    LTEXT           "SkyEdit v0.01-Alpha,  10 December 2011",IDC_STATIC,40,10,134,8,SS_NOPREFIX
+    LTEXT           "SkyEdit v0.02-Alpha,  16 December 2011",IDC_STATIC,40,10,134,8,SS_NOPREFIX
     LTEXT           "Copyright (C) 2011",IDC_STATIC,40,30,64,8
     DEFPUSHBUTTON   "OK",IDOK,224,7,50,14,WS_GROUP
     LTEXT           "by Dave Humphrey",IDC_STATIC,39,19,91,8

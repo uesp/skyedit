@@ -149,13 +149,13 @@ BOOL CAboutDlg::OnInitDialog() {
   AddText("");
   AddText("The latest version along with documentation and help can be found at:");
   AddText("     http://www.uesp.net/wiki/Tes5Mod:SkyEdit");
-  AddText("     Todo: Links to Github");
+  AddText("     http://github.com/uesp/skyedit");
   AddText("");
   AddText("Credits:");
   AddBullet("Devil (http://openil.sourceforge.net/) for loading images.");
   AddBullet("zLib (http://www.zlib.net/) for loading/saving compressed data.");
   AddBullet("Resizable Control Bars (http://www.datamekanix.com/) for the nice dockable error/undo control bars in the main view.");
-  AddBullet("Tes5Lib for loading and manipulating Skyrim data files. ");
+  AddBullet("Tes5Lib (http://github.com/uesp/tes5lib) for loading and manipulating Skyrim data files. ");
   AddText("");
   AddText("Note: This notice can be turned off in SkyEdit.ini by changing 'DisplayAboutOnLoad' to false.");
   	
