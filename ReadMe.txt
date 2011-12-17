@@ -1,5 +1,5 @@
  
-	   Package: SkyEdit v0.01alpha, 10 December 2011
+	   Package: SkyEdit v0.02alpha, 16 December 2011
 	    Author: Dave Humphrey, dave@uesp.net
 	   Website: www.uesp.net/wiki/Tes5Mod:SkyEdit
 
@@ -43,6 +43,8 @@ basic set of features is included.
 	- Recipes
 
   Partially Editable Records
+	- Enchantments (new)
+	- Spells (new)
 	- Weapons
 	- Magic Effects
 
@@ -131,6 +133,19 @@ can be found at:
   - Simple caching to defer loading of parts of master files to reduce
     memory requirements (currently only LAND and NAVM records).
 
+
+  Version History
+=======================================
+
+0.02alpha - 16 December 2011
+	- Several crash bug fixes
+	- A bunch of records added to the list display
+	- Addition of editable enchantments and spells
+	- Expanded editing of existing records
+	- Added missing record drag capabilities
+
+0.01alpha - 10 December 2011
+	- First release
 
 
   Credits
