@@ -840,3 +840,70 @@ DisplayFilter
 	Parent = Weapons
 	Material = Steel
 End
+#
+# Armor Filters
+#
+DisplayFilter
+	ID = "ArmoAmulet"
+	DisplayName = "Amulets"
+	RecName = ARMO
+	Parent = Armor
+	BodyParts = Amulet
+	BodyCompare = OR
+End
+DisplayFilter
+	ID = "ArmoFeet"
+	DisplayName = "Boots"
+	RecName = ARMO
+	Parent = Armor
+	BodyParts = Feet
+	BodyCompare = OR
+End
+DisplayFilter
+	ID = "ArmoChest"
+	DisplayName = "Chests"
+	RecName = ARMO
+	Parent = Armor
+	BodyParts = Chest
+	BodyCompare = OR
+End
+DisplayFilter
+	ID = "ArmoCrown"
+	DisplayName = "Crowns"
+	RecName = ARMO
+	Parent = Armor
+	BodyParts = Crown
+	BodyCompare = OR
+End
+DisplayFilter
+	ID = "ArmoHand"
+	DisplayName = "Hands"
+	RecName = ARMO
+	Parent = Armor
+	BodyParts = Hand
+	BodyCompare = OR
+End
+DisplayFilter
+	ID = "ArmoHead"
+	DisplayName = "Helmets"
+	RecName = ARMO
+	Parent = Armor
+	BodyParts = Head
+	BodyCompare = OR
+End
+DisplayFilter
+	ID = "ArmoRing"
+	DisplayName = "Rings"
+	RecName = ARMO
+	Parent = Armor
+	BodyParts = Ring
+	BodyCompare = OR
+End
+DisplayFilter
+	ID = "ArmoShield"
+	DisplayName = "Shields"
+	RecName = ARMO
+	Parent = Armor
+	BodyParts = Shield
+	BodyCompare = OR
+End
