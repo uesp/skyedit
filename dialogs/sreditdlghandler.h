@@ -43,6 +43,7 @@
   #include "srmgefview.h"
   #include "srscrlview.h"
   #include "srspelview.h"
+  #include "srstatview.h"
   #include "srweapview.h"
 /*===========================================================================
  *		End of Required Includes

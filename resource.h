@@ -72,6 +72,7 @@
 #define IDD_INGR_VIEW                   195
 #define IDD_SCRL_VIEW                   196
 #define IDD_BOOK_VIEW                   197
+#define IDD_STAT_VIEW                   198
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -269,6 +270,8 @@
 #define IDC_EDIT_ARMMODEL               1195
 #define IDC_SKILL                       1195
 #define IDC_FLICKERNONE                 1196
+#define IDC_SCALE                       1196
+#define IDC_SELECT_MATERIAL             1197
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -465,7 +468,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        194
 #define _APS_NEXT_COMMAND_VALUE         32859
-#define _APS_NEXT_CONTROL_VALUE         1196
+#define _APS_NEXT_CONTROL_VALUE         1198
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
