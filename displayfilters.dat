@@ -83,6 +83,12 @@ DisplayFilter
 	Parent = NULL
 End
 DisplayFilter
+	ID = "Scroll"
+	DisplayName = "Scrolls"
+	RecName = SCRL
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Spells"
 	DisplayName = "Spells"
 	RecName = SPEL
