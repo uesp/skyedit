@@ -41,6 +41,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "Container"
+	DisplayName = "Container"
+	RecName = CONT
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Enchant"
 	DisplayName = "Enchantments"
 	RecName = ENCH
@@ -247,12 +253,6 @@ DisplayFilter
 	ID = "CollisionLayer"
 	DisplayName = "Collision Layer"
 	RecName = COLL
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "Container"
-	DisplayName = "Container"
-	RecName = CONT
 	Parent = NoEdit
 End	
 DisplayFilter
