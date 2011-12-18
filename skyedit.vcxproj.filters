@@ -809,6 +809,9 @@
     <ClCompile Include="dialogs\SrStatView.cpp">
       <Filter>Source Files\Forms\Dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="dialogs\SrMiscView.cpp">
+      <Filter>Source Files\Forms\Dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">

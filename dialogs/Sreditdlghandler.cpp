@@ -47,6 +47,7 @@ srdlgcreateinfo_t l_SrDlgCreateInfo[] = {
 	{ &SR_NAME_INGR, "Ingredient",	     CSrIngrView::IDD,   RUNTIME_CLASS(CSrIngrView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Ingredient"),	_T("Ingredient") },
 	{ &SR_NAME_KYWD, "Keyword",		     CSrKywdView::IDD,   RUNTIME_CLASS(CSrKywdView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Keyword"),		_T("Keyword") },
 	{ &SR_NAME_MGEF, "Magic Effect",     CSrMgefView::IDD,   RUNTIME_CLASS(CSrMgefView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/MagicEffect"),	_T("Magic_Effect") },
+	{ &SR_NAME_MISC, "Misc",			 CSrMiscView::IDD,   RUNTIME_CLASS(CSrMiscView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Misc"),			_T("Misc") },
 	{ &SR_NAME_ALCH, "Potion",			 CSrAlchView::IDD,   RUNTIME_CLASS(CSrAlchView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Potion"),		_T("Potion") },
 	{ &SR_NAME_COBJ, "Recipe",		     CSrCobjView::IDD,   RUNTIME_CLASS(CSrCobjView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Recipe"),		_T("Recipe") },
 	{ &SR_NAME_SCRL, "Scroll",		     CSrScrlView::IDD,   RUNTIME_CLASS(CSrScrlView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Scroll"),		_T("Scroll") },

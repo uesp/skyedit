@@ -73,6 +73,8 @@
 #define IDD_SCRL_VIEW                   196
 #define IDD_BOOK_VIEW                   197
 #define IDD_STAT_VIEW                   198
+#define IDD_WEAP_VIEW1                  199
+#define IDD_MISC_VIEW                   199
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002

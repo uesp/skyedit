@@ -1823,6 +1823,7 @@
     <ClCompile Include="dialogs\SrBookView.cpp" />
     <ClCompile Include="dialogs\SrEnchView.cpp" />
     <ClCompile Include="dialogs\SrIngrView.cpp" />
+    <ClCompile Include="dialogs\SrMiscView.cpp" />
     <ClCompile Include="dialogs\SrScrlView.cpp" />
     <ClCompile Include="dialogs\SrSpelView.cpp" />
     <ClCompile Include="dialogs\SrStatView.cpp" />
