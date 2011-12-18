@@ -71,6 +71,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "LeveledActor"
+	DisplayName = "Leveled Actor"
+	RecName = LVLN
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "LeveledItem"
 	DisplayName = "Leveled Item"
 	RecName = LVLI
@@ -451,12 +457,6 @@ DisplayFilter
 	ID = "LandTexture"
 	DisplayName = "Land Texture"
 	RecName = LTEX
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "LeveledActor"
-	DisplayName = "Leveled Actor"
-	RecName = LVLN
 	Parent = NoEdit
 End	
 DisplayFilter
