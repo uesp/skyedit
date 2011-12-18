@@ -48,6 +48,7 @@ srdlgcreateinfo_t l_SrDlgCreateInfo[] = {
 	{ &SR_NAME_KYWD, "Keyword",		     CSrKywdView::IDD,   RUNTIME_CLASS(CSrKywdView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Keyword"),		_T("Keyword") },
 	{ &SR_NAME_LVLN, "Leveled Actor",    CSrLvlnView::IDD,   RUNTIME_CLASS(CSrLvlnView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Leveled_Actor"),	_T("Leveled Actor") },
 	{ &SR_NAME_LVLI, "Leveled Item",     CSrLvliView::IDD,   RUNTIME_CLASS(CSrLvliView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Leveled_Item"),	_T("Leveled Item") },
+	{ &SR_NAME_LVSP, "Leveled Spell",    CSrLvspView::IDD,   RUNTIME_CLASS(CSrLvspView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Leveled_Spell"),	_T("Leveled Spell") },
 	{ &SR_NAME_MGEF, "Magic Effect",     CSrMgefView::IDD,   RUNTIME_CLASS(CSrMgefView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/MagicEffect"),	_T("Magic_Effect") },
 	{ &SR_NAME_MISC, "Misc",			 CSrMiscView::IDD,   RUNTIME_CLASS(CSrMiscView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Misc"),			_T("Misc") },
 	{ &SR_NAME_ALCH, "Potion",			 CSrAlchView::IDD,   RUNTIME_CLASS(CSrAlchView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Potion"),		_T("Potion") },

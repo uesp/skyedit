@@ -83,6 +83,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "LeveledSpell"
+	DisplayName = "Leveled Spell"
+	RecName = LVSP
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "MagicEffects"
 	DisplayName = "Magic Effects"
 	RecName = MGEF
@@ -457,12 +463,6 @@ DisplayFilter
 	ID = "LandTexture"
 	DisplayName = "Land Texture"
 	RecName = LTEX
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "LeveledSpell"
-	DisplayName = "Leveled Spell"
-	RecName = LVSP
 	Parent = NoEdit
 End	
 DisplayFilter

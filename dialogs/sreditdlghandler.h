@@ -42,6 +42,7 @@
   #include "srkywdview.h"
   #include "srlvliview.h"
   #include "srlvlnview.h"
+  #include "srlvspview.h"
   #include "srmgefview.h"
   #include "srmiscview.h"
   #include "srscrlview.h"
