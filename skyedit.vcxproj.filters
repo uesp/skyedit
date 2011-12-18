@@ -1584,6 +1584,12 @@
     <ClInclude Include="dialogs\SrAlchView.h">
       <Filter>Header Files\Forms.\Dialogs.</Filter>
     </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\sralchdatasubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srenitalchsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="skyedit.rc">

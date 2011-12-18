@@ -53,6 +53,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "Ingredient"
+	DisplayName = "Ingredients"
+	RecName = INGR
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Keywords"
 	DisplayName = "Keywords"
 	RecName = KYWD

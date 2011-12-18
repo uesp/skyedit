@@ -2061,12 +2061,14 @@
     <ClInclude Include="..\tes5lib\modfile\srrectype.h" />
     <ClInclude Include="..\tes5lib\modfile\srsimplerecordhandler.h" />
     <ClInclude Include="..\tes5lib\modfile\srundoitem.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\sralchdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srarmodatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srbytesubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srctdasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srdwordsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srefitsubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srenitalchsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srenitsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srfloatsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srformidarraysubrecord.h" />

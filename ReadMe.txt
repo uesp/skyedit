@@ -136,6 +136,8 @@ can be found at:
 
   Version History
 =======================================
+0.03alpha - 16 December 2011
+	- Addition of: AMMO, ARMO, ALCH
 
 0.02alpha - 16 December 2011
 	- Several crash bug fixes

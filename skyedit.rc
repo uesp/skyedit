@@ -1464,7 +1464,7 @@ BEGIN
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY, GRAYED
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE, GRAYED
         MENUITEM SEPARATOR
-        MENUITEM "Find...",                     ID_EDIT_FIND
+        MENUITEM "&Find...",                    ID_EDIT_FIND
     END
     POPUP "&View"
     BEGIN
