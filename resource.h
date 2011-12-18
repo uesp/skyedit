@@ -73,8 +73,10 @@
 #define IDD_SCRL_VIEW                   196
 #define IDD_BOOK_VIEW                   197
 #define IDD_STAT_VIEW                   198
-#define IDD_WEAP_VIEW1                  199
 #define IDD_MISC_VIEW                   199
+#define IDD_LVLI_VIEW                   201
+#define IDD_DIALOG1                     202
+#define IDD_LVLEDIT_DLG                 202
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -117,8 +119,17 @@
 #define IDC_BINARY_CHECK                1055
 #define IDC_FORMID                      1056
 #define IDC_SEARCH_COMBO                1057
+#define IDC_CALCULATEALL                1058
+#define IDC_LEVEL                       1059
 #define IDC_CASESENSITIVE_CHECK         1060
+#define IDC_CALCULATEEACH               1061
+#define IDC_USEALL                      1062
+#define IDC_COUNT                       1062
 #define IDC_FIND_LABEL                  1063
+#define IDC_CHANCENONE                  1064
+#define IDC_OBJECT_FORMID               1065
+#define IDC_ITEM_LIST                   1066
+#define IDC_FORMID2                     1068
 #define IDC_WEIGHT                      1070
 #define IDC_VALUE                       1073
 #define IDC_UNKNOWN                     1074
@@ -468,7 +479,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        194
+#define _APS_NEXT_RESOURCE_VALUE        203
 #define _APS_NEXT_COMMAND_VALUE         32859
 #define _APS_NEXT_CONTROL_VALUE         1198
 #define _APS_NEXT_SYMED_VALUE           101
