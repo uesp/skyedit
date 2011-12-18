@@ -30,31 +30,31 @@ DisplayFilter
 End	
 DisplayFilter
 	ID = "Armor"
-	DisplayName = "Armor"
+	DisplayName = "Armors"
 	RecName = ARMO
 	Parent = NULL
 End	
 DisplayFilter
 	ID = "Book"
-	DisplayName = "Book"
+	DisplayName = "Books"
 	RecName = BOOK
 	Parent = NULL
 End	
 DisplayFilter
 	ID = "Enchant"
-	DisplayName = "Enchantment"
+	DisplayName = "Enchantments"
 	RecName = ENCH
 	Parent = NULL
 End	
 DisplayFilter
 	ID = "Global"
-	DisplayName = "Global"
+	DisplayName = "Globals"
 	RecName = GLOB
 	Parent = NULL
 End	
 DisplayFilter
 	ID = "GameSetting"
-	DisplayName = "Game Setting"
+	DisplayName = "Game Settings"
 	RecName = GMST
 	Parent = NULL
 End	
@@ -101,7 +101,14 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "Static"
+	DisplayName = "Statics"
+	RecName = STAT
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Weapons"
+	DisplayName = "Weapons"
 	RecName = WEAP
 	Parent = NULL
 End	
