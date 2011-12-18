@@ -35,6 +35,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "Book"
+	DisplayName = "Book"
+	RecName = BOOK
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Enchant"
 	DisplayName = "Enchantment"
 	RecName = ENCH
@@ -174,12 +180,6 @@ DisplayFilter
 	ID = "ActorValue"
 	DisplayName = "Actor Value"
 	RecName = AVIF
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "Book"
-	DisplayName = "Book"
-	RecName = BOOK
 	Parent = NoEdit
 End	
 DisplayFilter
