@@ -476,6 +476,12 @@ DisplayFilter
 	RecName = SOUN
 	Parent = NoEdit
 End	
+DisplayFilter
+	ID = "SoundDesc"
+	DisplayName = "Sound Desc"
+	RecName = SNDR
+	Parent = NoEdit
+End	
 #
 # NoEdit Refs
 #
