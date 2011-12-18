@@ -106,6 +106,9 @@ protected:
 
 public:
 	CButton m_UseAll;
+	CEdit m_Global;
+	afx_msg void OnBnClickedEditGlobal();
+	afx_msg void OnBnClickedSelectGlobal();
 };
 /*===========================================================================
  *		End of Class CSrLvliView Definition

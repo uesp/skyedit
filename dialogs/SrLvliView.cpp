@@ -59,6 +59,8 @@ BEGIN_MESSAGE_MAP(CSrLvliView, CSrRecordDialog)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_ITEM_LIST, OnDropItemList)
 	ON_NOTIFY(ID_SRRECORDLIST_KEYDOWN, IDC_ITEM_LIST, OnKeydownItemList)
 	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDC_EDIT_GLOBAL, &CSrLvliView::OnBnClickedEditGlobal)
+	ON_BN_CLICKED(IDC_SELECT_GLOBAL, &CSrLvliView::OnBnClickedSelectGlobal)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -77,6 +79,7 @@ BEGIN_SRRECUIFIELDS(CSrLvliView)
 	ADD_SRRECUIFIELDS( SR_FIELD_CALCULATEALL,	IDC_CALCULATEALL,	0,		IDS_TT_CALCALL)
 	ADD_SRRECUIFIELDS( SR_FIELD_USEALL,			IDC_USEALL,			0,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_CHANCENONE,		IDC_CHANCENONE,		16,		IDS_TT_CHANCENONE)
+	ADD_SRRECUIFIELDS( SR_FIELD_GLOBAL,			IDC_GLOBAL,			200,	0)
 END_SRRECUIFIELDS()
 /*===========================================================================
  *		End of UI Field Map
@@ -201,7 +204,8 @@ void CSrLvliView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_FORMID2, m_FormID);
 	DDX_Control(pDX, IDC_ITEM_LIST, m_ItemList);
 	DDX_Control(pDX, IDC_USEALL, m_UseAll);
-}
+	DDX_Control(pDX, IDC_GLOBAL, m_Global);
+ }
 /*===========================================================================
  *		End of Class Method CSrLvliView::DoDataExchange()
  *=========================================================================*/
@@ -933,3 +937,15 @@ void CSrLvliView::OnKeydownItemList (NMHDR* pHdr, LRESULT* lResult)
 /*===========================================================================
  *		End of Class Event CSrLvliView::OnKeydownItemList()
  *=========================================================================*/
+
+
+ void CSrLvliView::OnBnClickedEditGlobal()
+ {
+	 if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_Global, SR_NAME_GLOB);
+ }
+
+
+ void CSrLvliView::OnBnClickedSelectGlobal()
+ {
+	 if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_Global, SR_NAME_GLOB, &CSrGlobRecord::s_FieldMap);
+ }
