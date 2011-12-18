@@ -938,3 +938,551 @@ DisplayFilter
 	BodyParts = Shield
 	BodyCompare = OR
 End
+#
+# Static Sub-Filters
+#
+DisplayFilter
+	ID = "StaticActor"
+	DisplayName = "Actors"
+	RecName = STAT
+	Parent = Static
+	FieldStarts = Model, Actors	
+End
+DisplayFilter
+	ID = "StaticArch"
+	DisplayName = "Architecture"
+	RecName = STAT
+	Parent = Static
+	FieldStarts = Model, Architecture	
+End
+DisplayFilter
+	ID = "StaticArchDock"
+	DisplayName = "Docks"
+	RecName = STAT
+	Parent = StaticArch
+	FieldStarts = Model, Architecture\Docks
+End
+DisplayFilter
+	ID = "StaticArchFalmer"
+	DisplayName = "Falmer"
+	RecName = STAT
+	Parent = StaticArch
+	FieldStarts = Model, Architecture\Falmer
+End
+DisplayFilter
+	ID = "StaticArchFarm"
+	DisplayName = "Farmhouse"
+	RecName = STAT
+	Parent = StaticArch
+	FieldStarts = Model, Architecture\Farmhouse
+End
+DisplayFilter
+	ID = "StaticArchHrothgar"
+	DisplayName = "High Hrothgar"
+	RecName = STAT
+	Parent = StaticArch
+	FieldStarts = Model, Architecture\HighHrothgar
+End
+DisplayFilter
+	ID = "StaticArchMarkath"
+	DisplayName = "Markath"
+	RecName = STAT
+	Parent = StaticArch
+	FieldStarts = Model, Architecture\Markath
+End
+DisplayFilter
+	ID = "StaticArchRiften"
+	DisplayName = "Riften"
+	RecName = STAT
+	Parent = StaticArch
+	FieldStarts = Model, Architecture\Riften
+End
+DisplayFilter
+	ID = "StaticArchShack"
+	DisplayName = "Shack"
+	RecName = STAT
+	Parent = StaticArch
+	FieldStarts = Model, Architecture\Shack
+End
+DisplayFilter
+	ID = "StaticArchSkyHaven"
+	DisplayName = "Sky Haven"
+	RecName = STAT
+	Parent = StaticArch
+	FieldStarts = Model, Architecture\SkyHaven
+End
+DisplayFilter
+	ID = "StaticArchSolitude"
+	DisplayName = "Solitude"
+	RecName = STAT
+	Parent = StaticArch
+	FieldStarts = Model, Architecture\Solitude
+End
+DisplayFilter
+	ID = "StaticArchSovengarde"
+	DisplayName = "Sovengarde"
+	RecName = STAT
+	Parent = StaticArch
+	FieldStarts = Model, Architecture\Sovengarde
+End
+DisplayFilter
+	ID = "StaticArchTent"
+	DisplayName = "Tents"
+	RecName = STAT
+	Parent = StaticArch
+	FieldStarts = Model, Architecture\Tent
+End
+DisplayFilter
+	ID = "StaticArchWhiterun"
+	DisplayName = "Whiterun"
+	RecName = STAT
+	Parent = StaticArch
+	FieldStarts = Model, Architecture\Whiterun
+End
+DisplayFilter
+	ID = "StaticArchWindhelm"
+	DisplayName = "Windhelm"
+	RecName = STAT
+	Parent = StaticArch
+	FieldStarts = Model, Architecture\Windhelm
+End
+DisplayFilter
+	ID = "StaticArmor"
+	DisplayName = "Armor"
+	RecName = STAT
+	Parent = Static
+	FieldStarts = Model, Armor
+End
+DisplayFilter
+	ID = "StaticCamera"
+	DisplayName = "Camera"
+	RecName = STAT
+	Parent = Static
+	FieldStarts = Model, Camera
+End
+DisplayFilter
+	ID = "StaticClutter"
+	DisplayName = "Clutter"
+	RecName = STAT
+	Parent = Static
+	FieldStarts = Model, Clutter
+End
+DisplayFilter
+	ID = "StaticClutterBlackreach"
+	DisplayName = "Blackreach"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Blackreach
+End
+DisplayFilter
+	ID = "StaticClutterBone"
+	DisplayName = "Bones"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Bones
+End
+DisplayFilter
+	ID = "StaticClutterBook"
+	DisplayName = "Books"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Books
+End
+DisplayFilter
+	ID = "StaticClutterBrew"
+	DisplayName = "Brew"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Brew
+End
+DisplayFilter
+	ID = "StaticClutterBurial"
+	DisplayName = "Burial"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Burial
+End
+DisplayFilter
+	ID = "StaticClutterCandle"
+	DisplayName = "Candles"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Candle
+End
+DisplayFilter
+	ID = "StaticClutterCart"
+	DisplayName = "Carts"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Carts
+End
+DisplayFilter
+	ID = "StaticClutterCivilWar"
+	DisplayName = "CivilWar"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\CivilWar
+End
+DisplayFilter
+	ID = "StaticClutterCoffin"
+	DisplayName = "Coffins"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Coffins
+End
+DisplayFilter
+	ID = "StaticClutterCommon"
+	DisplayName = "Common"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Common
+End
+DisplayFilter
+	ID = "StaticClutterCook"
+	DisplayName = "Cooking"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Cooking
+End
+DisplayFilter
+	ID = "StaticClutterCounter"
+	DisplayName = "Counter"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Counter
+End
+DisplayFilter
+	ID = "StaticClutterDBHood"
+	DisplayName = "DBHood"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\DBHood
+End
+DisplayFilter
+	ID = "StaticClutterDaedric"
+	DisplayName = "Daedric"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Daedric
+End
+DisplayFilter
+	ID = "StaticClutterDeadAnimal"
+	DisplayName = "Dead Animals"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\DeadAnimals
+End
+DisplayFilter
+	ID = "StaticClutterDining"
+	DisplayName = "Dining"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Dining
+End
+DisplayFilter
+	ID = "StaticClutterDwemer"
+	DisplayName = "Dwemer"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Dwemer
+End
+DisplayFilter
+	ID = "StaticClutterFalmer"
+	DisplayName = "Falmer"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Falmer
+End
+DisplayFilter
+	ID = "StaticClutterFire"
+	DisplayName = "Fire..."
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Fire
+End
+DisplayFilter
+	ID = "StaticClutterGiant"
+	DisplayName = "Giant"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Giant
+End
+DisplayFilter
+	ID = "StaticClutter"
+	DisplayName = ""
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\
+End
+DisplayFilter
+	ID = "StaticClutterHagraven"
+	DisplayName = "Hagraven"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Hagraven
+End
+DisplayFilter
+	ID = "StaticClutterHelgen"
+	DisplayName = "Helgen"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Helgen
+End
+DisplayFilter
+	ID = "StaticClutterImperial"
+	DisplayName = "Imperial"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Imperial
+End
+DisplayFilter
+	ID = "StaticClutterPelt"
+	DisplayName = "Pelts"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Pelt
+End
+DisplayFilter
+	ID = "StaticClutterQuest"
+	DisplayName = "Quest"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Quest
+End
+DisplayFilter
+	ID = "StaticClutterRuin"
+	DisplayName = "Ruins"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Ruin
+EndDisplayFilter
+	ID = "StaticClutterSign"
+	DisplayName = "Sign"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Signage
+End
+DisplayFilter
+	ID = "StaticClutterStatue"
+	DisplayName = "Statues"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Statue
+End
+DisplayFilter
+	ID = "StaticClutterStockada"
+	DisplayName = "Stockade"
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\Stockade
+End
+DisplayFilter
+	ID = "StaticClutter"
+	DisplayName = ""
+	RecName = STAT
+	Parent = StaticClutter
+	FieldStarts = Model, Clutter\
+End
+DisplayFilter
+	ID = "StaticDungeon"
+	DisplayName = "Dungeons"
+	RecName = STAT
+	Parent = Static
+	FieldStarts = Model, Dungeons\
+End
+DisplayFilter
+	ID = "StaticDungeonCave"
+	DisplayName = "Caves"
+	RecName = STAT
+	Parent = StaticDungeon
+	FieldStarts = Model, Dungeons\Caves\
+End
+DisplayFilter
+	ID = "StaticDungeonCaveBlackreach"
+	DisplayName = "Blackreach"
+	RecName = STAT
+	Parent = StaticDungeonCave
+	FieldStarts = Model, Dungeons\Caves\Blackreach
+End
+DisplayFilter
+	ID = "StaticDungeonCaveGreen"
+	DisplayName = "Green"
+	RecName = STAT
+	Parent = StaticDungeonCave
+	FieldStarts = Model, Dungeons\Caves\Green
+End
+DisplayFilter
+	ID = "StaticDungeonCaveIce"
+	DisplayName = "Ice"
+	RecName = STAT
+	Parent = StaticDungeonCave
+	FieldStarts = Model, Dungeons\Caves\Ice
+End
+DisplayFilter
+	ID = "StaticDungeonDwemer"
+	DisplayName = "Dwemer"
+	RecName = STAT
+	Parent = StaticDungeon
+	FieldStarts = Model, Dungeons\Dwemer
+End
+DisplayFilter
+	ID = "StaticDungeonImperial"
+	DisplayName = "Imperial"
+	RecName = STAT
+	Parent = StaticDungeon
+	FieldStarts = Model, Dungeons\Imperial
+End
+DisplayFilter
+	ID = "StaticDungeonMine"
+	DisplayName = "Mines"
+	RecName = STAT
+	Parent = StaticDungeon
+	FieldStarts = Model, Dungeons\Mines
+End
+DisplayFilter
+	ID = "StaticDungeonNordic"
+	DisplayName = "Nordic"
+	RecName = STAT
+	Parent = StaticDungeon
+	FieldStarts = Model, Dungeons\Nordic
+End
+DisplayFilter
+	ID = "StaticDungeonRiften"
+	DisplayName = "Riften"
+	RecName = STAT
+	Parent = StaticDungeon
+	FieldStarts = Model, Dungeons\Riften
+End
+DisplayFilter
+	ID = "StaticDungeonShip"
+	DisplayName = "Ship"
+	RecName = STAT
+	Parent = StaticDungeon
+	FieldStarts = Model, Dungeons\Ship
+End
+DisplayFilter
+	ID = "StaticEffect"
+	DisplayName = "Effect"
+	RecName = STAT
+	Parent = Static
+	FieldStarts = Model, Effects
+End
+DisplayFilter
+	ID = "StaticFurn"
+	DisplayName = "Furniture"
+	RecName = STAT
+	Parent = Static
+	FieldStarts = Model, Furniture
+End
+DisplayFilter
+	ID = "StaticLand"
+	DisplayName = "Landscape"
+	RecName = STAT
+	Parent = Static
+	FieldStarts = Model, Landscape
+End
+DisplayFilter
+	ID = "StaticLandDirtCliff"
+	DisplayName = "Dirt Cliffs"
+	RecName = STAT
+	Parent = StaticLand
+	FieldStarts = Model, Landscape\DirtCliffs
+End
+DisplayFilter
+	ID = "StaticLandIce"
+	DisplayName = "Ice"
+	RecName = STAT
+	Parent = StaticLand
+	FieldStarts = Model, Landscape\Ice
+End
+DisplayFilter
+	ID = "StaticLandMountain"
+	DisplayName = "Mountains"
+	RecName = STAT
+	Parent = StaticLand
+	FieldStarts = Model, Landscape\Mountains
+End
+DisplayFilter
+	ID = "StaticLandRoad"
+	DisplayName = "Roads"
+	RecName = STAT
+	Parent = StaticLand
+	FieldStarts = Model, Landscape\Roads
+End
+DisplayFilter
+	ID = "StaticLandRock"
+	DisplayName = "Rocks"
+	RecName = STAT
+	Parent = StaticLand
+	FieldStarts = Model, Landscape\Rocks
+End
+DisplayFilter
+	ID = "StaticLandSnow"
+	DisplayName = "Snow"
+	RecName = STAT
+	Parent = StaticLand
+	FieldStarts = Model, Landscape\Snow
+End
+DisplayFilter
+	ID = "StaticLandTree"
+	DisplayName = "Trees"
+	RecName = STAT
+	Parent = StaticLand
+	FieldStarts = Model, Landscape\Trees
+End
+DisplayFilter
+	ID = "StaticLandTundra"
+	DisplayName = "Tundra"
+	RecName = STAT
+	Parent = StaticLand
+	FieldStarts = Model, Landscape\Tundra
+End
+DisplayFilter
+	ID = "StaticLandUnique"
+	DisplayName = "Unique"
+	RecName = STAT
+	Parent = StaticLand
+	FieldStarts = Model, Landscape\Unique
+End
+DisplayFilter
+	ID = "StaticLandVolcanic"
+	DisplayName = "Volcanic"
+	RecName = STAT
+	Parent = StaticLand
+	FieldStarts = Model, Landscape\Volcanic
+End
+DisplayFilter
+	ID = "StaticLoad"
+	DisplayName = "Loadscreen"
+	RecName = STAT
+	Parent = Static
+	FieldStarts = Model, LoadScreen
+End
+DisplayFilter
+	ID = "StaticMagic"
+	DisplayName = "Magic"
+	RecName = STAT
+	Parent = Static
+	FieldStarts = Model, Magic
+End
+DisplayFilter
+	ID = "StaticMarker"
+	DisplayName = "Markers"
+	RecName = STAT
+	Parent = Static
+	FieldStarts = Model, Marker
+End
+DisplayFilter
+	ID = "StaticSky"
+	DisplayName = "Sky"
+	RecName = STAT
+	Parent = Static
+	FieldStarts = Model, Sky
+End
+DisplayFilter
+	ID = "StaticWeapon"
+	DisplayName = "Weapon"
+	RecName = STAT
+	Parent = Static
+	FieldStarts = Model, Weapon
+End
