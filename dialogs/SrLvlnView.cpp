@@ -839,14 +839,15 @@ void CSrLvlnView::OnDropItemList (NMHDR* pNotifyStruct, LRESULT* pResult)
  * Class CSrLvlnView Event - int OnDropCustomData (DropItems);
  *
  *=========================================================================*/
-int CSrLvlnView::OnDropCustomData (srrldroprecords_t& DropItems) {
+int CSrLvlnView::OnDropCustomData (srrldroprecords_t& DropItems) 
+{
   CSrLvloSubrecord*  pItem;
-  CSrLvliRecord*     pRecord;
   srrlcustomdata_t*  pCustomData;
   dword				 Index;
 
 	/* Check all custom data dropped */
-  for (Index = 0; Index < DropItems.pCustomDatas->GetSize(); ++Index) {
+  for (Index = 0; Index < DropItems.pCustomDatas->GetSize(); ++Index) 
+  {
     pCustomData = DropItems.pCustomDatas->GetAt(Index);
 
     if (pCustomData->pRecord        == NULL) return (SRRL_DROPCHECK_ERROR);
@@ -854,8 +855,7 @@ int CSrLvlnView::OnDropCustomData (srrldroprecords_t& DropItems) {
     if (pCustomData->pSubrecords[0] == NULL) return (SRRL_DROPCHECK_ERROR);
 
 		/* Check for dragging another lvlo record */
-    pRecord = SrCastClass(CSrLvliRecord, pCustomData->pRecord);
-    if (pRecord == NULL) return (SRRL_DROPCHECK_ERROR);
+	if (!SrIsValidLvlnRecord(pCustomData->pRecord->GetRecordType())) return (SRRL_DROPCHECK_ERROR);
     pItem = SrCastClass(CSrLvloSubrecord, pCustomData->pSubrecords[0]);
     if (pItem == NULL) return (SRRL_DROPCHECK_ERROR);
     
@@ -880,12 +880,14 @@ int CSrLvlnView::OnDropCustomData (srrldroprecords_t& DropItems) {
  * Class CSrLvlnView Event - int OnDropRecords (DropItems);
  *
  *=========================================================================*/
-int CSrLvlnView::OnDropRecords (srrldroprecords_t& DropItems) {
+int CSrLvlnView::OnDropRecords (srrldroprecords_t& DropItems) 
+{
   CSrLvloSubrecord*  pItem;
   CSrRecord*	     pRecord;
   dword		     Index;
 
-  for (Index = 0; Index < DropItems.pRecords->GetSize(); ++Index) {
+  for (Index = 0; Index < DropItems.pRecords->GetSize(); ++Index) 
+  {
     pRecord = DropItems.pRecords->GetAt(Index);
     
 		/* Don't drag onto ourself */
@@ -893,7 +895,7 @@ int CSrLvlnView::OnDropRecords (srrldroprecords_t& DropItems) {
     if (pRecord->GetFormID() == m_EditInfo.pOldRecord->GetFormID()) return (SRRL_DROPCHECK_ERROR);
 
 		/* Ignore any invalid record types */
-    if (!SrIsValidLvliRecord(pRecord->GetRecordType())) return (SRRL_DROPCHECK_ERROR);
+    if (!SrIsValidLvlnRecord(pRecord->GetRecordType())) return (SRRL_DROPCHECK_ERROR);
 
 		/* If we're just checking */
     if (DropItems.Notify.code == ID_SRRECORDLIST_CHECKDROP) continue;

@@ -35,7 +35,7 @@ class CSrLvlnView : public CSrRecordDialog {
 
   /*---------- Begin Protected Class Members ----------------------------*/
 protected:
-  CSrLvliRecord		m_CopyRecord;
+  CSrLvlnRecord		m_CopyRecord;
 
 
   /*---------- Begin Protected Class Methods ----------------------------*/

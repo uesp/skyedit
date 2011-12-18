@@ -799,16 +799,19 @@ LRESULT CSrLvliView::OnEditBaseRecordMsg (WPARAM wParam, LPARAM lParam) {
  * Class CSrLvliView Event - void OnDropItemList (pNotifyStruct, pResult);
  *
  *=========================================================================*/
-void CSrLvliView::OnDropItemList (NMHDR* pNotifyStruct, LRESULT* pResult) {
+void CSrLvliView::OnDropItemList (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
   srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
 
   *pResult = SRRL_DROPCHECK_ERROR;
   
 	/* Check for custom data */
-  if (pDropItems->pCustomDatas != NULL && pDropItems->pCustomDatas->GetSize() > 0) {
+  if (pDropItems->pCustomDatas != NULL && pDropItems->pCustomDatas->GetSize() > 0) 
+  {
     *pResult = OnDropCustomData(*pDropItems);
   }	/* Check for records */
-  else if (pDropItems->pRecords != NULL) {
+  else if (pDropItems->pRecords != NULL) 
+  {
     *pResult = OnDropRecords(*pDropItems);
   } 
 
@@ -823,14 +826,15 @@ void CSrLvliView::OnDropItemList (NMHDR* pNotifyStruct, LRESULT* pResult) {
  * Class CSrLvliView Event - int OnDropCustomData (DropItems);
  *
  *=========================================================================*/
-int CSrLvliView::OnDropCustomData (srrldroprecords_t& DropItems) {
+int CSrLvliView::OnDropCustomData (srrldroprecords_t& DropItems) 
+{
   CSrLvloSubrecord*  pItem;
-  CSrLvliRecord*     pRecord;
   srrlcustomdata_t*  pCustomData;
   dword				 Index;
 
 	/* Check all custom data dropped */
-  for (Index = 0; Index < DropItems.pCustomDatas->GetSize(); ++Index) {
+  for (Index = 0; Index < DropItems.pCustomDatas->GetSize(); ++Index) 
+  {
     pCustomData = DropItems.pCustomDatas->GetAt(Index);
 
     if (pCustomData->pRecord        == NULL) return (SRRL_DROPCHECK_ERROR);
@@ -838,8 +842,7 @@ int CSrLvliView::OnDropCustomData (srrldroprecords_t& DropItems) {
     if (pCustomData->pSubrecords[0] == NULL) return (SRRL_DROPCHECK_ERROR);
 
 		/* Check for dragging another lvlo record */
-    pRecord = SrCastClass(CSrLvliRecord, pCustomData->pRecord);
-    if (pRecord == NULL) return (SRRL_DROPCHECK_ERROR);
+    if (!SrIsValidLvliRecord(pCustomData->pRecord->GetRecordType())) return (SRRL_DROPCHECK_ERROR);
     pItem = SrCastClass(CSrLvloSubrecord, pCustomData->pSubrecords[0]);
     if (pItem == NULL) return (SRRL_DROPCHECK_ERROR);
     
@@ -864,12 +867,14 @@ int CSrLvliView::OnDropCustomData (srrldroprecords_t& DropItems) {
  * Class CSrLvliView Event - int OnDropRecords (DropItems);
  *
  *=========================================================================*/
-int CSrLvliView::OnDropRecords (srrldroprecords_t& DropItems) {
+int CSrLvliView::OnDropRecords (srrldroprecords_t& DropItems) 
+{
   CSrLvloSubrecord*  pItem;
   CSrRecord*	     pRecord;
   dword		     Index;
 
-  for (Index = 0; Index < DropItems.pRecords->GetSize(); ++Index) {
+  for (Index = 0; Index < DropItems.pRecords->GetSize(); ++Index) 
+  {
     pRecord = DropItems.pRecords->GetAt(Index);
     
 		/* Don't drag onto ourself */
@@ -900,20 +905,24 @@ int CSrLvliView::OnDropRecords (srrldroprecords_t& DropItems) {
  * Class CSrLvliView Event - void OnKeydownItemList (pHdr, lResult);
  *
  *=========================================================================*/
-void CSrLvliView::OnKeydownItemList (NMHDR* pHdr, LRESULT* lResult) {
+void CSrLvliView::OnKeydownItemList (NMHDR* pHdr, LRESULT* lResult) 
+{
   srrlkeydown_t* pNotify = (srrlkeydown_t *) pHdr;
   *lResult = 0;
 	
-  if (pNotify->KeyDown.nVKey == VK_DELETE || pNotify->KeyDown.nVKey == VK_BACK) {
+  if (pNotify->KeyDown.nVKey == VK_DELETE || pNotify->KeyDown.nVKey == VK_BACK) 
+  {
     if (!pNotify->Ctrl && !pNotify->Alt) OnLvllistDelete();
   }
-  else if (pNotify->KeyDown.nVKey == VK_ADD) {
+  else if (pNotify->KeyDown.nVKey == VK_ADD) 
+  {
     if (pNotify->Shift) 
       OnAddCount();
     else
       OnAddLevel();
   }
-  else if (pNotify->KeyDown.nVKey == VK_SUBTRACT) {
+  else if (pNotify->KeyDown.nVKey == VK_SUBTRACT) 
+  {
     if (pNotify->Shift) 
       OnMinusCount();
     else
