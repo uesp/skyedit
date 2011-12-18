@@ -77,6 +77,12 @@ DisplayFilter
 	Parent = NULL
 End
 DisplayFilter
+	ID = "Misc"
+	DisplayName = "Misc"
+	RecName = MISC
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Potions"
 	DisplayName = "Potions"
 	RecName = ALCH
