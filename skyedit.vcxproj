@@ -2065,8 +2065,12 @@
     <ClInclude Include="..\tes5lib\modfile\srsimplerecordhandler.h" />
     <ClInclude Include="..\tes5lib\modfile\srundoitem.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\sralchdatasubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srammodatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srarmodatasubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srbodtsubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srbookdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srbytesubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srcntosubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srctdasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srdwordsubrecord.h" />
@@ -2078,10 +2082,13 @@
     <ClInclude Include="..\tes5lib\modfile\subrecords\srformidsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srgmstdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srhedrsubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\sringrdatasubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\sringrenitsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srint64subrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srlongsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srlstringsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srmgefdatasubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srscrldatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srspitsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srstringsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srsubreccont.h" />
