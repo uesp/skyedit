@@ -37,6 +37,7 @@
   #include "srenchview.h"
   #include "srglobview.h"
   #include "srgmstview.h"
+  #include "sringrview.h"
   #include "srkywdview.h"
   #include "srmgefview.h"
   #include "srspelview.h"

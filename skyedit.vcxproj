@@ -1821,6 +1821,7 @@
     <ClCompile Include="dialogs\SrArmoView.cpp" />
     <ClCompile Include="dialogs\SrBodyPartsListDlg.cpp" />
     <ClCompile Include="dialogs\SrEnchView.cpp" />
+    <ClCompile Include="dialogs\SrIngrView.cpp" />
     <ClCompile Include="dialogs\SrSpelView.cpp" />
     <ClCompile Include="SrCobjView.cpp" />
     <ClCompile Include="SrConditionDlg.cpp" />
@@ -2099,6 +2100,7 @@
     <ClInclude Include="dialogs\SrArmoView.h" />
     <ClInclude Include="dialogs\SrBodyPartsListDlg.h" />
     <ClInclude Include="dialogs\SrEnchView.h" />
+    <ClInclude Include="dialogs\SrIngrView.h" />
     <ClInclude Include="dialogs\SrSpelView.h" />
     <ClInclude Include="SrCobjView.h" />
     <ClInclude Include="SrConditionDlg.h" />

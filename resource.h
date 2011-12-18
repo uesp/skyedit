@@ -69,6 +69,7 @@
 #define IDD_ARMO_VIEW                   192
 #define IDD_BODYPARTS_DLG               193
 #define IDD_ALCH_VIEW                   194
+#define IDD_INGR_VIEW                   195
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -115,6 +116,8 @@
 #define IDC_FIND_LABEL                  1063
 #define IDC_WEIGHT                      1070
 #define IDC_VALUE                       1073
+#define IDC_VALUE2                      1074
+#define IDC_UNKNOWN                     1074
 #define IDC_ENCHANTCHARGE               1080
 #define IDC_NAME                        1081
 #define IDC_ENCHANTMENT                 1095
@@ -166,7 +169,6 @@
 #define IDC_SELECTPICKUPSOUND_BUTTON    1139
 #define IDC_PARAM2_LABEL                1140
 #define IDC_SELECTARMMODEL_BUTTON       1140
-#define IDC_SELECTPICKUPSOUND_BUTTON2   1140
 #define IDC_VALUE_TEXT                  1141
 #define IDC_SELECTUSESOUND_BUTTON       1141
 #define IDC_VALUE_LABEL                 1142

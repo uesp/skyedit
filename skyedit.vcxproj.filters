@@ -797,6 +797,9 @@
     <ClCompile Include="dialogs\SrAlchView.cpp">
       <Filter>Source Files\Forms\Dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="dialogs\SrIngrView.cpp">
+      <Filter>Source Files\Forms\Dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">
@@ -1589,6 +1592,9 @@
     </ClInclude>
     <ClInclude Include="..\tes5lib\modfile\subrecords\srenitalchsubrecord.h">
       <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="dialogs\SrIngrView.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
