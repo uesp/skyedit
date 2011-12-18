@@ -30,6 +30,7 @@
   #include "srbatcheditdlg.h"
   #include "srfinddlg.h"
 
+  #include "sralchview.h"
   #include "srammoview.h"
   #include "srarmoview.h"
   #include "srcobjview.h"

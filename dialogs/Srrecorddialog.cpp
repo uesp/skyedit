@@ -1935,7 +1935,8 @@ void CSrRecordDialog::OnDropSound (NMHDR* pNotifyStruct, LRESULT* pResult) {
   if (pSound == NULL) return;
 
 	/* If we're just checking or not */
-  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) {
+  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
+  {
     m_pSoundField->SetWindowText(pSound->GetEditorID());
   }
 
@@ -1964,7 +1965,7 @@ void CSrRecordDialog::OnDropDropSound (NMHDR* pNotifyStruct, LRESULT* pResult) {
   pRecord = pDropItems->pRecords->GetAt(0);
 
 	/* Ignore any invalid record types */
-  if (pRecord->GetRecordType() != SR_NAME_SOUN) return;
+  if (pRecord->GetRecordType() != SR_NAME_SNDR) return;
   pSound = SrCastClass(CSrIdRecord, pRecord);
   if (pSound == NULL) return;
 
@@ -1998,7 +1999,7 @@ void CSrRecordDialog::OnDropPickupSound (NMHDR* pNotifyStruct, LRESULT* pResult)
   pRecord = pDropItems->pRecords->GetAt(0);
 
 	/* Ignore any invalid record types */
-  if (pRecord->GetRecordType() != SR_NAME_SOUN) return;
+  if (pRecord->GetRecordType() != SR_NAME_SNDR) return;
   pSound = SrCastClass(CSrIdRecord, pRecord);
   if (pSound == NULL) return;
 
@@ -2194,7 +2195,7 @@ void CSrRecordDialog::OnBnClickedSelectdropsoundButton()
 	CString Buffer;
 
 	m_pDropSoundField->GetWindowText(Buffer);
-	if (!m_pDlgHandler->SelectSound(Buffer)) return;
+	if (!m_pDlgHandler->SelectRecord(Buffer, SR_NAME_SNDR, &CSrSndrRecord::s_FieldMap)) return;
 	m_pDropSoundField->SetWindowText(Buffer);
 }
 
@@ -2205,20 +2206,20 @@ void CSrRecordDialog::OnBnClickedSelectpickupButton()
 	CString Buffer;
 
 	m_pPickupSoundField->GetWindowText(Buffer);
-	if (!m_pDlgHandler->SelectSound(Buffer)) return;
+	if (!m_pDlgHandler->SelectRecord(Buffer, SR_NAME_SNDR, &CSrSndrRecord::s_FieldMap)) return;
 	m_pPickupSoundField->SetWindowText(Buffer);
 }
 
 
 void CSrRecordDialog::OnBnClickedEditDropsound()
 {
-	if (m_pDlgHandler && m_pDropSoundField) m_pDlgHandler->EditRecordHelper(m_pDropSoundField, SR_NAME_SOUN);
+	if (m_pDlgHandler && m_pDropSoundField) m_pDlgHandler->EditRecordHelper(m_pDropSoundField, SR_NAME_SNDR);
 }
 
 
 void CSrRecordDialog::OnBnClickedEditPickupsound()
 {
-	if (m_pDlgHandler && m_pPickupSoundField) m_pDlgHandler->EditRecordHelper(m_pPickupSoundField, SR_NAME_SOUN);
+	if (m_pDlgHandler && m_pPickupSoundField) m_pDlgHandler->EditRecordHelper(m_pPickupSoundField, SR_NAME_SNDR);
 }
 
 

@@ -68,6 +68,7 @@
 #define IDD_AMMO_VIEW                   191
 #define IDD_ARMO_VIEW                   192
 #define IDD_BODYPARTS_DLG               193
+#define IDD_ALCH_VIEW                   194
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -164,9 +165,10 @@
 #define IDC_SELECTPARAM2_BUTTON         1139
 #define IDC_SELECTPICKUPSOUND_BUTTON    1139
 #define IDC_PARAM2_LABEL                1140
-#define IDC_SELECTPICKUPSOUND_BUTTON2   1140
 #define IDC_SELECTARMMODEL_BUTTON       1140
+#define IDC_SELECTPICKUPSOUND_BUTTON2   1140
 #define IDC_VALUE_TEXT                  1141
+#define IDC_SELECTUSESOUND_BUTTON       1141
 #define IDC_VALUE_LABEL                 1142
 #define IDC_OPERATOR_LIST               1143
 #define IDC_OR_CHECK                    1144
@@ -234,10 +236,12 @@
 #define IDC_MATERIAL                    1183
 #define IDC_SELECTPICKUP_BUTTON         1184
 #define IDC_SELECTMATERIAL_BUTTON       1184
+#define IDC_USESOUND                    1184
 #define IDC_EDIT_DROPSOUND              1185
 #define IDC_EDIT_PICKUPSOUND            1186
 #define IDC_EDIT_RACE                   1187
 #define IDC_EDIT_TEMPLATE               1188
+#define IDC_EDIT_USESOUND               1188
 #define IDC_EDIT_MATERIAL               1189
 #define IDC_FLICKER                     1190
 #define IDC_IMPACTDATA                  1190
@@ -247,6 +251,7 @@
 #define IDC_BODYPARTS                   1193
 #define IDC_PULSE                       1194
 #define IDC_ARMMODEL                    1194
+#define IDC_POTIONTYPE                  1194
 #define IDC_PULSESLOW                   1195
 #define IDC_EDIT_ARMMODEL               1195
 #define IDC_FLICKERNONE                 1196
@@ -446,7 +451,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        194
 #define _APS_NEXT_COMMAND_VALUE         32859
-#define _APS_NEXT_CONTROL_VALUE         1194
+#define _APS_NEXT_CONTROL_VALUE         1195
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

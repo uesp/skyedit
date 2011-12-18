@@ -1816,6 +1816,7 @@
     <ClCompile Include="..\tes5lib\windows\srrecordtreectrl.cpp" />
     <ClCompile Include="..\tes5lib\windows\srrecordvirtuallistctrl.cpp" />
     <ClCompile Include="..\tes5lib\windows\tabctrlsheet.cpp" />
+    <ClCompile Include="dialogs\SrAlchView.cpp" />
     <ClCompile Include="dialogs\SrAmmoView.cpp" />
     <ClCompile Include="dialogs\SrArmoView.cpp" />
     <ClCompile Include="dialogs\SrBodyPartsListDlg.cpp" />
@@ -2091,6 +2092,7 @@
     <ClInclude Include="..\tes5lib\windows\srrecordtreectrl.h" />
     <ClInclude Include="..\tes5lib\windows\srrecordvirtuallistctrl.h" />
     <ClInclude Include="..\tes5lib\windows\tabctrlsheet.h" />
+    <ClInclude Include="dialogs\SrAlchView.h" />
     <ClInclude Include="dialogs\SrAmmoView.h" />
     <ClInclude Include="dialogs\SrArmoView.h" />
     <ClInclude Include="dialogs\SrBodyPartsListDlg.h" />

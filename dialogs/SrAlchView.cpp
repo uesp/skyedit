@@ -1,6 +1,6 @@
 /*===========================================================================
  *
- * File:		SrSpelView.CPP
+ * File:		SrAlchView.CPP
  * Author:		Dave Humphrey (dave@uesp.net)
  * Created On:	14 December 2011
  *
@@ -11,7 +11,7 @@
 	/* Include Files */
 #include "stdafx.h"
 #include "sredit.h"
-#include "srspelview.h"
+#include "sralchview.h"
 #include "dialogs/sreditdlghandler.h"
 #include "../SrConditionDlg.h"
 
@@ -27,7 +27,7 @@
 //  static char THIS_FILE[] = __FILE__;
 //#endif
 
-  IMPLEMENT_DYNCREATE(CSrSpelView, CSrRecordDialog);
+  IMPLEMENT_DYNCREATE(CSrAlchView, CSrRecordDialog);
 
 /*===========================================================================
  *		End of Local Definitions
@@ -36,31 +36,27 @@
 
 /*===========================================================================
  *
- * Begin CSrSpelView Message Map
+ * Begin CSrAlchView Message Map
  *
  *=========================================================================*/
-BEGIN_MESSAGE_MAP(CSrSpelView, CSrRecordDialog)
-	ON_BN_CLICKED(IDC_EDIT_EQUIPSLOT, &CSrSpelView::OnBnClickedEditEquipSlot)
-	ON_BN_CLICKED(IDC_SELECTEQUIPSLO_BUTTON, &CSrSpelView::OnBnClickedSelectequipslotButton)
-	ON_NOTIFY(LVN_ITEMCHANGED, IDC_EFFECT_LIST, &CSrSpelView::OnLvnItemchangedEffectList)
-	ON_BN_CLICKED(IDC_CONDITION_BUTTON, &CSrSpelView::OnBnClickedConditionButton)
-	ON_BN_CLICKED(IDC_EDIT_EFFECT, &CSrSpelView::OnBnClickedEditEffect)
-	ON_BN_CLICKED(IDC_SELECTEFFECT_BUTTON, &CSrSpelView::OnBnClickedSelecteffectButton)
-	ON_BN_CLICKED(ID_ADD_BUTTON, &CSrSpelView::OnBnClickedAddButton)
-	ON_BN_CLICKED(ID_DELETE_BUTTON2, &CSrSpelView::OnBnClickedDeleteButton)
-	ON_BN_CLICKED(IDC_EDIT_PERK, &CSrSpelView::OnBnClickedEditPerk)
-	ON_BN_CLICKED(IDC_SELECTPERK_BUTTON, &CSrSpelView::OnBnClickedSelectperkButton)
+BEGIN_MESSAGE_MAP(CSrAlchView, CSrRecordDialog)
+	ON_NOTIFY(LVN_ITEMCHANGED, IDC_EFFECT_LIST, &CSrAlchView::OnLvnItemchangedEffectList)
+	ON_BN_CLICKED(IDC_CONDITION_BUTTON, &CSrAlchView::OnBnClickedConditionButton)
+	ON_BN_CLICKED(IDC_EDIT_EFFECT, &CSrAlchView::OnBnClickedEditEffect)
+	ON_BN_CLICKED(IDC_SELECTEFFECT_BUTTON, &CSrAlchView::OnBnClickedSelecteffectButton)
+	ON_BN_CLICKED(ID_ADD_BUTTON, &CSrAlchView::OnBnClickedAddButton)
+	ON_BN_CLICKED(ID_DELETE_BUTTON2, &CSrAlchView::OnBnClickedDeleteButton)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EFFECT_LIST, OnDropEffectList)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EFFECT_LIST, OnDropEffectList)
-	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EQUIPSLOT, OnDropEquipSlot)
-	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EQUIPSLOT, OnDropEquipSlot)
-	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_PERK, OnDropPerk)
-	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_PERK, OnDropPerk)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EFFECTNAME, OnDropEffect)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EFFECTNAME, OnDropEffect)
+	ON_BN_CLICKED(IDC_EDIT_USESOUND, &CSrAlchView::OnBnClickedEditUsesound)
+	ON_BN_CLICKED(IDC_SELECTUSESOUND_BUTTON, &CSrAlchView::OnBnClickedSelectusesoundButton)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_USESOUND, OnDropUseSound)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_USESOUND, OnDropUseSound)
 END_MESSAGE_MAP()
 /*===========================================================================
- *		End of CSrSpelView Message Map
+ *		End of CSrAlchView Message Map
  *=========================================================================*/
 
 
@@ -98,22 +94,21 @@ static srrecfield_t s_EffectFields[] = {
  * Begin UI Field Map
  *
  *=========================================================================*/
-BEGIN_SRRECUIFIELDS(CSrSpelView)
+BEGIN_SRRECUIFIELDS(CSrAlchView)
 	ADD_SRRECUIFIELDS( SR_FIELD_EDITORID,			IDC_EDITORID,			128,	IDS_TT_EDITORID)
 	ADD_SRRECUIFIELDS( SR_FIELD_FORMID,				IDC_FORMID,				128,	IDS_TT_FORMID)
 	ADD_SRRECUIFIELDS( SR_FIELD_ITEMNAME,			IDC_ITEMNAME,			128,	IDS_TT_FULLNAME)
 	ADD_SRRECUIFIELDS( SR_FIELD_EQUIPSLOT,			IDC_EQUIPSLOT,			128,	0)
 	ADD_SRRECUIFIELDS( SR_FIELD_COST,				IDC_COST,				8,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_DESCRIPTION,		IDC_DESCRIPTION,		256,	IDS_TT_DESCRIPTION)
-	ADD_SRRECUIFIELDS( SR_FIELD_PERK,				IDC_PERK,				128,	0)
-	ADD_SRRECUIFIELDS( SR_FIELD_SPELLFLAGS,			IDC_SPELLFLAGS,			16,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_SPELLTYPE,			IDC_SPELLTYPE,			32,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_CASTTIME,			IDC_CASTTIME,			32,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_CASTTYPE,			IDC_CASTTYPE,			32,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_CASTANIM,			IDC_CASTANIM,			32,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_AUTOCALC,			IDC_AUTOCALC,			32,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN1,			IDC_UNKNOWN1,			32,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN2,			IDC_UNKNOWN2,			32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_PICKUPSOUND,		IDC_PICKUPSOUND,		128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_DROPSOUND,			IDC_DROPSOUND,			128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_USESOUND,			IDC_USESOUND,			128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_TYPE,				IDC_POTIONTYPE,			32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_VALUE,				IDC_VALUE,				32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_WEIGHT,				IDC_WEIGHT,				32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_KEYWORDS,			IDC_KEYWORDS,			128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_MODEL,				IDC_MODEL,				128,	0)
 END_SRRECUIFIELDS()
 /*===========================================================================
  *		End of UI Field Map
@@ -122,46 +117,45 @@ END_SRRECUIFIELDS()
 
 /*===========================================================================
  *
- * Class CSrSpelView Constructor
+ * Class CSrAlchView Constructor
  *
  *=========================================================================*/
-CSrSpelView::CSrSpelView() : CSrRecordDialog(CSrSpelView::IDD) 
+CSrAlchView::CSrAlchView() : CSrRecordDialog(CSrAlchView::IDD) 
 {
   m_InitialSetData = false;
   m_IsInitialized = false;
   m_pCurrentEffect = NULL;
 }
 /*===========================================================================
- *		End of Class CSrSpelView Constructor
+ *		End of Class CSrAlchView Constructor
  *=========================================================================*/
 
 
 /*===========================================================================
  *
- * Class CSrSpelView Destructor
+ * Class CSrAlchView Destructor
  *
  *=========================================================================*/
-CSrSpelView::~CSrSpelView() 
+CSrAlchView::~CSrAlchView() 
 {
 }
 /*===========================================================================
- *		End of Class CSrSpelView Destructor
+ *		End of Class CSrAlchView Destructor
  *=========================================================================*/
 
 
 /*===========================================================================
  *
- * Class CSrSpelView Method - void DoDataExchange (pDX);
+ * Class CSrAlchView Method - void DoDataExchange (pDX);
  *
  *=========================================================================*/
-void CSrSpelView::DoDataExchange (CDataExchange* pDX) 
+void CSrAlchView::DoDataExchange (CDataExchange* pDX) 
 {
 	CSrRecordDialog::DoDataExchange(pDX);
 
 	DDX_Control(pDX, IDC_ITEMNAME, m_ItemName);
 	DDX_Control(pDX, IDC_EDITORID, m_EditorID);
 	DDX_Control(pDX, IDC_FORMID, m_FormID);
-	DDX_Control(pDX, IDC_EQUIPSLOT, m_EquipSlot);
 	DDX_Control(pDX, IDC_EFFECT_LIST, m_EffectList);
 	DDX_Control(pDX, IDC_EFFECTNAME, m_EffectName);
 	DDX_Control(pDX, IDC_EDIT_EFFECT, m_EditEffectButton);
@@ -170,56 +164,54 @@ void CSrSpelView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_MAGNITUDE, m_Magnitude);
 	DDX_Control(pDX, IDC_AREA, m_Area);
 	DDX_Control(pDX, IDC_DURATION, m_Duration);
-	DDX_Control(pDX, IDC_COST, m_Cost);
 	DDX_Control(pDX, IDC_DESCRIPTION, m_Description);
-	DDX_Control(pDX, IDC_PERK, m_Perk);
-	DDX_Control(pDX, IDC_SPELLFLAGS, m_SpellFlags);
-	DDX_Control(pDX, IDC_SPELLTYPE, m_SpellType);
-	DDX_Control(pDX, IDC_CASTTYPE, m_CastType);
-	DDX_Control(pDX, IDC_CASTANIM, m_CastAnim);
-	DDX_Control(pDX, IDC_CASTTIME, m_CastTime);
-	DDX_Control(pDX, IDC_UNKNOWN1, m_Unknown1);
-	DDX_Control(pDX, IDC_UNKNOWN2, m_Unknown2);
-	DDX_Control(pDX, IDC_AUTOCALC, m_AutoCalc);
+	DDX_Control(pDX, IDC_POTIONTYPE, m_PotionType);
+	DDX_Control(pDX, IDC_VALUE, m_Value);
+	DDX_Control(pDX, IDC_WEIGHT, m_Weight);
+	DDX_Control(pDX, IDC_PICKUPSOUND, m_PickupSound);
+	DDX_Control(pDX, IDC_DROPSOUND, m_DropSound);
+	DDX_Control(pDX, IDC_USESOUND, m_UseSound);
+	DDX_Control(pDX, IDC_KEYWORDS, m_Keywords);
+	DDX_Control(pDX, IDC_MODEL, m_Model);
 }
 /*===========================================================================
- *		End of Class Method CSrSpelView::DoDataExchange()
+ *		End of Class Method CSrAlchView::DoDataExchange()
  *=========================================================================*/
 
 
 /*===========================================================================
  *
- * Begin CSrSpelView Diagnostics
+ * Begin CSrAlchView Diagnostics
  *
  *=========================================================================*/
 #ifdef _DEBUG
 
-void CSrSpelView::AssertValid() const {
+void CSrAlchView::AssertValid() const {
   CSrRecordDialog::AssertValid();
 }
 
 
-void CSrSpelView::Dump(CDumpContext& dc) const {
+void CSrAlchView::Dump(CDumpContext& dc) const {
   CSrRecordDialog::Dump(dc);
 }
 
 #endif
 /*===========================================================================
- *		End of CSrSpelView Diagnostics
+ *		End of CSrAlchView Diagnostics
  *=========================================================================*/
 
 
 /*===========================================================================
  *
- * Class CSrSpelView Event - void OnInitialUpdate (void);
+ * Class CSrAlchView Event - void OnInitialUpdate (void);
  *
  *=========================================================================*/
-void CSrSpelView::OnInitialUpdate (void) 
+void CSrAlchView::OnInitialUpdate (void) 
 {
 	m_IsInitialized = false;
 	CSrRecordDialog::OnInitialUpdate();
 
-	m_EffectList.SetListName("SpellEffectList");
+	m_EffectList.SetListName("PotionEffectList");
 	m_EffectList.SetDragEnable(true);
 	m_EffectList.DefaultSettings();
 	m_EffectList.SetupCustomList(s_EffectListInit, NULL, s_EffectFields);
@@ -231,19 +223,17 @@ void CSrSpelView::OnInitialUpdate (void)
 	
 	CreateEffectArray();
 
-	::SrFillComboList(m_CastType, s_SrSpellCastTypes, 0);
-	::SrFillComboList(m_CastAnim, s_SrSpellCastAnims, 0);
-	::SrFillComboList(m_SpellType, s_SrSpellTypes, 0);
+	::SrFillComboList(m_PotionType, s_SrPotionTypes, 0);
   
 	SetControlData();
 	m_IsInitialized = true;
 }
 /*===========================================================================
- *		End of Class Event CSrSpelView::OnInitialUpdate()
+ *		End of Class Event CSrAlchView::OnInitialUpdate()
  *=========================================================================*/
 
 
-void CSrSpelView::GetControlData (void)
+void CSrAlchView::GetControlData (void)
 {
 	CSrSubrecord* pNewEffect;
 	CSrSubrecord* pNewEffectData;
@@ -252,22 +242,22 @@ void CSrSpelView::GetControlData (void)
 	CSrRecordDialog::GetControlData();
 	GetCurrentEffect();
 
-	CSrSpelRecord* pSpell = SrCastClassNull(CSrSpelRecord, GetOutputRecord());
-	if (pSpell == NULL) return;
+	CSrAlchRecord* pPotion = SrCastClassNull(CSrAlchRecord, GetOutputRecord());
+	if (pPotion == NULL) return;
 
-	pSpell->DeleteSubrecords(SR_NAME_EFID);
-	pSpell->DeleteSubrecords(SR_NAME_EFIT);
-	pSpell->DeleteSubrecords(SR_NAME_CTDA);	
+	pPotion->DeleteSubrecords(SR_NAME_EFID);
+	pPotion->DeleteSubrecords(SR_NAME_EFIT);
+	pPotion->DeleteSubrecords(SR_NAME_CTDA);	
 
 	for (dword i = 0; i < m_Effects.GetSize(); ++i)
 	{
-		srspel_effectdata_t* pEffect = m_Effects[i];
+		sralch_effectdata_t* pEffect = m_Effects[i];
 		if (pEffect == NULL || pEffect->pEffect == NULL || pEffect->pEffectData == NULL) continue;
 				
-		pNewEffect = pSpell->AddNewSubrecord(SR_NAME_EFID);
+		pNewEffect = pPotion->AddNewSubrecord(SR_NAME_EFID);
 		if (pNewEffect) pNewEffect->Copy(pEffect->pEffect);
 
-		pNewEffectData = pSpell->AddNewSubrecord(SR_NAME_EFIT);
+		pNewEffectData = pPotion->AddNewSubrecord(SR_NAME_EFIT);
 		if (pNewEffectData) pNewEffectData->Copy(pEffect->pEffectData);
 
 		for (dword j = 0; j < pEffect->Conditions.GetSize(); ++j)
@@ -275,7 +265,7 @@ void CSrSpelView::GetControlData (void)
 			CSrCtdaSubrecord* pCondition = pEffect->Conditions[j];
 			if (pCondition == NULL) continue;
 
-			pNewCondition = pSpell->AddNewSubrecord(SR_NAME_CTDA);
+			pNewCondition = pPotion->AddNewSubrecord(SR_NAME_CTDA);
 			if (pNewCondition) pNewCondition->Copy(pCondition);
 		}
 
@@ -283,34 +273,14 @@ void CSrSpelView::GetControlData (void)
 }
 
 
-void CSrSpelView::SetControlData (void)
+void CSrAlchView::SetControlData (void)
 {
 	CSrRecordDialog::SetControlData();
 	SetEffectList();
 }
 
 
-void CSrSpelView::OnBnClickedEditEquipSlot()
-{
-	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_EquipSlot, SR_NAME_EQUP);
-}
-
-
-void CSrSpelView::OnBnClickedSelectequipslotButton()
-{
-	CString    Buffer;
-
-	if (m_pDlgHandler == NULL) return;
-	m_EquipSlot.GetWindowText(Buffer);
-
-	bool Result = m_pDlgHandler->SelectRecord(Buffer, SR_NAME_EQUP, &CSrFlstRecord::s_FieldMap);
-	if (!Result) return;
-
-	m_EquipSlot.SetWindowText(Buffer);
-}
-
-
-void CSrSpelView::SetEffectList (void)
+void CSrAlchView::SetEffectList (void)
 {
 	m_EffectList.DeleteAllItems();
 	
@@ -326,10 +296,10 @@ void CSrSpelView::SetEffectList (void)
 
 /*===========================================================================
  *
- * Class CSrSpelView Method - int AddEffectList (pEffectData);
+ * Class CSrAlchView Method - int AddEffectList (pEffectData);
  *
  *=========================================================================*/
-int CSrSpelView::AddEffectList (srspel_effectdata_t* pEffectData) 
+int CSrAlchView::AddEffectList (sralch_effectdata_t* pEffectData) 
 {
   srrlcustomdata_t	CustomData = { 0 };
   CString           Buffer;
@@ -352,16 +322,16 @@ int CSrSpelView::AddEffectList (srspel_effectdata_t* pEffectData)
   return (ListIndex);
 }
 /*===========================================================================
- *		End of Class Method CSrSpelView::AddEffectList()
+ *		End of Class Method CSrAlchView::AddEffectList()
  *=========================================================================*/
 
 
 /*===========================================================================
  *
- * Class CSrSpelView Method - void UpdateEffectList (ListIndex, Update);
+ * Class CSrAlchView Method - void UpdateEffectList (ListIndex, Update);
  *
  *=========================================================================*/
-void CSrSpelView::UpdateEffectList (const int ListIndex, const bool Update)
+void CSrAlchView::UpdateEffectList (const int ListIndex, const bool Update)
 {
 	CSrFormidSubrecord*	pEffectID;
 	srrlcustomdata_t*	pCustomData;
@@ -390,32 +360,32 @@ void CSrSpelView::UpdateEffectList (const int ListIndex, const bool Update)
 	m_EffectList.SetCustomField(ListIndex, SR_FIELD_CONDITIONCOUNT, Buffer);  
 }
 /*===========================================================================
- *		End of Class Method CSrSpelView::UpdateEffectList()
+ *		End of Class Method CSrAlchView::UpdateEffectList()
  *=========================================================================*/
 
 
-void CSrSpelView::CreateEffectArray (void)
+void CSrAlchView::CreateEffectArray (void)
 {
-	CSrSpelRecord*			pSpell;
+	CSrAlchRecord*			pPotion;
 	CSrSubrecord*			pSubrecord;
 	CSrSubrecord*			pNewSubrecord;
 	CSrFormidSubrecord*		pEffectID;
-	srspel_effectdata_t*	pEffectData;
+	sralch_effectdata_t*	pEffectData;
 	int Position;
 	int EfitCount;
 
 	m_Effects.Empty();
-	pSpell = SrCastClassNull(CSrSpelRecord, GetInputRecord());
-	if (pSpell == NULL) return;
+	pPotion = SrCastClassNull(CSrAlchRecord, GetInputRecord());
+	if (pPotion == NULL) return;
 
-	pSubrecord = pSpell->FindFirstSubrecord(SR_NAME_EFID, Position);
+	pSubrecord = pPotion->FindFirstSubrecord(SR_NAME_EFID, Position);
 
 	while (pSubrecord)
 	{
 		pEffectID = SrCastClass(CSrFormidSubrecord, pSubrecord);
 		if (pEffectID == NULL) goto CreateEffectArray_EndLoop;
 
-		pEffectData = new srspel_effectdata_t;
+		pEffectData = new sralch_effectdata_t;
 		m_Effects.Add(pEffectData);
 
 		pSubrecord = GetInputRecord()->CreateSubrecord(SR_NAME_EFID);
@@ -425,9 +395,9 @@ void CSrSpelView::CreateEffectArray (void)
 		pEffectData->pEffect->Copy(pEffectID);
 		EfitCount = 0;
 
-		for (int i = Position + 1; i < (int) pSpell->GetNumSubrecords(); ++i)
+		for (int i = Position + 1; i < (int) pPotion->GetNumSubrecords(); ++i)
 		{
-			pSubrecord = pSpell->GetSubrecord(i);
+			pSubrecord = pPotion->GetSubrecord(i);
 			if (pSubrecord == NULL) continue;
 			if (pSubrecord->GetRecordType() == SR_NAME_EFID) break;
 
@@ -443,7 +413,7 @@ void CSrSpelView::CreateEffectArray (void)
 			else if (pSubrecord->GetRecordType() == SR_NAME_EFIT)
 			{
 				++EfitCount;
-				if (EfitCount > 1) SystemLog.Printf("WARNING: More than one EFIT per EFID found in SPEL 0x%08X!", pSpell->GetFormID());
+				if (EfitCount > 1) SystemLog.Printf("WARNING: More than one EFIT per EFID found in ALCH 0x%08X!", pPotion->GetFormID());
 
 				pNewSubrecord = GetInputRecord()->CreateSubrecord(SR_NAME_EFIT);
 				pEffectData->pEffectData = SrCastClassNull(CSrEfitSubrecord, pNewSubrecord);
@@ -453,18 +423,18 @@ void CSrSpelView::CreateEffectArray (void)
 			}
 			else
 			{
-				SystemLog.Printf("WARNING: Unknown subrecord type %4.4s found in SPEL effects!", pSubrecord->GetRecordType().Name);
+				SystemLog.Printf("WARNING: Unknown subrecord type %4.4s found in ALCH effects!", pSubrecord->GetRecordType().Name);
 			}
 		}		
 
 CreateEffectArray_EndLoop:
-		pSubrecord = pSpell->FindNextSubrecord(SR_NAME_EFID, Position);
+		pSubrecord = pPotion->FindNextSubrecord(SR_NAME_EFID, Position);
 	}
 	
 }
 
 
-void CSrSpelView::OnLvnItemchangedEffectList(NMHDR *pNMHDR, LRESULT *pResult)
+void CSrAlchView::OnLvnItemchangedEffectList(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
 	*pResult = 0;
@@ -477,7 +447,7 @@ void CSrSpelView::OnLvnItemchangedEffectList(NMHDR *pNMHDR, LRESULT *pResult)
 }
 
 
-void CSrSpelView::GetCurrentEffect (void)
+void CSrAlchView::GetCurrentEffect (void)
 {	
 	CString Buffer;
 
@@ -533,7 +503,7 @@ void CSrSpelView::GetCurrentEffect (void)
 }
 
 
-void CSrSpelView::SetCurrentEffect (srspel_effectdata_t* pEffectData)
+void CSrAlchView::SetCurrentEffect (sralch_effectdata_t* pEffectData)
 {
 	CString Buffer;
 
@@ -581,7 +551,7 @@ void CSrSpelView::SetCurrentEffect (srspel_effectdata_t* pEffectData)
 }
 
 
-void CSrSpelView::EnableEffectControls (const bool Enable)
+void CSrAlchView::EnableEffectControls (const bool Enable)
 {
 	m_EffectConditions.EnableWindow(Enable);
 	m_Magnitude.EnableWindow(Enable);
@@ -593,7 +563,7 @@ void CSrSpelView::EnableEffectControls (const bool Enable)
 }
 
 
-void CSrSpelView::OnBnClickedConditionButton()
+void CSrAlchView::OnBnClickedConditionButton()
 {
 	if (m_pCurrentEffect == NULL) return;
 
@@ -609,13 +579,13 @@ void CSrSpelView::OnBnClickedConditionButton()
 }
 
 
-void CSrSpelView::OnBnClickedEditEffect()
+void CSrAlchView::OnBnClickedEditEffect()
 {
 	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_EffectName, SR_NAME_MGEF);
 }
 
 
-void CSrSpelView::OnBnClickedSelecteffectButton()
+void CSrAlchView::OnBnClickedSelecteffectButton()
 {
 	CString    Buffer;
 
@@ -630,16 +600,16 @@ void CSrSpelView::OnBnClickedSelecteffectButton()
 }
 
 
-int CSrSpelView::OnPreSaveRecord (void)
+int CSrAlchView::OnPreSaveRecord (void)
 {
 	GetCurrentEffect();
 	return CSrRecordDialog::OnPreSaveRecord();
 }
 
 
-void CSrSpelView::OnBnClickedAddButton()
+void CSrAlchView::OnBnClickedAddButton()
 {
-	srspel_effectdata_t* pNewEffect = new srspel_effectdata_t;
+	sralch_effectdata_t* pNewEffect = new sralch_effectdata_t;
 	CSrSubrecord* pSubrecord;
 
 	pSubrecord = GetInputRecord()->CreateSubrecord(SR_NAME_EFID);
@@ -666,7 +636,7 @@ void CSrSpelView::OnBnClickedAddButton()
 }
 
 
-void CSrSpelView::OnBnClickedDeleteButton()
+void CSrAlchView::OnBnClickedDeleteButton()
 {
 	if (m_pCurrentEffect == NULL) return;
 	GetCurrentEffect();
@@ -690,37 +660,17 @@ void CSrSpelView::OnBnClickedDeleteButton()
 }
 
 
-void CSrSpelView::OnBnClickedEditPerk()
-{
-	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_Perk, SR_NAME_PERK);
-}
-
-
-void CSrSpelView::OnBnClickedSelectperkButton()
-{
-	CString    Buffer;
-
-	if (m_pDlgHandler == NULL) return;
-	m_Perk.GetWindowText(Buffer);
-
-	bool Result = m_pDlgHandler->SelectRecord(Buffer, SR_NAME_PERK, &CSrPerkRecord::s_FieldMap);
-	if (!Result) return;
-
-	m_Perk.SetWindowText(Buffer);
-}
-
-
 /*===========================================================================
  *
- * Class CSrSpelView Event - int OnDropCustomEffectData (DropItems);
+ * Class CSrAlchView Event - int OnDropCustomEffectData (DropItems);
  *
  *=========================================================================*/
-int CSrSpelView::OnDropCustomEffectData (srrldroprecords_t& DropItems) 
+int CSrAlchView::OnDropCustomEffectData (srrldroprecords_t& DropItems) 
 {
   CSrFormidSubrecord*   pEffect;
   CSrEfitSubrecord*     pEffectData;
   srrlcustomdata_t*     pCustomData;
-  srspel_effectdata_t*  pEffectInfo;
+  sralch_effectdata_t*  pEffectInfo;
   dword					Index;
 
   GetCurrentEffect();
@@ -775,16 +725,16 @@ int CSrSpelView::OnDropCustomEffectData (srrldroprecords_t& DropItems)
   return (SRRL_DROPCHECK_OK);
 }
 /*===========================================================================
- *		End of Class Event CSrSpelView::OnDropCustomData()
+ *		End of Class Event CSrAlchView::OnDropCustomData()
  *=========================================================================*/
 
 
  /*===========================================================================
  *
- * Class CSrSpelView Event - void OnDropEffectList (pNotifyStruct, pResult);
+ * Class CSrAlchView Event - void OnDropEffectList (pNotifyStruct, pResult);
  *
  *=========================================================================*/
-void CSrSpelView::OnDropEffectList (NMHDR* pNotifyStruct, LRESULT* pResult) 
+void CSrAlchView::OnDropEffectList (NMHDR* pNotifyStruct, LRESULT* pResult) 
 {
   srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
 
@@ -801,80 +751,16 @@ void CSrSpelView::OnDropEffectList (NMHDR* pNotifyStruct, LRESULT* pResult)
 
 }
 /*===========================================================================
- *		End of Class Event CSrSpelView::OnDropEffectList()
- *=========================================================================*/
-
-
- /*===========================================================================
- *
- * Class CSrSpelView Event - void OnDropEquipSlot (pNotifyStruct, pResult);
- *
- *=========================================================================*/
-void CSrSpelView::OnDropEquipSlot (NMHDR* pNotifyStruct, LRESULT* pResult) {
-  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
-  CSrRecord*	     pRecord;
-  CSrEqupRecord*     pEquipSlot;
-
-  *pResult = SRRL_DROPCHECK_ERROR;
-  if (pDropItems->pRecords == NULL) return;
-  if (pDropItems->pRecords->GetSize() != 1) return;
-
-  pRecord = pDropItems->pRecords->GetAt(0);
-
-  if (pRecord->GetRecordType() != SR_NAME_EQUP) return;
-  pEquipSlot = SrCastClass(CSrEqupRecord, pRecord);
-  if (pEquipSlot == NULL) return;
-
-  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
-  {
-    m_EquipSlot.SetWindowText(pEquipSlot->GetEditorID());
-  }
-
-  *pResult = SRRL_DROPCHECK_OK;
-}
-/*===========================================================================
- *		End of Class Event CSrSpelView::OnDropEquipSlot()
+ *		End of Class Event CSrAlchView::OnDropEffectList()
  *=========================================================================*/
 
 
 /*===========================================================================
  *
- * Class CSrSpelView Event - void OnDropPerk (pNotifyStruct, pResult);
+ * Class CSrAlchView Event - void OnDropEffect (pNotifyStruct, pResult);
  *
  *=========================================================================*/
-void CSrSpelView::OnDropPerk (NMHDR* pNotifyStruct, LRESULT* pResult) {
-  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
-  CSrRecord*	     pRecord;
-  CSrPerkRecord*     pPerk;
-
-  *pResult = SRRL_DROPCHECK_ERROR;
-  if (pDropItems->pRecords == NULL) return;
-  if (pDropItems->pRecords->GetSize() != 1) return;
-
-  pRecord = pDropItems->pRecords->GetAt(0);
-
-  if (pRecord->GetRecordType() != SR_NAME_PERK) return;
-  pPerk = SrCastClass(CSrPerkRecord, pRecord);
-  if (pPerk == NULL) return;
-
-  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
-  {
-    m_Perk.SetWindowText(pPerk->GetEditorID());
-  }
-
-  *pResult = SRRL_DROPCHECK_OK;
-}
-/*===========================================================================
- *		End of Class Event CSrSpelView::OnDropPerk()
- *=========================================================================*/
-
-
-/*===========================================================================
- *
- * Class CSrSpelView Event - void OnDropEffect (pNotifyStruct, pResult);
- *
- *=========================================================================*/
-void CSrSpelView::OnDropEffect (NMHDR* pNotifyStruct, LRESULT* pResult) {
+void CSrAlchView::OnDropEffect (NMHDR* pNotifyStruct, LRESULT* pResult) {
   srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
   CSrRecord*	     pRecord;
   CSrMgefRecord*     pMgef;
@@ -898,5 +784,25 @@ void CSrSpelView::OnDropEffect (NMHDR* pNotifyStruct, LRESULT* pResult) {
   *pResult = SRRL_DROPCHECK_OK;
 }
 /*===========================================================================
- *		End of Class Event CSrSpelView::OnDropEffect()
+ *		End of Class Event CSrAlchView::OnDropEffect()
  *=========================================================================*/
+
+
+void CSrAlchView::OnBnClickedEditUsesound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_UseSound, SR_NAME_SNDR);
+}
+
+
+void CSrAlchView::OnBnClickedSelectusesoundButton()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_UseSound, SR_NAME_SNDR, &CSrSndrRecord::s_FieldMap);
+}
+
+
+void CSrAlchView::OnDropUseSound (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	*pResult = DropRecordHelper(pDropItems, &m_UseSound, SR_NAME_SNDR, 1);
+}
+

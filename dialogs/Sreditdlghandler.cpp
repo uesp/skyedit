@@ -45,6 +45,7 @@ srdlgcreateinfo_t l_SrDlgCreateInfo[] = {
 	{ &SR_NAME_GMST, "Game Setting",     CSrGmstView::IDD,   RUNTIME_CLASS(CSrGmstView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Game_Setting"),	_T("Game_Setting") },
 	{ &SR_NAME_KYWD, "Keyword",		     CSrKywdView::IDD,   RUNTIME_CLASS(CSrKywdView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Keyword"),		_T("Keyword") },
 	{ &SR_NAME_MGEF, "Magic Effect",     CSrMgefView::IDD,   RUNTIME_CLASS(CSrMgefView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/MagicEffect"),	_T("Magic_Effect") },
+	{ &SR_NAME_ALCH, "Potion",			 CSrAlchView::IDD,   RUNTIME_CLASS(CSrAlchView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Potion"),		_T("Potion") },
 	{ &SR_NAME_COBJ, "Recipe",		     CSrCobjView::IDD,   RUNTIME_CLASS(CSrCobjView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Recipe"),		_T("Recipe") },
 	{ &SR_NAME_SPEL, "Spell",		     CSrSpelView::IDD,   RUNTIME_CLASS(CSrSpelView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Spell"),			_T("Spell") },
 	{ &SR_NAME_WEAP, "Weapon",		     CSrWeapView::IDD,   RUNTIME_CLASS(CSrWeapView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Weapon"),		_T("Weapon") },
