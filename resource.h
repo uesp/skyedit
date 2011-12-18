@@ -75,8 +75,9 @@
 #define IDD_STAT_VIEW                   198
 #define IDD_MISC_VIEW                   199
 #define IDD_LVLI_VIEW                   201
-#define IDD_DIALOG1                     202
 #define IDD_LVLEDIT_DLG                 202
+#define IDD_LVLI_VIEW1                  203
+#define IDD_LVLN_VIEW                   203
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002

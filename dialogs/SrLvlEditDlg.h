@@ -136,7 +136,7 @@ protected:
 
   int SrEditLvlItemDlg     (CSrLvloSubrecord* pSubrecord, CSrRecordHandler* pHandler, const srformid_t ParentFormID);
   int SrEditLvlSpellDlg    (CSrLvloSubrecord* pSubrecord, CSrRecordHandler* pHandler, const srformid_t ParentFormID);
-  int SrEditLvlCreatureDlg (CSrLvloSubrecord* pSubrecord, CSrRecordHandler* pHandler, const srformid_t ParentFormID);
+  int SrEditLvlActorDlg    (CSrLvloSubrecord* pSubrecord, CSrRecordHandler* pHandler, const srformid_t ParentFormID);
 
 /*===========================================================================
  *		End of Function Prototypes

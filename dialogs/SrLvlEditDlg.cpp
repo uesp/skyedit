@@ -510,28 +510,28 @@ int SrEditLvlSpellDlg (CSrLvloSubrecord* pSubrecord, CSrRecordHandler* pHandler,
 
 /*===========================================================================
  *
- * Function - int SrEditLvlCreatureDlg (pSubrecord, ParentFormID);
+ * Function - int SrEditLvlActorDlg (pSubrecord, ParentFormID);
  *
  * Displays a modal edit lvlo edit dialog for a leveled creature.
  *
  *=========================================================================*/
-int SrEditLvlCreatureDlg (CSrLvloSubrecord* pSubrecord, CSrRecordHandler* pHandler, const srformid_t ParentFormID) 
+int SrEditLvlActorDlg (CSrLvloSubrecord* pSubrecord, CSrRecordHandler* pHandler, const srformid_t ParentFormID) 
 {
-  static const srrectype_t s_LvlcRecordTypes[] = { SR_NAME_LVLN, SR_NAME_NPC_, SR_NAME_NULL };
+  static const srrectype_t s_LvlnRecordTypes[] = { SR_NAME_LVLN, SR_NAME_NPC_, SR_NAME_NULL };
   CSrLvlEditDlg Dlg;
   int		Result;
 
   Dlg.SetRecordHandler(pHandler);
   Dlg.SetSubrecord(pSubrecord);
-  Dlg.SetTitleValue(_T("Edit Leveled Creature Entry"));
-  Dlg.SetRecordTypes(s_LvlcRecordTypes);
+  Dlg.SetTitleValue(_T("Edit Leveled Actor Entry"));
+  Dlg.SetRecordTypes(s_LvlnRecordTypes);
   Dlg.SetParentFormID(ParentFormID);
 
   Result = Dlg.DoModal();
   return (Result);
 }
 /*===========================================================================
- *		End of Function SrEditLvlCreatureDlg()
+ *		End of Function SrEditLvlActorDlg()
  *=========================================================================*/
 
 
