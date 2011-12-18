@@ -71,6 +71,7 @@
 #define IDD_ALCH_VIEW                   194
 #define IDD_INGR_VIEW                   195
 #define IDD_SCRL_VIEW                   196
+#define IDD_BOOK_VIEW                   197
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -118,14 +119,13 @@
 #define IDC_WEIGHT                      1070
 #define IDC_VALUE                       1073
 #define IDC_UNKNOWN                     1074
-#define IDC_VALUE2                      1074
 #define IDC_ENCHANTCHARGE               1080
 #define IDC_NAME                        1081
+#define IDC_CNAME                       1082
 #define IDC_ENCHANTMENT                 1095
 #define IDC_EQUIPSLOT                   1096
 #define IDC_EDIT_ENCHANTMENT            1103
 #define IDC_EDIT_EQUIPSLOT              1104
-#define IDC_CNAME                       1113
 #define IDC_MODEL                       1113
 #define IDC_CREDITS                     1120
 #define IDC_DAMAGE                      1120
@@ -155,6 +155,7 @@
 #define IDC_SELECTENCHANT_BUTTON        1133
 #define IDC_SELECTFUNCTION_BUTTON       1133
 #define IDC_UNKNOWN2                    1133
+#define IDC_SKILLBOOK                   1133
 #define IDC_ADDKEYWORD_BUTTON           1134
 #define IDC_FUNCTION_LABEL              1134
 #define IDC_EDITKEYWORD_BUTTON          1135
@@ -164,14 +165,19 @@
 #define IDC_CONDITION_BUTTON            1137
 #define IDC_PARAM1_LABEL                1137
 #define IDC_SELECTEQUIPSLOT_BUTTON      1137
+#define IDC_NOTETYPE                    1137
 #define IDC_PARAM2_TEXT                 1138
 #define IDC_PLAYABLE                    1138
+#define IDC_SPELLTOME                   1138
 #define IDC_SELECTPARAM2_BUTTON         1139
 #define IDC_SELECTPICKUPSOUND_BUTTON    1139
 #define IDC_PARAM2_LABEL                1140
 #define IDC_SELECTARMMODEL_BUTTON       1140
+#define IDC_SELECTSTATICMODEL_BUTTON    1140
 #define IDC_VALUE_TEXT                  1141
 #define IDC_SELECTUSESOUND_BUTTON       1141
+#define IDC_SELECTSTATICMODEL_BUTTON2   1141
+#define IDC_SELECTSPELL_BUTTON          1141
 #define IDC_VALUE_LABEL                 1142
 #define IDC_OPERATOR_LIST               1143
 #define IDC_OR_CHECK                    1144
@@ -237,14 +243,18 @@
 #define IDC_SELECT_MODEL                1181
 #define IDC_PICKUPSOUND                 1182
 #define IDC_MATERIAL                    1183
+#define IDC_STATICMODEL                 1183
 #define IDC_SELECTPICKUP_BUTTON         1184
 #define IDC_SELECTMATERIAL_BUTTON       1184
 #define IDC_USESOUND                    1184
+#define IDC_SPELL                       1184
 #define IDC_EDIT_DROPSOUND              1185
 #define IDC_EDIT_PICKUPSOUND            1186
 #define IDC_EDIT_RACE                   1187
+#define IDC_EDIT_STATICMODEL            1187
 #define IDC_EDIT_TEMPLATE               1188
 #define IDC_EDIT_USESOUND               1188
+#define IDC_EDIT_SPELL                  1188
 #define IDC_EDIT_MATERIAL               1189
 #define IDC_FLICKER                     1190
 #define IDC_IMPACTDATA                  1190
@@ -257,6 +267,7 @@
 #define IDC_POTIONTYPE                  1194
 #define IDC_PULSESLOW                   1195
 #define IDC_EDIT_ARMMODEL               1195
+#define IDC_SKILL                       1195
 #define IDC_FLICKERNONE                 1196
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
@@ -454,7 +465,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        194
 #define _APS_NEXT_COMMAND_VALUE         32859
-#define _APS_NEXT_CONTROL_VALUE         1195
+#define _APS_NEXT_CONTROL_VALUE         1196
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
