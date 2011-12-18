@@ -70,6 +70,7 @@
 #define IDD_BODYPARTS_DLG               193
 #define IDD_ALCH_VIEW                   194
 #define IDD_INGR_VIEW                   195
+#define IDD_SCRL_VIEW                   196
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -116,8 +117,8 @@
 #define IDC_FIND_LABEL                  1063
 #define IDC_WEIGHT                      1070
 #define IDC_VALUE                       1073
-#define IDC_VALUE2                      1074
 #define IDC_UNKNOWN                     1074
+#define IDC_VALUE2                      1074
 #define IDC_ENCHANTCHARGE               1080
 #define IDC_NAME                        1081
 #define IDC_ENCHANTMENT                 1095
