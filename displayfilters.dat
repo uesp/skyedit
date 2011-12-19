@@ -95,6 +95,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "Light"
+	DisplayName = "Light"
+	RecName = LIGH
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "MagicEffects"
 	DisplayName = "Magic Effects"
 	RecName = MGEF
@@ -445,12 +451,6 @@ DisplayFilter
 	ID = "LightTemplate"
 	DisplayName = "Light Template"
 	RecName = LGTM
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "Light"
-	DisplayName = "Light"
-	RecName = LIGH
 	Parent = NoEdit
 End	
 DisplayFilter

@@ -2094,6 +2094,7 @@
     <ClInclude Include="..\tes5lib\modfile\subrecords\sringrdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\sringrenitsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srint64subrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srlighdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srlongsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srlstringsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srmgefdatasubrecord.h" />

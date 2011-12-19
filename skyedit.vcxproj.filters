@@ -1677,6 +1677,9 @@
     <ClInclude Include="SRBatchEditDlg.h">
       <Filter>Header Files\Forms.\CommonDlg.</Filter>
     </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srlighdatasubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="skyedit.rc">
