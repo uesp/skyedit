@@ -18,7 +18,8 @@
  *=========================================================================*/
   #include "dialogs/srrecorddialog.h"
   #include "windows/srrecordvirtuallistctrl.h"
-/*===========================================================================
+#include "afxwin.h"
+ /*===========================================================================
  *		End of Required Includes
  *=========================================================================*/
 
@@ -34,9 +35,10 @@ class CSrFindDlg : public CSrRecordDialog
 
   /*---------- Begin Protected Class Members -------------------------*/
 protected:
-  CString	m_TextData;
-  byte*		m_pBinaryData;
-  dword		m_BinarySize;
+  CString		m_TextData;
+  byte*			m_pBinaryData;
+  dword			m_BinarySize;
+  srformid_t	m_FindFormID;
 
   srfinddata_t	m_FindData;
 
@@ -98,6 +100,8 @@ protected:
 
   DECLARE_MESSAGE_MAP();
 
+public:
+	CButton m_FormIDCheck;
 };
 /*===========================================================================
  *		End of Class CSrFindDlg Definition

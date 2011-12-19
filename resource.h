@@ -80,7 +80,6 @@
 #define IDD_LVLN_VIEW                   203
 #define IDD_LVSP_VIEW                   204
 #define IDD_CONT_VIEW                   205
-#define IDD_LVLEDIT_DLG1                206
 #define IDD_CONTITEMEDIT_DLG            206
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
@@ -128,6 +127,8 @@
 #define IDC_LEVEL                       1059
 #define IDC_CASESENSITIVE_CHECK         1060
 #define IDC_CALCULATEEACH               1061
+#define IDC_CASESENSITIVE_CHECK2        1061
+#define IDC_FORMID_CHECK                1061
 #define IDC_USEALL                      1062
 #define IDC_COUNT                       1062
 #define IDC_FIND_LABEL                  1063

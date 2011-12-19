@@ -123,6 +123,7 @@ void CSrFindDlg::DoDataExchange (CDataExchange* pDX) {
 	DDX_Control(pDX, IDC_SEARCH_COMBO, m_SearchCombo);
 	DDX_Control(pDX, IDC_FIND_LIST, m_FindList);
 	//}}AFX_DATA_MAP
+	DDX_Control(pDX, IDC_FORMID_CHECK, m_FormIDCheck);
 }
 /*===========================================================================
  *		End of Class Method CSrFindDlg::DoDataExchange()
@@ -193,12 +194,14 @@ void CSrFindDlg::GetControlData (void) {
   m_FindData.Flags = SR_FIND_ADDRECORDS | SR_FIND_NOHEADER;
   if (!m_BinaryCheck.GetCheck())       m_FindData.Flags |= SR_FIND_COMPARETEXT;
   if (m_CaseSensitiveCheck.GetCheck()) m_FindData.Flags |= SR_FIND_CASESENSITIVE;
+  if (m_FormIDCheck.GetCheck())        m_FindData.Flags |= SR_FIND_FORMID;
 
 	/* Update the search text */
   m_SearchCombo.GetWindowText(m_TextData);
 
 	/* Set the binary data as required */
-  if (m_BinaryCheck.GetCheck()) {
+  if (m_BinaryCheck.GetCheck()) 
+  {
     Result = ConvertBinaryData();
 
     if (!Result) {
@@ -212,7 +215,14 @@ void CSrFindDlg::GetControlData (void) {
     m_FindData.pData    = m_pBinaryData;
     m_SearchCombo.SetWindowText(m_TextData);
   }
-  else {
+  else if (m_FindData.Flags & SR_FIND_FORMID)
+  {
+	m_FindData.DataSize = 4;
+	m_FindData.pData    = (const byte *) &m_FindFormID;
+	m_FindFormID = strtol(m_TextData, NULL, 0);
+  }
+  else
+  {
     m_FindData.DataSize = m_TextData.GetLength();
     m_FindData.pData    = (const byte *) (const TCHAR *) m_TextData;
     if (m_FindData.DataSize == 0) m_FindLabel.SetWindowText("Nothing to find!");
@@ -337,11 +347,11 @@ void CSrFindDlg::OnFindButton() {
   m_FindData.GroupCount      = 0;
   m_FindData.RecordCount     = 0;
   m_FindData.SubrecordCount  = 0;
-  m_FindData.pExcludeRecords = NULL;
-  
+  m_FindData.pExcludeRecords = NULL;  
 
-	/* Create a progress dialog */
-  if (m_pRecordHandler->GetNumRecords() > 1000) {
+		/* Create a progress dialog */
+  if (m_pRecordHandler->GetNumRecords() > 1000) 
+  {
     pProgressDlg = ShowSrProgressDlg(_T("Finding..."), _T("Finding data..."));
 
     m_Callback.SetEnable(true);
