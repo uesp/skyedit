@@ -92,33 +92,24 @@ public:
   void SetControlData (void);
   
 
-  //{{AFX_DATA(CSrLvlEditDlg)
   enum { IDD = IDD_LVLEDIT_DLG };
   CEdit				m_FormID;
   CEdit				m_Level;
   CEdit				m_Count;
   CEdit				m_ObjectID;
   CSrRecordVirtualListCtrl	m_RecordList;
-	//}}AFX_DATA
 
-	/* ClassWizard generated virtual function overrides */
-  //{{AFX_VIRTUAL(CSrLvlEditDlg)
 protected:
   virtual void DoDataExchange(CDataExchange* pDX);
   virtual void OnOK();
-  //}}AFX_VIRTUAL
 
-protected:
-
-	/* Generated message map functions */
-  //{{AFX_MSG(CSrLvlEditDlg)
   afx_msg void OnDeleteButton();
   virtual BOOL OnInitDialog();
   afx_msg void OnChangeEditorid();
   afx_msg void OnKillfocusEditorid();
   afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
   afx_msg void OnItemchangedRecordlist(NMHDR* pNMHDR, LRESULT* pResult);
-  //}}AFX_MSG
+  afx_msg LRESULT OnActivateList (WPARAM wParam, LPARAM lParam);
 
   DECLARE_MESSAGE_MAP();
 

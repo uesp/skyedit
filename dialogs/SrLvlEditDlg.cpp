@@ -36,13 +36,12 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrLvlEditDlg, CDialog)
-	//{{AFX_MSG_MAP(CSrLvlEditDlg)
 	ON_BN_CLICKED(ID_DELETE_BUTTON, OnDeleteButton)
 	ON_EN_CHANGE(IDC_EDITORID, OnChangeEditorid)
 	ON_EN_KILLFOCUS(IDC_EDITORID, OnKillfocusEditorid)
 	ON_WM_CTLCOLOR()
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_RECORDLIST, OnItemchangedRecordlist)
-	//}}AFX_MSG_MAP
+	ON_MESSAGE(ID_SRRECORDLIST_ACTIVATE, OnActivateList)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -448,6 +447,20 @@ void CSrLvlEditDlg::OnItemchangedRecordlist (NMHDR* pNMHDR, LRESULT* pResult)
 /*===========================================================================
  *		End of Class Event CSrLvlEditDlg::OnItemchangedRecordlist()
  *=========================================================================*/
+
+
+LRESULT CSrLvlEditDlg::OnActivateList (WPARAM wParam, LPARAM lParam) 
+{
+	CSrRecord*   pRecord = (CSrRecord *) wParam;
+	CSString	 Buffer;
+
+	if (pRecord == NULL) return 0;
+	pRecord->GetField(Buffer, SR_FIELD_EDITORID);
+		
+	OnOK();
+	EndDialog(IDOK);
+	return (0);
+}
 
 
 /*===========================================================================

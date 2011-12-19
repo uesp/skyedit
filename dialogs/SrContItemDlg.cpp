@@ -36,13 +36,12 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrContItemDlg, CDialog)
-	//{{AFX_MSG_MAP(CSrContItemDlg)
 	ON_BN_CLICKED(ID_DELETE_BUTTON, OnDeleteButton)
 	ON_EN_CHANGE(IDC_EDITORID, OnChangeEditorid)
 	ON_EN_KILLFOCUS(IDC_EDITORID, OnKillfocusEditorid)
 	ON_WM_CTLCOLOR()
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_RECORDLIST, OnItemchangedRecordlist)
-	//}}AFX_MSG_MAP
+	ON_MESSAGE(ID_SRRECORDLIST_ACTIVATE, OnActivateList)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -266,6 +265,8 @@ BOOL CSrContItemDlg::OnInitDialog()
   	/* Initialize the record list */
   m_RecordList.SetListName("ContItemList");
   m_RecordList.DefaultSettings();
+  m_RecordList.SetActivateType(SR_RLACTIVATE_RECORD);
+
   AddListColumns();
   FillRecordList();
   m_RecordList.SortList(SR_FIELD_EDITORID);
@@ -442,6 +443,20 @@ void CSrContItemDlg::OnItemchangedRecordlist (NMHDR* pNMHDR, LRESULT* pResult)
  *=========================================================================*/
 
 
+LRESULT CSrContItemDlg::OnActivateList (WPARAM wParam, LPARAM lParam) 
+{
+	CSrRecord*   pRecord = (CSrRecord *) wParam;
+	CSString	 Buffer;
+
+	if (pRecord == NULL) return 0;
+	pRecord->GetField(Buffer, SR_FIELD_EDITORID);
+		
+	OnOK();
+	EndDialog(IDOK);
+	return (0);
+}
+
+
 /*===========================================================================
  *
  * Function - int SrEditContItemDlg (pSubrecord, ParentFormID);
@@ -469,4 +484,5 @@ int SrEditContItemDlg (CSrCntoSubrecord* pSubrecord, CSrRecordHandler* pHandler,
 /*===========================================================================
  *		End of Function SrEditContItemDlg()
  *=========================================================================*/
+
 

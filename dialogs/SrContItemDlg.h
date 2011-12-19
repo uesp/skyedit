@@ -116,11 +116,14 @@ protected:
   afx_msg void OnChangeEditorid();
   afx_msg void OnKillfocusEditorid();
   afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-  afx_msg void OnItemchangedRecordlist(NMHDR* pNMHDR, LRESULT* pResult);
+  afx_msg void OnItemchangedRecordlist (NMHDR* pNMHDR, LRESULT* pResult);
+  afx_msg LRESULT OnActivateList (WPARAM wParam, LPARAM lParam);
   //}}AFX_MSG
 
   DECLARE_MESSAGE_MAP();
 
+public:
+	afx_msg void OnNMDblclkRecordlist(NMHDR *pNMHDR, LRESULT *pResult);
 };
 /*===========================================================================
  *		End of Class CSrContItemDlg Definition
