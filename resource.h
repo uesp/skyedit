@@ -62,6 +62,7 @@
 #define IDR_COMPONENT_MENU              187
 #define IDD_COBJ_VIEW                   188
 #define IDR_COMPONENT_ACCEL             188
+#define IDR_CONTAINERLIST_MENU          188
 #define IDD_ENCH_VIEW                   189
 #define IDD_SPEL_VIEW                   190
 #define IDC_GOODDROP_CURSOR             190
@@ -78,6 +79,9 @@
 #define IDD_LVLEDIT_DLG                 202
 #define IDD_LVLN_VIEW                   203
 #define IDD_LVSP_VIEW                   204
+#define IDD_CONT_VIEW                   205
+#define IDD_LVLEDIT_DLG1                206
+#define IDD_CONTITEMEDIT_DLG            206
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -289,6 +293,13 @@
 #define IDC_GLOBAL                      1198
 #define IDC_EDIT_GLOBAL                 1199
 #define IDC_SELECT_GLOBAL               1200
+#define IDC_OPENSOUND                   1201
+#define IDC_EDIT_OPENSOUND              1202
+#define IDC_SELECT_OPENSOUND            1203
+#define IDC_CLOSESOUND                  1204
+#define IDC_EDIT_CLOSESOUND             1205
+#define IDC_SELECT_CLOSESOUND           1206
+#define IDC_TYPE                        1207
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -485,7 +496,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        203
 #define _APS_NEXT_COMMAND_VALUE         32859
-#define _APS_NEXT_CONTROL_VALUE         1201
+#define _APS_NEXT_CONTROL_VALUE         1208
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

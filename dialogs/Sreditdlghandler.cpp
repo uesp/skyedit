@@ -41,6 +41,7 @@ srdlgcreateinfo_t l_SrDlgCreateInfo[] = {
 	{ &SR_NAME_AMMO, "Ammo",			 CSrAmmoView::IDD,   RUNTIME_CLASS(CSrAmmoView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Ammunition"),	_T("Ammunition") },
 	{ &SR_NAME_ARMO, "Armor",			 CSrArmoView::IDD,   RUNTIME_CLASS(CSrArmoView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Armor"),			_T("Armor") },
 	{ &SR_NAME_BOOK, "Book",			 CSrBookView::IDD,   RUNTIME_CLASS(CSrBookView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Book"),			_T("Book") },
+	{ &SR_NAME_CONT, "Container",		 CSrContView::IDD,   RUNTIME_CLASS(CSrContView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Container"),		_T("Container") },
 	{ &SR_NAME_ENCH, "Enchantment",		 CSrEnchView::IDD,   RUNTIME_CLASS(CSrEnchView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Enchantment"),	_T("Enchantment") },
 	{ &SR_NAME_GLOB, "Global",		     CSrGlobView::IDD,   RUNTIME_CLASS(CSrGlobView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Global"),		_T("Global") },
 	{ &SR_NAME_GMST, "Game Setting",     CSrGmstView::IDD,   RUNTIME_CLASS(CSrGmstView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Game_Setting"),	_T("Game_Setting") },

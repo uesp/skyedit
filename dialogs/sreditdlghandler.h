@@ -35,6 +35,7 @@
   #include "srarmoview.h"
   #include "srbookview.h"
   #include "srcobjview.h"
+  #include "srcontview.h"
   #include "srenchview.h"
   #include "srglobview.h"
   #include "srgmstview.h"

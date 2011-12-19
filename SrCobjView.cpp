@@ -709,15 +709,15 @@ void CSrCobjView::GetCurrentComponent (void)
 
 	if (pRecord != NULL)
 	{
-		m_pCurrentComponent->SetItemFormID(pRecord->GetFormID());
+		m_pCurrentComponent->SetFormID(pRecord->GetFormID());
 	}
 	else
 	{
-		m_pCurrentComponent->SetItemFormID(0);
+		m_pCurrentComponent->SetFormID(0);
 	}
 
 	m_ComponentCount.GetWindowText(Buffer);
-	m_pCurrentComponent->SetItemCount(atoi(Buffer));
+	m_pCurrentComponent->SetCount(atoi(Buffer));
 
 	for (int i = 0; i < m_ComponentList.GetItemCount(); ++i)
 	{
@@ -780,7 +780,7 @@ void CSrCobjView::OnComponentDecrease()
 	GetCurrentComponent();
 
 	int NewCount = pComp->GetCount() - 1;
-	if (NewCount >= 0) pComp->SetItemCount(NewCount);
+	if (NewCount >= 0) pComp->SetCount(NewCount);
 	UpdateComponentList(ListIndex, true);
 	SetCurrentComponent(pComp);
 }
@@ -797,7 +797,7 @@ void CSrCobjView::OnComponentIncrease()
 
 	GetCurrentComponent();
 
-	pComp->SetItemCount(pComp->GetCount() + 1);
+	pComp->SetCount(pComp->GetCount() + 1);
 	UpdateComponentList(ListIndex, true);
 	SetCurrentComponent(pComp);
 }
@@ -987,8 +987,8 @@ int CSrCobjView::OnDropRecordComponentData (srrldroprecords_t& DropItems)
 	}		
 
 	pNewComponent->InitializeNew();
-	pNewComponent->SetItemCount(1);
-	pNewComponent->SetItemFormID(pRecord->GetFormID());
+	pNewComponent->SetCount(1);
+	pNewComponent->SetFormID(pRecord->GetFormID());
 	m_Components.Add(pNewComponent);
 	
 	m_ComponentsChanged = true;
