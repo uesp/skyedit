@@ -99,8 +99,108 @@ public:
 	CButton m_DetrimentalCheck;
 	CButton m_PercentMagCheck;
 	CButton m_SelfCheck;
+	CButton m_NoAreaCheck;
 	CButton m_FXPersistCheck;
 	CButton m_BoundCheck;
+	CEdit m_EffectPlayRate;
+	CComboBox m_ActorValue;
+	CComboBox m_CastType;
+	
+	CEdit m_Unknown1;
+	CEdit m_Unknown2;
+	CEdit m_Unknown3;
+	CEdit m_Unknown4;
+	CEdit m_Unknown5;
+	CEdit m_Unknown6;
+	CEdit m_Unknown7;
+	CEdit m_Unknown8;
+	CEdit m_Unknown9;
+	CEdit m_Unknown10;
+	CEdit m_Unknown13;
+	CEdit m_Unknown14;
+	CEdit m_Unknown15;
+	
+	CEdit m_Light;
+	CEdit m_Shader1;
+	CEdit m_Shader2;
+	CEdit m_Art1;
+	CEdit m_Art2;
+	CEdit m_Art3;
+	CEdit m_Art4;
+	CEdit m_ImpactSet1;
+	CEdit m_ImpactSet2;
+	CEdit m_Perk;
+	CEdit m_Explosion;
+	CEdit m_DualCast;
+	CEdit m_SecondSpell;
+	CEdit m_Projectile;
+	
+	CButton m_WardCheck;
+	CButton	m_UnknownCheck1;
+	CButton m_UnknownCheck2;
+	CButton m_UnknownCheck3;
+	CButton m_UnknownCheck4;
+	CButton m_UnknownCheck5;
+	CButton m_UnknownCheck6;
+	CButton m_UnknownCheck7;
+	CButton m_UnknownCheck8;
+	CButton m_UnknownCheck9;
+
+	afx_msg void OnBnClickedEditPerk();
+	afx_msg void OnBnClickedSelectPerk();
+	afx_msg void OnDropPerk (NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditDualCast();
+	afx_msg void OnBnClickedSelectDualCast();
+	afx_msg void OnDropDualCast (NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditLight();
+	afx_msg void OnBnClickedSelectLight();
+	afx_msg void OnDropLight (NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditSecondSpell();
+	afx_msg void OnBnClickedSelectSecondSpell();
+	afx_msg void OnDropSecondSpell (NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditExplosion();
+	afx_msg void OnBnClickedSelectExplosion();
+	afx_msg void OnDropExplosion (NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditProjectile();
+	afx_msg void OnBnClickedSelectProjectile();
+	afx_msg void OnDropProjectile (NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditArt1();
+	afx_msg void OnBnClickedSelectArt1();
+	afx_msg void OnDropArt1 (NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditArt2();
+	afx_msg void OnBnClickedSelectArt2();
+	afx_msg void OnDropArt2 (NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditArt3();
+	afx_msg void OnBnClickedSelectArt3();
+	afx_msg void OnDropArt3 (NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditArt4();
+	afx_msg void OnBnClickedSelectArt4();
+	afx_msg void OnDropArt4 (NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditImpactSet1();
+	afx_msg void OnBnClickedSelectImpactSet1();
+	afx_msg void OnDropImpactSet1 (NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditImpactSet2();
+	afx_msg void OnBnClickedSelectImpactSet2();
+	afx_msg void OnDropImpactSet2 (NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditShader1();
+	afx_msg void OnBnClickedSelectShader1();
+	afx_msg void OnDropShader1 (NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditShader2();
+	afx_msg void OnBnClickedSelectShader2();
+	afx_msg void OnDropShader2 (NMHDR* pNotifyStruct, LRESULT* pResult);
 };
 /*===========================================================================
  *		End of Class CSrMgefView Definition
