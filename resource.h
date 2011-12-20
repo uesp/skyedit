@@ -365,7 +365,6 @@
 #define IDC_SELECT_CLOSESOUND           1206
 #define IDC_IMPACTSET2                  1206
 #define IDC_TYPE                        1207
-#define IDC_SELECT_IMPACT2              1207
 #define IDC_SELECT_IMPACTSET2           1207
 #define IDC_EDIT_IMPACTSET2             1208
 #define IDC_SHADER1                     1209
@@ -582,7 +581,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        208
-#define _APS_NEXT_COMMAND_VALUE         32859
+#define _APS_NEXT_COMMAND_VALUE         32861
 #define _APS_NEXT_CONTROL_VALUE         1225
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
