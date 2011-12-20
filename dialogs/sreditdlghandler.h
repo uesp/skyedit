@@ -41,6 +41,7 @@
   #include "srgmstview.h"
   #include "sringrview.h"
   #include "srkywdview.h"
+  #include "srlighview.h"
   #include "srlvliview.h"
   #include "srlvlnview.h"
   #include "srlvspview.h"

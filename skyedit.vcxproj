@@ -1825,6 +1825,7 @@
     <ClCompile Include="dialogs\SrContView.cpp" />
     <ClCompile Include="dialogs\SrEnchView.cpp" />
     <ClCompile Include="dialogs\SrIngrView.cpp" />
+    <ClCompile Include="dialogs\SrLighView.cpp" />
     <ClCompile Include="dialogs\SrLvlEditDlg.cpp" />
     <ClCompile Include="dialogs\SrLvliView.cpp" />
     <ClCompile Include="dialogs\SrLvlnView.cpp" />
@@ -2123,6 +2124,7 @@
     <ClInclude Include="dialogs\SrContView.h" />
     <ClInclude Include="dialogs\SrEnchView.h" />
     <ClInclude Include="dialogs\SrIngrView.h" />
+    <ClInclude Include="dialogs\SrLighView.h" />
     <ClInclude Include="dialogs\SrLvlEditDlg.h" />
     <ClInclude Include="dialogs\SrLvliView.h" />
     <ClInclude Include="dialogs\SrLvlnView.h" />
