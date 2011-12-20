@@ -39,12 +39,14 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrLighView, CSrRecordDialog)
-  //{{AFX_MSG_MAP(CSrLighView)
 	ON_BN_CLICKED(IDC_COLOR, OnColor)
 	ON_EN_CHANGE(IDC_RED, OnChangeColor)
 	ON_EN_CHANGE(IDC_GREEN, OnChangeColor)
 	ON_EN_CHANGE(IDC_BLUE, OnChangeColor)
-	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDC_EDIT_SOUND, &CSrLighView::OnBnClickedEditSound)
+	ON_BN_CLICKED(IDC_SELECTSOUND_BUTTON, &CSrLighView::OnBnClickedSelectsoundButton)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_SOUND, OnDropSound)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_SOUND, OnDropSound)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrLighView Message Map
@@ -295,3 +297,23 @@ void CSrLighView::OnChangeColor()
 /*===========================================================================
  *		End of Class Event CSrLighView::OnChangeColor()
  *=========================================================================*/
+
+
+void CSrLighView::OnBnClickedEditSound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_Sound, SR_NAME_SNDR);
+}
+
+
+void CSrLighView::OnBnClickedSelectsoundButton()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_Sound, SR_NAME_SNDR, &CSrSndrRecord::s_FieldMap);
+}
+
+
+void CSrLighView::OnDropSound (NMHDR* pNotifyStruct, LRESULT* pResult)
+{
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	*pResult = DropRecordHelper(pDropItems, &m_Sound, SR_NAME_SNDR, 1);
+}
+

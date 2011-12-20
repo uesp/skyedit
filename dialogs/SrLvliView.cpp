@@ -39,7 +39,6 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrLvliView, CSrRecordDialog)
-	//{{AFX_MSG_MAP(CSrLvliView)
 	ON_WM_CONTEXTMENU()
 	ON_COMMAND(ID_LVLLIST_EDIT, OnLvllistEdit)
 	ON_UPDATE_COMMAND_UI(ID_LVLLIST_EDIT, OnUpdateLvllistEdit)
@@ -58,7 +57,6 @@ BEGIN_MESSAGE_MAP(CSrLvliView, CSrRecordDialog)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_ITEM_LIST, OnDropItemList)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_ITEM_LIST, OnDropItemList)
 	ON_NOTIFY(ID_SRRECORDLIST_KEYDOWN, IDC_ITEM_LIST, OnKeydownItemList)
-	//}}AFX_MSG_MAP
 	ON_BN_CLICKED(IDC_EDIT_GLOBAL, &CSrLvliView::OnBnClickedEditGlobal)
 	ON_BN_CLICKED(IDC_SELECT_GLOBAL, &CSrLvliView::OnBnClickedSelectGlobal)
 END_MESSAGE_MAP()

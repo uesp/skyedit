@@ -89,6 +89,7 @@ protected:
 	afx_msg void OnCarried();
 	afx_msg void OnColor();
 	afx_msg void OnChangeColor();
+	afx_msg void OnDropSound(NMHDR* pNotifyStruct, LRESULT* pResult);
 
 	DECLARE_MESSAGE_MAP();
 
@@ -103,6 +104,8 @@ public:
 	CEdit m_Unknown2;
 	CEdit m_Unknown3;
 	CEdit m_Unknown4;
+	afx_msg void OnBnClickedEditSound();
+	afx_msg void OnBnClickedSelectsoundButton();
 };
 /*===========================================================================
  *		End of Class CSrLighView Definition
