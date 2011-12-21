@@ -1261,7 +1261,8 @@ DisplayFilter
 	RecName = STAT
 	Parent = StaticClutter
 	FieldStarts = Model, Clutter\Ruin
-EndDisplayFilter
+End
+DisplayFilter
 	ID = "StaticClutterSign"
 	DisplayName = "Sign"
 	RecName = STAT

@@ -833,6 +833,9 @@
     <ClCompile Include="dialogs\SrLighView.cpp">
       <Filter>Source Files\Forms\Dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srmgefsnddsubrecord.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">
@@ -1685,6 +1688,9 @@
     </ClInclude>
     <ClInclude Include="dialogs\SrLighView.h">
       <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srmgefsnddsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
