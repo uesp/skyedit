@@ -374,15 +374,25 @@ bool CSrRecordDialog::GetKeywords(sruirecfields_t& FieldInfo, CListBox* pListBox
 	if (GetOutputRecord()->GetParent() == NULL) return false;
 
 	pSubrecord = GetOutputRecord()->FindSubrecord(SR_NAME_KSIZ);
-	if (pSubrecord == NULL) pSubrecord = GetOutputRecord()->AddNewSubrecord(SR_NAME_KSIZ);
-	if (pSubrecord == NULL) return AddSrGeneralError("Failed to find or create KSIZ subrecord!");
 
+	if (pSubrecord == NULL) 
+	{
+		pSubrecord = GetOutputRecord()->AddNewSubrecord(SR_NAME_KSIZ);
+		if (pSubrecord == NULL) return AddSrGeneralError("Failed to find or create KSIZ subrecord!");
+		pSubrecord->InitializeNew();
+	}
+		
 	CSrDwordSubrecord* pFormIdCount = SrCastClass(CSrDwordSubrecord, pSubrecord);
 	if (pFormIdCount == NULL) return AddSrGeneralError("Invalid keyword count subrecord type!");
 
 	pSubrecord = GetOutputRecord()->FindSubrecord(SR_NAME_KWDA);
-	if (pSubrecord == NULL) pSubrecord = GetOutputRecord()->AddNewSubrecord(SR_NAME_KWDA);
-	if (pSubrecord == NULL) return AddSrGeneralError("Failed to find or create KWDA subrecord!");
+
+	if (pSubrecord == NULL) 
+	{
+		pSubrecord = GetOutputRecord()->AddNewSubrecord(SR_NAME_KWDA);
+		if (pSubrecord == NULL) return AddSrGeneralError("Failed to find or create KWDA subrecord!");
+		pSubrecord->InitializeNew();
+	}
 
 	CSrFormidArraySubrecord* pFormIDs = SrCastClass(CSrFormidArraySubrecord, pSubrecord);
 	if (pFormIDs == NULL) return AddSrGeneralError("Cannot add keywords to non-formid array!");
