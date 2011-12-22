@@ -1,14 +1,14 @@
 /*===========================================================================
  *
- * File:		Srlvleditdlg.H
+ * File:		SrMgefSndddEditdlg.H
  * Author:		Dave Humphrey (uesp@sympatico.ca)
- * Created On:	17 December 2011
+ * Created On:	21 December 2011
  *
  * Description
  *
  *=========================================================================*/
-#ifndef __SRLVLEDITDLG_H
-#define __SRLVLEDITDLG_H
+#ifndef __SRMGEFSNDDEDITDLG_H
+#define __SRMGEFSNDDEDITDLG_H
 
 
 /*===========================================================================
@@ -29,9 +29,9 @@
  *=========================================================================*/
 
 	/* Return results */
-  #define SR_LVLEDITDLG_RESULT_OK		IDOK
-  #define SR_LVLEDITDLG_RESULT_CANCEL	IDCANCEL
-  #define SR_LVLEDITDLG_RESULT_DELETE	201
+  #define SR_MGEFSNDDEDITDLG_RESULT_OK		IDOK
+  #define SR_MGEFSNDDEDITDLG_RESULT_CANCEL	IDCANCEL
+  #define SR_MGEFSNDDEDITDLG_RESULT_DELETE	201
 
 /*===========================================================================
  *		End of Definitions
@@ -40,25 +40,25 @@
 
 /*===========================================================================
  *
- * Begin Class CSrLvlEditDlg Definition
+ * Begin Class CSrMgefSnddEditDlg Definition
  *
  *=========================================================================*/
-class CSrLvlEditDlg : public CDialog {
+class CSrMgefSnddEditDlg : public CDialog {
 
   /*---------- Begin Protected Class Members --------------------------*/
 protected:
-  CSrLvloSubrecord*	m_pSubrecord;	/* Item being edited */
-  CString			m_TitleValue;
+  srmgefsndddata_t*		m_pSoundData;
+  CString				m_TitleValue;
   
-  CSrRecordHandler*	m_pRecordHandler;
+  CSrRecordHandler*		m_pRecordHandler;
 
   const srrectype_t*	m_pRecordTypes;
 
-  bool				m_UpdateListOnChange;
+  bool					m_UpdateListOnChange;
 
-  int				m_EditorIDCheck;
-  srformid_t		m_ObjectFormID;
-  srformid_t		m_ParentFormID;
+  int					m_EditorIDCheck;
+  srformid_t			m_ObjectFormID;
+  srformid_t			m_ParentFormID;
 
 
   /*---------- Begin Protected Class Methods --------------------------*/
@@ -75,13 +75,13 @@ protected:
 public:
 
 	/* Constructor */
-  CSrLvlEditDlg(CWnd* pParent = NULL);
+  CSrMgefSnddEditDlg(CWnd* pParent = NULL);
 
 	/* Get class members */
-  CSrLvloSubrecord* GetSubrecord (void) { return (m_pSubrecord); }
+  srmgefsndddata_t* GetSoundData (void) { return (m_pSoundData); }
 
 	/* Set class members */
-  void SetSubrecord       (CSrLvloSubrecord* pSubrecord) { m_pSubrecord      = pSubrecord; }
+  void SetSoundData       (srmgefsndddata_t*      pData) { m_pSoundData      = pData; }
   void SetTitleValue      (const char*          pString) { m_TitleValue      = pString; }
   void SetRecordHandler   (CSrRecordHandler*   pHandler) { m_pRecordHandler  = pHandler; }
   void SetRecordTypes     (const srrectype_t*    pTypes) { m_pRecordTypes    = pTypes; }
@@ -91,11 +91,9 @@ public:
   void GetControlData (void);
   void SetControlData (void);
   
-
-  enum { IDD = IDD_LVLEDIT_DLG };
+  enum { IDD = IDD_MGEFSNDDEDIT_DLG };
   CEdit				m_FormID;
-  CEdit				m_Level;
-  CEdit				m_Count;
+  CEdit				m_Value;
   CEdit				m_ObjectID;
   CSrRecordVirtualListCtrl	m_RecordList;
 
@@ -115,7 +113,7 @@ protected:
 
 };
 /*===========================================================================
- *		End of Class CSrLvlEditDlg Definition
+ *		End of Class CSrMgefSnddEditDlg Definition
  *=========================================================================*/
 
 
@@ -125,9 +123,7 @@ protected:
  *
  *=========================================================================*/
 
-  int SrEditLvlItemDlg     (CSrLvloSubrecord* pSubrecord, CSrRecordHandler* pHandler, const srformid_t ParentFormID);
-  int SrEditLvlSpellDlg    (CSrLvloSubrecord* pSubrecord, CSrRecordHandler* pHandler, const srformid_t ParentFormID);
-  int SrEditLvlActorDlg    (CSrLvloSubrecord* pSubrecord, CSrRecordHandler* pHandler, const srformid_t ParentFormID);
+  int SrEditMgefSnddDlg (srmgefsndddata_t* pData, CSrRecordHandler* pHandler, const srformid_t ParentFormID);
 
 /*===========================================================================
  *		End of Function Prototypes
@@ -136,5 +132,5 @@ protected:
 
 #endif
 /*===========================================================================
- *		End of File Srlvleditdlg.H
+ *		End of File SrMgefSnddEditdlg.H
  *=========================================================================*/

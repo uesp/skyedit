@@ -82,6 +82,8 @@
 #define IDD_CONT_VIEW                   205
 #define IDD_CONTITEMEDIT_DLG            206
 #define IDD_LIGH_VIEW                   207
+#define IDD_LVLEDIT_DLG1                208
+#define IDD_MGEFSNDDEDIT_DLG            208
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -386,6 +388,9 @@
 #define IDC_UNKNOWN15                   1225
 #define IDC_UNKNOWNCHECK9               1226
 #define IDC_NOAREACHECK                 1227
+#define IDC_SOUND_LIST                  1228
+#define IDC_ADDSOUND                    1229
+#define IDC_DELETESOUND                 1230
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -580,9 +585,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        208
+#define _APS_NEXT_RESOURCE_VALUE        209
 #define _APS_NEXT_COMMAND_VALUE         32861
-#define _APS_NEXT_CONTROL_VALUE         1225
+#define _APS_NEXT_CONTROL_VALUE         1230
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

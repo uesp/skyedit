@@ -1835,6 +1835,7 @@
     <ClCompile Include="dialogs\SrLvliView.cpp" />
     <ClCompile Include="dialogs\SrLvlnView.cpp" />
     <ClCompile Include="dialogs\SrLvspView.cpp" />
+    <ClCompile Include="dialogs\SrMgefSnddEditDlg.cpp" />
     <ClCompile Include="dialogs\SrMiscView.cpp" />
     <ClCompile Include="dialogs\SrScrlView.cpp" />
     <ClCompile Include="dialogs\SrSpelView.cpp" />

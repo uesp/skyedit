@@ -18,6 +18,7 @@
  *=========================================================================*/
 	#include "dialogs/srrecorddialog.h"
 #include "afxwin.h"
+#include "afxcmn.h"
  //#include "afxwin.h"
  /*===========================================================================
  *		End of Required Includes
@@ -35,6 +36,8 @@ class CSrMgefView : public CSrRecordDialog {
 
   /*---------- Begin Protected Class Members ---------------------*/
 protected:
+	CSrMgefSnddArray	m_SoundCopy;
+	bool				m_IsInitialized;
 	
 
 
@@ -67,6 +70,9 @@ public:
 
 	virtual void  GetControlData   (void);
 	virtual void  SetControlData   (void);
+	void SetSoundList (void);
+	int AddSoundList (srmgefsndddata_t* pSoundData);
+	void UpdateSoundList (const int ListIndex, const bool Update);
 
 	/* ClassWizard generated virtual function overrides */
   //{{AFX_VIRTUAL(CSrMgefView)
@@ -201,6 +207,15 @@ public:
 	afx_msg void OnBnClickedEditShader2();
 	afx_msg void OnBnClickedSelectShader2();
 	afx_msg void OnDropShader2 (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnBnClickedSoundButton();
+
+	afx_msg LRESULT OnEditSoundMsg (WPARAM wParam, LPARAM lParam);
+
+	CButton m_SoundButton;
+	afx_msg void OnCbnSelchangeCasttype();
+	CSrRecordListCtrl m_Sounds;
+	afx_msg void OnBnClickedDeletesound();
+	afx_msg void OnBnClickedAddsound();
 };
 /*===========================================================================
  *		End of Class CSrMgefView Definition

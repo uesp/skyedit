@@ -13,6 +13,7 @@
 #include "sredit.h"
 #include "srmgefview.h"
 #include "dialogs/sreditdlghandler.h"
+#include "dialogs/SrMgefSnddEditDlg.h"
 
 
 /*===========================================================================
@@ -35,10 +36,32 @@
 
 /*===========================================================================
  *
+ * Begin List Column Definitions
+ *
+ *=========================================================================*/
+static srreclistcolinit_t s_SoundListInit[] = {
+	{ SR_FIELD_SOUND,		180,	LVCFMT_CENTER },
+	{ SR_FIELD_VALUE,		50,		LVCFMT_CENTER },
+	{ SR_FIELD_NONE, 0, 0 }
+ };
+
+static srrecfield_t s_SoundFields[] = {
+	{ "Sound",		SR_FIELD_SOUND,		0, NULL },
+	{ "Value",		SR_FIELD_VALUE,		0, NULL },	
+	{ NULL,			SR_FIELD_NONE,		0, NULL }
+ };
+/*===========================================================================
+ *		End of List Column Definitions
+ *=========================================================================*/
+
+
+/*===========================================================================
+ *
  * Begin CSrMgefView Message Map
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrMgefView, CSrRecordDialog)
+	ON_MESSAGE(ID_SRRECORDLIST_ACTIVATE, OnEditSoundMsg)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_KEYWORDS, OnDropKeywords)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_KEYWORDS, OnDropKeywords)
 
@@ -112,6 +135,9 @@ BEGIN_MESSAGE_MAP(CSrMgefView, CSrRecordDialog)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_IMPACTSET2, OnDropImpactSet2)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_IMPACTSET2, OnDropImpactSet2)
 
+	ON_CBN_SELCHANGE(IDC_CASTTYPE, &CSrMgefView::OnCbnSelchangeCasttype)
+	ON_BN_CLICKED(IDC_DELETESOUND, &CSrMgefView::OnBnClickedDeletesound)
+	ON_BN_CLICKED(IDC_ADDSOUND, &CSrMgefView::OnBnClickedAddsound)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrMgefView Message Map
@@ -255,7 +281,7 @@ void CSrMgefView::DoDataExchange (CDataExchange* pDX) {
 	DDX_Control(pDX, IDC_EFFECTPLAYRATE,	m_EffectPlayRate);
 	DDX_Control(pDX, IDC_ACTORVALUE,		m_ActorValue);
 	DDX_Control(pDX, IDC_CASTTYPE,			m_CastType);
-	
+
 	DDX_Control(pDX, IDC_UNKNOWN1,			m_Unknown1);
 	DDX_Control(pDX, IDC_UNKNOWN2,			m_Unknown2);
 	DDX_Control(pDX, IDC_UNKNOWN3,			m_Unknown3);
@@ -269,7 +295,7 @@ void CSrMgefView::DoDataExchange (CDataExchange* pDX) {
 	DDX_Control(pDX, IDC_UNKNOWN13,			m_Unknown13);
 	DDX_Control(pDX, IDC_UNKNOWN14,			m_Unknown14);
 	DDX_Control(pDX, IDC_UNKNOWN15,			m_Unknown15);
-	
+
 	DDX_Control(pDX, IDC_LIGHT,				m_Light);
 	DDX_Control(pDX, IDC_SHADER1,			m_Shader1);
 	DDX_Control(pDX, IDC_SHADER2,			m_Shader2);
@@ -284,7 +310,7 @@ void CSrMgefView::DoDataExchange (CDataExchange* pDX) {
 	DDX_Control(pDX, IDC_DUALCAST,			m_DualCast);
 	DDX_Control(pDX, IDC_SECONDSPELL,		m_SecondSpell);
 	DDX_Control(pDX, IDC_PROJECTILE,		m_Projectile);
-	
+
 	DDX_Control(pDX, IDC_WARDCHECK,			m_WardCheck);
 	DDX_Control(pDX, IDC_NOAREACHECK,		m_NoAreaCheck);
 	DDX_Control(pDX, IDC_UNKNOWNCHECK1,		m_UnknownCheck1);
@@ -296,6 +322,7 @@ void CSrMgefView::DoDataExchange (CDataExchange* pDX) {
 	DDX_Control(pDX, IDC_UNKNOWNCHECK7,		m_UnknownCheck7);
 	DDX_Control(pDX, IDC_UNKNOWNCHECK8,		m_UnknownCheck8);
 	DDX_Control(pDX, IDC_UNKNOWNCHECK9,		m_UnknownCheck9);
+	DDX_Control(pDX, IDC_SOUND_LIST,		m_Sounds);
 }
 /*===========================================================================
  *		End of Class Method CSrMgefView::DoDataExchange()
@@ -331,14 +358,29 @@ void CSrMgefView::Dump(CDumpContext& dc) const {
  *=========================================================================*/
 void CSrMgefView::OnInitialUpdate (void) 
 {
-  CSrRecordDialog::OnInitialUpdate();
+	m_IsInitialized = false;
+	CSrRecordDialog::OnInitialUpdate();
 
-  SrFillComboList(m_SchoolList,	s_SrMagicSchools,		0);
-  SrFillComboList(m_TypeList,	s_SrMagicTypes,			0);
-  SrFillComboList(m_CastType,	s_SrEffectCastTypes,	0);
-  SrFillComboList(m_ActorValue,	s_SrActorValues,		0);
-  
-  SetControlData();
+	SrFillComboList(m_SchoolList,	s_SrMagicSchools,		0);
+	SrFillComboList(m_TypeList,	s_SrMagicTypes,			0);
+	SrFillComboList(m_CastType,	s_SrEffectCastTypes,	0);
+	SrFillComboList(m_ActorValue,	s_SrActorValues,		0);
+
+	CSrMgefRecord* pMgef = SrCastClassNull(CSrMgefRecord, GetInputRecord());
+	if (pMgef != NULL && pMgef->GetSoundArray()) m_SoundCopy = *pMgef->GetSoundArray();
+
+	m_Sounds.SetListName("EffectSoundList");
+	m_Sounds.SetDragEnable(true);
+	m_Sounds.DefaultSettings();
+	m_Sounds.SetupCustomList(s_SoundListInit, NULL, s_SoundFields);
+	m_Sounds.SetOwner(this);
+	m_Sounds.SetColorEnable(false);
+	m_Sounds.SetDragType(SR_RLDRAG_CUSTOM);
+	m_Sounds.SetSortEnable(false);
+	m_Sounds.SetActivateType(SR_RLACTIVATE_RECORD);
+	
+	SetControlData();
+	m_IsInitialized = true;
 }
 /*===========================================================================
  *		End of Class Event CSrMgefView::OnInitialUpdate()
@@ -352,13 +394,8 @@ void CSrMgefView::GetControlData (void)
 	CSrMgefRecord* pMgef = SrCastClassNull(CSrMgefRecord, GetOutputRecord());
 	if (pMgef == NULL) return;
 
-	//FlipFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_HOSTILE,		m_HostileCheck.GetCheck() != 0);
-	//FlipFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_RECOVER,		m_RecoverCheck.GetCheck() != 0);
-	//FlipFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_DETRIMENTAL,	m_DetrimentalCheck.GetCheck() != 0);
-	//FlipFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_PERCENTMAG,	m_PercentMagCheck.GetCheck() != 0);
-	//FlipFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_SELF,		m_SelfCheck.GetCheck() != 0);
-	//FlipFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_FXPERSIST,	m_FXPersistCheck.GetCheck() != 0);
-	//FlipFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_BOUND,		m_BoundCheck.GetCheck() != 0);
+	pMgef->SetSounds(m_SoundCopy);
+	
 }
 
 
@@ -367,16 +404,81 @@ void CSrMgefView::SetControlData (void)
 	CSrRecordDialog::SetControlData();
 
 	CSrMgefRecord* pMgef = SrCastClassNull(CSrMgefRecord, GetInputRecord());
-	if (pMgef == NULL) return;
+	if (pMgef == NULL) return;	
 
-	//m_HostileCheck.SetCheck(CheckFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_HOSTILE));
-	//m_RecoverCheck.SetCheck(CheckFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_RECOVER));
-	//m_DetrimentalCheck.SetCheck(CheckFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_DETRIMENTAL));
-	//m_PercentMagCheck.SetCheck(CheckFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_PERCENTMAG));
-	//m_SelfCheck.SetCheck(CheckFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_SELF));
-	//m_FXPersistCheck.SetCheck(CheckFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_FXPERSIST));
-	//m_BoundCheck.SetCheck(CheckFlagBits(pMgef->GetEffectData().Flags, SR_MGEFFLAG_BOUND));
+	SetSoundList();
 }
+
+
+void CSrMgefView::SetSoundList (void)
+{
+	m_Sounds.DeleteAllItems();
+	
+	for (dword i = 0; i < m_SoundCopy.GetSize(); ++i) 
+	{
+		AddSoundList(&m_SoundCopy[i]);
+	}
+
+	m_Sounds.SelectRecord(0);
+}
+
+
+/*===========================================================================
+ *
+ * Class CSrMgefView Method - int AddSoundList (pSoundData);
+ *
+ *=========================================================================*/
+int CSrMgefView::AddSoundList (srmgefsndddata_t* pSoundData) 
+{
+  srrlcustomdata_t	CustomData = { 0 };
+  CString           Buffer;
+  int		        ListIndex;
+
+  //CustomData.UserCount = pSoundData->Conditions.GetSize();
+  CustomData.pRecord   = GetInputRecord();
+  CustomData.pUserData = (void *) pSoundData;
+  //CustomData.pSubrecords[0] = pEffectData->pEffect;
+  //CustomData.pSubrecords[1] = pEffectData->pEffectData;
+      
+  ListIndex = m_Sounds.AddCustomRecord(CustomData);
+  if (ListIndex < 0) return (-1);
+
+  UpdateSoundList(ListIndex, false);
+  return (ListIndex);
+}
+/*===========================================================================
+ *		End of Class Method CSrMgefView::AddSoundList()
+ *=========================================================================*/
+
+
+/*===========================================================================
+ *
+ * Class CSrMgefView Method - void UpdateSoundList (ListIndex, Update);
+ *
+ *=========================================================================*/
+void CSrMgefView::UpdateSoundList (const int ListIndex, const bool Update)
+{
+	srrlcustomdata_t* pCustomData;
+	srmgefsndddata_t* pSoundData;
+	CString		      Buffer;
+
+	if (GetInputRecord() == NULL) return;
+
+	pCustomData = m_Sounds.GetCustomData(ListIndex);
+	if (pCustomData == NULL) return;
+	if (Update) m_Sounds.UpdateRecord(ListIndex);
+
+	pSoundData = (srmgefsndddata_t *) pCustomData->pUserData;
+	if (pSoundData == NULL) return;
+
+	m_Sounds.SetCustomField(ListIndex, SR_FIELD_SOUND,  GetInputRecord()->GetParent()->GetEditorID(pSoundData->SoundID));
+		
+	Buffer.Format("%d", pSoundData->Value);
+	m_Sounds.SetCustomField(ListIndex, SR_FIELD_VALUE, Buffer);  
+}
+/*===========================================================================
+ *		End of Class Method CSrMgefView::UpdateSoundList()
+ *=========================================================================*/
 
 
 /*===========================================================================
@@ -679,3 +781,66 @@ void CSrMgefView::OnDropShader2 (NMHDR* pNotifyStruct, LRESULT* pResult)
   *pResult = DropRecordHelper(pDropItems, &m_Shader2, SR_NAME_EFSH, 1);
 }
 
+
+
+void CSrMgefView::OnBnClickedSoundButton()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void CSrMgefView::OnCbnSelchangeCasttype()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void CSrMgefView::OnBnClickedDeletesound()
+{
+	int ListIndex = m_Sounds.GetSelectedItem();
+
+	if (ListIndex < 0) return;
+
+	m_SoundCopy.Delete(ListIndex);
+	m_Sounds.DeleteItem(ListIndex);
+	m_Sounds.SelectRecord(ListIndex - 1);
+}
+
+
+void CSrMgefView::OnBnClickedAddsound()
+{
+	srmgefsndddata_t NewData = { 0, 0 };
+	m_SoundCopy.Add(NewData);
+	AddSoundList(&m_SoundCopy[m_SoundCopy.GetSize() - 1]);
+}
+
+
+LRESULT CSrMgefView::OnEditSoundMsg (WPARAM wParam, LPARAM lParam) 
+{
+	srmgefsndddata_t*	pSoundData;
+	srrlcustomdata_t*	pCustomData;
+	int					ListIndex;
+	int					Result;
+
+	ListIndex = m_Sounds.GetSelectedItem();
+	if (ListIndex < 0) return -1;
+
+	pCustomData = m_Sounds.GetCustomData(ListIndex);
+	if (pCustomData == NULL) return -1;
+
+	pSoundData = (srmgefsndddata_t *) pCustomData->pUserData;
+	if (pSoundData == NULL) return -1;
+	
+	Result = SrEditMgefSnddDlg (pSoundData, m_pRecordHandler, GetInputRecord()->GetFormID());
+	if (Result == SR_MGEFSNDDEDITDLG_RESULT_CANCEL) return -1;
+
+	if (Result == SR_MGEFSNDDEDITDLG_RESULT_DELETE) 
+	{
+		m_SoundCopy.Delete(ListIndex);
+		m_Sounds.RemoveItem(ListIndex);
+		return -1;
+	}
+  
+	UpdateSoundList(ListIndex, true);
+	return (0);
+}
