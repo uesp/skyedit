@@ -157,19 +157,15 @@ int __stdcall l_SortLoadInfosByDate (long lParam1, long lParam2, long lParamSort
   srloaddlgfileinfo_t* pFileInfo1 = (srloaddlgfileinfo_t *) lParam1;
   srloaddlgfileinfo_t* pFileInfo2 = (srloaddlgfileinfo_t *) lParam2;
 
+		/* Special case for Skyrim.esm to ensure it is loaded first */
+  if (stricmp(pFileInfo1->FindData.cFileName, "Skyrim.esm") == 0) return -1;
+  if (stricmp(pFileInfo2->FindData.cFileName, "Skyrim.esm") == 0) return 1;
+
   if (pFileInfo1 == NULL || pFileInfo2 == NULL) return (0);
 
   CTime Time1(pFileInfo1->FindData.ftLastWriteTime);
   CTime Time2(pFileInfo2->FindData.ftLastWriteTime);
   CTimeSpan TimeDiff = Time1 - Time2;
-
-		/* Special case for update.esm and skyrim.esm having the same date */
-  if (TimeDiff.GetTotalSeconds() == 0)
-  {
-	  if (stricmp(pFileInfo1->FindData.cFileName, "Skyrim.esm") == 0) return -1;
-	  if (stricmp(pFileInfo2->FindData.cFileName, "Skyrim.esm") == 0) return 1;
-	  return 0;
-  }
 
   return(int) TimeDiff.GetTotalSeconds();
 }
