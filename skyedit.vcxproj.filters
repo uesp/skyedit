@@ -1695,6 +1695,9 @@
     <ClInclude Include="..\tes5lib\modfile\subrecords\srmgefsnddsubrecord.h">
       <Filter>Header Files\ESP.\Subrecords.</Filter>
     </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\records\sridkeyrecord.h">
+      <Filter>Header Files\ESP.\Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="skyedit.rc">

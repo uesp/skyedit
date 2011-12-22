@@ -1989,6 +1989,7 @@
     <ClInclude Include="..\tes5lib\modfile\records\SrGrasRecord.h" />
     <ClInclude Include="..\tes5lib\modfile\records\SrHazdRecord.h" />
     <ClInclude Include="..\tes5lib\modfile\records\SrHdptRecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\records\sridkeyrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\records\SrIdleRecord.h" />
     <ClInclude Include="..\tes5lib\modfile\records\SrIdlmRecord.h" />
     <ClInclude Include="..\tes5lib\modfile\records\sridrecord.h" />

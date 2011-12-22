@@ -101,7 +101,6 @@ public:
 	CEdit		m_Magnitude;
 	CEdit		m_Area;
 	CEdit		m_Duration;
-	CEdit		m_Description;
 	CComboBox	m_PotionType;
 	CEdit		m_Value;
 	CEdit		m_Weight;
