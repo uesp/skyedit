@@ -50,7 +50,6 @@ ehthumbs.db
 *.[Cc]ache
 *.ilk
 *.log
-*.lib
 *.sbr
 *.sdf
 ipch/
