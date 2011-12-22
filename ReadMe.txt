@@ -1,5 +1,5 @@
  
-	   Package: SkyEdit v0.03alpha, 22 December 2011
+	   Package: SkyEdit v0.031alpha, 22 December 2011
 	    Author: Dave Humphrey, dave@uesp.net
 	   Website: www.uesp.net/wiki/Tes5Mod:SkyEdit
 
@@ -136,6 +136,9 @@ can be found at:
 
   Version History
 =======================================
+0.031alpha - 22 December 2011
+	- Fixed game crash from a modified record with no keywords.
+
 0.03alpha - 22 December 2011
 	- New Editable Types: AMMO, ARMO, ALCH, BOOK, CONT, INGR, LIGH, LVLI, LVLN, 
 		LVSP, MISC, SCRL, STAT
