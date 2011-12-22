@@ -1,5 +1,5 @@
  
-	   Package: SkyEdit v0.02alpha, 16 December 2011
+	   Package: SkyEdit v0.03alpha, 22 December 2011
 	    Author: Dave Humphrey, dave@uesp.net
 	   Website: www.uesp.net/wiki/Tes5Mod:SkyEdit
 
@@ -36,17 +36,18 @@ basic set of features is included.
   Current Status
 =======================================
 
-  Fully Editable Records
-	- Keywords
-	- Globals
-	- Game Settings
-	- Recipes
-
-  Partially Editable Records
-	- Enchantments (new)
-	- Spells (new)
-	- Weapons
-	- Magic Effects
+  Editable Records
+	- Keywords              - Containers
+	- Globals				- Leveled Items
+	- Game Settings			- Leveled Spells
+	- Recipes				- Leveled Actors
+	- Weapons				- Armor
+	- Magic Effects			- Ammo
+	- Enchantments			- Lights
+	- Spells				- Potions
+	- Ingredients			- Books
+	- Misc					- Scrolls
+	- Statics	
 
 
   What it Can Do
@@ -67,10 +68,9 @@ The basic capabilities of the editor in this release include:
 Some notable lack of features in the current release are:
 
   - Cannot edit or view most record types yet
-  - No script compiler or syntax highlighting
+  - No editing/compiling of scripts
   - No cell view or preview windows
   - No use info display
-  - Does not update dependancies when deleting records
 
 
   Installation
@@ -137,7 +137,8 @@ can be found at:
   Version History
 =======================================
 0.03alpha - 22 December 2011
-	- New Editable Types: AMMO, ARMO, ALCH, BOOK, CONT, INGR, LIGH, LVLI, LVLN, LVSP, MISC, SCRL, STAT, 
+	- New Editable Types: AMMO, ARMO, ALCH, BOOK, CONT, INGR, LIGH, LVLI, LVLN, 
+		LVSP, MISC, SCRL, STAT
 	- Expand Existing Types: MGEF, WEAP
 	- Find formids
 
@@ -147,7 +148,6 @@ can be found at:
 	- Addition of editable enchantments and spells
 	- Expanded editing of existing records
 	- Added missing record drag capabilities
-
 
 0.01alpha - 10 December 2011
 	- First release
