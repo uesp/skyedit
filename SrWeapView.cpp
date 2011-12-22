@@ -45,6 +45,38 @@ BEGIN_MESSAGE_MAP(CSrWeapView, CSrRecordDialog)
 	ON_BN_CLICKED(IDC_SELECTEQUIPSLOT_BUTTON, &CSrWeapView::OnBnClickedSelectequipslotButton)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EQUIPSLOT, OnDropEquipSlot)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EQUIPSLOT, OnDropEquipSlot)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_IMPACTSET, OnDropImpactSet)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_IMPACTSET, OnDropImpactSet)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_STATICMODEL, OnDropStaticModel)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_STATICMODEL, OnDropStaticModel)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_DRAWSOUND, OnDropDrawSound)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_DRAWSOUND, OnDropDrawSound)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_SHEATHSOUND, OnDropSheathSound)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_SHEATHSOUND, OnDropSheathSound)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_SWINGSOUND, OnDropSwingSound)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_SWINGSOUND, OnDropSwingSound)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_BOUNDSOUND, OnDropBoundSound)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_BOUNDSOUND, OnDropBoundSound)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_TRAPSOUND, OnDropTrapSound)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_TRAPSOUND, OnDropTrapSound)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_BASEWEAPON, OnDropBaseWeapon)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_BASEWEAPON, OnDropBaseWeapon)
+	ON_BN_CLICKED(IDC_EDIT_IMPACTSET, &CSrWeapView::OnBnClickedEditImpactset)
+	ON_BN_CLICKED(IDC_SELECT_IMPACTSET, &CSrWeapView::OnBnClickedSelectImpactset)
+	ON_BN_CLICKED(IDC_EDIT_STATICMODEL, &CSrWeapView::OnBnClickedEditStaticmodel)
+	ON_BN_CLICKED(IDC_SELECT_STATICMODEL, &CSrWeapView::OnBnClickedSelectStaticmodel)
+	ON_BN_CLICKED(IDC_EDIT_DRAWSOUND, &CSrWeapView::OnBnClickedEditDrawsound)
+	ON_BN_CLICKED(IDC_SELECT_DRAWSOUND, &CSrWeapView::OnBnClickedSelectDrawsound)
+	ON_BN_CLICKED(IDC_EDIT_SHEATHSOUND, &CSrWeapView::OnBnClickedEditSheathsound)
+	ON_BN_CLICKED(IDC_SELECT_SHEATHSOUND, &CSrWeapView::OnBnClickedSelectSheathsound)
+	ON_BN_CLICKED(IDC_EDIT_SWINGSOUND, &CSrWeapView::OnBnClickedEditSwingsound)
+	ON_BN_CLICKED(IDC_SELECT_SWINGSOUND, &CSrWeapView::OnBnClickedSelectSwingsound)
+	ON_BN_CLICKED(IDC_EDIT_BOUNDSOUND, &CSrWeapView::OnBnClickedEditBoundsound)
+	ON_BN_CLICKED(IDC_SELECT_BOUNDSOUND, &CSrWeapView::OnBnClickedSelectBoundsound)
+	ON_BN_CLICKED(IDC_EDIT_TRAPSOUND, &CSrWeapView::OnBnClickedEditTrapsound)
+	ON_BN_CLICKED(IDC_SELECT_TRAPSOUND, &CSrWeapView::OnBnClickedSelectTrapsound)
+	ON_BN_CLICKED(IDC_EDIT_BASEWEAPON, &CSrWeapView::OnBnClickedEditBaseweapon)
+	ON_BN_CLICKED(IDC_SELECT_BASEWEAPON, &CSrWeapView::OnBnClickedSelectBaseweapon)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrWeapView Message Map
@@ -69,6 +101,32 @@ BEGIN_SRRECUIFIELDS(CSrWeapView)
 	ADD_SRRECUIFIELDS( SR_FIELD_QUESTITEM,		IDC_QUESTITEM,		0,		IDS_TT_QUESTITEM)
 	ADD_SRRECUIFIELDS( SR_FIELD_KEYWORDS,		IDC_KEYWORDS,		0,		IDS_TT_KEYWORDS)
 	ADD_SRRECUIFIELDS( SR_FIELD_EQUIPSLOT,		IDC_EQUIPSLOT,		128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_BASEWEAPON,		IDC_BASEWEAPON,		128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_IMPACTSET,		IDC_IMPACTSET,		128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_STATIC,			IDC_STATICMODEL,	128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_DRAWSOUND,		IDC_DRAWSOUND,		128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_SHEATHSOUND,	IDC_SHEATHSOUND,	128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_SWINGSOUND,		IDC_SWINGSOUND,		128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_BOUNDSOUND,		IDC_BOUNDSOUND,		128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_FIRESOUND,		IDC_TRAPSOUND,		128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN1,		IDC_UNKNOWN1,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN2,		IDC_UNKNOWN2a,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN3,		IDC_UNKNOWN3,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN4,		IDC_UNKNOWN4,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN5,		IDC_UNKNOWN5,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN6,		IDC_UNKNOWN6,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN7,		IDC_UNKNOWN7,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN8,		IDC_UNKNOWN8,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN9,		IDC_UNKNOWN9,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN10,		IDC_UNKNOWN10a,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN11,		IDC_UNKNOWN11,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN12,		IDC_UNKNOWN12,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN13,		IDC_UNKNOWN13,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN14,		IDC_UNKNOWN14,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN15,		IDC_UNKNOWN15,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN16,		IDC_UNKNOWN16,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWNFLAG1,	IDC_UNKNOWNFLAGS1,	16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_NNAM,			IDC_NNAME,			128,	0)
 END_SRRECUIFIELDS()
 /*===========================================================================
  *		End of UI Field Map
@@ -126,7 +184,33 @@ void CSrWeapView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_FORMID, m_FormID);
 	DDX_Control(pDX, IDC_KEYWORDS, m_Keywords);
 	DDX_Control(pDX, IDC_EQUIPSLOT, m_EquipSlot);
- }
+	DDX_Control(pDX, IDC_IMPACTSET, m_ImpactSet);
+	DDX_Control(pDX, IDC_STATICMODEL, m_StaticModel);
+	DDX_Control(pDX, IDC_DRAWSOUND, m_DrawSound);
+	DDX_Control(pDX, IDC_SHEATHSOUND, m_SheathSound);
+	DDX_Control(pDX, IDC_SWINGSOUND, m_SwingSound);
+	DDX_Control(pDX, IDC_BOUNDSOUND, m_BoundSound);
+	DDX_Control(pDX, IDC_TRAPSOUND, m_TrapSound);
+	DDX_Control(pDX, IDC_BASEWEAPON, m_BaseWeapon);
+	DDX_Control(pDX, IDC_NNAME, m_NName);
+	DDX_Control(pDX, IDC_UNKNOWN1, m_Unknown1);
+	DDX_Control(pDX, IDC_UNKNOWN2a, m_Unknown2);
+	DDX_Control(pDX, IDC_UNKNOWN3, m_Unknown3);
+	DDX_Control(pDX, IDC_UNKNOWN4, m_Unknown4);
+	DDX_Control(pDX, IDC_UNKNOWN5, m_Unknown5);
+	DDX_Control(pDX, IDC_UNKNOWN6, m_Unknown6);
+	DDX_Control(pDX, IDC_UNKNOWN7, m_Unknown7);
+	DDX_Control(pDX, IDC_UNKNOWN8, m_Unknown8);
+	DDX_Control(pDX, IDC_UNKNOWN9, m_Unknown9);
+	DDX_Control(pDX, IDC_UNKNOWN10a, m_Unknown10);
+	DDX_Control(pDX, IDC_UNKNOWN11, m_Unknown11);
+	DDX_Control(pDX, IDC_UNKNOWN12, m_Unknown12);
+	DDX_Control(pDX, IDC_UNKNOWN13, m_Unknown13);
+	DDX_Control(pDX, IDC_UNKNOWN14, m_Unknown14);
+	DDX_Control(pDX, IDC_UNKNOWN15, m_Unknown15);
+	DDX_Control(pDX, IDC_UNKNOWN16, m_Unknown16);
+	DDX_Control(pDX, IDC_UNKNOWNFLAGS1, m_UnknownFlags1);
+}
 /*===========================================================================
  *		End of Class Method CSrWeapView::DoDataExchange()
  *=========================================================================*/
@@ -220,3 +304,155 @@ void CSrWeapView::OnDropEquipSlot (NMHDR* pNotifyStruct, LRESULT* pResult) {
 /*===========================================================================
  *		End of Class Event CSrWeapView::OnDropEquipSlot()
  *=========================================================================*/
+
+
+void CSrWeapView::OnBnClickedEditImpactset()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_ImpactSet, SR_NAME_IPDS);
+}
+
+
+void CSrWeapView::OnBnClickedSelectImpactset()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_ImpactSet, SR_NAME_IPDS, &CSrIpdsRecord::s_FieldMap);
+}
+
+
+void CSrWeapView::OnBnClickedEditStaticmodel()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_StaticModel, SR_NAME_STAT);
+}
+
+
+void CSrWeapView::OnBnClickedSelectStaticmodel()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_StaticModel, SR_NAME_STAT, &CSrStatRecord::s_FieldMap);
+}
+
+
+void CSrWeapView::OnBnClickedEditDrawsound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_DrawSound, SR_NAME_SNDR);
+}
+
+
+void CSrWeapView::OnBnClickedSelectDrawsound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_DrawSound, SR_NAME_SNDR, &CSrSndrRecord::s_FieldMap);
+}
+
+
+void CSrWeapView::OnBnClickedEditSheathsound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_SheathSound, SR_NAME_SNDR);
+}
+
+
+void CSrWeapView::OnBnClickedSelectSheathsound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_SheathSound, SR_NAME_SNDR, &CSrSndrRecord::s_FieldMap);
+}
+
+
+void CSrWeapView::OnBnClickedEditSwingsound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_SwingSound, SR_NAME_SNDR);
+}
+
+
+void CSrWeapView::OnBnClickedSelectSwingsound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_SwingSound, SR_NAME_SNDR, &CSrSndrRecord::s_FieldMap);
+}
+
+
+void CSrWeapView::OnBnClickedEditBoundsound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_BoundSound, SR_NAME_SNDR);
+}
+
+
+void CSrWeapView::OnBnClickedSelectBoundsound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_BoundSound, SR_NAME_SNDR, &CSrSndrRecord::s_FieldMap);
+}
+
+
+void CSrWeapView::OnBnClickedEditTrapsound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_TrapSound, SR_NAME_SNDR);
+}
+
+
+void CSrWeapView::OnBnClickedSelectTrapsound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_TrapSound, SR_NAME_SNDR, &CSrSndrRecord::s_FieldMap);
+}
+
+
+void CSrWeapView::OnBnClickedEditBaseweapon()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_BaseWeapon, SR_NAME_WEAP);
+}
+
+
+void CSrWeapView::OnBnClickedSelectBaseweapon()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_BaseWeapon, SR_NAME_WEAP, &CSrWeapRecord::s_FieldMap);
+}
+
+
+void CSrWeapView::OnDropImpactSet (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	*pResult = DropRecordHelper(pDropItems, &m_ImpactSet, SR_NAME_IPDS, 1);
+}
+
+
+void CSrWeapView::OnDropStaticModel (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	*pResult = DropRecordHelper(pDropItems, &m_StaticModel, SR_NAME_STAT, 1);
+}
+
+
+void CSrWeapView::OnDropDrawSound (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	*pResult = DropRecordHelper(pDropItems, &m_DrawSound, SR_NAME_SNDR, 1);
+}
+
+
+void CSrWeapView::OnDropSheathSound (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	*pResult = DropRecordHelper(pDropItems, &m_SheathSound, SR_NAME_SNDR, 1);
+}
+
+
+void CSrWeapView::OnDropSwingSound (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	*pResult = DropRecordHelper(pDropItems, &m_SwingSound, SR_NAME_SNDR, 1);
+}
+
+
+void CSrWeapView::OnDropBoundSound (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	*pResult = DropRecordHelper(pDropItems, &m_BoundSound, SR_NAME_SNDR, 1);
+}
+
+
+void CSrWeapView::OnDropTrapSound (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	*pResult = DropRecordHelper(pDropItems, &m_TrapSound, SR_NAME_SNDR, 1);
+}
+
+
+void CSrWeapView::OnDropBaseWeapon (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	*pResult = DropRecordHelper(pDropItems, &m_BaseWeapon, SR_NAME_WEAP, 1);
+}
