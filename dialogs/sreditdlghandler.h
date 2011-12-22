@@ -281,6 +281,8 @@ public:
   bool SrFillComboList       (CComboBox& ComboBox, const stringvalue_t* pStringValues, const dword Flags);
   bool SrFillEffectComboList (CComboBox& ComboBox, const dword Flags, const dword EffectFlagMask, const dword InvalidEffectFlagMask);
 
+  CString& TerminatePathString (CString& PathBuffer);
+
 /*===========================================================================
  *		End of Function Definitions
  *=========================================================================*/

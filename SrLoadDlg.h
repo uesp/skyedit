@@ -56,9 +56,10 @@
 	/* Used to hold information of files in the list */
   struct srloaddlgfileinfo_t 
   {
-	WIN32_FIND_DATA FindData;
-	bool		IsActive;
-	bool		IsMaster;
+		WIN32_FIND_DATA FindData;
+		CString			Path;
+		bool			IsActive;
+		bool			IsMaster;
   };
 
   typedef CSrPtrArray<srloaddlgfileinfo_t>    CSrLoadDlgFileInfos;
@@ -84,9 +85,12 @@ protected:
 
   srfileloadinfo_t		m_LoadInfo;
 
-  CString				m_FilePath;
   bool					m_LastSortReverse;
   int					m_LastSortSubItem;
+
+
+public:
+	static CStringArray	s_ExtraFilePaths;
 
 
   /*---------- Protected Class Methods ---------------------------------*/
@@ -94,8 +98,8 @@ protected:
 
 	/* Populate the file list with plugins */
   void FillFileList (void);
-  int  FillFileList (const char* pFileSpec);
-  void AddFile      (WIN32_FIND_DATA& FindData);
+  int  FillFileList (const char* pPath, const char* pFileSpec);
+  void AddFile      (const char* pPath, WIN32_FIND_DATA& FindData);
   void UpdateFile   (const int ListIndex, srloaddlgfileinfo_t* pFileData);
 
 	/* Create the loadinfo structure from the current list */

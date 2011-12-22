@@ -419,10 +419,26 @@ void CSrEditApp::UpdateOptions (const bool Set)
   m_ConfigFile.UpdateString (Set, "SkyrimInstallPath",  g_SrManualInstallPath);
   g_SrManualInstallPath.Trim();
 
-	/* Language/string file options */
+		/* Language/string file options */
   m_ConfigFile.UpdateString(Set, "StringFileLanguage", g_SrLanguage);
 
-	/* Script options */
+		/* File/path options */
+  CSString Value;
+  int      Position;
+
+  if (!Set)
+  {
+	  bool Result = m_ConfigFile.FindFirst(Value, "ExtraLoadPath", Position);
+	  CSrLoadDlg::s_ExtraFilePaths.RemoveAll();
+
+	  while (Result)
+	  {
+		  CSrLoadDlg::s_ExtraFilePaths.Add(Value.c_str());
+		  Result = m_ConfigFile.FindNext(Value, "ExtraLoadPath", Position);
+	  }
+  }
+
+		/* Script options */
   //m_ConfigFile.UpdateString (Set, "ScriptFontName", CSrScptView::m_Options.FontName);
   //m_ConfigFile.UpdateInteger(Set, "ScriptFontSize", CSrScptView::m_Options.FontSize);
   //m_ConfigFile.UpdateDword  (Set, "ScriptForeColor[]", CSrScptView::m_Options.DefaultForeColor);

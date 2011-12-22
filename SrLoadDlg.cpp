@@ -12,6 +12,7 @@
 #include "stdafx.h"
 #include "sredit.h"
 #include "srLoadDlg.h"
+#include "dialogs/sreditdlghandler.h"
 
 
 /*===========================================================================
@@ -24,6 +25,8 @@
   #undef THIS_FILE
   static char THIS_FILE[] = __FILE__;
 #endif
+
+  CStringArray	CSrLoadDlg::s_ExtraFilePaths;
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -101,13 +104,12 @@ int CALLBACK l_FileListCompare (LPARAM lParam1, LPARAM lParam2, LPARAM lParamSor
  * Class CSrLoadDlg Constructor
  *
  *=========================================================================*/
-CSrLoadDlg::CSrLoadDlg(CWnd* pParent) : CDialog(CSrLoadDlg::IDD, pParent) {
-  //{{AFX_DATA_INIT(CSrLoadDlg)
-  //}}AFX_DATA_INIT
-  m_LastSortReverse = false;
-  m_LastSortSubItem = SRFILELIST_FILENAME;
-  m_pLastActiveFile = NULL;
- }
+CSrLoadDlg::CSrLoadDlg(CWnd* pParent) : CDialog(CSrLoadDlg::IDD, pParent) 
+{
+	m_LastSortReverse = false;
+	m_LastSortSubItem = SRFILELIST_FILENAME;
+	m_pLastActiveFile = NULL;
+}
 /*===========================================================================
  *		End of Class CSrLoadDlg Constructor
  *=========================================================================*/
@@ -115,32 +117,35 @@ CSrLoadDlg::CSrLoadDlg(CWnd* pParent) : CDialog(CSrLoadDlg::IDD, pParent) {
 
 /*===========================================================================
  *
- * Class CSrLoadDlg Method - void AddFile (FindData);
+ * Class CSrLoadDlg Method - void AddFile (pPath, FindData);
  *
  *=========================================================================*/
-void CSrLoadDlg::AddFile (WIN32_FIND_DATA& FindData) {
-  srloaddlgfileinfo_t* pNewData;
-  CString	       Buffer;
-  int                  ListIndex;
+void CSrLoadDlg::AddFile (const char* pPath, WIN32_FIND_DATA& FindData) 
+{
+	srloaddlgfileinfo_t*	pNewData;
+	CString					Buffer;
+	int						ListIndex;
 
-	/* Create a copy of the find data */
-  pNewData  = new srloaddlgfileinfo_t;
-  m_FileInfos.Add(pNewData);
+		/* Create a copy of the find data */
+	pNewData  = new srloaddlgfileinfo_t;
+	m_FileInfos.Add(pNewData);
 
-  pNewData->FindData = FindData;
-  pNewData->IsActive = false;
-  pNewData->IsMaster = false;
+	pNewData->FindData = FindData;
+	pNewData->IsActive = false;
+	pNewData->IsMaster = false;
+	pNewData->Path     = pPath;
 
-	/* Add the file to the list control */
-  ListIndex = m_FileList.InsertItem(0, FindData.cFileName);
-  if (ListIndex < 0) return;
-  m_FileList.SetItemData(ListIndex, (DWORD) pNewData);
+		/* Add the file to the list control */
+	ListIndex = m_FileList.InsertItem(0, FindData.cFileName);
+	if (ListIndex < 0) return;
+	m_FileList.SetItemData(ListIndex, (DWORD) pNewData);
 
-  if (SrCheckExtension(FindData.cFileName, "esm")) {
-    pNewData->IsMaster = true;
-  }
+	if (SrCheckExtension(FindData.cFileName, "esm")) 
+	{
+		pNewData->IsMaster = true;
+	}
   
-  UpdateFile(ListIndex, pNewData);
+	UpdateFile(ListIndex, pNewData);
 }
 /*===========================================================================
  *		End of Class Method CSrLoadDlg::AddFile()
@@ -179,44 +184,51 @@ int __stdcall l_SortLoadInfosByDate (long lParam1, long lParam2, long lParamSort
  * Class CSrLoadDlg Method - void CreateLoadInfo (void);
  *
  *=========================================================================*/
-void CSrLoadDlg::CreateLoadInfo (void) {
-  CSrRefLoadDlgFileInfos SortLoadInfos;
-  srloaddlgfileinfo_t*	 pFileData;
-  CSString*		 pNewString;
-  dword			 Index;
-  int			 ListIndex;
+void CSrLoadDlg::CreateLoadInfo (void) 
+{
+	 CSrRefLoadDlgFileInfos SortLoadInfos;
+	 srloaddlgfileinfo_t*	 pFileData;
+	 CSString*				 pNewString;
+	 dword					 Index;
+	 int					 ListIndex;
 
-	/* Clear the current load information */
-  m_LoadInfo.m_MasterFilenames.Destroy();
-  m_LoadInfo.m_ActiveFilename.Empty();
+		/* Clear the current load information */
+	 m_LoadInfo.m_MasterFilenames.Destroy();
+	 m_LoadInfo.m_ActiveFilename.Empty();
 
-	/* Iterate through all checked items in the list */
-  for (ListIndex = 0; ListIndex < m_FileList.GetItemCount(); ++ListIndex) {
-    if (!m_FileList.GetCheck(ListIndex)) continue;
+		/* Iterate through all checked items in the list */
+	for (ListIndex = 0; ListIndex < m_FileList.GetItemCount(); ++ListIndex) 
+	{
+		if (!m_FileList.GetCheck(ListIndex)) continue;
 
-    pFileData = (srloaddlgfileinfo_t *) m_FileList.GetItemData(ListIndex);
-    if (pFileData == NULL) continue;
+	    pFileData = (srloaddlgfileinfo_t *) m_FileList.GetItemData(ListIndex);
+	    if (pFileData == NULL) continue;
 
-    if (pFileData->IsActive) {
-      m_LoadInfo.m_ActiveFilename = m_FilePath + pFileData->FindData.cFileName;
-    }
-    else if (pFileData->IsMaster) {
-      SortLoadInfos.Add(pFileData);
-    }
-    else {
-      AddSrGeneralError("Cannot add non-master file '%s' as a dependancy!", pFileData->FindData.cFileName);
-    }
-  } 
+	    if (pFileData->IsActive) 
+		{
+			//m_LoadInfo.m_ActiveFilename = m_FilePath + pFileData->FindData.cFileName;
+			m_LoadInfo.m_ActiveFilename = pFileData->Path + pFileData->FindData.cFileName;
+		}	
+		else if (pFileData->IsMaster) 
+		{
+			SortLoadInfos.Add(pFileData);
+		}
+		else 
+		{
+			AddSrGeneralError("Cannot add non-master file '%s' as a dependancy!", pFileData->FindData.cFileName);
+		}
+	} 
 
-	/* Sort and load the masters according to date */
-  SortLoadInfos.Sort(l_SortLoadInfosByDate, 0);
+		/* Sort and load the masters according to date */
+	SortLoadInfos.Sort(l_SortLoadInfosByDate, 0);
 
-  for (Index = 0; Index < SortLoadInfos.GetSize(); ++Index) {
-    pNewString = new CSString;
-    m_LoadInfo.m_MasterFilenames.Add(pNewString);
-    *pNewString = m_FilePath + SortLoadInfos[Index]->FindData.cFileName;
-    //SystemLog.Printf("%d) %s", Index, pNewString->c_str());
-  }
+	for (Index = 0; Index < SortLoadInfos.GetSize(); ++Index) 
+	{
+		pNewString = new CSString;
+		m_LoadInfo.m_MasterFilenames.Add(pNewString);
+		*pNewString = SortLoadInfos[Index]->Path + SortLoadInfos[Index]->FindData.cFileName;
+		//SystemLog.Printf("%d) %s", Index, pNewString->c_str());
+	}
 
 }
 /*===========================================================================
@@ -229,12 +241,11 @@ void CSrLoadDlg::CreateLoadInfo (void) {
  * Class CSrLoadDlg Method - void DoDataExchange (pDX);
  *
  *=========================================================================*/
-void CSrLoadDlg::DoDataExchange (CDataExchange* pDX) {
-  CDialog::DoDataExchange(pDX);
+void CSrLoadDlg::DoDataExchange (CDataExchange* pDX) 
+{
+	CDialog::DoDataExchange(pDX);
 
-	//{{AFX_DATA_MAP(CSrLoadDlg)
 	DDX_Control(pDX, IDC_FILE_LIST, m_FileList);
-	//}}AFX_DATA_MAP
 }
 /*===========================================================================
  *		End of Class Method CSrLoadDlg::DoDataExchange()
@@ -246,26 +257,32 @@ void CSrLoadDlg::DoDataExchange (CDataExchange* pDX) {
  * Class CSrLoadDlg Method - void FillFileList (void);
  *
  *=========================================================================*/
-void CSrLoadDlg::FillFileList (void) {
+void CSrLoadDlg::FillFileList (void) 
+{
   CSString DataPath;
   CSString FileSpec;
   bool     Result;
 
-	/* Clear the current contents */
+		/* Clear the current contents */
   m_FileList.DeleteAllItems();
   m_FileInfos.Empty();
   m_pLastActiveFile = NULL;
 
-	/* Attempt to get the Oblivion data path */
+		/* Attempt to get Skyrim's data path */
   Result = GetSrInstallPath(DataPath);
   if (Result) DataPath += "data\\";
-  m_FilePath = DataPath;
 
-	/* Find all ESP/ESM files in the path */
-  FileSpec = DataPath + "*.esp";
-  FillFileList(FileSpec);
-  FileSpec = DataPath + "*.esm";
-  FillFileList(FileSpec);
+		/* Find all plugins in the game's \DATA path */
+  FillFileList(DataPath, "*.esp");
+  FillFileList(DataPath, "*.esm");
+
+		/* Find all plugins in the extra paths */
+  for (INT_PTR i = 0; i < s_ExtraFilePaths.GetSize(); ++i)
+  {
+		FillFileList(s_ExtraFilePaths[i], "*.esp");
+		FillFileList(s_ExtraFilePaths[i], "*.esm");
+  }
+
 }
 /*===========================================================================
  *		End of Class Method CSrLoadDlg::FillFileList()
@@ -274,22 +291,26 @@ void CSrLoadDlg::FillFileList (void) {
 
 /*===========================================================================
  *
- * Class CSrLoadDlg Method - int FillFileList (pFileSpec);
+ * Class CSrLoadDlg Method - int FillFileList (pPath, pFileSpec);
  *
  *=========================================================================*/
-int CSrLoadDlg::FillFileList (const char* pFileSpec) {
-  HANDLE	  hFind;
-  WIN32_FIND_DATA FindData;
-  BOOL		  FindResult;
-  int		  Count = 0;
+int CSrLoadDlg::FillFileList (const char* pPath, const char* pFileSpec) {
+  HANDLE			hFind;
+  WIN32_FIND_DATA	FindData;
+  BOOL				FindResult;
+  CString			FullFileSpec(pPath);
+  int				Count = 0;
 
-  hFind = FindFirstFile(pFileSpec, &FindData);
+  TerminatePathString(FullFileSpec);
+  FullFileSpec += pFileSpec;
+  
+  hFind = FindFirstFile(FullFileSpec, &FindData);
   FindResult = (hFind != INVALID_HANDLE_VALUE);
-
+  
   while (FindResult) {
     ++Count;
 
-    AddFile(FindData);
+    AddFile(pPath, FindData);
     
     FindResult = FindNextFile(hFind, &FindData);
   }

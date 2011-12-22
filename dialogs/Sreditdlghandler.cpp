@@ -1386,3 +1386,10 @@ bool SrFillEffectComboList (CComboBox& ComboBox, const dword Flags, const dword 
  *		End of Function SrFillEffectComboList()
  *=========================================================================*/
 
+
+CString& TerminatePathString (CString& PathBuffer) 
+{
+	if (PathBuffer.GetLength() == 0) return (PathBuffer);
+	if (PathBuffer.GetAt(PathBuffer.GetLength() - 1) != '\\') PathBuffer += '\\';
+	return (PathBuffer);
+}
