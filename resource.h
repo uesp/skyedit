@@ -64,6 +64,8 @@
 #define IDR_COMPONENT_ACCEL             188
 #define IDR_CONTAINERLIST_MENU          188
 #define IDD_ENCH_VIEW                   189
+#define IDR_LVLITEMLIST_MENU1           189
+#define IDR_MGEFSOUNDLIST_MENU          189
 #define IDD_SPEL_VIEW                   190
 #define IDC_GOODDROP_CURSOR             190
 #define IDD_AMMO_VIEW                   191
@@ -312,7 +314,6 @@
 #define IDC_UNKNOWN8                    1177
 #define IDC_PROJECTILE                  1178
 #define IDC_ARMORTYPE                   1178
-#define IDC_UNKNOWN17                   1178
 #define IDC_UNKNOWNFLAGS1               1178
 #define IDC_EDIT_PROJECTILE             1179
 #define IDC_TEMPLATE                    1179
@@ -607,6 +608,10 @@
 #define ID_Menu                         32854
 #define ID_COMPONENT_INCREASE           32855
 #define ID_COMPONENT_DECREASE           32856
+#define ID_SNDDLIST_DELETE              32861
+#define ID_SNDDLIST_EDIT                32862
+#define ID_SNDDLIST_ADD                 32863
+#define ID_SNDDLIST_EDITRECORD          32864
 
 // Next default values for new objects
 // 
@@ -614,7 +619,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        209
-#define _APS_NEXT_COMMAND_VALUE         32861
+#define _APS_NEXT_COMMAND_VALUE         32865
 #define _APS_NEXT_CONTROL_VALUE         1230
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

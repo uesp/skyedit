@@ -61,6 +61,7 @@ static srrecfield_t s_SoundFields[] = {
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrMgefView, CSrRecordDialog)
+	ON_WM_CONTEXTMENU()
 	ON_MESSAGE(ID_SRRECORDLIST_ACTIVATE, OnEditSoundMsg)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_KEYWORDS, OnDropKeywords)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_KEYWORDS, OnDropKeywords)
@@ -135,9 +136,13 @@ BEGIN_MESSAGE_MAP(CSrMgefView, CSrRecordDialog)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_IMPACTSET2, OnDropImpactSet2)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_IMPACTSET2, OnDropImpactSet2)
 
-	ON_CBN_SELCHANGE(IDC_CASTTYPE, &CSrMgefView::OnCbnSelchangeCasttype)
 	ON_BN_CLICKED(IDC_DELETESOUND, &CSrMgefView::OnBnClickedDeletesound)
+	ON_COMMAND(ID_SNDDLIST_DELETE, &CSrMgefView::OnBnClickedDeletesound)
+
 	ON_BN_CLICKED(IDC_ADDSOUND, &CSrMgefView::OnBnClickedAddsound)
+	ON_COMMAND(ID_SNDDLIST_ADD, &CSrMgefView::OnBnClickedAddsound)
+	ON_COMMAND(ID_SNDDLIST_EDITRECORD, &CSrMgefView::OnSnddlistEditrecord)
+	ON_COMMAND(ID_SNDDLIST_EDIT, &CSrMgefView::OnSnddlistEdit)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrMgefView Message Map
@@ -782,19 +787,6 @@ void CSrMgefView::OnDropShader2 (NMHDR* pNotifyStruct, LRESULT* pResult)
 }
 
 
-
-void CSrMgefView::OnBnClickedSoundButton()
-{
-	// TODO: Add your control notification handler code here
-}
-
-
-void CSrMgefView::OnCbnSelchangeCasttype()
-{
-	// TODO: Add your control notification handler code here
-}
-
-
 void CSrMgefView::OnBnClickedDeletesound()
 {
 	int ListIndex = m_Sounds.GetSelectedItem();
@@ -844,3 +836,65 @@ LRESULT CSrMgefView::OnEditSoundMsg (WPARAM wParam, LPARAM lParam)
 	UpdateSoundList(ListIndex, true);
 	return (0);
 }
+
+
+void CSrMgefView::OnSnddlistEditrecord()
+{
+	srmgefsndddata_t*	pSoundData;
+	srrlcustomdata_t*	pCustomData;
+	int					ListIndex;
+
+	if (m_pDlgHandler == NULL || GetInputRecord()->GetParent() == NULL) return;
+
+	ListIndex = m_Sounds.GetSelectedItem();
+	if (ListIndex < 0) return;
+
+	pCustomData = m_Sounds.GetCustomData(ListIndex);
+	if (pCustomData == NULL) return;
+
+	pSoundData = (srmgefsndddata_t *) pCustomData->pUserData;
+	if (pSoundData == NULL) return;
+	
+	CSrRecord* pRecord = GetInputRecord()->GetParent()->FindFormID(pSoundData->SoundID);
+	if (pRecord == NULL) return;
+
+	m_pDlgHandler->EditRecord(pRecord);
+}
+
+
+void CSrMgefView::OnSnddlistEdit()
+{
+	OnEditSoundMsg(0, 0);
+}
+
+
+/*===========================================================================
+ *
+ * Class CSrMgefView Event - void OnContextMenu (pWnd, Point);
+ *
+ *=========================================================================*/
+void CSrMgefView::OnContextMenu (CWnd* pWnd, CPoint Point) 
+{
+  CMenu  Menu;
+  CMenu* pSubMenu;
+  int    Result;
+
+  if (pWnd->GetDlgCtrlID() == IDC_SOUND_LIST) 
+  {
+    Result = Menu.LoadMenu(IDR_MGEFSOUNDLIST_MENU);
+    if (!Result) return;
+
+    pSubMenu = Menu.GetSubMenu(0);
+    if (pSubMenu == NULL) return;
+
+    pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this, NULL);
+  }
+  else
+  {
+    CSrRecordDialog::OnContextMenu(pWnd, Point);
+  }
+    
+}
+/*===========================================================================
+ *		End of Class Event CSrMgefView::OnContextMenu()
+ *=========================================================================*/

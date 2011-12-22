@@ -136,9 +136,10 @@ can be found at:
 
   Version History
 =======================================
-0.03alpha - ?? December 2011
+0.03alpha - 22 December 2011
 	- New Editable Types: AMMO, ARMO, ALCH, BOOK, CONT, INGR, LIGH, LVLI, LVLN, LVSP, MISC, SCRL, STAT, 
-	- Expand Existing Types: MGEF
+	- Expand Existing Types: MGEF, WEAP
+	- Find formids
 
 0.02alpha - 16 December 2011
 	- Several crash bug fixes
@@ -147,8 +148,10 @@ can be found at:
 	- Expanded editing of existing records
 	- Added missing record drag capabilities
 
+
 0.01alpha - 10 December 2011
 	- First release
+	- Editable: KYWD, GLOB, GMST, COBJ, WEAP, MGEF
 
 
   Credits

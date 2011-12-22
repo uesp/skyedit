@@ -207,15 +207,18 @@ public:
 	afx_msg void OnBnClickedEditShader2();
 	afx_msg void OnBnClickedSelectShader2();
 	afx_msg void OnDropShader2 (NMHDR* pNotifyStruct, LRESULT* pResult);
-	afx_msg void OnBnClickedSoundButton();
 
 	afx_msg LRESULT OnEditSoundMsg (WPARAM wParam, LPARAM lParam);
 
 	CButton m_SoundButton;
-	afx_msg void OnCbnSelchangeCasttype();
 	CSrRecordListCtrl m_Sounds;
+
 	afx_msg void OnBnClickedDeletesound();
 	afx_msg void OnBnClickedAddsound();
+	afx_msg void OnSnddlistAdd();
+	afx_msg void OnSnddlistEditrecord();
+	afx_msg void OnSnddlistEdit();
+	afx_msg void OnContextMenu (CWnd* pWnd, CPoint Point);
 };
 /*===========================================================================
  *		End of Class CSrMgefView Definition

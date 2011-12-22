@@ -2340,6 +2340,18 @@ BEGIN
     END
 END
 
+IDR_MGEFSOUNDLIST_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "Add",                         ID_SNDDLIST_ADD
+        MENUITEM "Edit",                        ID_SNDDLIST_EDIT
+        MENUITEM "Delete",                      ID_SNDDLIST_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "Edit Base Record",            ID_SNDDLIST_EDITRECORD
+    END
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
