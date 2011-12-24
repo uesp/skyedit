@@ -2087,6 +2087,7 @@
     <ClInclude Include="..\tes5lib\modfile\subrecords\srbookdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srbytesubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srcntosubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srcrdtsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srctdasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srdnamsubrecord.h" />
@@ -2196,6 +2197,7 @@
     <None Include="res\Toolbar.bmp" />
     <None Include="skyedit.ini" />
     <None Include="skyedit.log" />
+    <None Include="todo.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1698,6 +1698,9 @@
     <ClInclude Include="..\tes5lib\modfile\records\sridkeyrecord.h">
       <Filter>Header Files\ESP.\Common</Filter>
     </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srcrdtsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="skyedit.rc">
@@ -1748,6 +1751,9 @@
       <Filter>Resources</Filter>
     </None>
     <None Include="ReadMe.txt">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="todo.txt">
       <Filter>Data</Filter>
     </None>
   </ItemGroup>
