@@ -1,5 +1,7 @@
 
 v0.03a
+	- Check SecondSpell in MGEF
+	- Batch rename (suffix/prefix)
 	- Some unknown edit controls have "number" flag incorrectly set.
 	- Armor dialog is not filling in the model field correctly.
 	- Proper error messages and checks for record/subrecord sizes. A macro like:
