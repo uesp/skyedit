@@ -118,7 +118,7 @@ public:
 	CEdit m_Unknown4;
 	CEdit m_Unknown5;
 	CEdit m_Unknown6;
-	CEdit m_Unknown7;
+	CComboBox m_Unknown7;
 	CEdit m_Unknown8;
 	CEdit m_Unknown9;
 	CEdit m_Unknown10;

@@ -367,9 +367,10 @@ void CSrMgefView::OnInitialUpdate (void)
 	CSrRecordDialog::OnInitialUpdate();
 
 	SrFillComboList(m_SchoolList,	s_SrMagicSchools,		0);
-	SrFillComboList(m_TypeList,	s_SrMagicTypes,			0);
-	SrFillComboList(m_CastType,	s_SrEffectCastTypes,	0);
+	SrFillComboList(m_TypeList,		s_SrMagicTypes,			0);
+	SrFillComboList(m_CastType,		s_SrEffectCastTypes,	0);
 	SrFillComboList(m_ActorValue,	s_SrActorValues,		0);
+	SrFillComboList(m_Unknown7,		s_SrEffectLinkTypes,	0);
 
 	CSrMgefRecord* pMgef = SrCastClassNull(CSrMgefRecord, GetInputRecord());
 	if (pMgef != NULL && pMgef->GetSoundArray()) m_SoundCopy = *pMgef->GetSoundArray();
@@ -599,20 +600,69 @@ void CSrMgefView::OnDropExplosion (NMHDR* pNotifyStruct, LRESULT* pResult)
 
 void CSrMgefView::OnBnClickedEditSecondSpell()
 {
-	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_SecondSpell, SR_NAME_SPEL);
+	CString Buffer;
+	int     Unknown7 = 0;
+
+	if (m_pDlgHandler == NULL) return;
+
+	m_Unknown7.GetWindowText(Buffer);
+	GetSrEffectLinkTypeValue(Unknown7, Buffer);
+
+	srrectype_t RecType = CSrMgefRecord::GetSecondRecordType(Unknown7);
+	m_pDlgHandler->EditRecordHelper(&m_SecondSpell, RecType);
 }
 
 
 void CSrMgefView::OnBnClickedSelectSecondSpell()
 {
-	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, SR_NAME_SPEL, &CSrSpelRecord::s_FieldMap);
+	CString Buffer;
+	int     Unknown7 = 0;
+
+	if (m_pDlgHandler == NULL) return;
+
+	m_Unknown7.GetWindowText(Buffer);
+	GetSrEffectLinkTypeValue(Unknown7, Buffer);
+
+	srrectype_t RecType = CSrMgefRecord::GetSecondRecordType(Unknown7);
+
+	if (RecType == SR_NAME_NULL)
+	{
+		Buffer.Format("A value of LinkRecType=%d doesn't have an associated record type to select!", Unknown7);
+		MessageBox(Buffer, "Warning", MB_OK);
+		return;
+	}
+
+	switch (Unknown7)
+	{
+		case 12: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrLighRecord::s_FieldMap); break;
+		case 17: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrWeapRecord::s_FieldMap); break;
+		case 18: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrNpc_Record::s_FieldMap); break;
+		case 25: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrHazdRecord::s_FieldMap); break;
+		case 34: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrKywdRecord::s_FieldMap); break;
+		case 35: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrSpelRecord::s_FieldMap); break;
+		case 36: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrRaceRecord::s_FieldMap); break;
+		case 39: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrEnchRecord::s_FieldMap); break;
+		case 40: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrHazdRecord::s_FieldMap); break;
+		default:
+			break;
+	}
+	
+
 }
 
 
 void CSrMgefView::OnDropSecondSpell (NMHDR* pNotifyStruct, LRESULT* pResult) 
 {
-  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
-  *pResult = DropRecordHelper(pDropItems, &m_SecondSpell, SR_NAME_SPEL, 1);
+	CString Buffer;
+	int     Unknown7 = 0;
+
+	if (m_pDlgHandler == NULL) return;
+
+	m_Unknown7.GetWindowText(Buffer);
+	GetSrEffectLinkTypeValue(Unknown7, Buffer);
+
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	*pResult = DropRecordHelper(pDropItems, &m_SecondSpell, CSrMgefRecord::GetSecondRecordType(Unknown7), 1);
 }
 
 

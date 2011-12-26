@@ -309,6 +309,7 @@
 #define IDC_IGNORERESIST                1176
 #define IDC_SELECTRACE_BUTTON           1176
 #define IDC_UNKNOWN7                    1176
+#define IDC_ACTORVALUE2                 1176
 #define IDC_VANISH                      1177
 #define IDC_RATING                      1177
 #define IDC_UNKNOWN8                    1177

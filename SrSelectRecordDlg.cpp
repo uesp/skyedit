@@ -174,6 +174,7 @@ static srreclistcolinit_t s_ComponentListInit[] = {
 	{ SR_FIELD_FORMID,		75,		LVCFMT_LEFT },
 	{ SR_FIELD_RECORDTYPE,	75,		LVCFMT_CENTER },
 	{ SR_FIELD_FLAGS,		50,		LVCFMT_CENTER },
+	{ SR_FIELD_RECORDTYPE,	60,		LVCFMT_CENTER },
 	{ SR_FIELD_NONE, 0, 0 }
   };
 
@@ -228,9 +229,10 @@ static srselrecdlginfo_t s_EquipSlotRecordSelDlg =
 static srreclistcolinit_t s_ActorListInit[] = 
 {
 	{ SR_FIELD_EDITORID,	200,	LVCFMT_LEFT },
-	{ SR_FIELD_FORMID,	75,	LVCFMT_LEFT },
-	{ SR_FIELD_FLAGS,	60,	LVCFMT_CENTER },
+	{ SR_FIELD_FORMID,		75,		LVCFMT_LEFT },
+	{ SR_FIELD_FLAGS,		60,		LVCFMT_CENTER },
 	{ SR_FIELD_FULLNAME,	120,	LVCFMT_CENTER },
+	{ SR_FIELD_RECORDTYPE,	60,		LVCFMT_CENTER },
 	{ SR_FIELD_NONE, 0, 0 }
   };
 
@@ -1001,6 +1003,7 @@ srreclistcolinit_t GeneralListInit[] = {
 	{ SR_FIELD_FORMID,		75,		LVCFMT_LEFT },
 	{ SR_FIELD_FLAGS,		60,		LVCFMT_CENTER },
 	{ SR_FIELD_FULLNAME,	120,	LVCFMT_CENTER },
+	{ SR_FIELD_RECORDTYPE,	60,		LVCFMT_CENTER },
 	{ SR_FIELD_NONE, 0, 0 }
   };
 
