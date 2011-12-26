@@ -783,26 +783,11 @@ bool CSrEditApp::InitResourceHandler (void) {
 
 	/* Add files in the data file path */  
   SrStartTimer(Timer);
-/*
-  Buffer1 = Buffer + "textures\\";
-  m_ResourceHandler.AddPathContents(Buffer1, false);
-
-  Buffer1 = Buffer + "menus\\";
-  m_ResourceHandler.AddPathContents(Buffer1, false);
-
-  Buffer1 = Buffer + "fonts\\";
-  m_ResourceHandler.AddPathContents(Buffer1, false);
-
-  Buffer1 = Buffer + "facegen\\";
-  m_ResourceHandler.AddPathContents(Buffer1, false);
-
-  Buffer1 = Buffer + "video\\";
-  m_ResourceHandler.AddPathContents(Buffer1, false); //*/
-
+ 
   m_ResourceHandler.AddPathContents(Buffer, false);
   if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(10);
   
-  SrEndTimer(Timer, "Added path contents in ");
+  SrEndTimer(Timer, "Added resource \\data path contents in ");
 
 		/* Add known BSA files for now */
   Filename = Buffer + "Skyrim - Misc.bsa";
