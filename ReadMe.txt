@@ -86,6 +86,12 @@ Some notable lack of features in the current release are:
     backups and temporary resource files).
 
 
+  Upgrading
+=======================================
+Simply overwrite an older version with the latest version. Multiple versions 
+can also be kept in and run from seperate directories if desired.
+
+
   Features
 =======================================
 Some more specific features of the editor are listed below. A more exhaustive list 
