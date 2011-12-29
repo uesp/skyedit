@@ -98,6 +98,7 @@ BEGIN_SRRECUIFIELDS(CSrWeapView)
 	ADD_SRRECUIFIELDS( SR_FIELD_ENCHANTPOINTS,	IDC_ENCHANTCHARGE,	8,		IDS_TT_ENCHANTPOINTS)
 	ADD_SRRECUIFIELDS( SR_FIELD_DAMAGE,			IDC_DAMAGE,	        8,		IDS_TT_DAMAGE)
 	ADD_SRRECUIFIELDS( SR_FIELD_MODEL,			IDC_MODEL,	        256,	IDS_TT_MODEL)
+	ADD_SRRECUIFIELDS( SR_FIELD_DESCRIPTION,	IDC_DESCRIPTION,	256,	IDS_TT_DESCRIPTION)
 	ADD_SRRECUIFIELDS( SR_FIELD_QUESTITEM,		IDC_QUESTITEM,		0,		IDS_TT_QUESTITEM)
 	ADD_SRRECUIFIELDS( SR_FIELD_KEYWORDS,		IDC_KEYWORDS,		0,		IDS_TT_KEYWORDS)
 	ADD_SRRECUIFIELDS( SR_FIELD_EQUIPSLOT,		IDC_EQUIPSLOT,		128,	0)
@@ -210,7 +211,8 @@ void CSrWeapView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_UNKNOWN15, m_Unknown15);
 	DDX_Control(pDX, IDC_UNKNOWN16, m_Unknown16);
 	DDX_Control(pDX, IDC_UNKNOWNFLAGS1, m_UnknownFlags1);
-}
+	DDX_Control(pDX, IDC_DESCRIPTION, m_Description);
+ }
 /*===========================================================================
  *		End of Class Method CSrWeapView::DoDataExchange()
  *=========================================================================*/

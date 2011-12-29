@@ -141,6 +141,7 @@ public:
 	CEdit m_Unknown15;
 	CEdit m_Unknown16;
 	CEdit m_UnknownFlags1;
+	CEdit m_Description;
 };
 /*===========================================================================
  *		End of Class CSrWeapView Definition

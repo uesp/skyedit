@@ -151,6 +151,7 @@
 #define IDC_NAME                        1081
 #define IDC_CNAME                       1082
 #define IDC_NNAME                       1082
+#define IDC_NAME2                       1083
 #define IDC_ENCHANTMENT                 1095
 #define IDC_EQUIPSLOT                   1096
 #define IDC_IMPACTSET                   1097
@@ -309,7 +310,6 @@
 #define IDC_IGNORERESIST                1176
 #define IDC_SELECTRACE_BUTTON           1176
 #define IDC_UNKNOWN7                    1176
-#define IDC_ACTORVALUE2                 1176
 #define IDC_VANISH                      1177
 #define IDC_RATING                      1177
 #define IDC_UNKNOWN8                    1177
