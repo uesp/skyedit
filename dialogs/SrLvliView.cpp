@@ -234,6 +234,8 @@ void CSrLvliView::GetControlData (void)
 		pLevelItem->AddItem(pItem->GetFormID(), pItem->GetLevel(), pItem->GetCount());
   }
 
+  pLevelItem->UpdateListCount();
+
 }
 /*===========================================================================
  *		End of Class Method CSrLvliView::GetControlData()

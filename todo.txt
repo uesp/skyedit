@@ -1,5 +1,6 @@
 
 v0.03a
+	- Modifying containers crashes Skyrim
 	- File meshes not showing up?
 	- Check SecondSpell in MGEF
 	- Batch rename (suffix/prefix) or batch copy/rename

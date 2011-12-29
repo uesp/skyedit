@@ -219,6 +219,7 @@ void CSrContView::GetControlData (void)
 		pContainer->AddItem(pItem->GetFormID(), pItem->GetCount());
   }
 
+  pContainer->UpdateItemCount();
 }
 /*===========================================================================
  *		End of Class Method CSrContView::GetControlData()
