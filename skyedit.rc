@@ -210,8 +210,8 @@ BEGIN
     PUSHBUTTON      ">",IDC_SELECT_SWINGSOUND,202,278,10,12
     RTEXT           "Unk 2",IDC_STATIC,220,139,31,9
     RTEXT           "Unk 3",IDC_STATIC,226,154,26,9
-    RTEXT           "Unk 5",IDC_STATIC,225,168,27,9
-    RTEXT           "Unk 6",IDC_STATIC,226,184,26,9
+    RTEXT           "Speed",IDC_STATIC,224,169,27,9
+    RTEXT           "Range",IDC_STATIC,226,184,26,9
     RTEXT           "Unk 7",IDC_STATIC,218,200,33,9
     RTEXT           "Unk 8",IDC_STATIC,220,216,32,9
     RTEXT           "Unk 9",IDC_STATIC,222,232,30,9
