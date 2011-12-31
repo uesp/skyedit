@@ -113,7 +113,7 @@ BEGIN_SRRECUIFIELDS(CSrWeapView)
 	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN1,		IDC_UNKNOWN1,		16,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN2,		IDC_UNKNOWN2a,		16,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN3,		IDC_UNKNOWN3,		16,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN4,		IDC_UNKNOWN4,		16,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_TYPE,			IDC_TYPE_LIST,		16,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN5,		IDC_UNKNOWN5,		16,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN6,		IDC_UNKNOWN6,		16,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN7,		IDC_UNKNOWN7,		16,		0)
@@ -197,7 +197,6 @@ void CSrWeapView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_UNKNOWN1, m_Unknown1);
 	DDX_Control(pDX, IDC_UNKNOWN2a, m_Unknown2);
 	DDX_Control(pDX, IDC_UNKNOWN3, m_Unknown3);
-	DDX_Control(pDX, IDC_UNKNOWN4, m_Unknown4);
 	DDX_Control(pDX, IDC_UNKNOWN5, m_Unknown5);
 	DDX_Control(pDX, IDC_UNKNOWN6, m_Unknown6);
 	DDX_Control(pDX, IDC_UNKNOWN7, m_Unknown7);
@@ -212,7 +211,8 @@ void CSrWeapView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_UNKNOWN16, m_Unknown16);
 	DDX_Control(pDX, IDC_UNKNOWNFLAGS1, m_UnknownFlags1);
 	DDX_Control(pDX, IDC_DESCRIPTION, m_Description);
- }
+	DDX_Control(pDX, IDC_TYPE_LIST, m_Type);
+}
 /*===========================================================================
  *		End of Class Method CSrWeapView::DoDataExchange()
  *=========================================================================*/
@@ -248,6 +248,8 @@ void CSrWeapView::Dump(CDumpContext& dc) const {
 void CSrWeapView::OnInitialUpdate (void) 
 {
   CSrRecordDialog::OnInitialUpdate();
+
+  SrFillComboList(m_Type, s_SrWeaponTypes, 0);
 
   SetControlData();
 }

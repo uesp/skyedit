@@ -127,7 +127,6 @@ public:
 	CEdit m_Unknown1;
 	CEdit m_Unknown2;
 	CEdit m_Unknown3;
-	CEdit m_Unknown4;
 	CEdit m_Unknown5;
 	CEdit m_Unknown6;
 	CEdit m_Unknown7;
@@ -142,6 +141,7 @@ public:
 	CEdit m_Unknown16;
 	CEdit m_UnknownFlags1;
 	CEdit m_Description;
+	CComboBox m_Type;
 };
 /*===========================================================================
  *		End of Class CSrWeapView Definition
