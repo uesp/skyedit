@@ -1,5 +1,6 @@
 
 v0.03a
+	- ReadOnly/NoEdit field flag
 	- Modifying containers crashes Skyrim
 	- File meshes not showing up?
 	- Check SecondSpell in MGEF
