@@ -38,6 +38,7 @@
  *
  *=========================================================================*/
 srdlgcreateinfo_t l_SrDlgCreateInfo[] = {
+	{ &SR_NAME_ACTI, "Activator",		 CSrActiView::IDD,   RUNTIME_CLASS(CSrActiView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Activator"),		_T("Activator") },
 	{ &SR_NAME_AMMO, "Ammo",			 CSrAmmoView::IDD,   RUNTIME_CLASS(CSrAmmoView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Ammunition"),	_T("Ammunition") },
 	{ &SR_NAME_ARMO, "Armor",			 CSrArmoView::IDD,   RUNTIME_CLASS(CSrArmoView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Armor"),			_T("Armor") },
 	{ &SR_NAME_BOOK, "Book",			 CSrBookView::IDD,   RUNTIME_CLASS(CSrBookView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Book"),			_T("Book") },
@@ -1048,6 +1049,20 @@ bool CSrEditDlgHandler::SelectModel (const char* pString) {
   CString Buffer(SRRESOURCE_PATH_MESHES);
 
   Buffer += pString;
+
+  GetSrEditApp().OpenResourceView(Buffer);
+  return (true);
+}
+
+
+bool CSrEditDlgHandler::SelectModelHelper (CWnd* pWnd) {
+  CString Buffer(SRRESOURCE_PATH_MESHES);
+  CString Model;
+
+  if (pWnd == NULL) return false;
+  pWnd->GetWindowText(Model);
+
+  Buffer += Model;
 
   GetSrEditApp().OpenResourceView(Buffer);
   return (true);

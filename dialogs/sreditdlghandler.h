@@ -30,6 +30,7 @@
   #include "srbatcheditdlg.h"
   #include "srfinddlg.h"
 
+  #include "sractiview.h"
   #include "sralchview.h"
   #include "srammoview.h"
   #include "srarmoview.h"
@@ -253,6 +254,8 @@ public:
   bool SelectModel     (const char* pString);
   bool SelectIcon      (const char* pString);
   bool SelectSoundFile (const char* pString);
+
+  bool SelectModelHelper (CWnd* pWnd);
 
 };
 /*===========================================================================

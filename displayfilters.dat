@@ -23,6 +23,12 @@
 # Start top level filters
 #
 DisplayFilter
+	ID = "Activators"
+	DisplayName = "Activators"
+	RecName = ACTI
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Ammo"
 	DisplayName = "Ammo"
 	RecName = AMMO
@@ -169,12 +175,6 @@ DisplayFilter
 	ID = "Actions"
 	DisplayName = "Actions"
 	RecName = AACT
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "Activators"
-	DisplayName = "Activators"
-	RecName = ACTI
 	Parent = NoEdit
 End	
 DisplayFilter

@@ -85,6 +85,7 @@
 #define IDD_CONTITEMEDIT_DLG            206
 #define IDD_LIGH_VIEW                   207
 #define IDD_MGEFSNDDEDIT_DLG            208
+#define IDD_ACTI_VIEW                   209
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -171,6 +172,7 @@
 #define IDC_EDIT_TRAPSOUND              1112
 #define IDC_MODEL                       1113
 #define IDC_BASEWEAPON                  1114
+#define IDC_DESTROYMODEL                1114
 #define IDC_EDIT_BASEWEAPON             1115
 #define IDC_FLICKERTYPE                 1118
 #define IDC_REDSPIN                     1119
@@ -241,6 +243,7 @@
 #define IDC_SELECT_SHEATHSOUND          1141
 #define IDC_VALUE_LABEL                 1142
 #define IDC_SELECT_SWINGSOUND           1142
+#define IDC_SELECT_WATER                1142
 #define IDC_OPERATOR_LIST               1143
 #define IDC_SELECT_BOUNDSOUND           1143
 #define IDC_OR_CHECK                    1144
@@ -329,6 +332,7 @@
 #define IDC_MATERIAL                    1183
 #define IDC_STATICMODEL                 1183
 #define IDC_DUALCAST                    1183
+#define IDC_SELECT_DESTROYMODEL         1183
 #define IDC_SELECTPICKUP_BUTTON         1184
 #define IDC_SELECTMATERIAL_BUTTON       1184
 #define IDC_USESOUND                    1184
@@ -337,6 +341,7 @@
 #define IDC_EDIT_DROPSOUND              1185
 #define IDC_SELECT_DUALCAST             1185
 #define IDC_UNKNOWN11                   1185
+#define IDC_WATER                       1185
 #define IDC_EDIT_PICKUPSOUND            1186
 #define IDC_UNKNOWN12                   1186
 #define IDC_EDIT_RACE                   1187
@@ -348,6 +353,7 @@
 #define IDC_EXPLOSION                   1188
 #define IDC_EDIT_MATERIAL               1189
 #define IDC_SELECT_EXPLOSION            1189
+#define IDC_EDIT_WATER                  1189
 #define IDC_FLICKER                     1190
 #define IDC_IMPACTDATA                  1190
 #define IDC_EDIT_EXPLOSION              1190
@@ -421,8 +427,14 @@
 #define IDC_SOUND_LIST                  1228
 #define IDC_ADDSOUND                    1229
 #define IDC_DELETESOUND                 1230
-#define IDC_COMBO1                      1230
 #define IDC_TYPE_LIST                   1230
+#define IDC_AMBIENTSOUND                1231
+#define IDC_EDIT_AMBIENTSOUND           1232
+#define IDC_SELECT_AMBIENTSOUND         1233
+#define IDC_KEYWORD                     1234
+#define IDC_EDIT_KEYWORD                1235
+#define IDC_SELECT_KEYWORD              1236
+#define IDC_VERB                        1237
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -623,7 +635,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        209
 #define _APS_NEXT_COMMAND_VALUE         32865
-#define _APS_NEXT_CONTROL_VALUE         1231
+#define _APS_NEXT_CONTROL_VALUE         1238
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
