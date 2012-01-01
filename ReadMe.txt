@@ -142,6 +142,10 @@ can be found at:
 
   Version History
 =======================================
+0.04alpha - January 2021
+	- New Editable Records: ACTI
+	- Variety of major/minor bug fixes
+
 0.031alpha - 22 December 2011
 	- Fixed game crash from a modified record with no keywords.
 
