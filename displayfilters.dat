@@ -35,6 +35,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "Armature"
+	DisplayName = "Armature"
+	RecName = ARMA
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Armor"
 	DisplayName = "Armors"
 	RecName = ARMO
@@ -193,12 +199,6 @@ DisplayFilter
 	ID = "Apparatus"
 	DisplayName = "Apparatus"
 	RecName = APPA
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "ArmAddOn"
-	DisplayName = "Arm Add-On"
-	RecName = ARMA
 	Parent = NoEdit
 End	
 DisplayFilter
