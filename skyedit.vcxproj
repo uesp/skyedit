@@ -2080,6 +2080,7 @@
     <ClInclude Include="..\tes5lib\modfile\srrectype.h" />
     <ClInclude Include="..\tes5lib\modfile\srsimplerecordhandler.h" />
     <ClInclude Include="..\tes5lib\modfile\srundoitem.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\sractidestsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\sralchdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srammodatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srarmodatasubrecord.h" />
