@@ -263,6 +263,7 @@ protected:
 	afx_msg void OnBnClickedEditPickupsound();
 	afx_msg void OnDropPickupSound (NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnDropDropSound (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnDropKeywords (NMHDR* pNotifyStruct, LRESULT* pResult);
 
   DECLARE_MESSAGE_MAP();
 

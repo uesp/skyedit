@@ -118,6 +118,8 @@ BEGIN_MESSAGE_MAP(CSrRecordDialog, CFormView)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_DROPSOUND, OnDropDropSound)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_PICKUPSOUND, OnDropPickupSound)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_PICKUPSOUND, OnDropPickupSound)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_KEYWORDS, OnDropKeywords)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_KEYWORDS, OnDropKeywords)
 	ON_BN_CLICKED(IDC_EDIT_DROPSOUND, &CSrRecordDialog::OnBnClickedEditDropsound)
 	ON_BN_CLICKED(IDC_EDIT_PICKUPSOUND, &CSrRecordDialog::OnBnClickedEditPickupsound)
 END_MESSAGE_MAP()
@@ -2298,4 +2300,41 @@ int CSrRecordDialog::DropRecordHelper (srrldroprecords_t* pDropItems, CListBox& 
 	}
 	
 	return SRRL_DROPCHECK_OK;
+}
+
+
+void CSrRecordDialog::OnDropKeywords (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	CSrRecord*	     pRecord;
+	CSrIdRecord*     pIdRecord;
+	CListBox*		 pListBox;
+
+	*pResult = SRRL_DROPCHECK_ERROR;
+
+	if (m_pKeywordsField == NULL) return;
+	if (!m_pKeywordsField->IsKindOf(RUNTIME_CLASS(CListBox))) return;
+
+	if (pDropItems == NULL) return;
+	if (pDropItems->pRecords == NULL) return;
+	
+	pListBox = (CListBox *) m_pKeywordsField;
+
+	for (dword i = 0; i < pDropItems->pRecords->GetSize(); ++i)
+	{
+		pRecord = pDropItems->pRecords->GetAt(i);
+
+			/* Ignore any invalid record types */
+		if (pRecord->GetRecordType() != SR_NAME_KYWD) return;
+		pIdRecord = SrCastClass(CSrIdRecord, pRecord);
+		if (pIdRecord == NULL) return;
+
+			/* If we're just checking or not */
+		if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
+		{
+			if (pListBox->FindString(-1, pIdRecord->GetEditorID()) < 0) pListBox->AddString(pIdRecord->GetEditorID());
+		}
+	}
+	
+	*pResult = SRRL_DROPCHECK_OK;
 }
