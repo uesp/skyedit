@@ -143,6 +143,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "Shout"
+	DisplayName = "Shouts"
+	RecName = SHOU
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "SoulGem"
 	DisplayName = "Soul Gems"
 	RecName = SLGM
