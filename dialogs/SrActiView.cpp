@@ -289,8 +289,6 @@ void CSrActiView::OnDropDestroyModel (NMHDR* pNotifyStruct, LRESULT* pResult)
 void CSrActiView::OnSelectDestroyModel (void) 
 {
   CString Buffer;
-
   m_DestroyModel.GetWindowText(Buffer);
-
   m_pDlgHandler->SelectModel(Buffer);
 }

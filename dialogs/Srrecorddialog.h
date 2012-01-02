@@ -156,7 +156,8 @@ public:
 	/* Access the UI field array */
   //virtual sruirecfields_t* GetUIFields (void) { return (NULL); }
 
-  int  DropRecordHelper (srrldroprecords_t* pDropItems, CWnd* pWnd, const srrectype_t AllowedType, const int AllowedCount);
+  int DropRecordHelper (srrldroprecords_t* pDropItems, CWnd* pWnd, const srrectype_t AllowedType, const int AllowedCount);
+  int DropRecordHelper (srrldroprecords_t* pDropItems, CListBox& ListBox, const srrectype_t AllowedType, const bool PermitDuplicates);
 
 	/* Access the dialog record object */
   virtual CSrRecord*       GetInputRecord  (void) { return (m_EditInfo.pOldRecord); }

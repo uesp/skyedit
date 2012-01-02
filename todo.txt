@@ -1,6 +1,8 @@
 
 v0.03a
+	- Change shared pointer objects to references where it is required
 	- ReadOnly/NoEdit field flag
+	- Fill in missing tooltip strings
 	- Modifying containers crashes Skyrim
 	- File meshes not showing up?
 	- Check SecondSpell in MGEF

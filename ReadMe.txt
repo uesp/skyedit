@@ -143,7 +143,7 @@ can be found at:
   Version History
 =======================================
 0.04alpha - January 2021
-	- New Editable Records: ACTI
+	- New Editable Records: ACTI, ARMA
 	- Variety of major/minor bug fixes
 
 0.031alpha - 22 December 2011

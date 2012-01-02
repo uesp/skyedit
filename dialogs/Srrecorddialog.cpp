@@ -2265,3 +2265,37 @@ int CSrRecordDialog::DropRecordHelper (srrldroprecords_t* pDropItems, CWnd* pWnd
 /*===========================================================================
  *		End of Class Event CSrRecordDialog::DropRecordHelper()
  *=========================================================================*/
+
+
+int CSrRecordDialog::DropRecordHelper (srrldroprecords_t* pDropItems, CListBox& ListBox, const srrectype_t AllowedType, const bool PermitDuplicates) {
+	CSrRecord*	     pRecord;
+	CSrIdRecord*     pIdRecord;
+  
+	if (pDropItems == NULL) return SRRL_DROPCHECK_ERROR;
+	if (pDropItems->pRecords == NULL) return SRRL_DROPCHECK_ERROR;
+
+	for (dword i = 0; i < pDropItems->pRecords->GetSize(); ++i)
+	{
+		pRecord = pDropItems->pRecords->GetAt(i);
+
+			/* Ignore any invalid record types */
+		if (pRecord->GetRecordType() != AllowedType) return SRRL_DROPCHECK_ERROR;
+		pIdRecord = SrCastClass(CSrIdRecord, pRecord);
+		if (pIdRecord == NULL) return SRRL_DROPCHECK_ERROR;
+
+			/* If we're just checking or not */
+		if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) 
+		{
+			if (PermitDuplicates)
+			{
+				ListBox.AddString(pIdRecord->GetEditorID());
+			}
+			else
+			{
+				if (ListBox.FindString(-1, pIdRecord->GetEditorID()) < 0) ListBox.AddString(pIdRecord->GetEditorID());
+			}
+		}
+	}
+	
+	return SRRL_DROPCHECK_OK;
+}
