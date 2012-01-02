@@ -36,6 +36,7 @@
   #include "srarmaview.h"
   #include "srarmoview.h"  
   #include "srbookview.h"
+  #include "srclasview.h"
   #include "srcobjview.h"
   #include "srcontview.h"
   #include "srenchview.h"
@@ -285,7 +286,7 @@ public:
   dword GetListBoxSelItemData  (CListBox&  ListBox,  const dword Default = 0);
 
 	/* Create list contents */
-  bool SrFillComboList       (CComboBox& ComboBox, const stringvalue_t* pStringValues, const dword Flags);
+  bool SrFillComboList       (CComboBox& ComboBox, const stringvalue_t* pStringValues, const dword Flags, const int RawDataOffset = 0);
   bool SrFillEffectComboList (CComboBox& ComboBox, const dword Flags, const dword EffectFlagMask, const dword InvalidEffectFlagMask);
 
   CString& TerminatePathString (CString& PathBuffer);

@@ -43,6 +43,7 @@ srdlgcreateinfo_t l_SrDlgCreateInfo[] = {
 	{ &SR_NAME_ARMA, "Armature",		 CSrArmaView::IDD,   RUNTIME_CLASS(CSrArmaView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Armature"),		_T("Armature") },
 	{ &SR_NAME_ARMO, "Armor",			 CSrArmoView::IDD,   RUNTIME_CLASS(CSrArmoView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Armor"),			_T("Armor") },
 	{ &SR_NAME_BOOK, "Book",			 CSrBookView::IDD,   RUNTIME_CLASS(CSrBookView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Book"),			_T("Book") },
+	{ &SR_NAME_CLAS, "Class",			 CSrClasView::IDD,   RUNTIME_CLASS(CSrClasView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Class"),			_T("Class") },
 	{ &SR_NAME_CONT, "Container",		 CSrContView::IDD,   RUNTIME_CLASS(CSrContView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Container"),		_T("Container") },
 	{ &SR_NAME_ENCH, "Enchantment",		 CSrEnchView::IDD,   RUNTIME_CLASS(CSrEnchView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Enchantment"),	_T("Enchantment") },
 	{ &SR_NAME_GLOB, "Global",		     CSrGlobView::IDD,   RUNTIME_CLASS(CSrGlobView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Global"),		_T("Global") },
@@ -1323,12 +1324,12 @@ int SrAddListBoxItem (CListBox& ListBox, const TCHAR* pString, const dword ItemD
 
 /*===========================================================================
  *
- * Function - bool SrFillComboList (ComboBox, pStringValues);
+ * Function - bool SrFillComboList (ComboBox, pStringValues, Flags, RawDataOffset);
  *
  * Fills the given combobox control with the given string values array.
  *
  *=========================================================================*/
-bool SrFillComboList (CComboBox& ComboBox, const stringvalue_t* pStringValues, const dword Flags) {
+bool SrFillComboList (CComboBox& ComboBox, const stringvalue_t* pStringValues, const dword Flags, const int RawDataOffset) {
   dword Index;
   bool  NoDuplicates = (Flags & SRE_FILLCOMBO_NODUPLICATES) != 0;
   int   ListIndex;
@@ -1342,7 +1343,7 @@ bool SrFillComboList (CComboBox& ComboBox, const stringvalue_t* pStringValues, c
 	/* Include a NULL value if needed */
   if ((Flags & SRE_FILLCOMBO_INCLUDENULL) != 0) {
     ListIndex = ComboBox.AddString("");
-    if (ListIndex >= 0) ComboBox.SetItemData(ListIndex, 0);
+    if (ListIndex >= 0) ComboBox.SetItemData(ListIndex, 0 + RawDataOffset);
   }
 
 	/* Add all strings in the array */
@@ -1350,13 +1351,13 @@ bool SrFillComboList (CComboBox& ComboBox, const stringvalue_t* pStringValues, c
 
 		/* Check for duplicate items if required */
     if (NoDuplicates) {
-      ListIndex = FindComboBoxItemData(ComboBox, pStringValues[Index].Value);
+      ListIndex = FindComboBoxItemData(ComboBox, pStringValues[Index].Value + RawDataOffset);
       if (ListIndex >= 0) continue;
     }
 
 		/* Add the item */
     ListIndex = ComboBox.AddString(pStringValues[Index].pString);
-    if (ListIndex >= 0) ComboBox.SetItemData(ListIndex, pStringValues[Index].Value);
+    if (ListIndex >= 0) ComboBox.SetItemData(ListIndex, pStringValues[Index].Value + RawDataOffset);
   }
 
   return (true);
