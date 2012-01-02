@@ -53,6 +53,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "Class"
+	DisplayName = "Class"
+	RecName = CLAS
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Container"
 	DisplayName = "Container"
 	RecName = CONT
@@ -253,12 +259,6 @@ DisplayFilter
 	ID = "CameraShot"
 	DisplayName = "Camera Shot"
 	RecName = CAMS
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "Class"
-	DisplayName = "Class"
-	RecName = CLAS
 	Parent = NoEdit
 End	
 DisplayFilter
