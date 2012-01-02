@@ -173,6 +173,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "WordOfPower"
+	DisplayName = "Words of Power"
+	RecName = WOOP
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "NoEdit"
 	DisplayName = "Not Editable"
 	RecName = NULL
