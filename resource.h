@@ -87,6 +87,7 @@
 #define IDD_MGEFSNDDEDIT_DLG            208
 #define IDD_ACTI_VIEW                   209
 #define IDD_ARMA_VIEW                   210
+#define IDD_SLGM_VIEW                   211
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -210,6 +211,7 @@
 #define IDC_UNKNOWN2                    1133
 #define IDC_SKILLBOOK                   1133
 #define IDC_DYNAMIC                     1133
+#define IDC_DANGEROUS                   1133
 #define IDC_ADDKEYWORD_BUTTON           1134
 #define IDC_FUNCTION_LABEL              1134
 #define IDC_CARRIED                     1134
@@ -439,7 +441,6 @@
 #define IDC_RACE_LIST                   1238
 #define IDC_ADD_RACELIST                1239
 #define IDC_EDIT_RACELIST               1240
-#define IDC_DELRACE                     1241
 #define IDC_DEL_RACELIST                1241
 #define IDC_FOOTSTEPS                   1242
 #define IDC_EDIT_FOOTSTEPS              1243
@@ -460,10 +461,16 @@
 #define IDC_MALEMODEL                   1258
 #define IDC_SELECT_MALEMODEL            1259
 #define IDC_FEMALEMODEL                 1260
+#define IDC_FILLEDGEM                   1260
 #define IDC_SELECT_FEMALEMODEL          1261
+#define IDC_EDIT_FILLEDGEM              1261
 #define IDC_MALE1STMODEL                1262
+#define IDC_SELECT_FILLEDGEM            1262
 #define IDC_SELECT_MALE1STMODEL         1263
+#define IDC_CAPACITY                    1263
 #define IDC_FEMALE1STMODEL              1264
+#define IDC_CAPACITY2                   1264
+#define IDC_CURRENTSOUL                 1264
 #define IDC_SELECT_FEMALE1STMODEL       1265
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
@@ -665,7 +672,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        209
 #define _APS_NEXT_COMMAND_VALUE         32865
-#define _APS_NEXT_CONTROL_VALUE         1260
+#define _APS_NEXT_CONTROL_VALUE         1264
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
