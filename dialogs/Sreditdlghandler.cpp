@@ -63,6 +63,7 @@ srdlgcreateinfo_t l_SrDlgCreateInfo[] = {
 	{ &SR_NAME_SPEL, "Spell",		     CSrSpelView::IDD,   RUNTIME_CLASS(CSrSpelView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Spell"),			_T("Spell") },
 	{ &SR_NAME_STAT, "Static",		     CSrStatView::IDD,   RUNTIME_CLASS(CSrStatView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Static"),		_T("Static") },
 	{ &SR_NAME_WEAP, "Weapon",		     CSrWeapView::IDD,   RUNTIME_CLASS(CSrWeapView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Weapon"),		_T("Weapon") },
+	{ &SR_NAME_WOOP, "Word of Power",    CSrWoopView::IDD,   RUNTIME_CLASS(CSrWoopView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Word_of_Power"), _T("Word_of_Power") },
 	{ &SR_NAME_NULL, NULL, 0, NULL, NULL,	NULL,	NULL }	/* Must be last */
 };
 

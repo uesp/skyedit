@@ -1844,6 +1844,7 @@
     <ClCompile Include="dialogs\SrSlgmView.cpp" />
     <ClCompile Include="dialogs\SrSpelView.cpp" />
     <ClCompile Include="dialogs\SrStatView.cpp" />
+    <ClCompile Include="dialogs\SrWoopView.cpp" />
     <ClCompile Include="SrCobjView.cpp" />
     <ClCompile Include="SrConditionDlg.cpp" />
     <ClCompile Include="SrFunctionDlg.cpp" />
@@ -2152,6 +2153,7 @@
     <ClInclude Include="dialogs\srslgmview.h" />
     <ClInclude Include="dialogs\SrSpelView.h" />
     <ClInclude Include="dialogs\SrStatView.h" />
+    <ClInclude Include="dialogs\SrWoopView.h" />
     <ClInclude Include="SrCobjView.h" />
     <ClInclude Include="SrConditionDlg.h" />
     <ClInclude Include="SrFunctionDlg.h" />

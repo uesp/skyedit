@@ -89,6 +89,7 @@
 #define IDD_ARMA_VIEW                   210
 #define IDD_SLGM_VIEW                   211
 #define IDD_SHOU_VIEW                   212
+#define IDD_WOOP_VIEW                   213
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -191,6 +192,8 @@
 #define IDC_DNAME                       1126
 #define IDC_RESULTCOUNT                 1126
 #define IDC_MAGNITUDE                   1126
+#define IDC_ITEMNAME2                   1126
+#define IDC_TRANSLATION                 1126
 #define IDC_SCHOOLLIST                  1127
 #define IDC_COMPONENTCOUNT              1127
 #define IDC_AREA                        1127

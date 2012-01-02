@@ -55,6 +55,7 @@
   #include "srspelview.h"
   #include "srstatview.h"
   #include "srweapview.h"
+  #include "srwoopview.h"
 /*===========================================================================
  *		End of Required Includes
  *=========================================================================*/
