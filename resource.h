@@ -88,6 +88,7 @@
 #define IDD_ACTI_VIEW                   209
 #define IDD_ARMA_VIEW                   210
 #define IDD_SLGM_VIEW                   211
+#define IDD_SHOU_VIEW                   212
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -154,7 +155,10 @@
 #define IDC_NAME                        1081
 #define IDC_CNAME                       1082
 #define IDC_NNAME                       1082
+#define IDC_RECHARGE1                   1082
 #define IDC_NAME2                       1083
+#define IDC_RECHARGE2                   1083
+#define IDC_RECHARGE3                   1084
 #define IDC_ENCHANTMENT                 1095
 #define IDC_EQUIPSLOT                   1096
 #define IDC_IMPACTSET                   1097
@@ -469,9 +473,26 @@
 #define IDC_SELECT_MALE1STMODEL         1263
 #define IDC_CAPACITY                    1263
 #define IDC_FEMALE1STMODEL              1264
-#define IDC_CAPACITY2                   1264
 #define IDC_CURRENTSOUL                 1264
+#define IDC_POWERWORD1                  1264
 #define IDC_SELECT_FEMALE1STMODEL       1265
+#define IDC_EDIT_POWERWORD1             1265
+#define IDC_SELECT_POWERWORD1           1266
+#define IDC_SPELL1                      1267
+#define IDC_EDIT_SPELL1                 1268
+#define IDC_SELECT_SPELL1               1269
+#define IDC_POWERWORD2                  1270
+#define IDC_EDIT_POWERWORD2             1271
+#define IDC_SELECT_POWERWORD2           1272
+#define IDC_SPELL2                      1273
+#define IDC_EDIT_SPELL2                 1274
+#define IDC_SELECT_SPELL2               1275
+#define IDC_POWERWORD3                  1276
+#define IDC_EDIT_POWERWORD3             1277
+#define IDC_SELECT_POWERWORD3           1278
+#define IDC_SPELL3                      1279
+#define IDC_EDIT_SPELL3                 1280
+#define IDC_SELECT_SPELL3               1281
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -672,7 +693,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        209
 #define _APS_NEXT_COMMAND_VALUE         32865
-#define _APS_NEXT_CONTROL_VALUE         1264
+#define _APS_NEXT_CONTROL_VALUE         1267
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
