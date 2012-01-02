@@ -1716,6 +1716,9 @@
     <ClInclude Include="dialogs\SrArmaView.h">
       <Filter>Header Files\Forms.\Dialogs.</Filter>
     </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srslgmdatasubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="skyedit.rc">
