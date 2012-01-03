@@ -18,10 +18,22 @@
  *=========================================================================*/
 	#include "afxcmn.h"
 	#include "modfile/SrMultiRecordHandler.h"
-/*===========================================================================
+	#include "afxwin.h"
+	#include <vector>
+ /*===========================================================================
  *		End of Required Includes
  *=========================================================================*/
 
+
+	struct srrawdata_lineinfo_t
+	{
+		long			SelIndex;
+		CSrSubrecord*	pSubrecord;
+		dword			SubrecordIndex;
+		dword			DataOffset;
+	};
+
+	typedef std::vector<srrawdata_lineinfo_t> CLineInfoArray;
 
 /*===========================================================================
  *
@@ -33,8 +45,9 @@ class CSrRawDataDlg : public CDialogEx
 	DECLARE_DYNAMIC(CSrRawDataDlg)
 
 protected:
-	CSrRecord*  m_pRecord;
-	CFont		m_TextFont;
+	CSrRecord*			m_pRecord;
+	CSrRecordHandler&	m_RecordHandler;
+	CFont				m_TextFont;
 
 	CHARFORMAT2 m_HexFmt1;
 	CHARFORMAT2 m_HexFmt2;
@@ -43,12 +56,19 @@ protected:
 
 	CHARFORMAT2* m_pCurrentFmt;
 
+	bool		m_UpdateSelection;
+
+	CLineInfoArray	m_LineInfos;
+
+	bool FindLineInfo (srrawdata_lineinfo_t& Result, const long SelIndex);
+	CString FormatValueText (const dword Data);
+
 
 protected:
 	void AddText (const char* pString, ...);
 
 public:
-	CSrRawDataDlg(CWnd* pParent = NULL); 
+	CSrRawDataDlg(CSrRecordHandler&	Handler, CWnd* pParent = NULL); 
 	virtual ~CSrRawDataDlg();
 
 	int DoModal (CSrRecord* pRecord);
@@ -67,6 +87,8 @@ public:
 	CRichEditCtrl m_Text;
 
 	virtual BOOL OnInitDialog();
+	CEdit m_ValueText;
+	afx_msg void OnEnSelchangeTextcontrol(NMHDR *pNMHDR, LRESULT *pResult);
 };
 /*===========================================================================
  *		End of Class CSrPromptDlg Definition

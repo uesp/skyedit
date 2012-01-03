@@ -31,16 +31,18 @@ IMPLEMENT_DYNAMIC(CSrRawDataDlg, CDialogEx)
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrRawDataDlg, CDialogEx)
+	ON_NOTIFY(EN_SELCHANGE, IDC_TEXTCONTROL, &CSrRawDataDlg::OnEnSelchangeTextcontrol)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrPromptDlg Message Map
  *=========================================================================*/
 
 
-CSrRawDataDlg::CSrRawDataDlg(CWnd* pParent)
-	: CDialogEx(CSrRawDataDlg::IDD, pParent)
+CSrRawDataDlg::CSrRawDataDlg(CSrRecordHandler&	Handler, CWnd* pParent)
+	: CDialogEx(CSrRawDataDlg::IDD, pParent), m_RecordHandler(Handler)
 {
 	m_pRecord = NULL;
+	m_UpdateSelection = false;
 
 	m_HexFmt1.cbSize = sizeof(m_HexFmt1);
 	m_HexFmt2.cbSize = sizeof(m_HexFmt2);
@@ -58,7 +60,7 @@ CSrRawDataDlg::CSrRawDataDlg(CWnd* pParent)
 	m_DefaultFmt.dwMask = CFM_COLOR;
 
 	m_DefaultFmt.crTextColor = RGB(0,0,0);
-	m_HexFmt1.crTextColor = RGB(0,128,128);
+	m_HexFmt1.crTextColor = RGB(0,0,128);
 	m_HexFmt2.crTextColor = RGB(0,0,255);
 	m_StringFmt.crTextColor = RGB(128,0,0);
 
@@ -75,6 +77,7 @@ void CSrRawDataDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_TEXTCONTROL, m_Text);
+	DDX_Control(pDX, IDC_VALUETEXT, m_ValueText);
 }
 
 
@@ -88,16 +91,18 @@ void CSrRawDataDlg::AddText (const char* pString, ...)
 	Buffer.FormatV(pString, Args);
 	va_end(Args);
 
+	long OrigTextLength = m_Text.GetTextLengthEx(GTL_NUMCHARS);
 	TextLength = m_Text.GetTextLength();
 	m_Text.SetSel(TextLength, TextLength);
 	m_Text.ReplaceSel(Buffer);
-
+	
 	if (m_pCurrentFmt)
 	{
-		//m_Text.SetSel(TextLength, m_Text.GetTextLengthEx(GTL_USECRLF | GTL_NUMCHARS) - 1);
-		//m_Text.SetSelectionCharFormat(*m_pCurrentFmt);
-		//m_Text.SetSel(0, 0);
+		m_Text.SetSel(OrigTextLength, m_Text.GetTextLengthEx(GTL_NUMCHARS));
+		m_Text.SetSelectionCharFormat(*m_pCurrentFmt);
+		m_Text.SetSel(0, 0);
 	}
+
 }
 
 
@@ -114,6 +119,8 @@ BOOL CSrRawDataDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	m_Text.SetEventMask(ENM_SELCHANGE);
+
 	m_TextFont.CreatePointFont(11, "FixedSys");
 	m_Text.SetFont(&m_TextFont);
 
@@ -126,19 +133,22 @@ BOOL CSrRawDataDlg::OnInitDialog()
 
 void CSrRawDataDlg::SetControlData (void)
 {
+	srrawdata_lineinfo_t LineInfo;
+
+	m_UpdateSelection = false;
 	m_pCurrentFmt = &m_DefaultFmt;
 
-	AddText("Record Information\r\n");
-	AddText("\tFormID: 0x%08X\r\n", m_pRecord->GetFormID());
-	AddText("\tType: %4.4s\r\n", m_pRecord->GetHeader().RecordType.Name);
-	AddText("\tFlags1: 0x%08X\r\n", m_pRecord->GetHeader().Flags1);
-	AddText("\tFlags2: 0x%08X\r\n", m_pRecord->GetHeader().Flags2);
-	AddText("\tSize: %d bytes\r\n", m_pRecord->GetHeader().Size);
-	AddText("\tVersion: %d\r\n", m_pRecord->GetHeader().Version);
-	AddText("\tUnknown: %d\r\n", m_pRecord->GetHeader().Unknown);
-	AddText("\r\n");
+	AddText("Record Information\n");
+	AddText("\tFormID: 0x%08X\n", m_pRecord->GetFormID());
+	AddText("\tType: %4.4s\n", m_pRecord->GetHeader().RecordType.Name);
+	AddText("\tFlags1: 0x%08X\n", m_pRecord->GetHeader().Flags1);
+	AddText("\tFlags2: 0x%08X\n", m_pRecord->GetHeader().Flags2);
+	AddText("\tSize: %d bytes\n", m_pRecord->GetHeader().Size);
+	AddText("\tVersion: %d\n", m_pRecord->GetHeader().Version);
+	AddText("\tUnknown: %d\n", m_pRecord->GetHeader().Unknown);
+	AddText("\n");
 
-	AddText("%d Subrecords\r\n", m_pRecord->GetNumSubrecords());
+	AddText("%d Subrecords\n", m_pRecord->GetNumSubrecords());
 
 	for (dword i = 0; i < m_pRecord->GetNumSubrecords(); ++i)
 	{
@@ -149,11 +159,11 @@ void CSrRawDataDlg::SetControlData (void)
 
 		if (pSubrecord == NULL) 
 		{
-			AddText("Error getting subrecord!\r\n");
+			AddText("Error getting subrecord!\n");
 			continue;
 		}
 
-		AddText("%4.4s,  %d bytes\r\n", pSubrecord->GetRecordType().Name, pSubrecord->GetRecordSize());
+		AddText("%4.4s,  %d bytes\n", pSubrecord->GetRecordType().Name, pSubrecord->GetRecordSize());
 
 		const byte* pData = pSubrecord->GetData();
 		dword Size = pSubrecord->GetRecordSize();
@@ -164,6 +174,12 @@ void CSrRawDataDlg::SetControlData (void)
 			dword   k;
 			
 			AddText("\t\t");			
+
+			LineInfo.DataOffset = j;
+			LineInfo.pSubrecord = pSubrecord;
+			LineInfo.SelIndex   = m_Text.GetTextLengthEx(GTL_NUMCHARS);
+			LineInfo.SubrecordIndex = i;
+			m_LineInfos.push_back(LineInfo);
 
 			for (k = 0; k < 16 && j < Size; ++k, ++j)
 			{			
@@ -186,8 +202,115 @@ void CSrRawDataDlg::SetControlData (void)
 			}
 
 			m_pCurrentFmt = &m_StringFmt;
-			AddText("  %s\r\n", Buffer);
+			AddText("  %s\n", Buffer);
 		}
 	}
 
+	m_UpdateSelection = true;
+}
+
+
+CString CSrRawDataDlg::FormatValueText (const dword Data)
+{
+	CString Result;
+	CString Tmp;
+
+	Tmp.Format("Raw: 0x%08X\r\n", Data);
+	Result += Tmp;
+
+	Tmp.Format("Byte: %u   ", (byte) Data);
+	Result += Tmp;
+
+	Tmp.Format("Word: %u   ", (word) Data);
+	Result += Tmp;
+
+	Tmp.Format("DWord: %u   ", (dword) Data);
+	Result += Tmp;
+
+	Tmp.Format("Float: %g\r\n", *(float *) &Data);
+	Result += Tmp;
+
+	CSString* pString = m_RecordHandler.FindLocalString(Data);
+	Tmp.Format("LString: \"%s\"    ", pString ? pString->c_str() : "[Not Found]");
+	Result += Tmp;
+
+	CSrRecord* pRecord = m_RecordHandler.FindFormID(Data);
+
+	if (pRecord)
+	{
+		Tmp.Format("Record(%4.4s): %s    ", pRecord->GetRecordType().Name, m_RecordHandler.GetEditorID(pRecord->GetFormID()));
+	}
+	else
+	{
+		Tmp = "Record: [Not Found]    ";
+	}
+
+	Result += Tmp;
+
+	return Result;
+}
+
+
+void CSrRawDataDlg::OnEnSelchangeTextcontrol(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	SELCHANGE *pSelChange = reinterpret_cast<SELCHANGE *>(pNMHDR);
+	*pResult = 0;
+
+	if (!m_UpdateSelection) return;
+
+	CString Buffer;
+	srrawdata_lineinfo_t LineInfo;
+
+	bool Result = FindLineInfo (LineInfo, pSelChange->chrg.cpMin);
+	
+	if (Result)
+	{
+		//Buffer.Format("%d - %d\r\nLineInfo %d\r\n", pSelChange->chrg.cpMin, pSelChange->chrg.cpMax, LineInfo.SelIndex);
+
+		CString Buffer1;
+		dword Data = 0;
+		dword Offset = (pSelChange->chrg.cpMin - LineInfo.SelIndex + 1) / 3 + LineInfo.DataOffset;
+
+		if (Offset + 4 < LineInfo.pSubrecord->GetRecordSize())
+		{
+			memcpy(&Data, LineInfo.pSubrecord->GetData() + Offset, 4);
+			//Buffer1.Format("Data = %08X", Data);
+			Buffer = FormatValueText(Data);
+		}
+		else if (Offset < LineInfo.pSubrecord->GetRecordSize())
+		{
+			memcpy(&Data, LineInfo.pSubrecord->GetData() + Offset, LineInfo.pSubrecord->GetRecordSize() - Offset);
+			//Buffer1.Format("Data = %08X", Data);
+			Buffer = FormatValueText(Data);
+		}
+		else
+		{
+			//Buffer1 = "No Data";
+		}
+
+		//Buffer += Buffer1;
+	}
+	else
+	{
+		//Buffer.Format("%d - %d\r\nLineInfo Not Found", pSelChange->chrg.cpMin, pSelChange->chrg.cpMax);
+		Buffer = "";
+	}
+
+	m_ValueText.SetWindowText(Buffer);	
+}
+
+
+ bool CSrRawDataDlg::FindLineInfo (srrawdata_lineinfo_t& Result, const long SelIndex)
+{
+
+	for (CLineInfoArray::iterator i = m_LineInfos.begin(); i != m_LineInfos.end(); ++i)
+	{
+		if (SelIndex < i->SelIndex) continue;
+		if (SelIndex > i->SelIndex + 48) continue;
+
+		Result = *i;
+		return true;
+	}
+
+	return false;
 }

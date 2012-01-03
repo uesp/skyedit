@@ -2234,7 +2234,7 @@ void CSrEditView::OnEditSelectall() {
 
 void CSrEditView::OnMenuViewrawdata()
  {
-	 CSrRawDataDlg Dlg;
+	 CSrRawDataDlg Dlg(GetDocument()->GetRecordHandler());
 	 CSrRecord* pRecord = m_RecordList.GetSelectedRecord();
 
 	 if (pRecord == NULL) return;

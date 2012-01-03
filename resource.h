@@ -508,6 +508,8 @@
 #define IDC_TEXTCONTROL                 1270
 #define IDC_EDIT_POWERWORD2             1271
 #define IDC_DESTRUCTION                 1271
+#define IDC_EDIT1                       1271
+#define IDC_VALUETEXT                   1271
 #define IDC_SELECT_POWERWORD2           1272
 #define IDC_SPELL2                      1273
 #define IDC_EDIT_SPELL2                 1274
@@ -720,7 +722,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        216
 #define _APS_NEXT_COMMAND_VALUE         32867
-#define _APS_NEXT_CONTROL_VALUE         1271
+#define _APS_NEXT_CONTROL_VALUE         1272
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
