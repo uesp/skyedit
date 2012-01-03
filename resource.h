@@ -91,6 +91,7 @@
 #define IDD_SHOU_VIEW                   212
 #define IDD_WOOP_VIEW                   213
 #define IDD_CLAS_VIEW                   214
+#define IDD_RAWDATA_DLG                 215
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -388,7 +389,6 @@
 #define IDC_FLICKERSLOW                 1193
 #define IDC_BODYPARTS                   1193
 #define IDC_EDIT_ART1                   1193
-#define IDC_HEAVYARMOR3                 1193
 #define IDC_ENCHANTING                  1193
 #define IDC_PULSE                       1194
 #define IDC_ARMMODEL                    1194
@@ -505,6 +505,7 @@
 #define IDC_MARKSMAN                    1269
 #define IDC_POWERWORD2                  1270
 #define IDC_LOCKPICKING                 1270
+#define IDC_TEXTCONTROL                 1270
 #define IDC_EDIT_POWERWORD2             1271
 #define IDC_DESTRUCTION                 1271
 #define IDC_SELECT_POWERWORD2           1272
@@ -709,15 +710,17 @@
 #define ID_SNDDLIST_EDIT                32862
 #define ID_SNDDLIST_ADD                 32863
 #define ID_SNDDLIST_EDITRECORD          32864
+#define ID_MENU_VIEWDATADATA            32865
+#define ID_MENU_VIEWRAWDATA             32866
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        209
-#define _APS_NEXT_COMMAND_VALUE         32865
-#define _APS_NEXT_CONTROL_VALUE         1270
+#define _APS_NEXT_RESOURCE_VALUE        216
+#define _APS_NEXT_COMMAND_VALUE         32867
+#define _APS_NEXT_CONTROL_VALUE         1271
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

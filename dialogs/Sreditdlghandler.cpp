@@ -914,7 +914,7 @@ int CSrEditDlgHandler::PromptRenameCopy (sreditrecinfo_t& EditInfo) {
   //EditInfo.pOldRecord->GetField(EditorID, SR_FIELD_EDITORID);
   Buffer.Format(_T("The editorid has changed to %s.\r\n\r\nDo you wish to create a new copy or rename the record?"), EditInfo.NewEditorID);
 
-  Result = ShowObPromptDlg ("Rename/Copy Record", Buffer, "Copy", "Rename", "Cancel");
+  Result = ShowSrPromptDlg ("Rename/Copy Record", Buffer, "Copy", "Rename", "Cancel");
   if (Result == 3) Result = 0;
 
   switch (Result) {

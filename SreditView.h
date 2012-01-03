@@ -179,7 +179,9 @@ protected:
 
   DECLARE_MESSAGE_MAP();
 
- };
+ public:
+	 afx_msg void OnMenuViewrawdata();
+};
 /*===========================================================================
  *		End of Class CSrEditView Definition
  *=========================================================================*/

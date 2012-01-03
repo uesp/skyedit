@@ -1508,6 +1508,15 @@ BEGIN
     LTEXT           "Skill Modifiers: 0-7 with higher values increasing faster",IDC_STATIC,7,152,251,9
 END
 
+IDD_RAWDATA_DLG DIALOGEX 0, 0, 455, 231
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Raw Data Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Close",IDOK,398,210,50,14
+    CONTROL         "",IDC_TEXTCONTROL,"RichEdit20A",ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | WS_BORDER | WS_VSCROLL | WS_TABSTOP,7,7,441,199
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1911,6 +1920,14 @@ BEGIN
         VERTGUIDE, 212
         TOPMARGIN, 7
         BOTTOMMARGIN, 245
+    END
+
+    IDD_RAWDATA_DLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 448
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 224
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -2627,6 +2644,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Batch Edit...",               ID_RECORD_BATCHEDIT
         MENUITEM "Export to CSV...",            ID_FILE_EXPORTCSV_SELECTEDITEMS
+        MENUITEM "View Raw Data...",            ID_MENU_VIEWRAWDATA
         MENUITEM SEPARATOR
         MENUITEM "Clean",                       ID_RECORD_CLEAN
         MENUITEM "Move To Active",              ID_RECORD_MOVEACTIVE

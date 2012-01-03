@@ -1,14 +1,14 @@
 /*===========================================================================
  *
- * File:	Obpromptdlg.H
- * Author:	Dave Humphrey (dave@uesp.net)
- * Created On:	September 26, 2006
+ * File:		Srpromptdlg.H
+ * Author:		Dave Humphrey (dave@uesp.net)
+ * Created On:	2 January 2012
  *
  * Description
  *
  *=========================================================================*/
-#ifndef __OBPROMPTDLG_H
-#define __OBPROMPTDLG_H
+#ifndef __SRPROMPTDLG_H
+#define __SRPROMPTDLG_H
 
 
 /*===========================================================================
@@ -96,22 +96,17 @@ protected:
  *
  *=========================================================================*/
 
-  int  ShowObPromptDlg   (const TCHAR* pTitle, const TCHAR* pLabel, const TCHAR* pButton1, const TCHAR* pButton2 = "", const TCHAR* pButton3 = "");
-  void ShowObOkDlg       (const TCHAR* pTitle, const TCHAR* pLabel);
-  bool ShowObYesNoDlg    (const TCHAR* pTitle, const TCHAR* pLabel);
-  bool ShowObOkCancelDlg (const TCHAR* pTitle, const TCHAR* pLabel);
+  int  ShowSrPromptDlg   (const TCHAR* pTitle, const TCHAR* pLabel, const TCHAR* pButton1, const TCHAR* pButton2 = "", const TCHAR* pButton3 = "");
+  void ShowSrOkDlg       (const TCHAR* pTitle, const TCHAR* pLabel);
+  bool ShowSrYesNoDlg    (const TCHAR* pTitle, const TCHAR* pLabel);
+  bool ShowSrOkCancelDlg (const TCHAR* pTitle, const TCHAR* pLabel);
 
 /*===========================================================================
  *		End of Function Prototypes
  *=========================================================================*/
 
 
-
-//{{AFX_INSERT_LOCATION}}
-//}}AFX_INSERT_LOCATION
-
-
 #endif
 /*===========================================================================
- *		End of File Obpromptdlg.H
+ *		End of File SrPromptdlg.H
  *=========================================================================*/

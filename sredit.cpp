@@ -104,6 +104,7 @@ CSrEditApp::~CSrEditApp()
  *
  *=========================================================================*/
 BOOL CSrEditApp::InitInstance() {
+//TODO: call AfxInitRichEdit2() to initialize richedit2 library.
   TCHAR    Buffer[_MAX_PATH + 8];
   CSString PathBuffer;
   bool     Result;
@@ -111,7 +112,7 @@ BOOL CSrEditApp::InitInstance() {
   SystemLog.Open("skyedit.log");
 
   AfxEnableControlContainer();
-  AfxInitRichEdit();
+  AfxInitRichEdit2();
 
 #ifdef _AFXDLL
   Enable3dControls();

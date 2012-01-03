@@ -1840,6 +1840,7 @@
     <ClCompile Include="dialogs\SrLvspView.cpp" />
     <ClCompile Include="dialogs\SrMgefSnddEditDlg.cpp" />
     <ClCompile Include="dialogs\SrMiscView.cpp" />
+    <ClCompile Include="dialogs\SrRawDataDlg.cpp" />
     <ClCompile Include="dialogs\SrScrlView.cpp" />
     <ClCompile Include="dialogs\SrShouView.cpp" />
     <ClCompile Include="dialogs\SrSlgmView.cpp" />
@@ -2150,6 +2151,7 @@
     <ClInclude Include="dialogs\SrLvlnView.h" />
     <ClInclude Include="dialogs\SrLvspView.h" />
     <ClInclude Include="dialogs\SrMiscView.h" />
+    <ClInclude Include="dialogs\SrRawDataDlg.h" />
     <ClInclude Include="dialogs\SrScrlView.h" />
     <ClInclude Include="dialogs\SrShouView.h" />
     <ClInclude Include="dialogs\srslgmview.h" />

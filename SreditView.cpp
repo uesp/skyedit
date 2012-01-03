@@ -20,6 +20,7 @@
 #include "srfindbinarydlg.h"
 #include "common/srtime.h"
 #include "modfile/srexport.h"
+#include "dialogs/SrRawDataDlg.h"
 //#include "modfile/compiler/customcompiler.h"
 #include "mainfrm.h"
 //#include "modfile/compiler/obscriptutils.h"
@@ -98,6 +99,7 @@ BEGIN_MESSAGE_MAP(CSrEditView, CFormView)
   ON_UPDATE_COMMAND_UI(ID_RECORD_BATCHEDIT, OnUpdateHasSelectedRecords)
   ON_COMMAND(ID_EDIT_SELECTALL, OnEditSelectall)
   //}}AFX_MSG_MAP
+  ON_COMMAND(ID_MENU_VIEWRAWDATA, &CSrEditView::OnMenuViewrawdata)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Class CSrEditView Message Map
@@ -2228,3 +2230,13 @@ void CSrEditView::OnEditSelectall() {
 /*===========================================================================
  *		End of Class Event CSrEditView::OnEditSelectall()
  *=========================================================================*/
+
+
+void CSrEditView::OnMenuViewrawdata()
+ {
+	 CSrRawDataDlg Dlg;
+	 CSrRecord* pRecord = m_RecordList.GetSelectedRecord();
+
+	 if (pRecord == NULL) return;
+	 Dlg.DoModal(pRecord);
+ }
