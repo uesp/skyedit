@@ -100,6 +100,7 @@ BEGIN_MESSAGE_MAP(CSrEditView, CFormView)
   ON_COMMAND(ID_EDIT_SELECTALL, OnEditSelectall)
   //}}AFX_MSG_MAP
   ON_COMMAND(ID_MENU_VIEWRAWDATA, &CSrEditView::OnMenuViewrawdata)
+  ON_COMMAND(ID_HELP_TESTOUTPUTPERKS, &CSrEditView::OnHelpTestoutputperks)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Class CSrEditView Message Map
@@ -2240,3 +2241,233 @@ void CSrEditView::OnMenuViewrawdata()
 	 if (pRecord == NULL) return;
 	 Dlg.DoModal(pRecord);
  }
+
+
+void CSrEditView::OnHelpTestoutputperks()
+{
+	CSrTypeGroup *pPerkGroup = GetDocument()->GetRecordHandler().GetTypeGroup(SR_NAME_PERK);
+	CString Buffer;
+	int Position;
+	if ( pPerkGroup == NULL) return;
+
+	SystemLog.Printf("Dumping PERKs...");
+
+	for (dword i = 0; i < pPerkGroup->GetNumRecords(); ++i)
+	{
+		CSrBaseRecord* pRecord = pPerkGroup->GetRecord(i);
+		CSrPerkRecord* pPerk = SrCastClassNull(CSrPerkRecord, pRecord);
+		if (pPerk == NULL) continue;
+
+		CSrSubrecord* pSubrecord = pPerk->FindFirstSubrecord(SR_NAME_EPFT, Position);
+
+		while (pSubrecord)
+		{
+			Buffer.Empty();
+
+			for (dword j = 0; j < pSubrecord->GetRecordSize(); ++j)
+			{
+				CString Tmp;
+				Tmp.Format("%02X ", (dword) pSubrecord->GetData()[j]);
+				Buffer += Tmp;
+			}
+
+			SystemLog.Printf("\t%32.32s(%02d): EPFT(%d bytes) = %s", pPerk->GetEditorID(), (dword)pPerk->GetHeader().Version, pSubrecord->GetRecordSize(), Buffer);
+			pSubrecord = pPerk->FindNextSubrecord(SR_NAME_EPFT, Position);
+		} //*/
+
+		/*
+		CSrSubrecord* pSubrecord = pPerk->FindFirstSubrecord(SR_NAME_PRKC, Position);
+
+		while (pSubrecord)
+		{
+			Buffer.Empty();
+
+			for (dword j = 0; j < pSubrecord->GetRecordSize(); ++j)
+			{
+				CString Tmp;
+				Tmp.Format("%02X ", (dword) pSubrecord->GetData()[j]);
+				Buffer += Tmp;
+			}
+
+			SystemLog.Printf("\t%32.32s(%02d): PRKC(%d bytes) = %s", pPerk->GetEditorID(), (dword)pPerk->GetHeader().Version, pSubrecord->GetRecordSize(), Buffer);
+			pSubrecord = pPerk->FindNextSubrecord(SR_NAME_PRKC, Position);
+		} //*/
+
+		/*
+		CSrSubrecord* pSubrecord = pPerk->FindFirstSubrecord(SR_NAME_PRKE, Position);
+
+		while (pSubrecord)
+		{
+			Buffer.Empty();
+
+			for (dword j = 0; j < pSubrecord->GetRecordSize(); ++j)
+			{
+				CString Tmp;
+				Tmp.Format("%02X ", (dword) pSubrecord->GetData()[j]);
+				Buffer += Tmp;
+			}
+
+			SystemLog.Printf("\t%32.32s(%02d): PRKE(%d bytes) = %s", pPerk->GetEditorID(), (dword)pPerk->GetHeader().Version, pSubrecord->GetRecordSize(), Buffer);
+			pSubrecord = pPerk->FindNextSubrecord(SR_NAME_PRKE, Position);
+		} //*/
+
+		/*
+		CSrSubrecord* pSubrecord = pPerk->FindFirstSubrecord(SR_NAME_DATA, Position);
+		pSubrecord = pPerk->FindNextSubrecord(SR_NAME_DATA, Position);
+
+		while (pSubrecord)
+		{
+			Buffer.Empty();
+
+			for (dword j = 0; j < pSubrecord->GetRecordSize(); ++j)
+			{
+				CString Tmp;
+				Tmp.Format("%02X ", (dword) pSubrecord->GetData()[j]);
+				Buffer += Tmp;
+			}
+
+			SystemLog.Printf("\t%32.32s(%02d): DATA(%d bytes) = %s", pPerk->GetEditorID(), (dword)pPerk->GetHeader().Version, pSubrecord->GetRecordSize(), Buffer);
+			pSubrecord = pPerk->FindNextSubrecord(SR_NAME_DATA, Position);
+		} //*/
+	}
+
+}
+/*
+EPFT
+	01 = Float
+	02 = (float AV, float Factor)?
+	04 =
+		EPF2 = LString "verb" (feed) (optional)
+		EPF3 = dword?
+		EPFD = formid (optional)
+	05 = SPEL?
+	06 = GMST boolean string?
+	07 = EPFD = LString "verb"
+
+PRKC = Condition index?
+	00 = Normal?
+	01 = AND conditions?
+	02 = ?
+
+PRKE
+	word U1
+		0000
+			Just a DATA (formid Qust, dword Stage?)
+		0001
+			Just a DATA (formid Record)
+		0002
+			Data (3 bytes) followed by other subrecords
+	byte U2
+		00, 03-22, 50, 100
+		Index of some sort (can have duplicates)
+		
+		
+
+struct data1		//Always present
+{
+	word NullBytes
+	byte U1			//01 or 05
+	byte U2			//00 or 01
+	byte U3			//00 or 01
+}
+
+
+
+struct data2		//3 4 or 8 bytes
+{
+	dword ID1
+	dword ID2
+}
+
+PRKE=2 (data2 = 3 bytes)
+	struct data2-3
+	{
+		byte U1;
+		byte U2;
+		byte U3;
+	}
+	U2:
+		01 = Absolute: New = EPFD
+		02 = Additive: New = Old + EPFD
+		03 = Factor:   New = Old * EPFD
+		09 = Apply activate verb?
+		0A = Cast spell?
+		0B = Set GMST?
+		0E = two floats: (ActorValue, SkillAdjustFactor)?
+		0F = Apply activate verb?
+
+	U3:
+		01 = 
+		02 = 
+		03 =
+
+	U1:
+		00  ?
+		01  Critical Damage (EPFD = dmg multiplier)
+		02	Critical Chance (EPFD = percent chance increase)
+		08  Buy price factor 
+		0E  Apply custom activate verb? (EPF2 = Verb string)
+		12  Backstab (EPFD = dmg mult/2, so EPFD=1.5 means a x3 dmg mult)
+		14  Zoom factor (EPFD = zoom amount, 0.6) EagleEye
+		15  Recover arrows (EPFD = Percent Chance?)
+		16  Skill increase mod (EPFD = mult)
+		1A  Bash damage mod (EPFD = mod)
+		1B  Stamina cost mod (EPFD = mod)
+		1C  Power attack damage mod (EPFD = mod)
+		1D  Spell magnitude mod (EPFD = mod)
+		1E  Spell duration mod (EPFD = mod)
+		20  Armor weight+movement penalty mod (EPFD = weight mult)
+		21  Player Stagger chance (EPFD = mult)
+		22  Enemy staff chance (EPFD = mult)
+		23  Damage mod (EPFD = mult)
+		24  Received Damage mod (EPFD = amount) Abs
+		25  Ignore armor (EPFD = factor, 0.5 = ignore 50%)
+		26  Spell Cost (EPFD = mult)
+		27  Blocking chance (EPFD = mult)
+		28  Blocking damage mod? (EPFD = percent amount, 100 = 100% damage blocked)  
+		29  Incoming spell dmg? (EPFD = mult)
+		2B  Intimidation success mod (EPFD = mod)		
+		2F  Detection mod? (EPFD = mod) MQ101IncreaseDetection
+		30  Detection mod? (EPFD = mod) MQ101IncreaseDetection
+		31  Soul charge mod (EPFD = percent factor?)
+		32  Hit chance? (EPFD = chance, 1=100%?) sweep
+		33  Hit cast spell? (EPFD = spell)
+		34  Bash cast spell? (EPFD = spell)
+		35  Spell cast spell? (EPFD = spell)
+		36  Set GMST bool? (EPFD = GMST string)
+		37  Casting noise mod? (EPFD = mult)
+		38  Pickpocket
+		39  Stealth
+		3A  Falling damage mod (EPFD = mod)
+		3B  Lockpicking easier mod? (EPFD = mod, 1.6 = 60% easier)
+		3C  Sell price mod
+		3D  Pickpocket equipped wepons (EPFD = bool)
+		3F  Lockpick starts closer (EPFD = percent closer? 45)
+		41  Lockpicking
+		42  Alchemy
+		43  Is attacking? QuickReflexes
+		44  Number of raised dead mod (EPFD = mult or count?)
+		45  Sneak cast spell (EPFD = spell)
+		46  Set something (QuickReflexes)
+		47  Spell absorb mod? (EPFD = chance or effect? 0.25 = ?)  
+		48  Eating ingredient effect count (EPFD = number of effects to show) 
+		49  Potion Purity? (EPFD = effect chance? 1 = 100%)
+		4A  Door access? (EPFD = bool)
+		4B  Permit dual casting? (EPFD = bool) 
+		4C  Armor smithing mod (EPFD = mod)
+		4D  Enchantment effect mod (EPFD = mod)
+		4E  Weapon recharge on creature death (EPFD = soul absorb amount, 0.05 = 5%)
+		50  Enchant effect count (EPFD = effect count)
+		51	EPFT=7, EPFD=verb lstring "feed" (werewolf feed)
+		52  Allow shouts? (EPFD = bool, 1=allow?)
+		53  Poison hit count (EPFD = number of hits)
+		54  Permit placing poisons with PP? (EPFD = bool)
+		55  Armor rating (EPFD = armor mod, 1.8 = +80%)
+		56  Lockpick noise mod? (EPFD = noise mod)
+		57  Gather plant count (EPFD = number of ingredients gathered)
+		58  Summon range (EPFD = range mod)
+		59  Create duplicate potion? (EPFD = float, 1.0?) NN01Perk
+		5A  Make wax key (EPFD = percent chance? 100 = 100%)
+
+
+*/

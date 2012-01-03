@@ -238,14 +238,39 @@ CString CSrRawDataDlg::FormatValueText (const dword Data)
 
 	if (pRecord)
 	{
-		Tmp.Format("Record(%4.4s): %s    ", pRecord->GetRecordType().Name, m_RecordHandler.GetEditorID(pRecord->GetFormID()));
+		Tmp.Format("Record(%4.4s): %s    \r\n", pRecord->GetRecordType().Name, m_RecordHandler.GetEditorID(pRecord->GetFormID()));
+		Result += Tmp;
 	}
 	else
 	{
-		Tmp = "Record: [Not Found]    ";
+		Result += "Record: [Not Found]    \r\n";
+	}	
+
+	srfunction_t* pFunction = GetSrFunction((word) Data);
+
+	if (pFunction)
+	{
+		Tmp.Format("Function: %s   ", pFunction->Name);
+		Result += Tmp;
+	}
+	else
+	{
+		Result += "Function: [none]   ";
 	}
 
-	Result += Tmp;
+	pFunction = GetSrFunction((word) Data + 4096);
+
+	if (pFunction)
+	{
+		Tmp.Format("Function(+4096): %s   ", pFunction->Name);
+		Result += Tmp;
+	}
+	else
+	{
+		Result += "Function(+4096): [none]   ";
+	}
+
+	
 
 	return Result;
 }

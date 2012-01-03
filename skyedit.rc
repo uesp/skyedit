@@ -2622,6 +2622,7 @@ BEGIN
         MENUITEM "Test Clean Recompile All Scripts", ID_TEST_CLEANRECOMPILEALL, INACTIVE
         MENUITEM "Test Recompile Active Scripts", ID_TEST_RECOMPILEALL
         MENUITEM "Test Compare Scripts",        ID_HELP_TESTCOMPARESCRIPTS
+        MENUITEM "Test Output Perks",           ID_HELP_TESTOUTPUTPERKS
     END
 END
 

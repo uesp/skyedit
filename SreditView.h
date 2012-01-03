@@ -181,6 +181,7 @@ protected:
 
  public:
 	 afx_msg void OnMenuViewrawdata();
+	 afx_msg void OnHelpTestoutputperks();
 };
 /*===========================================================================
  *		End of Class CSrEditView Definition
