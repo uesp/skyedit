@@ -145,8 +145,9 @@ can be found at:
 0.04alpha - January 2021
 	- New Editable Records: ACTI, ARMA, SLGM, SHOU, WOOP
 	- Variety of major/minor bug fixes
-	- Addition of a basic raw/hex data dialog (right-click and choose "Raw Data View...").
-	  This works with any record type including "non-editable".
+	- Addition of a basic raw/hex data dialog (right-click and choose "Raw Data View...")
+	  This works with any record type including "non-editable"
+	- Condition data can accept script variables for param1/2 (enter as "::VariableName")
 
 0.031alpha - 22 December 2011
 	- Fixed game crash from a modified record with no keywords.

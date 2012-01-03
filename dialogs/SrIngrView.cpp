@@ -250,7 +250,7 @@ void CSrIngrView::GetControlData (void)
 
 		for (dword j = 0; j < pEffect->Conditions.GetSize(); ++j)
 		{
-			CSrCtdaSubrecord* pCondition = pEffect->Conditions[j];
+			CSrCtdaSubrecord* pCondition = &pEffect->Conditions[j]->Condition;
 			if (pCondition == NULL) continue;
 
 			pNewCondition = pIngredient->AddNewSubrecord(SR_NAME_CTDA);
@@ -300,7 +300,7 @@ int CSrIngrView::AddEffectList (sringr_effectdata_t* pEffectData)
   
   for (int i = 0; i < SR_RLMAX_SUBRECORDS-3 && i < (int) pEffectData->Conditions.GetSize(); ++i)
   {
-	  CustomData.pSubrecords[i+2] = pEffectData->Conditions[i];
+	  CustomData.pSubrecords[i+2] = &pEffectData->Conditions[i]->Condition;
   }
   
   ListIndex = m_EffectList.AddCustomRecord(CustomData);
@@ -391,11 +391,8 @@ void CSrIngrView::CreateEffectArray (void)
 
 			if (pSubrecord->GetRecordType() == SR_NAME_CTDA)
 			{
-				pNewSubrecord = GetInputRecord()->CreateSubrecord(SR_NAME_CTDA);
-				CSrCtdaSubrecord* pNewCond = SrCastClassNull(CSrCtdaSubrecord, pNewSubrecord);
-				if (pNewCond == NULL) goto CreateEffectArray_EndLoop;
-				pNewCond->InitializeNew();
-				pNewCond->Copy(pSubrecord);
+				srconditioninfo_t* pNewCond = new srconditioninfo_t;
+				pNewCond->Condition.Copy(pSubrecord);
 				pEffectData->Conditions.Add(pNewCond);
 			}
 			else if (pSubrecord->GetRecordType() == SR_NAME_EFIT)
@@ -481,7 +478,7 @@ void CSrIngrView::GetCurrentEffect (void)
 
 		for (int j = 0; j < SR_RLMAX_SUBRECORDS-3 && j < (int) m_pCurrentEffect->Conditions.GetSize(); ++j)
 		{
-			pCustomData->pSubrecords[j+2] = m_pCurrentEffect->Conditions[j];
+			pCustomData->pSubrecords[j+2] = &m_pCurrentEffect->Conditions[j]->Condition;
 		}
 
 		UpdateEffectList(i, true);
@@ -558,6 +555,7 @@ void CSrIngrView::OnBnClickedConditionButton()
 	CSrConditionDlg ConditionDlg;
 	int Result = ConditionDlg.DoModal(GetInputRecord(), &m_pCurrentEffect->Conditions);
 	if (Result != IDOK) return;
+	m_ConditionsChanged = true;
 
 	CString Buffer;
 	Buffer.Format("%d", m_pCurrentEffect->Conditions.GetSize());
@@ -703,8 +701,8 @@ int CSrIngrView::OnDropCustomEffectData (srrldroprecords_t& DropItems)
 		if (pCustomData->pSubrecords[i] == NULL) continue;
 		if (pCustomData->pSubrecords[i]->GetRecordType() != SR_NAME_CTDA) continue;
 
-		CSrCtdaSubrecord* pNewCond = pEffectInfo->Conditions.AddNew();
-		pNewCond->Copy(pCustomData->pSubrecords[i]);
+		srconditioninfo_t* pNewCond = pEffectInfo->Conditions.AddNew();
+		pNewCond->Condition.Copy(pCustomData->pSubrecords[i]);
 	}
     
     AddEffectList(pEffectInfo);

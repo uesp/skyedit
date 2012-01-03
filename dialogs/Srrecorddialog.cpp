@@ -26,13 +26,7 @@
  * Begin Local Definitions
  *
  *=========================================================================*/
-//#ifdef _DEBUG
-//  #define new DEBUG_NEW
-//  #undef THIS_FILE
-//  static char THIS_FILE[] = __FILE__;
-//#endif
-
-  IMPLEMENT_DYNCREATE(CSrRecordDialog, CFormView);
+	IMPLEMENT_DYNCREATE(CSrRecordDialog, CFormView);
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -44,7 +38,6 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrRecordDialog, CFormView)
-	//{{AFX_MSG_MAP(CSrRecordDialog)
 	ON_WM_DESTROY()
 	ON_COMMAND(ID_APPLY_BUTTON, OnApply)
 	ON_COMMAND(ID_CANCEL_BUTTON, OnCancel)
@@ -108,7 +101,6 @@ BEGIN_MESSAGE_MAP(CSrRecordDialog, CFormView)
 	ON_BN_CLICKED(IDC_DELKEYWORD_BUTTON, OnBnClickedDelkeywordButton)
 	ON_LBN_DBLCLK(IDC_KEYWORDS, OnBnClickedEditkeywordButton)
 	ON_LBN_SELCHANGE(IDC_KEYWORDS, OnLbnSelchangeKeywords)
-	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_EDIT_FIND, &CSrRecordDialog::OnEditFind)
 	ON_BN_CLICKED(IDC_CONDITION_BUTTON, &CSrRecordDialog::OnBnClickedConditionButton)
 	ON_BN_CLICKED(IDC_SELECTDROPSOUND_BUTTON, &CSrRecordDialog::OnBnClickedSelectdropsoundButton)
@@ -207,6 +199,7 @@ CSrRecordDialog::CSrRecordDialog (const int ID) : CFormView(ID)
   m_pConditionField  = NULL;
   m_pPickupSoundField = NULL;
   m_pDropSoundField    = NULL;
+  m_IgnoreConditions   = false;
 
   m_pMaleWorldModelField   = NULL;
   m_pMaleBipedModelField   = NULL;
@@ -2138,25 +2131,51 @@ void CSrRecordDialog::OnLbnSelchangeKeywords()
 void CSrRecordDialog::CopyConditions (void) 
 {
 	if (GetInputRecord() == NULL) return;
+	if (m_IgnoreConditions) return;
 
 	for (dword i = 0; i < GetInputRecord()->GetNumSubrecords(); ++i)
 	{
-		CSrSubrecord* pSubrecord =  GetInputRecord()->GetSubrecord(i);
+		CSrSubrecord* pSubrecord = GetInputRecord()->GetSubrecord(i);
 		if (pSubrecord->GetRecordType() != SR_NAME_CTDA) continue;
 
 		CSrCtdaSubrecord* pCondition = SrCastClassNull(CSrCtdaSubrecord, pSubrecord);
-		CSrCtdaSubrecord* pNewCond;
+		srconditioninfo_t* pNewCond;
 
 		if (pCondition != NULL) 
 		{
-			pNewCond = new CSrCtdaSubrecord;
-			pNewCond->Copy(pCondition);
+			pNewCond = new srconditioninfo_t;
+			pNewCond->Condition.Copy(pCondition);
 			m_ConditionsCopy.Add(pNewCond);
+
+			pSubrecord = GetInputRecord()->GetSubrecord(i+1);
+			if (pSubrecord == NULL) continue;
+
+			if (pSubrecord->GetRecordType() == SR_NAME_CIS1)
+			{
+				pNewCond->pParam1 = new CSrStringSubrecord;
+				pNewCond->pParam1->Initialize(SR_NAME_CIS1, 1);
+				pNewCond->pParam1->Copy(pSubrecord);
+			}
+			else if (pSubrecord->GetRecordType() == SR_NAME_CIS2)
+			{
+				pNewCond->pParam2 = new CSrStringSubrecord;
+				pNewCond->pParam2->Initialize(SR_NAME_CIS2, 1);
+				pNewCond->pParam2->Copy(pSubrecord);
+			}
+
+			pSubrecord = GetInputRecord()->GetSubrecord(i+2);
+			if (pSubrecord == NULL) continue;
+
+			if (pSubrecord->GetRecordType() == SR_NAME_CIS2 && pNewCond->pParam2 == NULL)
+			{
+				pNewCond->pParam2 = new CSrStringSubrecord;
+				pNewCond->pParam2->Initialize(SR_NAME_CIS2, 1);
+				pNewCond->pParam2->Copy(pSubrecord);
+			}
 		}
 	}
 
 	m_ConditionsChanged = false;
-
 }
 
 
@@ -2164,19 +2183,35 @@ void CSrRecordDialog::SaveConditions (void)
 {
 	if (!m_ConditionsChanged) return;
 	if (GetOutputRecord() == NULL) return;
+	if (m_IgnoreConditions) return;
+
 	GetOutputRecord()->DeleteSubrecords(SR_NAME_CTDA);
+	GetOutputRecord()->DeleteSubrecords(SR_NAME_CIS1);
+	GetOutputRecord()->DeleteSubrecords(SR_NAME_CIS2);
 
 	for (dword i = 0; i < m_ConditionsCopy.GetSize(); ++i)
 	{
-		CSrCtdaSubrecord* pCondition =  m_ConditionsCopy[i];
+		srconditioninfo_t* pCondition = m_ConditionsCopy[i];
 		
 		if (pCondition != NULL) 
 		{
-			CSrSubrecord* pNewCond = GetOutputRecord()->AddNewSubrecord(SR_NAME_CTDA);;
-			pNewCond->Copy(pCondition);
-			
+			CSrSubrecord* pNewCond = GetOutputRecord()->AddNewSubrecord(SR_NAME_CTDA);
+			if (pNewCond) pNewCond->Copy(&pCondition->Condition);
+
+			if (pCondition->pParam1)
+			{
+				CSrSubrecord* pNewParam = GetOutputRecord()->AddNewSubrecord(SR_NAME_CIS1);
+				if (pNewParam) pNewParam->Copy(pCondition->pParam1);
+			}
+
+			if (pCondition->pParam2)
+			{
+				CSrSubrecord* pNewParam = GetOutputRecord()->AddNewSubrecord(SR_NAME_CIS2);
+				if (pNewParam) pNewParam->Copy(pCondition->pParam2);
+			}
 		}
-  }
+
+	}
 
 }
 

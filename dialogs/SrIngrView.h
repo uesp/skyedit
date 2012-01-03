@@ -29,7 +29,7 @@ struct sringr_effectdata_t
 {
 	CSrFormidSubrecord*	pEffect;
 	CSrEfitSubrecord*	pEffectData;
-	CSrCtdaArray		Conditions;
+	CSrConditionArray	Conditions;
 
 	sringr_effectdata_t()
 	{

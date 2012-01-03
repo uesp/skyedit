@@ -257,7 +257,9 @@ void CSrSpelView::GetControlData (void)
 
 	pSpell->DeleteSubrecords(SR_NAME_EFID);
 	pSpell->DeleteSubrecords(SR_NAME_EFIT);
-	pSpell->DeleteSubrecords(SR_NAME_CTDA);	
+	pSpell->DeleteSubrecords(SR_NAME_CTDA);
+	pSpell->DeleteSubrecords(SR_NAME_CIS1);
+	pSpell->DeleteSubrecords(SR_NAME_CIS2);
 
 	for (dword i = 0; i < m_Effects.GetSize(); ++i)
 	{
@@ -272,11 +274,24 @@ void CSrSpelView::GetControlData (void)
 
 		for (dword j = 0; j < pEffect->Conditions.GetSize(); ++j)
 		{
-			CSrCtdaSubrecord* pCondition = pEffect->Conditions[j];
+			srconditioninfo_t* pCondInfo = pEffect->Conditions[j];
+			CSrCtdaSubrecord* pCondition = &pCondInfo->Condition;
 			if (pCondition == NULL) continue;
 
 			pNewCondition = pSpell->AddNewSubrecord(SR_NAME_CTDA);
 			if (pNewCondition) pNewCondition->Copy(pCondition);
+
+			if (pCondInfo->pParam1)
+			{
+				CSrSubrecord* pNewParam = pSpell->AddNewSubrecord(SR_NAME_CIS1);
+				if (pNewParam) pNewParam->Copy(pCondInfo->pParam1);
+			}
+
+			if (pCondInfo->pParam2)
+			{
+				CSrSubrecord* pNewParam = pSpell->AddNewSubrecord(SR_NAME_CIS2);
+				if (pNewParam) pNewParam->Copy(pCondInfo->pParam2);
+			}
 		}
 
 	}
@@ -342,7 +357,7 @@ int CSrSpelView::AddEffectList (srspel_effectdata_t* pEffectData)
   
   for (int i = 0; i < SR_RLMAX_SUBRECORDS-3 && i < (int) pEffectData->Conditions.GetSize(); ++i)
   {
-	  CustomData.pSubrecords[i+2] = pEffectData->Conditions[i];
+	  CustomData.pSubrecords[i+2] = &pEffectData->Conditions[i]->Condition;
   }
   
   ListIndex = m_EffectList.AddCustomRecord(CustomData);
@@ -433,12 +448,23 @@ void CSrSpelView::CreateEffectArray (void)
 
 			if (pSubrecord->GetRecordType() == SR_NAME_CTDA)
 			{
-				pNewSubrecord = GetInputRecord()->CreateSubrecord(SR_NAME_CTDA);
-				CSrCtdaSubrecord* pNewCond = SrCastClassNull(CSrCtdaSubrecord, pNewSubrecord);
-				if (pNewCond == NULL) goto CreateEffectArray_EndLoop;
-				pNewCond->InitializeNew();
-				pNewCond->Copy(pSubrecord);
+				srconditioninfo_t* pNewCond = new srconditioninfo_t;
+				pNewCond->Condition.Copy(pSubrecord);
 				pEffectData->Conditions.Add(pNewCond);
+
+				pSubrecord = pSpell->GetSubrecord(i+1);
+				if (pSubrecord == NULL) goto CreateEffectArray_EndLoop;
+
+				if (pSubrecord->GetRecordType() == SR_NAME_CIS1)
+					pNewCond->CopyParam1(pSubrecord);
+				else if (pSubrecord->GetRecordType() == SR_NAME_CIS2)
+					pNewCond->CopyParam2(pSubrecord);
+
+				pSubrecord = pSpell->GetSubrecord(i+2);
+				if (pSubrecord == NULL) goto CreateEffectArray_EndLoop;
+
+				if (pSubrecord->GetRecordType() == SR_NAME_CIS2 && pNewCond->pParam2 == NULL)
+					pNewCond->CopyParam2(pSubrecord);
 			}
 			else if (pSubrecord->GetRecordType() == SR_NAME_EFIT)
 			{
@@ -521,9 +547,25 @@ void CSrSpelView::GetCurrentEffect (void)
 		pCustomData->UserCount = m_pCurrentEffect->Conditions.GetSize();
 		memset(pCustomData->pSubrecords + 2, 0, sizeof(pCustomData->pSubrecords) - 2*sizeof(pCustomData->pSubrecords[0]));
 
-		for (int j = 0; j < SR_RLMAX_SUBRECORDS-3 && j < (int) m_pCurrentEffect->Conditions.GetSize(); ++j)
+		int CDIndex = 2;
+
+		for (int j = 0; CDIndex < SR_RLMAX_SUBRECORDS && j < (int) m_pCurrentEffect->Conditions.GetSize(); ++j)
 		{
-			pCustomData->pSubrecords[j+2] = m_pCurrentEffect->Conditions[j];
+			srconditioninfo_t* pCondInfo = m_pCurrentEffect->Conditions[j];
+			pCustomData->pSubrecords[CDIndex] = &pCondInfo->Condition;
+			++CDIndex;
+
+			if (pCondInfo->pParam1 != NULL && CDIndex < SR_RLMAX_SUBRECORDS)
+			{
+				pCustomData->pSubrecords[CDIndex] = pCondInfo->pParam1;
+				++CDIndex;
+			}
+
+			if (pCondInfo->pParam2 != NULL && CDIndex < SR_RLMAX_SUBRECORDS)
+			{
+				pCustomData->pSubrecords[CDIndex] = pCondInfo->pParam2;
+				++CDIndex;
+			}
 		}
 
 		UpdateEffectList(i, true);
@@ -600,6 +642,7 @@ void CSrSpelView::OnBnClickedConditionButton()
 	CSrConditionDlg ConditionDlg;
 	int Result = ConditionDlg.DoModal(GetInputRecord(), &m_pCurrentEffect->Conditions);
 	if (Result != IDOK) return;
+	m_ConditionsChanged = true;
 
 	CString Buffer;
 	Buffer.Format("%d", m_pCurrentEffect->Conditions.GetSize());
@@ -765,8 +808,20 @@ int CSrSpelView::OnDropCustomEffectData (srrldroprecords_t& DropItems)
 		if (pCustomData->pSubrecords[i] == NULL) continue;
 		if (pCustomData->pSubrecords[i]->GetRecordType() != SR_NAME_CTDA) continue;
 
-		CSrCtdaSubrecord* pNewCond = pEffectInfo->Conditions.AddNew();
-		pNewCond->Copy(pCustomData->pSubrecords[i]);
+		srconditioninfo_t* pNewCond = pEffectInfo->Conditions.AddNew();
+		pNewCond->Condition.Copy(pCustomData->pSubrecords[i]);
+
+		if (pCustomData->pSubrecords[i+1] == NULL) continue;
+
+		if (pCustomData->pSubrecords[i+1]->GetRecordType() == SR_NAME_CIS1)
+			pNewCond->CopyParam1(pCustomData->pSubrecords[i+1]);
+		else if (pCustomData->pSubrecords[i+1]->GetRecordType() == SR_NAME_CIS2)
+			pNewCond->CopyParam2(pCustomData->pSubrecords[i+1]);
+	
+		if (pCustomData->pSubrecords[i+2] == NULL) continue;
+
+		if (pCustomData->pSubrecords[i+2]->GetRecordType() == SR_NAME_CIS2 && pNewCond->pParam2 == NULL)
+			pNewCond->CopyParam2(pCustomData->pSubrecords[i+1]);
 	}
     
     AddEffectList(pEffectInfo);

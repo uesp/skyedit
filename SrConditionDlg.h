@@ -30,12 +30,12 @@ class CSrConditionDlg : public CDialogEx
 	/*---------- Begin Protected Class Members -----------------------*/
 protected:
 	CSrRecordListCtrl	m_ConditionList;
-	CSrCtdaArray*		m_pOrigConditions;
-	CSrCtdaArray		m_Conditions;
+	CSrConditionArray*	m_pOrigConditions;
+	CSrConditionArray	m_Conditions;
 	CSrRecord*			m_pRecord;
 	bool				m_IsInitialized;
 
-	CSrCtdaSubrecord*	m_pCurrentCondition;
+	srconditioninfo_t*	m_pCurrentCondition;
 
 	CStatic		m_Param1Label;
 	CStatic		m_Param2Label;
@@ -54,16 +54,17 @@ protected:
 protected:
 	void SetControlData (void);
 	void SetConditionList (void);
-	int AddConditionList (CSrCtdaSubrecord* pCondition);
+	int AddConditionList (srconditioninfo_t* pCondition);
 	void UpdateConditionList (const int ListIndex, const bool Update);
 
 	void GetCurrentCondition (void);
-	void SetCurrentCondition (CSrCtdaSubrecord* pCondition);
+	void SetCurrentCondition (srconditioninfo_t* pCondition);
 
 	bool CheckCurrentCondition (void);
 	void CopyConditions(void);
 
 	void SelectCondition (const int Index);
+	srconditioninfo_t* FindConditionInfo(CSrCtdaSubrecord* pCondition);
 
 
 	/*---------- Begin Public Class Methods --------------------------*/
@@ -76,7 +77,7 @@ public:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX); 
 
-	CSrCtdaSubrecord* GetSelectedCondition();
+	srconditioninfo_t* GetSelectedCondition();
 
 
 	DECLARE_MESSAGE_MAP()
@@ -86,7 +87,7 @@ public:
 	
 	virtual BOOL OnInitDialog();
 
-	bool DoModal (CSrRecord* pRecord, CSrCtdaArray* pConditions);
+	bool DoModal (CSrRecord* pRecord, CSrConditionArray* pConditions);
 	afx_msg void OnBnClickedSelectreferenceButton();
 	CEdit m_Reference;
 	CStatic m_ReferenceLabel;
