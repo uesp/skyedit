@@ -1,4 +1,10 @@
 
+v0.04
+	- Update web site help 
+	- CIS1 appears to be GMST editorIDs and not script variables (figure out exact format in CTDA or function calls)
+	- Raw view to handle array subrecords
+	- Change all "old" manual fields to use field macros
+
 v0.03a
 	- Cleanup condition implementation
 	- Change shared pointer objects to references where it is required

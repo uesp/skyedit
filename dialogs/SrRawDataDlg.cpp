@@ -133,8 +133,6 @@ BOOL CSrRawDataDlg::OnInitDialog()
 
 void CSrRawDataDlg::SetControlData (void)
 {
-	srrawdata_lineinfo_t LineInfo;
-
 	m_UpdateSelection = false;
 	m_pCurrentFmt = &m_DefaultFmt;
 
@@ -163,52 +161,60 @@ void CSrRawDataDlg::SetControlData (void)
 			continue;
 		}
 
-		AddText("%4.4s,  %d bytes\n", pSubrecord->GetRecordType().Name, pSubrecord->GetRecordSize());
-
-		const byte* pData = pSubrecord->GetData();
-		dword Size = pSubrecord->GetRecordSize();
-
-		for (dword j = 0; j < Size; )
-		{
-			CString Buffer;
-			dword   k;
-			
-			AddText("\t\t");			
-
-			LineInfo.DataOffset = j;
-			LineInfo.pSubrecord = pSubrecord;
-			LineInfo.SelIndex   = m_Text.GetTextLengthEx(GTL_NUMCHARS);
-			LineInfo.SubrecordIndex = i;
-			m_LineInfos.push_back(LineInfo);
-
-			for (k = 0; k < 16 && j < Size; ++k, ++j)
-			{			
-				if (((k/2) % 2) == 0)
-					m_pCurrentFmt = &m_HexFmt1;
-				else
-					m_pCurrentFmt = &m_HexFmt2;
-
-				AddText("%02X ", (dword) pData[j]);
-
-				if (isprint(pData[j]))
-					Buffer += pData[j];
-				else
-					Buffer += (char) 'Ž';
-			}
-
-			for (; k < 16; ++k)
-			{
-				AddText("   ");
-			}
-
-			m_pCurrentFmt = &m_StringFmt;
-			AddText("  %s\n", Buffer);
-		}
+		OutputSubrecord(pSubrecord, i);
 	}
 
 	m_UpdateSelection = true;
 }
 
+
+void CSrRawDataDlg::OutputSubrecord (CSrSubrecord* pSubrecord, const int i)
+{
+	srrawdata_lineinfo_t LineInfo;
+
+	AddText("%4.4s,  %d bytes\n", pSubrecord->GetRecordType().Name, pSubrecord->GetRecordSize());
+
+	const byte* pData = pSubrecord->GetData();
+	dword Size = pSubrecord->GetRecordSize();
+
+	for (dword j = 0; j < Size; )
+	{
+		CString Buffer;
+		dword   k;
+		
+		AddText("\t\t");			
+
+		LineInfo.DataOffset = j;
+		LineInfo.pSubrecord = pSubrecord;
+		LineInfo.SelIndex   = m_Text.GetTextLengthEx(GTL_NUMCHARS);
+		LineInfo.SubrecordIndex = i;
+		m_LineInfos.push_back(LineInfo);
+
+		for (k = 0; k < 16 && j < Size; ++k, ++j)
+		{			
+			if (((k/2) % 2) == 0)
+				m_pCurrentFmt = &m_HexFmt1;
+			else
+				m_pCurrentFmt = &m_HexFmt2;
+
+			AddText("%02X ", (dword) pData[j]);
+
+			if (isprint(pData[j]))
+				Buffer += pData[j];
+			else
+				Buffer += (char) 'Ž';
+		}
+
+		for (; k < 16; ++k)
+		{
+			AddText("   ");
+		}
+
+		m_pCurrentFmt = &m_StringFmt;
+		AddText("  %s\n", Buffer);
+	}
+
+}
 
 CString CSrRawDataDlg::FormatValueText (const dword Data)
 {

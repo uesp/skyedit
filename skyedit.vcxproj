@@ -1698,6 +1698,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srarraysubrecord.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\tes5lib\modfile\subrecords\srcntosubrecord.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -1728,6 +1733,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\tes5lib\modfile\subrecords\srenitsubrecord.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srepfdsubrecord.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -1765,6 +1775,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\tes5lib\modfile\subrecords\srmgefsnddsubrecord.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srperkdatasubrecord.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -2090,11 +2105,15 @@
     <ClInclude Include="..\tes5lib\modfile\subrecords\sractidestsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\sralchdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srammodatasubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srarmadnamsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srarmodatasubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srarraysubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srbodtsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srbookdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srbytesubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srclasdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srcntosubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srcontdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srcrdtsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srctdasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srdatasubrecord.h" />
@@ -2103,6 +2122,7 @@
     <ClInclude Include="..\tes5lib\modfile\subrecords\srefitsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srenitalchsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srenitsubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srepfdsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srfloatsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srformidarraysubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srformidsubrecord.h" />
@@ -2114,15 +2134,22 @@
     <ClInclude Include="..\tes5lib\modfile\subrecords\srlighdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srlongsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srlstringsubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srlvlfsubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srlvlosubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srmgefdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srmgefsnddsubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srmiscdatasubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srperkdatasubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srprkesubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srscrldatasubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srshousnamsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srslgmdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srspitsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srstringsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srsubreccont.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srweapdatasubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srweapdnamsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srwordsubrecord.h" />
     <ClInclude Include="..\tes5lib\strings\SrStringFile.h" />
     <ClInclude Include="..\tes5lib\windows\scbarcf.h" />

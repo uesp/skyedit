@@ -860,6 +860,15 @@
     <ClCompile Include="dialogs\SrRawDataDlg.cpp">
       <Filter>Source Files\Forms\CommonDlg</Filter>
     </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srarraysubrecord.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srperkdatasubrecord.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srepfdsubrecord.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">
@@ -1751,6 +1760,42 @@
     </ClInclude>
     <ClInclude Include="dialogs\SrRawDataDlg.h">
       <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srperkdatasubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srprkesubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srarraysubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srarmadnamsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srclasdatasubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srlvlosubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srcontdatasubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srmiscdatasubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srlvlfsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srweapdnamsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srshousnamsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srepfdsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

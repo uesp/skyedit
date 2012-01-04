@@ -131,6 +131,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "Perks"
+	DisplayName = "Perks"
+	RecName = PERK
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Potions"
 	DisplayName = "Potions"
 	RecName = ALCH
@@ -499,12 +505,6 @@ DisplayFilter
 	ID = "FormList"
 	DisplayName = "Non-Levelled List"
 	RecName = FLST
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "Perks"
-	DisplayName = "Perks"
-	RecName = PERK
 	Parent = NoEdit
 End	
 DisplayFilter

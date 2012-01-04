@@ -59,13 +59,13 @@ protected:
 	bool		m_UpdateSelection;
 
 	CLineInfoArray	m_LineInfos;
-
-	bool FindLineInfo (srrawdata_lineinfo_t& Result, const long SelIndex);
-	CString FormatValueText (const dword Data);
-
+	
 
 protected:
 	void AddText (const char* pString, ...);
+	void OutputSubrecord (CSrSubrecord* pSubrecord, const int i);
+	bool FindLineInfo (srrawdata_lineinfo_t& Result, const long SelIndex);
+	CString FormatValueText (const dword Data);
 
 public:
 	CSrRawDataDlg(CSrRecordHandler&	Handler, CWnd* pParent = NULL); 
