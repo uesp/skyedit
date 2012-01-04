@@ -83,12 +83,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "UESP"
             VALUE "FileDescription", "SkyEdit, alternate editor for Skyrim"
-            VALUE "FileVersion", "0.031"
+            VALUE "FileVersion", "0.04"
             VALUE "InternalName", "SkyEdit"
-            VALUE "LegalCopyright", "Copyright (C) 2011"
+            VALUE "LegalCopyright", "Copyright (C) 2011-2012"
             VALUE "OriginalFilename", "Skyedit.EXE"
             VALUE "ProductName", "SkyEdit"
-            VALUE "ProductVersion", "0.031"
+            VALUE "ProductVersion", "0.04"
         END
     END
     BLOCK "VarFileInfo"
@@ -1966,7 +1966,7 @@ IDC_GOODDROP_CURSOR     CURSOR                  "res\\cursor1.cur"
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "SkyEdit v0.031 alpha"
+    IDR_MAINFRAME           "SkyEdit v0.04 alpha"
     IDR_SREDITTYPE          "\nSkyEdit\nSkyEdit\nPlugin Files (*.esp)\n.esp\nSkyEdit.DocumentkyEdit Document"
 END
 
@@ -2350,7 +2350,7 @@ CAPTION "About SkyEdit"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,7,14,20,20
-    LTEXT           "SkyEdit v0.031-Alpha,  22 December 2011",IDC_STATIC,40,10,134,8,SS_NOPREFIX
+    LTEXT           "SkyEdit v0.04-Alpha,  3 January 2012",IDC_STATIC,40,10,134,8,SS_NOPREFIX
     LTEXT           "Copyright (C) 2011",IDC_STATIC,40,30,64,8
     DEFPUSHBUTTON   "OK",IDOK,224,7,50,14,WS_GROUP
     LTEXT           "by Dave Humphrey",IDC_STATIC,39,19,91,8
