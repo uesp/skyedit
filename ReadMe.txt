@@ -1,7 +1,7 @@
  
-	   Package: SkyEdit v0.031alpha, 22 December 2011
-	    Author: Dave Humphrey, dave@uesp.net
-	   Website: www.uesp.net/wiki/Tes5Mod:SkyEdit
+	              Package: SkyEdit v0.04alpha, 3 January 2012
+	               Author: Dave Humphrey, dave@uesp.net
+                  Website: www.uesp.net/wiki/Tes5Mod:SkyEdit
 
 
   Introduction
@@ -26,7 +26,7 @@ basic set of features is included.
   - Another major purpose of this release is for more extensive testing. The more people
     use it and the more different systems it is used on the more bugs can be found and
 	fixed.
-  - A minimum of 512MB of RAM is recommended for decent performance. Loading of 
+  - A minimum of 1GB of RAM is recommended for usable performance. Loading of 
     Skyrim.esm uses around 500MB of memory. Plugins can also be edited without loading
 	the master files to save time/memory but this limits what editing can be done.
   - Some help and documentation can be found at:
@@ -47,8 +47,10 @@ basic set of features is included.
 	- Spells				- Potions
 	- Ingredients			- Books
 	- Misc					- Scrolls
-	- Statics	
-
+	- Statics				- Activators
+	- Armatures (ARMA)		- Soul Gems
+	- Shouts				- Words of Power
+	
 
   What it Can Do
 =======================================
@@ -61,6 +63,7 @@ The basic capabilities of the editor in this release include:
   - Import/export from/to CSV files
   - Simple undo system
   - Automatic backup when saving plugins
+  - View raw data/hex of all records
 
 
   What it Can't Do (Yet)
@@ -117,6 +120,7 @@ can be found at:
   - Update a record being edited without closing its dialog (Apply)
   - Drag-and-drop operations are supported in more locations
   - Tooltips for most controls
+  - View raw data/hex display of records
 
       Resource Viewer
   ---------------------------
@@ -142,7 +146,7 @@ can be found at:
 
   Version History
 =======================================
-0.04alpha - January 2021
+0.04alpha - 3 January 2021
 	- New Editable Records: ACTI, ARMA, SLGM, SHOU, WOOP
 	- Variety of major/minor bug fixes
 	- Addition of a basic raw/hex data dialog (right-click and choose "Raw Data View...")
