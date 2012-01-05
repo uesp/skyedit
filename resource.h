@@ -272,7 +272,6 @@
 #define IDC_EDIT_RESULTITEM             1147
 #define IDC_SELECTRESULTITEM_BUTTON     1148
 #define IDC_COMPONENT_LIST              1149
-#define IDC_OPERATOR_LIST2              1149
 #define IDC_PRKC_LIST                   1149
 #define IDC_CRAFTSTATION                1150
 #define IDC_TYPEFILTER_STATIC           1150
@@ -542,6 +541,7 @@
 #define IDC_SECTIONUNKNOWNTYPE          1285
 #define IDC_SECTION_EDITORIDLABEL       1286
 #define IDC_PRKC_LABEL                  1287
+#define IDC_RICHEDIT21                  1288
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -745,7 +745,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        216
 #define _APS_NEXT_COMMAND_VALUE         32868
-#define _APS_NEXT_CONTROL_VALUE         1288
+#define _APS_NEXT_CONTROL_VALUE         1289
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
