@@ -1,5 +1,5 @@
  
-	              Package: SkyEdit v0.04alpha, 3 January 2012
+	              Package: SkyEdit v0.041alpha, 4 January 2012
 	               Author: Dave Humphrey, dave@uesp.net
                   Website: www.uesp.net/wiki/Tes5Mod:SkyEdit
 
@@ -146,6 +146,12 @@ can be found at:
 
   Version History
 =======================================
+0.041alpha - 4 January 2021
+	- Beta of editable Perks
+	- Fixed resource viewer crash
+	- Fixed "HasSpell" function selection in conditions
+	- Fixed condition corruption in magic related records and recipes
+
 0.04alpha - 3 January 2021
 	- New Editable Records: ACTI, ARMA, SLGM, SHOU, WOOP
 	- Variety of major/minor bug fixes
