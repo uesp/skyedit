@@ -21,14 +21,7 @@
  * Begin Local Definitions
  *
  *=========================================================================*/
-//#ifdef _DEBUG
-//  #define new DEBUG_NEW
-//  #undef THIS_FILE
-//  static char THIS_FILE[] = __FILE__;
-//#endif
-
-  IMPLEMENT_DYNCREATE(CSrSpelView, CSrRecordDialog);
-
+	IMPLEMENT_DYNCREATE(CSrSpelView, CSrRecordDialog);
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -127,9 +120,9 @@ END_SRRECUIFIELDS()
  *=========================================================================*/
 CSrSpelView::CSrSpelView() : CSrRecordDialog(CSrSpelView::IDD) 
 {
-  m_InitialSetData = false;
-  m_IsInitialized = false;
-  m_pCurrentEffect = NULL;
+	m_InitialSetData = false;
+	m_IsInitialized = false;
+	m_pCurrentEffect = NULL;
 }
 /*===========================================================================
  *		End of Class CSrSpelView Constructor
@@ -455,7 +448,7 @@ void CSrSpelView::CreateEffectArray (void)
 				pEffectData->Conditions.Add(pNewCond);
 
 				pSubrecord = pSpell->GetSubrecord(i+1);
-				if (pSubrecord == NULL) goto CreateEffectArray_EndLoop;
+				if (pSubrecord == NULL) continue;
 
 				if (pSubrecord->GetRecordType() == SR_NAME_CIS1)
 					pNewCond->CopyParam1(pSubrecord);
@@ -463,7 +456,7 @@ void CSrSpelView::CreateEffectArray (void)
 					pNewCond->CopyParam2(pSubrecord);
 
 				pSubrecord = pSpell->GetSubrecord(i+2);
-				if (pSubrecord == NULL) goto CreateEffectArray_EndLoop;
+				if (pSubrecord == NULL) continue;
 
 				if (pSubrecord->GetRecordType() == SR_NAME_CIS2 && pNewCond->pParam2 == NULL)
 					pNewCond->CopyParam2(pSubrecord);
@@ -475,7 +468,7 @@ void CSrSpelView::CreateEffectArray (void)
 
 				pNewSubrecord = GetInputRecord()->CreateSubrecord(SR_NAME_EFIT);
 				pEffectData->pEffectData = SrCastClassNull(CSrEfitSubrecord, pNewSubrecord);
-				if (pEffectData->pEffectData == NULL) goto CreateEffectArray_EndLoop;
+				if (pEffectData->pEffectData == NULL) continue;
 				pEffectData->pEffectData->InitializeNew();
 				pEffectData->pEffectData->Copy(pSubrecord);
 			}

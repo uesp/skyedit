@@ -394,6 +394,20 @@ void CSrIngrView::CreateEffectArray (void)
 				srconditioninfo_t* pNewCond = new srconditioninfo_t;
 				pNewCond->Condition.Copy(pSubrecord);
 				pEffectData->Conditions.Add(pNewCond);
+
+				pSubrecord = pIngredient->GetSubrecord(i+1);
+				if (pSubrecord == NULL) continue;
+
+				if (pSubrecord->GetRecordType() == SR_NAME_CIS1)
+					pNewCond->CopyParam1(pSubrecord);
+				else if (pSubrecord->GetRecordType() == SR_NAME_CIS2)
+					pNewCond->CopyParam2(pSubrecord);
+
+				pSubrecord = pIngredient->GetSubrecord(i+2);
+				if (pSubrecord == NULL) continue;
+
+				if (pSubrecord->GetRecordType() == SR_NAME_CIS2 && pNewCond->pParam2 == NULL)
+					pNewCond->CopyParam2(pSubrecord);
 			}
 			else if (pSubrecord->GetRecordType() == SR_NAME_EFIT)
 			{
@@ -402,7 +416,7 @@ void CSrIngrView::CreateEffectArray (void)
 
 				pNewSubrecord = GetInputRecord()->CreateSubrecord(SR_NAME_EFIT);
 				pEffectData->pEffectData = SrCastClassNull(CSrEfitSubrecord, pNewSubrecord);
-				if (pEffectData->pEffectData == NULL) goto CreateEffectArray_EndLoop;
+				if (pEffectData->pEffectData == NULL) continue;
 				pEffectData->pEffectData->InitializeNew();
 				pEffectData->pEffectData->Copy(pSubrecord);
 			}

@@ -52,7 +52,7 @@ protected:
 
 	/* Protected constructor used by dynamic creation */
   CSrCobjView();
-  void CopyConditions (void);
+  void CopyComponents (void);
 
   CSrCntoSubrecord* GetSelectedComponent (void);
   

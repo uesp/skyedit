@@ -446,7 +446,7 @@ void CSrScrlView::CreateEffectArray (void)
 				pEffectData->Conditions.Add(pNewCond);
 
 				pSubrecord = pScroll->GetSubrecord(i+1);
-				if (pSubrecord == NULL) goto CreateEffectArray_EndLoop;
+				if (pSubrecord == NULL) continue;
 
 				if (pSubrecord->GetRecordType() == SR_NAME_CIS1)
 					pNewCond->CopyParam1(pSubrecord);
@@ -454,7 +454,7 @@ void CSrScrlView::CreateEffectArray (void)
 					pNewCond->CopyParam2(pSubrecord);
 
 				pSubrecord = pScroll->GetSubrecord(i+2);
-				if (pSubrecord == NULL) goto CreateEffectArray_EndLoop;
+				if (pSubrecord == NULL) continue;
 
 				if (pSubrecord->GetRecordType() == SR_NAME_CIS2 && pNewCond->pParam2 == NULL)
 					pNewCond->CopyParam2(pSubrecord);
@@ -466,7 +466,7 @@ void CSrScrlView::CreateEffectArray (void)
 
 				pNewSubrecord = GetInputRecord()->CreateSubrecord(SR_NAME_EFIT);
 				pEffectData->pEffectData = SrCastClassNull(CSrEfitSubrecord, pNewSubrecord);
-				if (pEffectData->pEffectData == NULL) goto CreateEffectArray_EndLoop;
+				if (pEffectData->pEffectData == NULL) continue;
 				pEffectData->pEffectData->InitializeNew();
 				pEffectData->pEffectData->Copy(pSubrecord);
 			}

@@ -206,6 +206,7 @@ void CSrCobjView::Dump(CDumpContext& dc) const {
 void CSrCobjView::OnInitialUpdate (void) 
 {
 	CSrRecordDialog::OnInitialUpdate();
+
 	m_IsInitialized = false;
 	m_pCurrentComponent = NULL;
 
@@ -227,7 +228,7 @@ void CSrCobjView::OnInitialUpdate (void)
 
 	m_ComponentsChanged = false;
 	 
-	CopyConditions();
+	CopyComponents();
 	EnableComponentControls(false);
 	SetControlData();
 
@@ -238,7 +239,7 @@ void CSrCobjView::OnInitialUpdate (void)
  *=========================================================================*/
 
 
-void CSrCobjView::CopyConditions (void)
+void CSrCobjView::CopyComponents (void)
 {
 	CSrSubrecord*		pSubrecord;
 	CSrCntoSubrecord*	pComponent;
