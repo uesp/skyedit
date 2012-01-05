@@ -72,7 +72,8 @@ END_MESSAGE_MAP()
  * Begin List Column Definitions
  *
  *=========================================================================*/
-static srreclistcolinit_t s_ConditionListInit[] = {
+static srreclistcolinit_t s_ConditionListInit[] = 
+{
 	{ SR_FIELD_REFERENCE,	 100,		LVCFMT_CENTER },
 	{ SR_FIELD_FUNCTION,	 150,		LVCFMT_CENTER },
 	{ SR_FIELD_PARAM1,		 120,		LVCFMT_CENTER },
@@ -83,7 +84,21 @@ static srreclistcolinit_t s_ConditionListInit[] = {
 	{ SR_FIELD_NONE, 0, 0 }
  };
 
-static srrecfield_t s_ConditionFields[] = {
+static srreclistcolinit_t s_ConditionPrkcListInit[] = 
+{
+	{ SR_FIELD_PRKC,		 50,		LVCFMT_CENTER },
+	{ SR_FIELD_REFERENCE,	 100,		LVCFMT_CENTER },
+	{ SR_FIELD_FUNCTION,	 150,		LVCFMT_CENTER },
+	{ SR_FIELD_PARAM1,		 120,		LVCFMT_CENTER },
+	{ SR_FIELD_PARAM2,		 120,		LVCFMT_CENTER },
+	{ SR_FIELD_OPERATOR,	 50,		LVCFMT_CENTER },
+	{ SR_FIELD_VALUE,		 75,		LVCFMT_CENTER },
+	{ SR_FIELD_CONDFLAGSEX,	 100,		LVCFMT_CENTER },
+	{ SR_FIELD_NONE, 0, 0 }
+ };
+
+static srrecfield_t s_ConditionFields[] = 
+{
 	{ "Reference",	SR_FIELD_REFERENCE,		0, NULL },
 	{ "Function",	SR_FIELD_FUNCTION,		0, NULL },
 	{ "Param1",		SR_FIELD_PARAM1,		0, NULL },
@@ -91,6 +106,7 @@ static srrecfield_t s_ConditionFields[] = {
 	{ "Op",			SR_FIELD_OPERATOR,		0, NULL },
 	{ "Value",		SR_FIELD_VALUE,			0, NULL },
 	{ "Flags",		SR_FIELD_CONDFLAGSEX,	0, NULL },
+	{ "Prkc",		SR_FIELD_PRKC,			0, NULL },
 	{ NULL,			SR_FIELD_NONE,			0, NULL }
  };
 /*===========================================================================
@@ -109,6 +125,7 @@ CSrConditionDlg::CSrConditionDlg(CWnd* pParent)
 	m_pRecord = NULL;
 	m_pCurrentCondition = NULL;
 	m_IsInitialized = false;
+	m_PermitPrkc = false;
 }
 /*===========================================================================
  *		End of Class CSrConditionDlg Constructor
@@ -155,6 +172,8 @@ void CSrConditionDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SELECTREFERENCE_BUTTON, m_ReferenceButton);
 	DDX_Control(pDX, IDC_SELECTPARAM1_BUTTON, m_Param1Button);
 	DDX_Control(pDX, IDC_SELECTPARAM2_BUTTON, m_Param2Button);
+	DDX_Control(pDX, IDC_PRKC_LABEL, m_PrkcLabel);
+	DDX_Control(pDX, IDC_PRKC_LIST, m_PrkcList);
 }
 /*===========================================================================
  *		End of Class CSrConditionDlg::DoDataExchange()
@@ -173,12 +192,24 @@ BOOL CSrConditionDlg::OnInitDialog()
 	m_FunctionIDCheck = SR_CHECKRESULT_NOCHANGE;
 
 	SrFillComboList(m_Operator, s_SrConditionOperators, 0);
+
+	EnablePrkcControls();
 		
-		/* Setup the list */
-	m_ConditionList.SetListName("ConditionList");
+		/* Setup the list */	
 	m_ConditionList.SetDragEnable(true);
 	m_ConditionList.DefaultSettings();
-	m_ConditionList.SetupCustomList(s_ConditionListInit, NULL, s_ConditionFields);
+
+	if (m_PermitPrkc)
+	{
+		m_ConditionList.SetListName("PerkConditionList");
+		m_ConditionList.SetupCustomList(s_ConditionPrkcListInit, NULL, s_ConditionFields);
+	}
+	else
+	{
+		m_ConditionList.SetListName("ConditionList");
+		m_ConditionList.SetupCustomList(s_ConditionListInit, NULL, s_ConditionFields);
+	}
+
 	m_ConditionList.SetOwner(this);
 	m_ConditionList.SetColorEnable(false);
 	m_ConditionList.SetDragType(SR_RLDRAG_CUSTOM);
@@ -317,6 +348,11 @@ void CSrConditionDlg::UpdateConditionList (const int ListIndex, const bool Updat
 	if (pEditorID != NULL) m_ConditionList.SetCustomField(ListIndex, SR_FIELD_PARAM2, pEditorID);
   }
 
+  if (m_PermitPrkc)
+  {
+	  m_ConditionList.SetCustomField(ListIndex, SR_FIELD_PRKC, GetSrPrkcTypeString((dword) pCondition->GetPrkc()));
+  }
+
 }
 /*===========================================================================
  *		End of Class Method CSrConditionDlg::UpdateConditionList()
@@ -328,12 +364,13 @@ void CSrConditionDlg::UpdateConditionList (const int ListIndex, const bool Updat
  * Class CSrConditionDlg Method - bool DoModal (pRecord, pConditions);
  *
  *=========================================================================*/
-bool CSrConditionDlg::DoModal (CSrRecord* pRecord, CSrConditionArray* pConditions)
+bool CSrConditionDlg::DoModal (CSrRecord* pRecord, CSrConditionArray* pConditions, const bool PermitPrkc)
 {
 	if (pRecord == NULL || pConditions == NULL) return false;
 
 	m_pOrigConditions = pConditions;
 	m_pRecord = pRecord;
+	m_PermitPrkc = PermitPrkc;
 	m_Conditions.Destroy();
 
 	for (dword i = 0; i < m_pOrigConditions->GetSize(); ++i)
@@ -459,6 +496,12 @@ void CSrConditionDlg::GetCurrentCondition (void)
 			m_pCurrentCondition->Condition.GetCtdtData().Parameter2 = pRecord->GetFormID();
 	}
 
+	if (m_PermitPrkc)
+	{
+		int ListIndex = m_PrkcList.GetCurSel();
+		if (ListIndex >= 0) m_pCurrentCondition->Condition.SetPrkc((byte) m_PrkcList.GetItemData(ListIndex));
+	}
+
 	dword Flags = m_pCurrentCondition->Condition.GetCtdtData().Flags;
 	::FlipFlagBits(Flags, SR_CTDA_FLAG_OR, m_FlagOr.GetCheck() != 0);
 	::FlipFlagBits(Flags, SR_CTDA_FLAG_RUNONTARGET, m_FlagRunOnTarget.GetCheck() != 0);
@@ -535,6 +578,7 @@ void CSrConditionDlg::SetCurrentCondition (srconditioninfo_t* pCondition)
 	if (pCondition == NULL)
 	{
 		m_Operator.SetCurSel(-1);
+		if (m_PermitPrkc) m_PrkcList.SetCurSel(-1);
 		m_Reference.SetWindowText("");
 		m_Function.SetWindowText("");
 		m_Param1.SetWindowText("");
@@ -637,6 +681,11 @@ void CSrConditionDlg::SetCurrentCondition (srconditioninfo_t* pCondition)
 	m_FlagOr.SetCheck(CheckFlagBits(pCondition->Condition.GetCtdtData().Flags, SR_CTDA_FLAG_OR));
 	m_FlagRunOnTarget.SetCheck(CheckFlagBits(pCondition->Condition.GetCtdtData().Flags, SR_CTDA_FLAG_RUNONTARGET));
 	m_FlagUseGlobal.SetCheck(CheckFlagBits(pCondition->Condition.GetCtdtData().Flags, SR_CTDA_FLAG_USEGLOBAL));
+
+	if (m_PermitPrkc)
+	{
+		FindComboBoxItemData(m_PrkcList, (int)pCondition->Condition.GetPrkc(), true);
+	}
 }
 /*===========================================================================
  *		End of Class Method CSrConditionDlg::SetCurrentCondition()
@@ -1046,4 +1095,16 @@ void CSrConditionDlg::OnLvnItemchangingConditionList(NMHDR *pNMHDR, LRESULT *pRe
 		//*pResult = TRUE;
 	}
 	
+}
+
+void CSrConditionDlg::EnablePrkcControls (void)
+{
+	if (!m_PermitPrkc)
+	{
+		m_PrkcLabel.ShowWindow(SW_HIDE);
+		m_PrkcList.ShowWindow(SW_HIDE);
+		return;
+	}
+
+	SrFillComboList(m_PrkcList, s_SrPrkcTypes, 0);
 }

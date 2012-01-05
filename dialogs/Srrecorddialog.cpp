@@ -2128,6 +2128,45 @@ void CSrRecordDialog::OnLbnSelchangeKeywords()
  *=========================================================================*/
 
 
+srconditioninfo_t* CSrRecordDialog::CreateConditionInfo (CSrCtdaSubrecord* pCondition, CSrRecord* pRecord, const dword Index)
+{
+	srconditioninfo_t* pNewCond;
+	CSrSubrecord*      pSubrecord;
+
+	pNewCond = new srconditioninfo_t;
+	pNewCond->Condition.Copy(pCondition);
+	m_ConditionsCopy.Add(pNewCond);
+
+	pSubrecord = pRecord->GetSubrecord(Index+1);
+	if (pSubrecord == NULL) return pNewCond;
+
+	if (pSubrecord->GetRecordType() == SR_NAME_CIS1)
+	{
+		pNewCond->pParam1 = new CSrStringSubrecord;
+		pNewCond->pParam1->Initialize(SR_NAME_CIS1, 1);
+		pNewCond->pParam1->Copy(pSubrecord);
+	}
+	else if (pSubrecord->GetRecordType() == SR_NAME_CIS2)
+	{
+		pNewCond->pParam2 = new CSrStringSubrecord;
+		pNewCond->pParam2->Initialize(SR_NAME_CIS2, 1);
+		pNewCond->pParam2->Copy(pSubrecord);
+	}
+
+	pSubrecord = pRecord->GetSubrecord(Index+2);
+	if (pSubrecord == NULL) return pNewCond;
+
+	if (pSubrecord->GetRecordType() == SR_NAME_CIS2 && pNewCond->pParam2 == NULL)
+	{
+		pNewCond->pParam2 = new CSrStringSubrecord;
+		pNewCond->pParam2->Initialize(SR_NAME_CIS2, 1);
+		pNewCond->pParam2->Copy(pSubrecord);
+	}
+
+	return pNewCond;
+}
+
+
 void CSrRecordDialog::CopyConditions (void) 
 {
 	if (GetInputRecord() == NULL) return;
@@ -2139,40 +2178,7 @@ void CSrRecordDialog::CopyConditions (void)
 		if (pSubrecord->GetRecordType() != SR_NAME_CTDA) continue;
 
 		CSrCtdaSubrecord* pCondition = SrCastClassNull(CSrCtdaSubrecord, pSubrecord);
-		srconditioninfo_t* pNewCond;
-
-		if (pCondition != NULL) 
-		{
-			pNewCond = new srconditioninfo_t;
-			pNewCond->Condition.Copy(pCondition);
-			m_ConditionsCopy.Add(pNewCond);
-
-			pSubrecord = GetInputRecord()->GetSubrecord(i+1);
-			if (pSubrecord == NULL) continue;
-
-			if (pSubrecord->GetRecordType() == SR_NAME_CIS1)
-			{
-				pNewCond->pParam1 = new CSrStringSubrecord;
-				pNewCond->pParam1->Initialize(SR_NAME_CIS1, 1);
-				pNewCond->pParam1->Copy(pSubrecord);
-			}
-			else if (pSubrecord->GetRecordType() == SR_NAME_CIS2)
-			{
-				pNewCond->pParam2 = new CSrStringSubrecord;
-				pNewCond->pParam2->Initialize(SR_NAME_CIS2, 1);
-				pNewCond->pParam2->Copy(pSubrecord);
-			}
-
-			pSubrecord = GetInputRecord()->GetSubrecord(i+2);
-			if (pSubrecord == NULL) continue;
-
-			if (pSubrecord->GetRecordType() == SR_NAME_CIS2 && pNewCond->pParam2 == NULL)
-			{
-				pNewCond->pParam2 = new CSrStringSubrecord;
-				pNewCond->pParam2->Initialize(SR_NAME_CIS2, 1);
-				pNewCond->pParam2->Copy(pSubrecord);
-			}
-		}
+		if (pCondition != NULL) CreateConditionInfo(pCondition, GetInputRecord(), i);
 	}
 
 	m_ConditionsChanged = false;

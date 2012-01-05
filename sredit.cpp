@@ -672,7 +672,7 @@ CSrResourceView* CSrEditApp::CreateResourceView (void) {
   CSrResourceView* pView;
   CCreateContext   Context;
   CFrameWnd*       pFrame;
-  CWnd*		   pWnd;
+  CWnd*			   pWnd;
 
   if (m_pCurrentProgressDlg == NULL) {
     m_pCurrentProgressDlg = ShowSrProgressDlg(_T("Resource Viewer"), _T("Initializing Resources..."));

@@ -2258,6 +2258,29 @@ void CSrEditView::OnHelpTestoutputperks()
 		CSrPerkRecord* pPerk = SrCastClassNull(CSrPerkRecord, pRecord);
 		if (pPerk == NULL) continue;
 
+		/*
+		CSrSubrecord* pLastData = NULL;
+
+		for (dword j = 0; j < pPerk->GetNumSubrecords(); ++j)
+		{
+			CSrSubrecord* pSubrecord = pPerk->GetSubrecord(j);
+
+			if (pSubrecord->GetRecordType() == SR_NAME_DATA && pSubrecord->GetRecordSize() == 3)
+			{
+				pLastData = pSubrecord;
+			}
+			else if (pSubrecord->GetRecordType() == SR_NAME_EPFT && pLastData)
+			{
+				CString Buffer1;
+				CString Buffer2;
+
+				Buffer1.Format("%02X %02X %02X", (int) (pLastData->GetData()[0]), (int) (pLastData->GetData()[1]), (int) (pLastData->GetData()[2]));
+				Buffer2.Format("%02X", (int) (pSubrecord->GetData()[0]));
+				SystemLog.Printf("\t%32.32s: DATA %s EPFT %s", pPerk->GetEditorID(), Buffer1, Buffer2);
+			}
+		} //*/
+
+		/*
 		CSrSubrecord* pSubrecord = pPerk->FindFirstSubrecord(SR_NAME_EPFT, Position);
 
 		while (pSubrecord)
@@ -2275,7 +2298,7 @@ void CSrEditView::OnHelpTestoutputperks()
 			pSubrecord = pPerk->FindNextSubrecord(SR_NAME_EPFT, Position);
 		} //*/
 
-		/*
+		//*
 		CSrSubrecord* pSubrecord = pPerk->FindFirstSubrecord(SR_NAME_PRKC, Position);
 
 		while (pSubrecord)

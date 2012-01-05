@@ -92,6 +92,7 @@
 #define IDD_WOOP_VIEW                   213
 #define IDD_CLAS_VIEW                   214
 #define IDD_RAWDATA_DLG                 215
+#define IDD_PERK_VIEW                   216
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -131,7 +132,9 @@
 #define IDC_BATCH_EDIT                  1050
 #define IDC_FIND_LIST                   1052
 #define IDC_EDITORID                    1053
+#define IDC_SECTIONINDEX                1054
 #define IDC_BINARY_CHECK                1055
+#define IDC_SECTIONVALUE                1055
 #define IDC_FORMID                      1056
 #define IDC_SEARCH_COMBO                1057
 #define IDC_CALCULATEALL                1058
@@ -155,6 +158,7 @@
 #define IDC_UNKNOWN2a                   1078
 #define IDC_UNKNOWN3                    1079
 #define IDC_ENCHANTCHARGE               1080
+#define IDC_SECTION_ACTORVALUE          1080
 #define IDC_NAME                        1081
 #define IDC_CNAME                       1082
 #define IDC_NNAME                       1082
@@ -239,6 +243,7 @@
 #define IDC_SPELLTOME                   1138
 #define IDC_UNKNOWNFLAG3                1138
 #define IDC_SELECT_IMPACTSET            1138
+#define IDC_SECTION_CONDITIONS          1138
 #define IDC_SELECTPARAM2_BUTTON         1139
 #define IDC_SELECTPICKUPSOUND_BUTTON    1139
 #define IDC_SELECTSOUND_BUTTON          1139
@@ -267,6 +272,8 @@
 #define IDC_EDIT_RESULTITEM             1147
 #define IDC_SELECTRESULTITEM_BUTTON     1148
 #define IDC_COMPONENT_LIST              1149
+#define IDC_OPERATOR_LIST2              1149
+#define IDC_PRKC_LIST                   1149
 #define IDC_CRAFTSTATION                1150
 #define IDC_TYPEFILTER_STATIC           1150
 #define IDC_EDIT_CRAFTSTATION           1151
@@ -510,15 +517,31 @@
 #define IDC_DESTRUCTION                 1271
 #define IDC_VALUETEXT                   1271
 #define IDC_SELECT_POWERWORD2           1272
+#define IDC_NEXTPERK                    1272
 #define IDC_SPELL2                      1273
+#define IDC_EDIT_NEXTPERK               1273
 #define IDC_EDIT_SPELL2                 1274
+#define IDC_SELECT_NEXTPERK             1274
 #define IDC_SELECT_SPELL2               1275
+#define IDC_PERKDATA_LIST               1275
 #define IDC_POWERWORD3                  1276
+#define ID_DELETEPERK_BUTTON            1276
 #define IDC_EDIT_POWERWORD3             1277
+#define ID_ADDPERK_BUTTON               1277
 #define IDC_SELECT_POWERWORD3           1278
+#define IDC_SECTIONTYPE                 1278
 #define IDC_SPELL3                      1279
+#define IDC_SECTION_EDITORID            1279
 #define IDC_EDIT_SPELL3                 1280
+#define IDC_EDIT_SECTIONEDITORID        1280
 #define IDC_SELECT_SPELL3               1281
+#define IDC_SELECT_SECTIONEDITORID      1281
+#define IDC_SECTION_VALUELABEL1         1282
+#define IDC_SECTIONEFFECTTYPE           1283
+#define IDC_SECTIONAPPLYTYPE            1284
+#define IDC_SECTIONUNKNOWNTYPE          1285
+#define IDC_SECTION_EDITORIDLABEL       1286
+#define IDC_PRKC_LABEL                  1287
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -722,7 +745,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        216
 #define _APS_NEXT_COMMAND_VALUE         32868
-#define _APS_NEXT_CONTROL_VALUE         1272
+#define _APS_NEXT_CONTROL_VALUE         1288
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

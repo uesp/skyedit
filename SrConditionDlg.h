@@ -34,6 +34,7 @@ protected:
 	CSrConditionArray	m_Conditions;
 	CSrRecord*			m_pRecord;
 	bool				m_IsInitialized;
+	bool				m_PermitPrkc;
 
 	srconditioninfo_t*	m_pCurrentCondition;
 
@@ -79,15 +80,16 @@ protected:
 
 	srconditioninfo_t* GetSelectedCondition();
 
-
 	DECLARE_MESSAGE_MAP()
+
+	void EnablePrkcControls (void);
 
 public:
 	afx_msg void OnLvnItemchangedConditionList(NMHDR *pNMHDR, LRESULT *pResult);
 	
 	virtual BOOL OnInitDialog();
 
-	bool DoModal (CSrRecord* pRecord, CSrConditionArray* pConditions);
+	bool DoModal (CSrRecord* pRecord, CSrConditionArray* pConditions, const bool PermitPrkc = false);
 	afx_msg void OnBnClickedSelectreferenceButton();
 	CEdit m_Reference;
 	CStatic m_ReferenceLabel;
@@ -121,6 +123,8 @@ public:
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg void OnEnChangeFunctionText();
 	afx_msg void OnLvnItemchangingConditionList(NMHDR *pNMHDR, LRESULT *pResult);
+	CStatic m_PrkcLabel;
+	CComboBox m_PrkcList;
 };
 /*===========================================================================
  *		End of Class CSrConditionDlg Definition

@@ -4,6 +4,7 @@ v0.04
 	- CIS1 appears to be GMST editorIDs and not script variables (figure out exact format in CTDA or function calls)
 	- Raw view to handle array subrecords
 	- Change all "old" manual fields to use field macros
+	- More handling of function parameters in condition dialog (i.e., actor values)
 
 v0.03a
 	- Cleanup condition implementation

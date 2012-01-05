@@ -17,9 +17,8 @@
  *
  *=========================================================================*/
 	#include "dialogs/srrecorddialog.h"
-#include "afxwin.h"
-#include "afxcmn.h"
- //#include "afxwin.h"
+	#include "afxwin.h"
+	#include "afxcmn.h"
  /*===========================================================================
  *		End of Required Includes
  *=========================================================================*/

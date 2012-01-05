@@ -56,6 +56,7 @@ srdlgcreateinfo_t l_SrDlgCreateInfo[] = {
 	{ &SR_NAME_LIGH, "Light",		     CSrLighView::IDD,   RUNTIME_CLASS(CSrLighView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Light"),			_T("Light") },
 	{ &SR_NAME_MGEF, "Magic Effect",     CSrMgefView::IDD,   RUNTIME_CLASS(CSrMgefView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/MagicEffect"),	_T("Magic_Effect") },
 	{ &SR_NAME_MISC, "Misc",			 CSrMiscView::IDD,   RUNTIME_CLASS(CSrMiscView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Misc"),			_T("Misc") },
+	{ &SR_NAME_PERK, "Perk",			 CSrPerkView::IDD,   RUNTIME_CLASS(CSrPerkView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Perk"),			_T("Perk") },
 	{ &SR_NAME_ALCH, "Potion",			 CSrAlchView::IDD,   RUNTIME_CLASS(CSrAlchView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Potion"),		_T("Potion") },
 	{ &SR_NAME_COBJ, "Recipe",		     CSrCobjView::IDD,   RUNTIME_CLASS(CSrCobjView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Recipe"),		_T("Recipe") },
 	{ &SR_NAME_SCRL, "Scroll",			 CSrScrlView::IDD,   RUNTIME_CLASS(CSrScrlView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Scroll"),		_T("Scroll") },
@@ -232,12 +233,13 @@ void CSrEditDlgHandler::Close (srdlginfo_t* pDlgInfo) {
  * Returns the new dialog information or NULL on any error.
  *
  *=========================================================================*/
-srdlginfo_t* CSrEditDlgHandler::CreateDlg (srdlgcreateinfo_t& CreateInfo) {
+srdlginfo_t* CSrEditDlgHandler::CreateDlg (srdlgcreateinfo_t& CreateInfo) 
+{
   srdlginfo_t*     pDlgInfo;
   CCreateContext   Context;
   CFrameWnd*       pFrame;
   CSrRecordDialog* pRecordDlg = NULL;
-  CWnd*		   pWnd;
+  CWnd*			   pWnd;
 
 	/* Initialize the context structure */
   Context.m_pCurrentDoc     = (CDocument *) m_pDocument;

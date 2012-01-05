@@ -73,6 +73,7 @@
 		srconditioninfo_t()
 		{
 			Condition.Initialize(SR_NAME_CTDA, SR_CTDA_SUBRECORD_SIZE);
+			Condition.InitializeNew();
 			pParam1 = NULL;
 			pParam2 = NULL;
 		}
@@ -239,20 +240,22 @@ protected:
   /*---------- Begin Protected Class Methods --------------------*/
 protected:
 
-	void CopyConditions (void);
-	void SaveConditions (void);
+	virtual void CopyConditions (void);
+	virtual void SaveConditions (void);
 
-	/* Output/input defined fields */
-  void GetUIFieldData (void);
-  void SetUIFieldData (void);
-  bool GetKeywords(sruirecfields_t& FieldInfo, CListBox* pListBox);
-  bool SetKeywords(sruirecfields_t& FieldInfo, CListBox* pListBox);
+	virtual srconditioninfo_t* CreateConditionInfo (CSrCtdaSubrecord* pCondition, CSrRecord* pRecord, const dword Index);
 
-	/* Update the editor ID in the edit info structure */
-  virtual int UpdateEditorID (void);
+		/* Output/input defined fields */
+	void GetUIFieldData (void);
+	void SetUIFieldData (void);
+	bool GetKeywords(sruirecfields_t& FieldInfo, CListBox* pListBox);
+	bool SetKeywords(sruirecfields_t& FieldInfo, CListBox* pListBox);
 
-	/* Initialize the dialog tooltips */
-  virtual void InitToolTips (void);
+		/* Update the editor ID in the edit info structure */
+	virtual int UpdateEditorID (void);
+
+		/* Initialize the dialog tooltips */
+	virtual void InitToolTips (void);
 
 
   /*---------- Begin Public Class Methods -----------------------*/

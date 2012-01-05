@@ -50,6 +50,7 @@
   #include "srlvspview.h"
   #include "srmgefview.h"
   #include "srmiscview.h"
+  #include "srperkview.h"
   #include "srscrlview.h"
   #include "srshouview.h"
   #include "srslgmview.h"
