@@ -217,6 +217,8 @@ void CSrSpelView::Dump(CDumpContext& dc) const {
 void CSrSpelView::OnInitialUpdate (void) 
 {
 	m_IsInitialized = false;
+	m_IgnoreConditions = true;
+
 	CSrRecordDialog::OnInitialUpdate();
 
 	m_EffectList.SetListName("SpellEffectList");
@@ -642,7 +644,6 @@ void CSrSpelView::OnBnClickedConditionButton()
 	CSrConditionDlg ConditionDlg;
 	int Result = ConditionDlg.DoModal(GetInputRecord(), &m_pCurrentEffect->Conditions);
 	if (Result != IDOK) return;
-	m_ConditionsChanged = true;
 
 	CString Buffer;
 	Buffer.Format("%d", m_pCurrentEffect->Conditions.GetSize());

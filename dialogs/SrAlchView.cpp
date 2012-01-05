@@ -199,6 +199,8 @@ void CSrAlchView::Dump(CDumpContext& dc) const {
 void CSrAlchView::OnInitialUpdate (void) 
 {
 	m_IsInitialized = false;
+	m_IgnoreConditions = true;
+
 	CSrRecordDialog::OnInitialUpdate();
 
 	m_EffectList.SetListName("PotionEffectList");
@@ -602,7 +604,6 @@ void CSrAlchView::OnBnClickedConditionButton()
 	CSrConditionDlg ConditionDlg;
 	int Result = ConditionDlg.DoModal(GetInputRecord(), &m_pCurrentEffect->Conditions);
 	if (Result != IDOK) return;
-	m_ConditionsChanged = true;
 
 	CString Buffer;
 	Buffer.Format("%d", m_pCurrentEffect->Conditions.GetSize());
