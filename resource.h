@@ -542,6 +542,9 @@
 #define IDC_SECTION_EDITORIDLABEL       1286
 #define IDC_PRKC_LABEL                  1287
 #define IDC_RICHEDIT21                  1288
+#define IDC_ACTIVECHECK                 1289
+#define IDC_EDIT1                       1290
+#define IDC_FILTERTEXT                  1290
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -745,7 +748,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        216
 #define _APS_NEXT_COMMAND_VALUE         32868
-#define _APS_NEXT_CONTROL_VALUE         1289
+#define _APS_NEXT_CONTROL_VALUE         1291
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

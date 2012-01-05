@@ -21,9 +21,7 @@
 #include "common/srtime.h"
 #include "modfile/srexport.h"
 #include "dialogs/SrRawDataDlg.h"
-//#include "modfile/compiler/customcompiler.h"
 #include "mainfrm.h"
-//#include "modfile/compiler/obscriptutils.h"
 
 
 /*===========================================================================
@@ -51,7 +49,6 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrEditView, CFormView)
-  //{{AFX_MSG_MAP(CSrEditView)
   ON_WM_SIZE()
   ON_NOTIFY(TVN_SELCHANGED, IDC_RECORDTREE, OnSelchangedRecordtree)
   ON_COMMAND(ID_FILE_IMPORT_CSV, OnFileImportCsv)
@@ -98,9 +95,12 @@ BEGIN_MESSAGE_MAP(CSrEditView, CFormView)
   ON_UPDATE_COMMAND_UI(ID_RECORD_RENAME, OnUpdateHasSelectedRecords)
   ON_UPDATE_COMMAND_UI(ID_RECORD_BATCHEDIT, OnUpdateHasSelectedRecords)
   ON_COMMAND(ID_EDIT_SELECTALL, OnEditSelectall)
-  //}}AFX_MSG_MAP
   ON_COMMAND(ID_MENU_VIEWRAWDATA, &CSrEditView::OnMenuViewrawdata)
   ON_COMMAND(ID_HELP_TESTOUTPUTPERKS, &CSrEditView::OnHelpTestoutputperks)
+  ON_BN_CLICKED(IDC_ACTIVECHECK, &CSrEditView::OnBnClickedActivecheck)
+  ON_EN_CHANGE(IDC_FILTERTEXT, &CSrEditView::OnEnChangeFiltertext)
+  ON_WM_TIMER()
+  ON_WM_CLOSE()
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Class CSrEditView Message Map
@@ -154,13 +154,14 @@ int l_RenamePromptFunc (sreditrecinfo_t& EditInfo, long UserData) {
  * Class CSrEditView Constructor
  *
  *=========================================================================*/
-CSrEditView::CSrEditView() : CFormView(CSrEditView::IDD) {
-  //{{AFX_DATA_INIT(CSrEditView)
-  //}}AFX_DATA_INIT
-
+CSrEditView::CSrEditView() : CFormView(CSrEditView::IDD) 
+{
   m_IsInitialized  = false;
   m_pCurrentFilter = NULL;
- }
+  m_UpdateFilterCounts = false;
+  m_hFilterUpdateThreadID = 0;
+  m_hFilterUpdateThread = 0;
+}
 /*===========================================================================
  *		End of Class CSrEditView Constructor
  *=========================================================================*/
@@ -171,8 +172,11 @@ CSrEditView::CSrEditView() : CFormView(CSrEditView::IDD) {
  * Class CSrEditView Destructor
  *
  *=========================================================================*/
-CSrEditView::~CSrEditView() {
- 
+CSrEditView::~CSrEditView() 
+{
+	SetEvent(m_ThreadCloseEvent);
+	DWORD Result = WaitForSingleObject(m_hFilterUpdateThread, 10000);
+	CloseHandle(m_ThreadCloseEvent);	
 }
 /*===========================================================================
  *		End of Class CSrEditView Destructor
@@ -184,14 +188,15 @@ CSrEditView::~CSrEditView() {
  * Class CSrEditView Method - void DoDataExchange (pDX);
  *
  *=========================================================================*/
-void CSrEditView::DoDataExchange(CDataExchange* pDX) {
-  CFormView::DoDataExchange(pDX);
+void CSrEditView::DoDataExchange(CDataExchange* pDX) 
+{
+	CFormView::DoDataExchange(pDX);
 
-  //{{AFX_DATA_MAP(CSrEditView)
-  DDX_Control(pDX, IDC_VEDGE, m_VertEdge);
-  DDX_Control(pDX, IDC_RECORDLIST, m_RecordList);
-  DDX_Control(pDX, IDC_RECORDTREE, m_RecordTree);
-  //}}AFX_DATA_MAP
+	DDX_Control(pDX, IDC_VEDGE, m_VertEdge);
+	DDX_Control(pDX, IDC_RECORDLIST, m_RecordList);
+	DDX_Control(pDX, IDC_RECORDTREE, m_RecordTree);
+	DDX_Control(pDX, IDC_FILTERTEXT, m_FilterText);
+	DDX_Control(pDX, IDC_ACTIVECHECK, m_ActiveCheck);
 }
 /*===========================================================================
  *		End of Class Method CSrEditView::DoDataExchange()
@@ -470,6 +475,17 @@ void CSrEditView::OnFileImportCsv() {
  *=========================================================================*/
 
 
+DWORD WINAPI l_ThreadFilterUpdate(LPVOID lpParameter)
+{
+	CSrEditView* pView = (CSrEditView *) lpParameter;
+	if (pView == NULL) return 1;
+
+	pView->ThreadUpdateFilterProc();
+	
+	return 0;
+}
+
+
 /*===========================================================================
  *
  * Class CSrEditView Event - void OnInitialUpdate ();
@@ -477,8 +493,12 @@ void CSrEditView::OnFileImportCsv() {
  *=========================================================================*/
 void CSrEditView::OnInitialUpdate() {
 
-	/* Call the base class method first */
+		/* Call the base class method first */
   CFormView::OnInitialUpdate();
+
+  m_ThreadCloseEvent = CreateEvent(NULL, TRUE, FALSE, TEXT("SkyEditThreadClose")); 
+  
+  m_hFilterUpdateThread = CreateThread(NULL, 0, l_ThreadFilterUpdate, this, 0, &m_hFilterUpdateThreadID);
 
   m_DlgHandler.SetDocument(GetDocument());
   GetDocument()->GetRecordHandler().GetEventHandler().AddListener(this);
@@ -677,7 +697,7 @@ void CSrEditView::OnSize (UINT nType, int CX, int CY)
   if (m_IsInitialized) 
   {
     m_RecordList.AutoResize();
-    m_RecordTree.SetWindowPos(NULL, 0, 0, 188, CY, SWP_NOMOVE | SWP_NOZORDER);
+    m_RecordTree.SetWindowPos(NULL, 0, 0, 188, CY - 48, SWP_NOMOVE | SWP_NOZORDER);
     m_VertEdge.SetWindowPos(NULL, 0, 0, 3, CY+2, SWP_NOMOVE | SWP_NOZORDER);
   }
 	
@@ -1229,11 +1249,12 @@ void CSrEditView::OnRecordClean() {
  * Class CSrEditView Method - void UpdateContents (void);
  *
  *=========================================================================*/
-void CSrEditView::UpdateContents (void) {
-  m_RecordList.DeleteAllItems();
-  m_RecordList.AddAllRecords(GetDocument()->GetRecordHandler().GetTopGroup());
-  m_RecordTree.UpdateFilterCounts(GetDocument()->GetRecordHandler().GetTopGroup());
-  AfxGetMainWnd()->SendMessage(SRE_MSG_UPDATEUNDO, (WPARAM) &GetDocument()->GetRecordHandler().GetUndoItems(), 0);
+void CSrEditView::UpdateContents (void) 
+{
+	m_RecordList.DeleteAllItems();
+	m_RecordList.AddAllRecords(GetDocument()->GetRecordHandler().GetTopGroup());
+	m_RecordTree.UpdateFilterCounts(GetDocument()->GetRecordHandler().GetTopGroup());
+	AfxGetMainWnd()->SendMessage(SRE_MSG_UPDATEUNDO, (WPARAM) &GetDocument()->GetRecordHandler().GetUndoItems(), 0);
 }
 /*===========================================================================
  *		End of Class Method CSrEditView::UpdateContents()
@@ -1348,10 +1369,11 @@ void CSrEditView::OnEditRecord (CSrRecord* pRecord) {
  * Class CSrEditView Event - void OnDestroy (void);
  *
  *=========================================================================*/
-void CSrEditView::OnDestroy (void) {
-  m_DlgHandler.CloseAll();
+void CSrEditView::OnDestroy (void) 
+{
+	m_DlgHandler.CloseAll();
 
-  CFormView::OnDestroy();
+	CFormView::OnDestroy();
 }
 /*===========================================================================
  *		End of Class Event CSrEditView::OnDestroy()
@@ -2494,3 +2516,74 @@ PRKE=2 (data2 = 3 bytes)
 
 
 */
+
+
+void CSrEditView::OnBnClickedActivecheck()
+{
+	bool Check = m_ActiveCheck.GetCheck() != 0;
+
+	m_RecordList.GetExtraFilter().ActiveOnly = Check;
+	m_RecordTree.GetExtraFilter().ActiveOnly = Check;
+
+	//UpdateContents();
+	m_RecordList.DeleteAllItems();
+	m_RecordList.AddAllRecords(GetDocument()->GetRecordHandler().GetTopGroup());
+	m_UpdateFilterCounts = true;
+}
+
+
+void CSrEditView::OnEnChangeFiltertext()
+{
+	CString Buffer;
+
+	m_FilterText.GetWindowText(Buffer);
+	Buffer.Trim(" \t\r\n");
+	
+	if (Buffer.CompareNoCase(m_RecordList.GetExtraFilter().FilterText.c_str()) == 0) return;
+
+	m_RecordList.GetExtraFilter().FilterText = Buffer;
+	m_RecordTree.GetExtraFilter().FilterText = Buffer;
+
+	//UpdateContents();
+	m_RecordList.DeleteAllItems();
+	m_RecordList.AddAllRecords(GetDocument()->GetRecordHandler().GetTopGroup());
+	m_UpdateFilterCounts = true;
+	//m_RecordTree.UpdateFilterCounts(GetDocument()->GetRecordHandler().GetTopGroup());
+}
+
+
+
+void CSrEditView::ThreadUpdateFilterProc (void)
+{
+
+	while (1)
+	{
+		DWORD dwWaitResult = WaitForSingleObject(m_ThreadCloseEvent, 1000);
+
+		if (dwWaitResult == WAIT_OBJECT_0) 
+		{
+			break;
+		}
+        
+		if (m_UpdateFilterCounts)
+		{
+			m_UpdateFilterCounts = false;
+			m_RecordTree.UpdateFilterCounts(GetDocument()->GetRecordHandler().GetTopGroup());
+		}
+	}
+
+	ExitThread(0);
+}
+
+
+
+void CSrEditView::OnTimer(UINT_PTR nIDEvent)
+{
+	__super::OnTimer(nIDEvent);
+}
+
+
+void CSrEditView::OnClose()
+{
+	__super::OnClose();
+}

@@ -25,7 +25,8 @@
   #include "il/il.h"
   #include "il/ilu.h"
   #include "il/ilut.h"
-/*===========================================================================
+#include "afxwin.h"
+ /*===========================================================================
  *		End of Required Includes
  *=========================================================================*/
 
@@ -45,6 +46,8 @@
 	/* Number of operations required for a progress dlg to be shown */
   #define SREDIT_MINIMUM_PROGRESS_COUNT 100
 
+  #define SREDIT_FILTERUPDATE_TIMERID 0x1234
+
 /*===========================================================================
  *		End of Definitions
  *=========================================================================*/
@@ -61,10 +64,14 @@ class CSrEditView : public CFormView, public ISrListener {
 protected:
   CSrEditDlgHandler	m_DlgHandler;		/* Handles all child windows */
 
-  bool			m_IsInitialized;	/* Has the view been initialized yet? */
+  bool				m_IsInitialized;	/* Has the view been initialized yet? */
 
   CSrRecordFilter*	m_pCurrentFilter;	/* Currently displayed record filter */
-  CSString		m_LastFilterID; 
+  CSString			m_LastFilterID; 
+  bool				m_UpdateFilterCounts;
+  DWORD				m_hFilterUpdateThreadID;
+  HANDLE			m_hFilterUpdateThread;
+  HANDLE			m_ThreadCloseEvent;
 
 
   /*---------- Begin Protected Class Methods ----------------------*/
@@ -76,12 +83,10 @@ protected:
 
 
 public:
-  //{{AFX_DATA(CSrEditView)
   enum { IDD = IDD_SREDIT_FORM };
-  CStatic			m_VertEdge;
+  CStatic					m_VertEdge;
   CSrRecordVirtualListCtrl	m_RecordList;
-  CSrRecordTreeCtrl		m_RecordTree;
-  //}}AFX_DATA
+  CSrRecordTreeCtrl			m_RecordTree;
 
 
   /*---------- Begin Public Class Methods --------------------------*/
@@ -89,6 +94,8 @@ public:
 
 	/* Class destructor */
   virtual ~CSrEditView();
+
+  void ThreadUpdateFilterProc (void);
 
 	/* Get the parent document */
   CSrEditDoc*        GetDocument();
@@ -121,9 +128,6 @@ public:
   virtual void Dump(CDumpContext& dc) const;
 #endif
 
-  
-	/* ClassWizard generated virtual function overrides */
-  //{{AFX_VIRTUAL(CSrEditView)
 public:
   virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
@@ -131,12 +135,7 @@ protected:
   virtual void OnInitialUpdate();
   virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
   virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
-  //}}AFX_VIRTUAL
 
-
-	/* Generated message map functions */
-protected:
-  //{{AFX_MSG(CSrEditView)
   afx_msg void OnSize(UINT nType, int cx, int cy);
   afx_msg void OnSelchangedRecordtree(NMHDR* pNMHDR, LRESULT* pResult);
   afx_msg void OnFileImportCsv();
@@ -175,13 +174,18 @@ protected:
 	afx_msg void OnTestRecompileall();
 	afx_msg void OnHelpTestcomparescripts();
 	afx_msg void OnEditSelectall();
-	//}}AFX_MSG
 
   DECLARE_MESSAGE_MAP();
 
  public:
 	 afx_msg void OnMenuViewrawdata();
 	 afx_msg void OnHelpTestoutputperks();
+	 CEdit m_FilterText;
+	 CButton m_ActiveCheck;
+	 afx_msg void OnBnClickedActivecheck();
+	 afx_msg void OnEnChangeFiltertext();
+	 afx_msg void OnTimer(UINT_PTR nIDEvent);
+	 afx_msg void OnClose();
 };
 /*===========================================================================
  *		End of Class CSrEditView Definition
@@ -200,10 +204,6 @@ protected:
 /*===========================================================================
  *		End of Inline Class Methods
  *=========================================================================*/
-
-
-//{{AFX_INSERT_LOCATION}}
-//}}AFX_INSERT_LOCATION
 
 
 #endif
