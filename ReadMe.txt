@@ -146,10 +146,13 @@ can be found at:
 
   Version History
 =======================================
-0.05alpha - January 2021
+0.045alpha - January 2021
 	- Added filter text (display records with an editor ID containing that text)  
 	  and active only (display just the active mod records) controls.
-	- 
+	- Leveled lists sort records by level when being saved. Fixed level list saving bug.
+	- Support for saving of plugins with localized strings (click "Edit-Use Local Strings"
+	  to toggle on/off).
+	- Perk sections can now be added and deleted.
 
 0.041alpha - 4 January 2021
 	- Beta of editable Perks
