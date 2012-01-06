@@ -146,6 +146,11 @@ can be found at:
 
   Version History
 =======================================
+0.05alpha - January 2021
+	- Added filter text (display records with an editor ID containing that text)  
+	  and active only (display just the active mod records) controls.
+	- 
+
 0.041alpha - 4 January 2021
 	- Beta of editable Perks
 	- Fixed resource viewer crash

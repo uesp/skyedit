@@ -226,9 +226,12 @@ void CSrLvliView::GetControlData (void)
   pLevelItem = SrCastClass(CSrLvliRecord, m_EditInfo.pNewRecord);
   if (pLevelItem == NULL) return;
 
-		/* Copy all subrecords into the new record */
+	/* Ensure the count subreecord is created in the correct place */
+  pLevelItem->DeleteSubrecords(SR_NAME_LLCT);
   pLevelItem->DeleteSubrecords(SR_NAME_LVLO);
+  pLevelItem->UpdateListCount();
 
+		/* Copy all subrecords into the new record */
   for (pItem = m_CopyRecord.GetFirstItem(ItemPos); pItem != NULL; pItem = m_CopyRecord.GetNextItem(ItemPos)) 
   {
 		pLevelItem->AddItem(pItem->GetFormID(), pItem->GetLevel(), pItem->GetCount());
