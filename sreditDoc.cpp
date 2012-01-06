@@ -177,12 +177,23 @@ BOOL CSrEditDoc::DoFileSave() {
  *
  *=========================================================================*/
 bool CSrEditDoc::DoSaveBackup (const TCHAR* pFilename) {
+	bool Result;
 
-	/* Are backups enabled? */
-  if (!CSrMultiRecordHandler::GetOptions().EnableBackup)       return (true);
-  if (!CSrMultiRecordHandler::GetOptions().EnableBackupOnSave) return (true);
+		/* Are backups enabled? */
+	if (!CSrMultiRecordHandler::GetOptions().EnableBackup)       return (true);
+	if (!CSrMultiRecordHandler::GetOptions().EnableBackupOnSave) return (true);
 
-  return DoBackup(pFilename);
+		/* Main plugin backup */
+	Result = DoBackup(pFilename);
+	if (!Result) return false;
+
+		/* Do string file backup only if required */
+	if (!GetActiveFile().IsLoadLocalString()) return true;
+
+	Result  = DoBackup(CreateSrStringFilename(pFilename, "ILSTRINGS"));
+	Result &= DoBackup(CreateSrStringFilename(pFilename, "DLSTRINGS"));
+	Result &= DoBackup(CreateSrStringFilename(pFilename, "STRINGS"));
+	return Result;
 }
 /*===========================================================================
  *		End of Class Method CSrEditDoc::DoBackup()
@@ -316,31 +327,28 @@ bool CSrEditDoc::CreateBackupPath (void) {
  * Class CSrEditDoc Method - bool DoBackup (pFilename);
  *
  *=========================================================================*/
-bool CSrEditDoc::DoBackup (const TCHAR* pFilename) {
-  CString InputFile;
-  CString OutputFile;
-  bool    Result;
-  BOOL    CopyResult;
+bool CSrEditDoc::DoBackup (const TCHAR* pFilename) 
+{
+	CString InputFile;
+	CString OutputFile;
+	bool    Result;
+	BOOL    CopyResult;
 
-	/* Ignore if the file doesn't yet exist */
-  InputFile = pFilename;
-  if (!FileExists(InputFile)) return (true);
+		/* Ignore if the file doesn't yet exist */
+	InputFile = pFilename;
+	if (!FileExists(InputFile)) return true;
 
-  Result = MakeBackupFile(OutputFile, InputFile);
-  if (!Result) return (false);
+	Result = MakeBackupFile(OutputFile, InputFile);
+	if (!Result) return false;
 
-  Result = CreateBackupPath();
-  if (!Result) return (false);
+	Result = CreateBackupPath();
+	if (!Result) return false;
 
-  CopyResult = CopyFile(InputFile, OutputFile, FALSE);
+	CopyResult = CopyFile(InputFile, OutputFile, FALSE);
+	if (!CopyResult) return AddSrWindowsError("Failed to backup '%s' to '%s'!", InputFile, OutputFile);
 
-  if (!CopyResult) {
-    AddSrWindowsError("Failed to backup '%s' to '%s'!", InputFile, OutputFile);
-    return (false);
-  }
-
-  SystemLog.Printf("Successfully backed up '%s' to '%s'", InputFile, OutputFile);
-  return (true);
+	SystemLog.Printf("Successfully backed up '%s' to '%s'", InputFile, OutputFile);
+	return true;
 }
 /*===========================================================================
  *		End of Class Method CSrEditDoc::DoBackup()
