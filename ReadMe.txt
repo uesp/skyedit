@@ -151,7 +151,7 @@ can be found at:
 	  and active only (display just the active mod records) controls.
 	- Leveled lists sort records by level when being saved. Fixed level list saving bug.
 	- Support for saving of plugins with localized strings (click "Edit-Use Local Strings"
-	  to toggle on/off).
+	  to toggle on/off). String files are backed up on save just like plugin files.
 	- Perk sections can now be added and deleted.
 
 0.041alpha - 4 January 2021
