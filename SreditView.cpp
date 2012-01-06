@@ -175,8 +175,19 @@ CSrEditView::CSrEditView() : CFormView(CSrEditView::IDD)
 CSrEditView::~CSrEditView() 
 {
 	SetEvent(m_ThreadCloseEvent);
+
 	DWORD Result = WaitForSingleObject(m_hFilterUpdateThread, 10000);
+	if (Result != WAIT_OBJECT_0) TerminateThread(m_hFilterUpdateThread, 0x8888);
+
+	Sleep(50);
+
+	DWORD ExitCode = 0;
+	BOOL bResult = GetExitCodeThread(m_hFilterUpdateThread, &ExitCode);
+
+	SystemLog.Printf("Exit FilterUpdateThread: Result = 0x%08X,  ExitCode(%d) = 0x%08X", Result, bResult, ExitCode);
+
 	CloseHandle(m_ThreadCloseEvent);	
+	CloseHandle(m_hFilterUpdateThread);
 }
 /*===========================================================================
  *		End of Class CSrEditView Destructor
@@ -482,7 +493,8 @@ DWORD WINAPI l_ThreadFilterUpdate(LPVOID lpParameter)
 
 	pView->ThreadUpdateFilterProc();
 	
-	return 0;
+	//ExitThread(0x1234);
+	return 0x4321;
 }
 
 
@@ -2558,11 +2570,11 @@ void CSrEditView::ThreadUpdateFilterProc (void)
 
 	while (1)
 	{
-		DWORD dwWaitResult = WaitForSingleObject(m_ThreadCloseEvent, 1000);
+		DWORD dwWaitResult = WaitForSingleObject(m_ThreadCloseEvent, 2000);
 
 		if (dwWaitResult == WAIT_OBJECT_0) 
 		{
-			break;
+			return;
 		}
         
 		if (m_UpdateFilterCounts)
@@ -2571,8 +2583,7 @@ void CSrEditView::ThreadUpdateFilterProc (void)
 			m_RecordTree.UpdateFilterCounts(GetDocument()->GetRecordHandler().GetTopGroup());
 		}
 	}
-
-	ExitThread(0);
+	
 }
 
 
