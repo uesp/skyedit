@@ -196,10 +196,11 @@ HBRUSH CSrInputDialog::OnCtlColor (CDC* pDC, CWnd* pWnd, UINT nCtlColor) {
 
 /*===========================================================================
  *
- * Function - bool ObInputDialog (Buffer, pTitle, pLabel);
+ * Function - bool SrInputDialog (Buffer, pTitle, pLabel);
  *
  *=========================================================================*/
-bool ObInputDialog (CString& Buffer, const TCHAR* pTitle, const TCHAR* pLabel) {
+bool SrInputDialog (CString& Buffer, const TCHAR* pTitle, const TCHAR* pLabel) 
+{
   CSrInputDialog Dlg;
   int            Result;
 
@@ -214,7 +215,7 @@ bool ObInputDialog (CString& Buffer, const TCHAR* pTitle, const TCHAR* pLabel) {
   return (true);
 }
 /*===========================================================================
- *		End of Function ObInputDialog()
+ *		End of Function SrInputDialog()
  *=========================================================================*/
 
 

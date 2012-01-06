@@ -103,6 +103,8 @@ BEGIN_MESSAGE_MAP(CSrEditView, CFormView)
   ON_WM_CLOSE()
   ON_COMMAND(ID_EDIT_USELOCALSTRINGS, &CSrEditView::OnEditUselocalstrings)
   ON_UPDATE_COMMAND_UI(ID_EDIT_USELOCALSTRINGS, &CSrEditView::OnUpdateEditUselocalstrings)
+  ON_COMMAND(ID_EDIT_SETMODAUTHOR, &CSrEditView::OnEditSetmodauthor)
+  ON_COMMAND(ID_EDIT_SETMODDESCRIPTION, &CSrEditView::OnEditSetmoddescription)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Class CSrEditView Message Map
@@ -2611,4 +2613,30 @@ void CSrEditView::OnEditUselocalstrings()
 void CSrEditView::OnUpdateEditUselocalstrings(CCmdUI *pCmdUI)
 {
 	pCmdUI->SetCheck(GetDocument()->GetActiveFile().IsLocalStrings());
+}
+
+
+void CSrEditView::OnEditSetmodauthor()
+{
+	CString Buffer;
+
+	Buffer = GetDocument()->GetActiveFile().GetModAuthor();
+
+	if (!SrInputDialog(Buffer, "Mod Author", "Enter mod author:")) return;
+
+	GetDocument()->GetActiveFile().SetModAuthor(Buffer);
+	GetDocument()->SetModifiedFlag();
+}
+
+
+void CSrEditView::OnEditSetmoddescription()
+{
+	CString Buffer;
+
+	Buffer = GetDocument()->GetActiveFile().GetModDescription();
+	
+	if (!SrInputDialog(Buffer, "Mod Description", "Enter mod description:")) return;
+
+	GetDocument()->GetActiveFile().SetModDescription(Buffer);
+	GetDocument()->SetModifiedFlag();
 }

@@ -740,6 +740,8 @@
 #define ID_MENU_VIEWRAWDATA             32866
 #define ID_HELP_TESTOUTPUTPERKS         32867
 #define ID_EDIT_USELOCALSTRINGS         32868
+#define ID_EDIT_SETMODAUTHOR            32869
+#define ID_EDIT_SETMODDESCRIPTION       32870
 
 // Next default values for new objects
 // 
@@ -747,7 +749,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        216
-#define _APS_NEXT_COMMAND_VALUE         32869
+#define _APS_NEXT_COMMAND_VALUE         32871
 #define _APS_NEXT_CONTROL_VALUE         1291
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

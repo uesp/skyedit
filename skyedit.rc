@@ -2660,7 +2660,10 @@ BEGIN
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE, GRAYED
         MENUITEM SEPARATOR
         MENUITEM "&Find...",                    ID_EDIT_FIND
+        MENUITEM SEPARATOR
         MENUITEM "Use Local Strings",           ID_EDIT_USELOCALSTRINGS
+        MENUITEM "Set Mod Author...",           ID_EDIT_SETMODAUTHOR
+        MENUITEM "Set Mod Description...",      ID_EDIT_SETMODDESCRIPTION
     END
     POPUP "&View"
     BEGIN

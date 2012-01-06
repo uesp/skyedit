@@ -593,6 +593,7 @@ void CSrRecordDialog::OnSave (void) {
     return;
   }
 
+  GetDocument()->SetModifiedFlag(TRUE);
   Close();
 }
 /*===========================================================================
@@ -651,6 +652,8 @@ void CSrRecordDialog::OnApply() {
   m_EditInfo.IsNew        = false;
   m_EditInfo.IsHandled    = false;
   m_EditInfo.NeedsIndex   = false;
+
+  GetDocument()->SetModifiedFlag(TRUE);
 
 	/* Do another update */
   SetControlData();

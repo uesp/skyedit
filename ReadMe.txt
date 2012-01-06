@@ -153,6 +153,7 @@ can be found at:
 	- Support for saving of plugins with localized strings (click "Edit-Use Local Strings"
 	  to toggle on/off). String files are backed up on save just like plugin files.
 	- Perk sections can now be added and deleted.
+	- Edit mod author/description (under the Edit menu).
 
 0.041alpha - 4 January 2021
 	- Beta of editable Perks
