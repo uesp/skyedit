@@ -209,6 +209,19 @@ void CSrLvlnView::DoDataExchange (CDataExchange* pDX)
  *=========================================================================*/
 
 
+static int __stdcall l_SortLevelRecords (long lParam1, long lParam2, long lParamSort)
+{
+	CSrLvloSubrecord* pRecord1 = (CSrLvloSubrecord *) lParam1;
+	CSrLvloSubrecord* pRecord2 = (CSrLvloSubrecord *) lParam2;
+
+	if (pRecord1 == NULL || pRecord2 == NULL) return 0;
+
+	if (pRecord1->GetLevel() == pRecord2->GetLevel()) return 0;
+	if (pRecord1->GetLevel() >  pRecord2->GetLevel()) return 1;
+	return -1;
+}
+
+
 /*===========================================================================
  *
  * Class CSrLvlnView Method - void GetControlData (void);
@@ -216,9 +229,10 @@ void CSrLvlnView::DoDataExchange (CDataExchange* pDX)
  *=========================================================================*/
 void CSrLvlnView::GetControlData (void) 
 {
-  CSrLvlnRecord*    pLevelItem;
-  CSrLvloSubrecord* pItem;
-  int               ItemPos;
+  CSrLvlnRecord*		pLevelItem;
+  CSrLvloSubrecord*		pItem;
+  CSrRefSubrecordArray	SortLevelRecords;
+  int					ItemPos;
   
   CSrRecordDialog::GetControlData();
 
@@ -235,8 +249,17 @@ void CSrLvlnView::GetControlData (void)
 		/* Copy all subrecords into the new record */
   for (pItem = m_CopyRecord.GetFirstItem(ItemPos); pItem != NULL; pItem = m_CopyRecord.GetNextItem(ItemPos)) 
   {
-		pLevelItem->AddItem(pItem->GetFormID(), pItem->GetLevel(), pItem->GetCount());
+	  SortLevelRecords.Add(pItem);
   }
+
+  SortLevelRecords.Sort(l_SortLevelRecords, 0);
+
+  for (dword i = 0; i < SortLevelRecords.GetSize(); ++i)
+  {
+	  pItem = SrCastClass(CSrLvloSubrecord, SortLevelRecords[i]);
+	  if (pItem == NULL) continue;
+	  pLevelItem->AddItem(pItem->GetFormID(), pItem->GetLevel(), pItem->GetCount());
+  }  
 
   pLevelItem->UpdateListCount();
 }
