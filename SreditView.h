@@ -186,6 +186,8 @@ protected:
 	 afx_msg void OnEnChangeFiltertext();
 	 afx_msg void OnTimer(UINT_PTR nIDEvent);
 	 afx_msg void OnClose();
+	 afx_msg void OnEditUselocalstrings();
+	 afx_msg void OnUpdateEditUselocalstrings(CCmdUI *pCmdUI);
 };
 /*===========================================================================
  *		End of Class CSrEditView Definition

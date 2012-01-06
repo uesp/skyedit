@@ -948,13 +948,37 @@ void CSrPerkView::OnBnClickedSelectNextperk()
 
 void CSrPerkView::OnBnClickedAddperkButton()
 {
-	// TODO: Add your control notification handler code here
+	GetSectionData();
+	m_pCurrentSection = NULL;
+
+	srperk_section_t* pSection = m_Sections.AddNew();
+	pSection->InitializeNew();
+
+	int ListIndex = AddPerkSectionList(pSection);
+	m_SectionList.ClearSelections();
+	m_SectionList.SelectRecord(ListIndex);
 }
 
 
 void CSrPerkView::OnBnClickedDeleteperkButton()
 {
-	// TODO: Add your control notification handler code here
+	GetSectionData();
+	m_pCurrentSection = NULL;
+
+	int ListIndex = m_SectionList.GetSelectedItem();
+	if (ListIndex < 0) return;
+
+	m_SectionList.DeleteItem(ListIndex);
+	m_Sections.Delete(ListIndex);
+	m_SectionList.ClearSelections();
+	
+	if (m_SectionList.GetItemCount() == 0)
+		SetCurrentSection(NULL);
+	else if (ListIndex == 0)
+		m_SectionList.SelectRecord(ListIndex);
+	else
+		m_SectionList.SelectRecord(ListIndex-1);
+
 }
 
 

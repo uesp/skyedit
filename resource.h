@@ -543,7 +543,6 @@
 #define IDC_PRKC_LABEL                  1287
 #define IDC_RICHEDIT21                  1288
 #define IDC_ACTIVECHECK                 1289
-#define IDC_EDIT1                       1290
 #define IDC_FILTERTEXT                  1290
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
@@ -740,6 +739,7 @@
 #define ID_MENU_VIEWDATADATA            32865
 #define ID_MENU_VIEWRAWDATA             32866
 #define ID_HELP_TESTOUTPUTPERKS         32867
+#define ID_EDIT_USELOCALSTRINGS         32868
 
 // Next default values for new objects
 // 
@@ -747,7 +747,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        216
-#define _APS_NEXT_COMMAND_VALUE         32868
+#define _APS_NEXT_COMMAND_VALUE         32869
 #define _APS_NEXT_CONTROL_VALUE         1291
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

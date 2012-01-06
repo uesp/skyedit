@@ -101,6 +101,8 @@ BEGIN_MESSAGE_MAP(CSrEditView, CFormView)
   ON_EN_CHANGE(IDC_FILTERTEXT, &CSrEditView::OnEnChangeFiltertext)
   ON_WM_TIMER()
   ON_WM_CLOSE()
+  ON_COMMAND(ID_EDIT_USELOCALSTRINGS, &CSrEditView::OnEditUselocalstrings)
+  ON_UPDATE_COMMAND_UI(ID_EDIT_USELOCALSTRINGS, &CSrEditView::OnUpdateEditUselocalstrings)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Class CSrEditView Message Map
@@ -2597,4 +2599,16 @@ void CSrEditView::OnTimer(UINT_PTR nIDEvent)
 void CSrEditView::OnClose()
 {
 	__super::OnClose();
+}
+
+
+void CSrEditView::OnEditUselocalstrings()
+{
+	GetDocument()->GetActiveFile().SetLoadLocal(!GetDocument()->GetActiveFile().IsLocalStrings());
+}
+
+
+void CSrEditView::OnUpdateEditUselocalstrings(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(GetDocument()->GetActiveFile().IsLocalStrings());
 }

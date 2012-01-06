@@ -2660,6 +2660,7 @@ BEGIN
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE, GRAYED
         MENUITEM SEPARATOR
         MENUITEM "&Find...",                    ID_EDIT_FIND
+        MENUITEM "Use Local Strings",           ID_EDIT_USELOCALSTRINGS
     END
     POPUP "&View"
     BEGIN
