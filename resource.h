@@ -94,6 +94,9 @@
 #define IDD_RAWDATA_DLG                 215
 #define IDD_PERK_VIEW                   216
 #define IDD_CAMS_VIEW                   217
+#define IDD_SOUN_VIEW                   218
+#define IDD_BOUNDS_DLGDIALOG1           219
+#define IDD_BOUNDS_DLG                  219
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -555,6 +558,12 @@
 #define IDC_X1                          1294
 #define IDC_X2                          1295
 #define IDC_UNKNOWN3a                   1296
+#define IDC_SOUNDFILE                   1297
+#define IDC_SELECT_SOUNDFILE            1298
+#define IDC_SOUNDREF                    1299
+#define IDC_EDIT_SOUNDREF               1300
+#define IDC_SELECT_SOUNDREF             1301
+#define IDC_BOUNDS                      1302
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -759,9 +768,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        216
+#define _APS_NEXT_RESOURCE_VALUE        220
 #define _APS_NEXT_COMMAND_VALUE         32871
-#define _APS_NEXT_CONTROL_VALUE         1297
+#define _APS_NEXT_CONTROL_VALUE         1304
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

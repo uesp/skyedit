@@ -197,8 +197,8 @@ protected:
   sreditrecinfo_t			m_EditInfo;		/* Holds information on the record being edited */
   CSrMultiRecordHandler*	m_pRecordHandler;	/* Main record handler object */
 
-  HACCEL			m_hAccelerator;		/* Optional custom accelerator table for the dialog */
-  int				m_AcceleratorID;
+  HACCEL				m_hAccelerator;		/* Optional custom accelerator table for the dialog */
+  int					m_AcceleratorID;
 
   CSrEditDlgHandler*	m_pDlgHandler;
 
@@ -224,8 +224,9 @@ protected:
   CWnd*			m_pFemaleBipedModelField;
   CWnd*			m_pMaleIconField;
   CWnd*			m_pFemaleIconField;
-
+  CWnd*			m_pBoundsField;
   CWnd*			m_pKeywordsField;
+  srboundsdata_t m_BoundsCopy;
 
   bool			m_InitialSetData;
   bool			m_NoActivateRecord;
@@ -385,6 +386,7 @@ protected:
 
  public:
 	 afx_msg void OnEditFind();
+	 afx_msg void OnBnClickedBounds();
 };
 /*===========================================================================
  *		End of Class CSrRecordDialog Definition

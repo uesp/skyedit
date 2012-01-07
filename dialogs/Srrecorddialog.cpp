@@ -19,6 +19,7 @@
 //#include "srbipedpartslistdlg.h"
 #include "mainfrm.h"
 #include "SrConditionDlg.h"
+#include "SrBoundsDlg.h"
 
 
 /*===========================================================================
@@ -114,6 +115,7 @@ BEGIN_MESSAGE_MAP(CSrRecordDialog, CFormView)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_KEYWORDS, OnDropKeywords)
 	ON_BN_CLICKED(IDC_EDIT_DROPSOUND, &CSrRecordDialog::OnBnClickedEditDropsound)
 	ON_BN_CLICKED(IDC_EDIT_PICKUPSOUND, &CSrRecordDialog::OnBnClickedEditPickupsound)
+	ON_BN_CLICKED(IDC_BOUNDS, OnBnClickedBounds)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -184,7 +186,7 @@ static obrdtooltip_t s_ToolTipInfo[] = {
  * Class CSrRecordDialog Constructor
  *
  *=========================================================================*/
-CSrRecordDialog::CSrRecordDialog (const int ID) : CFormView(ID) 
+CSrRecordDialog::CSrRecordDialog (const int ID) : CFormView(ID)
 {
   m_pRecordHandler   = NULL;
   m_pDlgHandler      = NULL;
@@ -199,6 +201,7 @@ CSrRecordDialog::CSrRecordDialog (const int ID) : CFormView(ID)
   m_pConditionField  = NULL;
   m_pPickupSoundField = NULL;
   m_pDropSoundField    = NULL;
+  m_pBoundsField       = NULL;
   m_IgnoreConditions   = false;
 
   m_pMaleWorldModelField   = NULL;
@@ -221,6 +224,8 @@ CSrRecordDialog::CSrRecordDialog (const int ID) : CFormView(ID)
   m_EnchantType = 0;
 
   m_TitlePrefix = _T("Unknown");
+
+  memset(&m_BoundsCopy, 0, sizeof(m_BoundsCopy));
 }
 /*===========================================================================
  *		End of Class CSrRecordDialog Constructor
@@ -340,6 +345,12 @@ void CSrRecordDialog::GetUIFieldData (void) {
 		Buffer = (pButton->GetCheck() != 0) ? "true" : "false" ;
 		Result = GetOutputRecord()->SetField(pFields[Index].FieldID, Buffer);
 		if (!Result) continue;
+	  }
+	  else if (pButton == m_pBoundsField)
+	  {
+		  pButton->GetWindowText(Buffer);
+		  Result = GetOutputRecord()->SetField(pFields[Index].FieldID, Buffer);
+		  if (!Result) continue;
 	  }
     }
 	else if (pWnd->IsKindOf(RUNTIME_CLASS(CListBox)))
@@ -871,6 +882,11 @@ void CSrRecordDialog::SetUIFieldData (void) {
 	  case SR_FIELD_CONDITIONCOUNT:   m_pConditionField   = pWnd; break;
 	  case SR_FIELD_DROPSOUND:        m_pDropSoundField   = pWnd; break;
 	  case SR_FIELD_PICKUPSOUND:      m_pPickupSoundField = pWnd; break;
+	  case SR_FIELD_BOUNDS:  
+		  m_pBoundsField = pWnd; 
+		  CSrIdRecord* pIdRecord = SrCastClass(CSrIdRecord, GetInputRecord());
+		  if (pIdRecord && pIdRecord->GetBoundsData()) m_BoundsCopy = *pIdRecord->GetBoundsData();
+		  break;		  
     }
 
     Result = GetInputRecord()->GetField(Buffer, pFields[Index].FieldID);
@@ -2381,4 +2397,18 @@ void CSrRecordDialog::OnDropKeywords (NMHDR* pNotifyStruct, LRESULT* pResult)
 	}
 	
 	*pResult = SRRL_DROPCHECK_OK;
+}
+
+
+void CSrRecordDialog::OnBnClickedBounds()
+{
+	CString Buffer;
+
+	if (m_pBoundsField == NULL) return;
+	if (!SrEditBoundsDlg(m_BoundsCopy)) return;
+
+	Buffer.Format("(%hd, %hd, %hd) (%hd, %hd, %hd)", 
+		m_BoundsCopy.X1, m_BoundsCopy.Y1, m_BoundsCopy.Z1,
+		m_BoundsCopy.X2, m_BoundsCopy.Y2, m_BoundsCopy.Z2);
+	m_pBoundsField->SetWindowText(Buffer);
 }

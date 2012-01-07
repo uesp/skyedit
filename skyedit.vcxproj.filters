@@ -875,6 +875,12 @@
     <ClCompile Include="dialogs\SrCamsView.cpp">
       <Filter>Source Files\Forms\Dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="dialogs\SrSounView.cpp">
+      <Filter>Source Files\Forms\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="dialogs\SrBoundsDlg.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">
@@ -1817,6 +1823,12 @@
     </ClInclude>
     <ClInclude Include="..\tes5lib\modfile\subrecords\srsndddatasubrecord.h">
       <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="dialogs\SrSounView.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="dialogs\SrBoundsDlg.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

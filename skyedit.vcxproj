@@ -1843,6 +1843,7 @@
     <ClCompile Include="dialogs\SrArmoView.cpp" />
     <ClCompile Include="dialogs\SrBodyPartsListDlg.cpp" />
     <ClCompile Include="dialogs\SrBookView.cpp" />
+    <ClCompile Include="dialogs\SrBoundsDlg.cpp" />
     <ClCompile Include="dialogs\SrCamsView.cpp" />
     <ClCompile Include="dialogs\SrClasView.cpp" />
     <ClCompile Include="dialogs\SrContItemDlg.cpp" />
@@ -1861,6 +1862,7 @@
     <ClCompile Include="dialogs\SrScrlView.cpp" />
     <ClCompile Include="dialogs\SrShouView.cpp" />
     <ClCompile Include="dialogs\SrSlgmView.cpp" />
+    <ClCompile Include="dialogs\SrSounView.cpp" />
     <ClCompile Include="dialogs\SrSpelView.cpp" />
     <ClCompile Include="dialogs\SrStatView.cpp" />
     <ClCompile Include="dialogs\SrWoopView.cpp" />
@@ -2172,6 +2174,7 @@
     <ClInclude Include="dialogs\SrArmoView.h" />
     <ClInclude Include="dialogs\SrBodyPartsListDlg.h" />
     <ClInclude Include="dialogs\SrBookView.h" />
+    <ClInclude Include="dialogs\SrBoundsDlg.h" />
     <ClInclude Include="dialogs\SrCamsView.h" />
     <ClInclude Include="dialogs\SrClasView.h" />
     <ClInclude Include="dialogs\SrContItemDlg.h" />
@@ -2189,6 +2192,7 @@
     <ClInclude Include="dialogs\SrScrlView.h" />
     <ClInclude Include="dialogs\SrShouView.h" />
     <ClInclude Include="dialogs\srslgmview.h" />
+    <ClInclude Include="dialogs\SrSounView.h" />
     <ClInclude Include="dialogs\SrSpelView.h" />
     <ClInclude Include="dialogs\SrStatView.h" />
     <ClInclude Include="dialogs\SrWoopView.h" />
