@@ -1,3 +1,6 @@
+v0.046a
+	- Conditions: Batch edit? drag-and-drop?
+
 v0.045a
 	- Implement an "editorid" control derived from a CEdit. Replace all current read-only CEdits with
 	  this control to permit more editing options (direct typing, color red/green for valid/invalid,

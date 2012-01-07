@@ -179,6 +179,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "SoundCate"
+	DisplayName = "Sound Cat."
+	RecName = SNCT
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "SoundDesc"
 	DisplayName = "Sound Desc."
 	RecName = SNDR
