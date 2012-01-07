@@ -2112,7 +2112,9 @@
     <ClInclude Include="..\tes5lib\modfile\subrecords\srarraysubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srbodtsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srbookdatasubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srboundssubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srbytesubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srcamsdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srclasdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srcntosubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srcontdatasubrecord.h" />

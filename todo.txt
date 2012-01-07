@@ -6,6 +6,7 @@ v0.04
 	- Change all "old" manual fields to use field macros
 	- More handling of function parameters in condition dialog (i.e., actor values)
 	- Rare crash when closing a main file view (thread is not being closed and accesses view after destruction)
+	- Bounds editing in dialogs
 
 v0.03a
 	- Cleanup condition implementation
