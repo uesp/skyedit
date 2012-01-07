@@ -1,5 +1,5 @@
  
-	              ackage: SkyEdit v0.045 alpha, 7 January 2012
+	              ackage: SkyEdit v0.046 alpha, 7 January 2012
 	               Author: Dave Humphrey, dave@uesp.net
                   Website: www.uesp.net/wiki/Tes5Mod:SkyEdit
 
@@ -51,6 +51,7 @@ basic set of features is included.
 	- Armatures (ARMA)		- Soul Gems
 	- Shouts				- Words of Power
 	- Camera Shots			- Sounds
+	- Sound Descriptors
 	
 
   What it Can Do
@@ -147,6 +148,10 @@ can be found at:
 
   Version History
 =======================================
+0.046alpha - 7 January 2021
+	- Fix saving crash.
+	- New editable records: Sound Descriptors (SNDR)
+
 0.045alpha - 7 January 2021
 	- Added filter text (display records with an editor ID containing that text)  
 	  and active only (display just the active mod records) controls.
