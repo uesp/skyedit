@@ -2148,6 +2148,7 @@
     <ClInclude Include="..\tes5lib\modfile\subrecords\srscrldatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srshousnamsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srslgmdatasubrecord.h" />
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srsndddatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srspitsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srstringsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srsubreccont.h" />

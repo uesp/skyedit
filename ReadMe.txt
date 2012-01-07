@@ -155,6 +155,7 @@ can be found at:
 	- Perk sections can now be added and deleted.
 	- Edit mod author/description (under the Edit menu).
 	- New editable records: Image Space (IMAD)
+	- Added bounds data handling to most records (accessible via batch edit if needed).
 
 0.041alpha - 4 January 2021
 	- Beta of editable Perks
