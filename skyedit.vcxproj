@@ -1862,6 +1862,7 @@
     <ClCompile Include="dialogs\SrScrlView.cpp" />
     <ClCompile Include="dialogs\SrShouView.cpp" />
     <ClCompile Include="dialogs\SrSlgmView.cpp" />
+    <ClCompile Include="dialogs\SrSnctView.cpp" />
     <ClCompile Include="dialogs\SrSndrView.cpp" />
     <ClCompile Include="dialogs\SrSounView.cpp" />
     <ClCompile Include="dialogs\SrSpelView.cpp" />
@@ -2193,6 +2194,7 @@
     <ClInclude Include="dialogs\SrScrlView.h" />
     <ClInclude Include="dialogs\SrShouView.h" />
     <ClInclude Include="dialogs\srslgmview.h" />
+    <ClInclude Include="dialogs\SrSnctView.h" />
     <ClInclude Include="dialogs\SrSndrView.h" />
     <ClInclude Include="dialogs\SrSounView.h" />
     <ClInclude Include="dialogs\SrSpelView.h" />

@@ -98,6 +98,7 @@
 #define IDD_BOUNDS_DLGDIALOG1           219
 #define IDD_BOUNDS_DLG                  219
 #define IDD_SNDR_VIEW                   220
+#define IDD_SNCT_VIEW                   221
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -579,7 +580,11 @@
 #define ID_EDIT_SOUNDFILE               1311
 #define ID_DELETE_SOUNDFILE             1312
 #define ID_SELECT_SOUNDFILE             1313
+#define IDC_SOUNDPARENT                 1313
 #define ID_ADD_SOUNDFILE                1314
+#define IDC_EDIT_SOUNDPARENT            1314
+#define IDC_SELECT_PARENT               1315
+#define IDC_SELECT_SOUNDPARENT          1315
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -786,7 +791,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        220
 #define _APS_NEXT_COMMAND_VALUE         32871
-#define _APS_NEXT_CONTROL_VALUE         1313
+#define _APS_NEXT_CONTROL_VALUE         1316
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
