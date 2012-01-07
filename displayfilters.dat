@@ -179,6 +179,13 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "SoundDesc"
+	DisplayName = "Sound Desc."
+	RecName = SNDR
+	Parent = NULL
+End	
+
+DisplayFilter
 	ID = "Spells"
 	DisplayName = "Spells"
 	RecName = SPEL
@@ -523,12 +530,6 @@ DisplayFilter
 	ID = "Race"
 	DisplayName = "Races"
 	RecName = RACE
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "SoundDesc"
-	DisplayName = "Sound Desc"
-	RecName = SNDR
 	Parent = NoEdit
 End	
 #
