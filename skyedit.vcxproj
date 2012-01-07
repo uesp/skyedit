@@ -1843,6 +1843,7 @@
     <ClCompile Include="dialogs\SrArmoView.cpp" />
     <ClCompile Include="dialogs\SrBodyPartsListDlg.cpp" />
     <ClCompile Include="dialogs\SrBookView.cpp" />
+    <ClCompile Include="dialogs\SrCamsView.cpp" />
     <ClCompile Include="dialogs\SrClasView.cpp" />
     <ClCompile Include="dialogs\SrContItemDlg.cpp" />
     <ClCompile Include="dialogs\SrContView.cpp" />
@@ -2168,6 +2169,7 @@
     <ClInclude Include="dialogs\SrArmoView.h" />
     <ClInclude Include="dialogs\SrBodyPartsListDlg.h" />
     <ClInclude Include="dialogs\SrBookView.h" />
+    <ClInclude Include="dialogs\SrCamsView.h" />
     <ClInclude Include="dialogs\SrClasView.h" />
     <ClInclude Include="dialogs\SrContItemDlg.h" />
     <ClInclude Include="dialogs\SrContView.h" />

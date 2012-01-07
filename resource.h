@@ -93,6 +93,7 @@
 #define IDD_CLAS_VIEW                   214
 #define IDD_RAWDATA_DLG                 215
 #define IDD_PERK_VIEW                   216
+#define IDD_CAMS_VIEW                   217
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -156,13 +157,17 @@
 #define IDC_RADIUS                      1075
 #define IDC_FALLOFF                     1076
 #define IDC_UNKNOWN2a                   1078
+#define IDC_Y1                          1078
 #define IDC_UNKNOWN3                    1079
+#define IDC_Z1                          1079
 #define IDC_ENCHANTCHARGE               1080
 #define IDC_SECTION_ACTORVALUE          1080
+#define IDC_Y2                          1080
 #define IDC_NAME                        1081
 #define IDC_CNAME                       1082
 #define IDC_NNAME                       1082
 #define IDC_RECHARGE1                   1082
+#define IDC_Z2                          1082
 #define IDC_NAME2                       1083
 #define IDC_RECHARGE2                   1083
 #define IDC_RECHARGE3                   1084
@@ -544,6 +549,12 @@
 #define IDC_RICHEDIT21                  1288
 #define IDC_ACTIVECHECK                 1289
 #define IDC_FILTERTEXT                  1290
+#define IDC_IMAGESPACE                  1291
+#define IDC_EDIT_IMAGESPACE             1292
+#define IDC_SELECT_IMAGESPACE           1293
+#define IDC_X1                          1294
+#define IDC_X2                          1295
+#define IDC_UNKNOWN3a                   1296
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -750,7 +761,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        216
 #define _APS_NEXT_COMMAND_VALUE         32871
-#define _APS_NEXT_CONTROL_VALUE         1291
+#define _APS_NEXT_CONTROL_VALUE         1297
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

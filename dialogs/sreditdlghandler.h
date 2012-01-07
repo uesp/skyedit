@@ -36,6 +36,7 @@
   #include "srarmaview.h"
   #include "srarmoview.h"  
   #include "srbookview.h"
+  #include "srcamsview.h"
   #include "srclasview.h"
   #include "srcobjview.h"
   #include "srcontview.h"

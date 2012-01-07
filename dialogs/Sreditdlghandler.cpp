@@ -43,6 +43,7 @@ srdlgcreateinfo_t l_SrDlgCreateInfo[] = {
 	{ &SR_NAME_ARMA, "Armature",		 CSrArmaView::IDD,   RUNTIME_CLASS(CSrArmaView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Armature"),		_T("Armature") },
 	{ &SR_NAME_ARMO, "Armor",			 CSrArmoView::IDD,   RUNTIME_CLASS(CSrArmoView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Armor"),			_T("Armor") },
 	{ &SR_NAME_BOOK, "Book",			 CSrBookView::IDD,   RUNTIME_CLASS(CSrBookView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Book"),			_T("Book") },
+	{ &SR_NAME_CAMS, "Camera Shot",		 CSrCamsView::IDD,   RUNTIME_CLASS(CSrCamsView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Camera_Shot"),	_T("Camera_Shot") },
 	{ &SR_NAME_CLAS, "Class",			 CSrClasView::IDD,   RUNTIME_CLASS(CSrClasView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Class"),			_T("Class") },
 	{ &SR_NAME_CONT, "Container",		 CSrContView::IDD,   RUNTIME_CLASS(CSrContView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Container"),		_T("Container") },
 	{ &SR_NAME_ENCH, "Enchantment",		 CSrEnchView::IDD,   RUNTIME_CLASS(CSrEnchView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Enchantment"),	_T("Enchantment") },

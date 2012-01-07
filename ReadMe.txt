@@ -154,6 +154,7 @@ can be found at:
 	  to toggle on/off). String files are backed up on save just like plugin files.
 	- Perk sections can now be added and deleted.
 	- Edit mod author/description (under the Edit menu).
+	- New editable records: Image Space (IMAD)
 
 0.041alpha - 4 January 2021
 	- Beta of editable Perks
