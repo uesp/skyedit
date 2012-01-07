@@ -97,6 +97,7 @@
 #define IDD_SOUN_VIEW                   218
 #define IDD_BOUNDS_DLGDIALOG1           219
 #define IDD_BOUNDS_DLG                  219
+#define IDD_SNDR_VIEW                   220
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -186,7 +187,9 @@
 #define IDC_EDIT_IMPACTSET              1105
 #define IDC_SOUND                       1106
 #define IDC_EDIT_DRAWSOUND              1107
+#define IDC_CATEGORY                    1107
 #define IDC_EDIT_SHEATHSOUND            1108
+#define IDC_OUTPUTMARKER                1108
 #define IDC_EDIT_SWINGSOUND             1109
 #define IDC_EDIT_BOUNDSOUND             1110
 #define IDC_TRAPSOUND                   1111
@@ -437,8 +440,10 @@
 #define IDC_IMPACTSET1                  1203
 #define IDC_CLOSESOUND                  1204
 #define IDC_SELECT_IMPACTSET1           1204
+#define IDC_EDIT_CATEGORY               1204
 #define IDC_EDIT_CLOSESOUND             1205
 #define IDC_EDIT_IMPACTSET1             1205
+#define IDC_EDIT_OUTPUTMARKER           1205
 #define IDC_SELECT_CLOSESOUND           1206
 #define IDC_IMPACTSET2                  1206
 #define IDC_TYPE                        1207
@@ -564,6 +569,17 @@
 #define IDC_EDIT_SOUNDREF               1300
 #define IDC_SELECT_SOUNDREF             1301
 #define IDC_BOUNDS                      1302
+#define IDC_SOUNDFLAGS                  1305
+#define IDC_FNAME                       1306
+#define IDC_SELECT_SOUND                1307
+#define IDC_SELECT_CATEGORY             1308
+#define IDC_SELECT_OUTPUTMARKER         1309
+#define IDC_SOUNDFILE_LIST              1310
+#define ID_EDIT_SOUNDFILEa              1311
+#define ID_EDIT_SOUNDFILE               1311
+#define ID_DELETE_SOUNDFILE             1312
+#define ID_SELECT_SOUNDFILE             1313
+#define ID_ADD_SOUNDFILE                1314
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -770,7 +786,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        220
 #define _APS_NEXT_COMMAND_VALUE         32871
-#define _APS_NEXT_CONTROL_VALUE         1304
+#define _APS_NEXT_CONTROL_VALUE         1313
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

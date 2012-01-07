@@ -872,10 +872,19 @@ bool CSrResourceView::SelectResource (const char* pResource) {
   CSrResourceBase* pBase;
   HTREEITEM        hTree;
 
-  if (m_pResourceHandler == NULL) return (false);
+  if (m_pResourceHandler == NULL || pResource == NULL) return (false);
   
   pBase = m_pResourceHandler->FindName(pResource);
-  if (pBase == NULL) return (false);
+
+  if (pBase == NULL) 
+  {
+	  if (strnicmp(pResource, "data\\", 5) == 0) 
+		  pBase = m_pResourceHandler->FindName(pResource + 5);
+	  else if (strnicmp(pResource, "\\data\\", 6) == 0) 
+		  pBase = m_pResourceHandler->FindName(pResource + 6);
+
+	  if (pBase == NULL) return false;
+  }
 
   hTree = (HTREEITEM) pBase->GetUserDataPtr();
   if (hTree == NULL) return (false);

@@ -201,12 +201,10 @@ void CSrSounView::OnDropSoundFile (NMHDR* pNotifyStruct, LRESULT* pResult)
 
 void CSrSounView::OnBnClickedSelectSoundfile()
 {
-  CString Buffer;
+	CString Buffer;
 
-  if (m_pSoundFileField == NULL) return;
-  m_pSoundFileField->GetWindowText(Buffer);
-
-  m_pDlgHandler->SelectSoundFile(Buffer);
+	m_SoundFile.GetWindowText(Buffer);
+	m_pDlgHandler->SelectSoundFile(Buffer);
 }
 
 

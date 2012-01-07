@@ -55,6 +55,7 @@
   #include "srscrlview.h"
   #include "srshouview.h"
   #include "srslgmview.h"
+  #include "srsndrview.h"
   #include "srsounview.h"
   #include "srspelview.h"
   #include "srstatview.h"

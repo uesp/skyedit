@@ -2,6 +2,7 @@ v0.045a
 	- Implement an "editorid" control derived from a CEdit. Replace all current read-only CEdits with
 	  this control to permit more editing options (direct typing, color red/green for valid/invalid,
 	  drag and drop, autocomplete, etc...).
+	- Play sounds (via default shell program?)
 
 v0.04a
 	- Update web site help 
