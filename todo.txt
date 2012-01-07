@@ -1,5 +1,5 @@
 
-v0.04
+v0.04a
 	- Update web site help 
 	- CIS1 appears to be GMST editorIDs and not script variables (figure out exact format in CTDA or function calls)
 	- Raw view to handle array subrecords
@@ -7,6 +7,7 @@ v0.04
 	- More handling of function parameters in condition dialog (i.e., actor values)
 	- Rare crash when closing a main file view (thread is not being closed and accesses view after destruction)
 	- Bounds editing in dialogs
+	- Permit resource viewer to display outside of main frame
 
 v0.03a
 	- Cleanup condition implementation

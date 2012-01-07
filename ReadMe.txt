@@ -1,5 +1,5 @@
  
-	              Package: SkyEdit v0.041alpha, 4 January 2012
+	              ackage: SkyEdit v0.045 alpha, 7 January 2012
 	               Author: Dave Humphrey, dave@uesp.net
                   Website: www.uesp.net/wiki/Tes5Mod:SkyEdit
 
@@ -50,6 +50,7 @@ basic set of features is included.
 	- Statics				- Activators
 	- Armatures (ARMA)		- Soul Gems
 	- Shouts				- Words of Power
+	- Camera Shots			- Sounds
 	
 
   What it Can Do
@@ -146,7 +147,7 @@ can be found at:
 
   Version History
 =======================================
-0.045alpha - January 2021
+0.045alpha - 7 January 2021
 	- Added filter text (display records with an editor ID containing that text)  
 	  and active only (display just the active mod records) controls.
 	- Leveled lists sort records by level when being saved. Fixed level list saving bug.
@@ -154,8 +155,8 @@ can be found at:
 	  to toggle on/off). String files are backed up on save just like plugin files.
 	- Perk sections can now be added and deleted.
 	- Edit mod author/description (under the Edit menu).
-	- New editable records: Image Space (IMAD)
-	- Added bounds data handling to most records (accessible via batch edit if needed).
+	- New editable records: Camera Shot, Sounds
+	- Added bounds data handling to most records (only editable via batch edit currently).
 
 0.041alpha - 4 January 2021
 	- Beta of editable Perks
