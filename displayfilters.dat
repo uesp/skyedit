@@ -137,6 +137,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "Outfit"
+	DisplayName = "Outfits"
+	RecName = OTFT
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Perks"
 	DisplayName = "Perks"
 	RecName = PERK
