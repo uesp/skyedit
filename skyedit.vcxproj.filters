@@ -281,9 +281,6 @@
     <ClCompile Include="srresourceview.cpp">
       <Filter>Source Files\Forms</Filter>
     </ClCompile>
-    <ClCompile Include="srprogressdlg.cpp">
-      <Filter>Source Files\Forms</Filter>
-    </ClCompile>
     <ClCompile Include="SrLoadDlg.cpp">
       <Filter>Source Files\Forms</Filter>
     </ClCompile>
@@ -891,6 +888,9 @@
       <Filter>Source Files\Forms\Dialogs</Filter>
     </ClCompile>
     <ClCompile Include="dialogs\SrSopmEditDlg.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="srprogressdlg.cpp">
       <Filter>Source Files\Forms\CommonDlg</Filter>
     </ClCompile>
   </ItemGroup>

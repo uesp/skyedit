@@ -57,6 +57,7 @@ protected:
 	CHARFORMAT2* m_pCurrentFmt;
 
 	bool		m_UpdateSelection;
+	bool		m_SummaryOnly;
 
 	CLineInfoArray	m_LineInfos;
 	
@@ -71,7 +72,7 @@ public:
 	CSrRawDataDlg(CSrRecordHandler&	Handler, CWnd* pParent = NULL); 
 	virtual ~CSrRawDataDlg();
 
-	int DoModal (CSrRecord* pRecord);
+	int DoModal (CSrRecord* pRecord, const bool SummaryOnly);
 
 	void SetControlData (void);
 

@@ -190,6 +190,7 @@ protected:
 	 afx_msg void OnUpdateEditUselocalstrings(CCmdUI *pCmdUI);
 	 afx_msg void OnEditSetmodauthor();
 	 afx_msg void OnEditSetmoddescription();
+	 afx_msg void OnMenuViewsummary();
 };
 /*===========================================================================
  *		End of Class CSrEditView Definition

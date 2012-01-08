@@ -12,6 +12,7 @@
 #include "resource.h"
 #include "SrRawDataDlg.h"
 #include "afxdialogex.h"
+#include "../Srprogressdlg.h"
 
 
 /*===========================================================================
@@ -43,6 +44,7 @@ CSrRawDataDlg::CSrRawDataDlg(CSrRecordHandler&	Handler, CWnd* pParent)
 {
 	m_pRecord = NULL;
 	m_UpdateSelection = false;
+	m_SummaryOnly = true;
 
 	m_HexFmt1.cbSize = sizeof(m_HexFmt1);
 	m_HexFmt2.cbSize = sizeof(m_HexFmt2);
@@ -106,10 +108,11 @@ void CSrRawDataDlg::AddText (const char* pString, ...)
 }
 
 
-int CSrRawDataDlg::DoModal (CSrRecord* pRecord)
+int CSrRawDataDlg::DoModal (CSrRecord* pRecord, const bool SummaryOnly)
 {
 	if (pRecord == NULL) return -1;
 	m_pRecord = pRecord;
+	m_SummaryOnly = SummaryOnly;
 
 	return CDialogEx::DoModal();
 }
@@ -136,6 +139,13 @@ void CSrRawDataDlg::SetControlData (void)
 	m_UpdateSelection = false;
 	m_pCurrentFmt = &m_DefaultFmt;
 
+	CSrProgressDlg* pProgress = ShowSrProgressDlg("View Data Data", "Creating Raw Data String...");
+	m_Text.SetRedraw(FALSE);
+	long EventMask = m_Text.GetEventMask();
+	m_Text.SetEventMask(0);
+
+	pProgress->Update(0);
+
 	AddText("Record Information\n");
 	AddText("\tFormID: 0x%08X\n", m_pRecord->GetFormID());
 	AddText("\tType: %4.4s\n", m_pRecord->GetHeader().RecordType.Name);
@@ -150,6 +160,9 @@ void CSrRawDataDlg::SetControlData (void)
 
 	for (dword i = 0; i < m_pRecord->GetNumSubrecords(); ++i)
 	{
+		pProgress->Update(float(i) / float(m_pRecord->GetNumSubrecords()) * 100.0f);
+		if (pProgress->GetIsCancelled()) break;
+
 		m_pCurrentFmt = &m_DefaultFmt;
 
 		CSrSubrecord* pSubrecord = m_pRecord->GetSubrecord(i);
@@ -164,6 +177,9 @@ void CSrRawDataDlg::SetControlData (void)
 		OutputSubrecord(pSubrecord, i);
 	}
 
+	DestroySrProgressDlg(pProgress);
+	m_Text.SetEventMask(EventMask);
+	m_Text.SetRedraw(TRUE);
 	m_UpdateSelection = true;
 }
 
@@ -173,6 +189,7 @@ void CSrRawDataDlg::OutputSubrecord (CSrSubrecord* pSubrecord, const int i)
 	srrawdata_lineinfo_t LineInfo;
 
 	AddText("%4.4s,  %d bytes\n", pSubrecord->GetRecordType().Name, pSubrecord->GetRecordSize());
+	if (m_SummaryOnly) return;
 
 	const byte* pData = pSubrecord->GetData();
 	dword Size = pSubrecord->GetRecordSize();

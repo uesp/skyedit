@@ -621,8 +621,8 @@
 #define IDC_DATALABEL8                  1342
 #define IDC_ANAMDATA_BUTTON             1343
 #define IDC_ONAMDATA_BUTTON             1344
-#define IDC_SNAMDATA_BUTTON             1345
 #define IDC_ANAMDATA_BUTTON3            1345
+#define IDC_SNAMDATA_BUTTON             1345
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -821,6 +821,7 @@
 #define ID_EDIT_USELOCALSTRINGS         32868
 #define ID_EDIT_SETMODAUTHOR            32869
 #define ID_EDIT_SETMODDESCRIPTION       32870
+#define ID_MENU_VIEWSUMMARY             32871
 
 // Next default values for new objects
 // 
@@ -828,7 +829,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        224
-#define _APS_NEXT_COMMAND_VALUE         32871
+#define _APS_NEXT_COMMAND_VALUE         32872
 #define _APS_NEXT_CONTROL_VALUE         1344
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

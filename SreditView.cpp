@@ -105,6 +105,7 @@ BEGIN_MESSAGE_MAP(CSrEditView, CFormView)
   ON_UPDATE_COMMAND_UI(ID_EDIT_USELOCALSTRINGS, &CSrEditView::OnUpdateEditUselocalstrings)
   ON_COMMAND(ID_EDIT_SETMODAUTHOR, &CSrEditView::OnEditSetmodauthor)
   ON_COMMAND(ID_EDIT_SETMODDESCRIPTION, &CSrEditView::OnEditSetmoddescription)
+  ON_COMMAND(ID_MENU_VIEWSUMMARY, &CSrEditView::OnMenuViewsummary)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Class CSrEditView Message Map
@@ -2277,8 +2278,18 @@ void CSrEditView::OnMenuViewrawdata()
 	 CSrRecord* pRecord = m_RecordList.GetSelectedRecord();
 
 	 if (pRecord == NULL) return;
-	 Dlg.DoModal(pRecord);
+	 Dlg.DoModal(pRecord, false);
  }
+
+
+void CSrEditView::OnMenuViewsummary()
+{
+	 CSrRawDataDlg Dlg(GetDocument()->GetRecordHandler());
+	 CSrRecord* pRecord = m_RecordList.GetSelectedRecord();
+
+	 if (pRecord == NULL) return;
+	 Dlg.DoModal(pRecord, true);
+}
 
 
 void CSrEditView::OnHelpTestoutputperks()
@@ -2640,3 +2651,4 @@ void CSrEditView::OnEditSetmoddescription()
 	GetDocument()->GetActiveFile().SetModDescription(Buffer);
 	GetDocument()->SetModifiedFlag();
 }
+
