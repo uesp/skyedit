@@ -148,6 +148,9 @@ can be found at:
 
   Version History
 =======================================
+0.05alpha - ? January 2021
+	- New editable records: Sound Categories (SNCT)
+
 0.046alpha - 7 January 2021
 	- Fix saving crash.
 	- New editable records: Sound Descriptors (SNDR)

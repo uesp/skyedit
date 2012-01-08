@@ -190,7 +190,12 @@ DisplayFilter
 	RecName = SNDR
 	Parent = NULL
 End	
-
+DisplayFilter
+	ID = "SoundMarker"
+	DisplayName = "Sound Marker"
+	RecName = SOPM
+	Parent = NULL
+End	
 DisplayFilter
 	ID = "Spells"
 	DisplayName = "Spells"
