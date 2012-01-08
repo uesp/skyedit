@@ -99,6 +99,8 @@
 #define IDD_BOUNDS_DLG                  219
 #define IDD_SNDR_VIEW                   220
 #define IDD_SNCT_VIEW                   221
+#define IDD_SOPM_VIEW                   222
+#define IDD_SOPMEDIT_DLG                223
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -168,14 +170,22 @@
 #define IDC_ENCHANTCHARGE               1080
 #define IDC_SECTION_ACTORVALUE          1080
 #define IDC_Y2                          1080
+#define IDC_DATA3                       1080
 #define IDC_NAME                        1081
+#define IDC_DATA6                       1081
 #define IDC_CNAME                       1082
 #define IDC_NNAME                       1082
 #define IDC_RECHARGE1                   1082
 #define IDC_Z2                          1082
+#define IDC_DATA9                       1082
 #define IDC_NAME2                       1083
 #define IDC_RECHARGE2                   1083
+#define IDC_DATA12                      1083
 #define IDC_RECHARGE3                   1084
+#define IDC_DATA15                      1084
+#define IDC_DATA18                      1085
+#define IDC_DATA21                      1086
+#define IDC_DATA24                      1087
 #define IDC_ENCHANTMENT                 1095
 #define IDC_EQUIPSLOT                   1096
 #define IDC_IMPACTSET                   1097
@@ -583,8 +593,36 @@
 #define IDC_SOUNDPARENT                 1313
 #define ID_ADD_SOUNDFILE                1314
 #define IDC_EDIT_SOUNDPARENT            1314
-#define IDC_SELECT_PARENT               1315
 #define IDC_SELECT_SOUNDPARENT          1315
+#define IDC_CONTENTTYPE                 1317
+#define IDC_DATA1                       1319
+#define IDC_DATA2                       1320
+#define IDC_DATA4                       1321
+#define IDC_DATA5                       1322
+#define IDC_DATA7                       1323
+#define IDC_DATA8                       1324
+#define IDC_DATA10                      1325
+#define IDC_DATA11                      1326
+#define IDC_DATA13                      1327
+#define IDC_DATA14                      1328
+#define IDC_DATA16                      1329
+#define IDC_DATA17                      1330
+#define IDC_DATA19                      1331
+#define IDC_DATA20                      1332
+#define IDC_DATA22                      1333
+#define IDC_DATA23                      1334
+#define IDC_DATALABEL1                  1335
+#define IDC_DATALABEL2                  1336
+#define IDC_DATALABEL3                  1337
+#define IDC_DATALABEL4                  1338
+#define IDC_DATALABEL5                  1339
+#define IDC_DATALABEL6                  1340
+#define IDC_DATALABEL7                  1341
+#define IDC_DATALABEL8                  1342
+#define IDC_ANAMDATA_BUTTON             1343
+#define IDC_ONAMDATA_BUTTON             1344
+#define IDC_SNAMDATA_BUTTON             1345
+#define IDC_ANAMDATA_BUTTON3            1345
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -789,9 +827,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        220
+#define _APS_NEXT_RESOURCE_VALUE        224
 #define _APS_NEXT_COMMAND_VALUE         32871
-#define _APS_NEXT_CONTROL_VALUE         1316
+#define _APS_NEXT_CONTROL_VALUE         1344
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

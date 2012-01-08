@@ -51,7 +51,7 @@ basic set of features is included.
 	- Armatures (ARMA)		- Soul Gems
 	- Shouts				- Words of Power
 	- Camera Shots			- Sounds
-	- Sound Descriptors
+	- Sound Descriptors		- Sound Markers (SOPM)
 	
 
   What it Can Do
@@ -149,7 +149,7 @@ can be found at:
   Version History
 =======================================
 0.05alpha - ? January 2021
-	- New editable records: Sound Categories (SNCT)
+	- New editable records: Sound Categories (SNCT), Sound Markers (SOPM)
 
 0.046alpha - 7 January 2021
 	- Fix saving crash.

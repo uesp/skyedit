@@ -1836,6 +1836,7 @@
     <ClCompile Include="..\tes5lib\windows\srrecordtreectrl.cpp" />
     <ClCompile Include="..\tes5lib\windows\srrecordvirtuallistctrl.cpp" />
     <ClCompile Include="..\tes5lib\windows\tabctrlsheet.cpp" />
+    <ClCompile Include="dialogs\SrSopmEditDlg.cpp" />
     <ClCompile Include="dialogs\SrActiView.cpp" />
     <ClCompile Include="dialogs\SrAlchView.cpp" />
     <ClCompile Include="dialogs\SrAmmoView.cpp" />
@@ -1864,6 +1865,7 @@
     <ClCompile Include="dialogs\SrSlgmView.cpp" />
     <ClCompile Include="dialogs\SrSnctView.cpp" />
     <ClCompile Include="dialogs\SrSndrView.cpp" />
+    <ClCompile Include="dialogs\SrSopmView.cpp" />
     <ClCompile Include="dialogs\SrSounView.cpp" />
     <ClCompile Include="dialogs\SrSpelView.cpp" />
     <ClCompile Include="dialogs\SrStatView.cpp" />
@@ -2172,6 +2174,7 @@
     <ClInclude Include="..\tes5lib\windows\srrecordtreectrl.h" />
     <ClInclude Include="..\tes5lib\windows\srrecordvirtuallistctrl.h" />
     <ClInclude Include="..\tes5lib\windows\tabctrlsheet.h" />
+    <ClInclude Include="dialogs\SrSopmEditDlg.h" />
     <ClInclude Include="dialogs\SrActiView.h" />
     <ClInclude Include="dialogs\SrAlchView.h" />
     <ClInclude Include="dialogs\SrAmmoView.h" />
@@ -2199,6 +2202,7 @@
     <ClInclude Include="dialogs\srslgmview.h" />
     <ClInclude Include="dialogs\SrSnctView.h" />
     <ClInclude Include="dialogs\SrSndrView.h" />
+    <ClInclude Include="dialogs\SrSopmView.h" />
     <ClInclude Include="dialogs\SrSounView.h" />
     <ClInclude Include="dialogs\SrSpelView.h" />
     <ClInclude Include="dialogs\SrStatView.h" />

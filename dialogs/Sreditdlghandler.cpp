@@ -65,6 +65,7 @@ srdlgcreateinfo_t l_SrDlgCreateInfo[] = {
 	{ &SR_NAME_SNCT, "Sound Category",   CSrSnctView::IDD,   RUNTIME_CLASS(CSrSnctView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Sound_Category"),_T("Sound_Category") },
 	{ &SR_NAME_SNDR, "Sound Descriptor", CSrSndrView::IDD,   RUNTIME_CLASS(CSrSndrView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Sound_Descriptor"),_T("Sound_Descriptor") },
 	{ &SR_NAME_SLGM, "Soul Gem",	     CSrSlgmView::IDD,   RUNTIME_CLASS(CSrSlgmView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Soul_Gem"),		_T("Soul_Gem") },
+	{ &SR_NAME_SOPM, "Sound Marker",	 CSrSopmView::IDD,   RUNTIME_CLASS(CSrSopmView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Sound_Marker"),	_T("Sound_Marker") },
 	{ &SR_NAME_SOUN, "Sound",			 CSrSounView::IDD,   RUNTIME_CLASS(CSrSounView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Sound"),			_T("Sound") },
 	{ &SR_NAME_SPEL, "Spell",		     CSrSpelView::IDD,   RUNTIME_CLASS(CSrSpelView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Spell"),			_T("Spell") },
 	{ &SR_NAME_STAT, "Static",		     CSrStatView::IDD,   RUNTIME_CLASS(CSrStatView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Static"),		_T("Static") },
