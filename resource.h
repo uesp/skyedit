@@ -68,6 +68,7 @@
 #define IDR_MGEFSOUNDLIST_MENU          189
 #define IDD_SPEL_VIEW                   190
 #define IDC_GOODDROP_CURSOR             190
+#define IDR_OUTFITLIST_MENU             190
 #define IDD_AMMO_VIEW                   191
 #define IDD_ARMO_VIEW                   192
 #define IDD_BODYPARTS_DLG               193
@@ -101,6 +102,7 @@
 #define IDD_SNCT_VIEW                   221
 #define IDD_SOPM_VIEW                   222
 #define IDD_SOPMEDIT_DLG                223
+#define IDD_OTFT_VIEW                   224
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -621,7 +623,6 @@
 #define IDC_DATALABEL8                  1342
 #define IDC_ANAMDATA_BUTTON             1343
 #define IDC_ONAMDATA_BUTTON             1344
-#define IDC_ANAMDATA_BUTTON3            1345
 #define IDC_SNAMDATA_BUTTON             1345
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
@@ -822,6 +823,12 @@
 #define ID_EDIT_SETMODAUTHOR            32869
 #define ID_EDIT_SETMODDESCRIPTION       32870
 #define ID_MENU_VIEWSUMMARY             32871
+#define ID_OUTFITLIST_ADD               32872
+#define ID_OUTFITLIST_EDIT              32873
+#define ID_OUTFITLIST_DELETE            32874
+#define ID_MENU_EDITRECORD32875         32875
+#define ID_MENU_EDITBASERECORD          32876
+#define ID_OUTFITLIST_EDITBASE          32877
 
 // Next default values for new objects
 // 
@@ -829,7 +836,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        224
-#define _APS_NEXT_COMMAND_VALUE         32872
+#define _APS_NEXT_COMMAND_VALUE         32878
 #define _APS_NEXT_CONTROL_VALUE         1344
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

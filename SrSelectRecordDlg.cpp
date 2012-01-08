@@ -19,11 +19,6 @@
  * Begin Local Definitions
  *
  *=========================================================================*/
-//#ifdef _DEBUG
-//  #define new DEBUG_NEW
-//  #undef THIS_FILE
-//  static char THIS_FILE[] = __FILE__;
-//#endif
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -35,13 +30,11 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrSelectRecordDlg, CDialog)
-	//{{AFX_MSG_MAP(CSrSelectRecordDlg)
 	ON_BN_CLICKED(ID_CLEAR_BUTTON, OnClearButton)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_RECORDLIST, OnItemchangedRecordlist)
 	ON_MESSAGE(ID_SRRECORDLIST_ACTIVATE, OnEditRecord)
 	ON_EN_CHANGE(IDC_CURRENT_TEXT, OnChangeCurrentText)
 	ON_WM_CTLCOLOR()
-	//}}AFX_MSG_MAP
 	ON_CBN_SELCHANGE(IDC_TYPEFILTER_LIST, &CSrSelectRecordDlg::OnCbnSelchangeTypefilterList)
 END_MESSAGE_MAP()
 /*===========================================================================
@@ -172,7 +165,7 @@ static srselrecdlginfo_t s_KeywordSelDlg =
 static srreclistcolinit_t s_ComponentListInit[] = {
 	{ SR_FIELD_EDITORID,	200,	LVCFMT_LEFT },
 	{ SR_FIELD_FORMID,		75,		LVCFMT_LEFT },
-	{ SR_FIELD_RECORDTYPE,	75,		LVCFMT_CENTER },
+	{ SR_FIELD_ITEMNAME,	75,		LVCFMT_CENTER },
 	{ SR_FIELD_FLAGS,		50,		LVCFMT_CENTER },
 	{ SR_FIELD_RECORDTYPE,	60,		LVCFMT_CENTER },
 	{ SR_FIELD_NONE, 0, 0 }
@@ -192,6 +185,34 @@ static const srrectype_t* s_ComponentRecordTypes[] = {
 static srselrecdlginfo_t s_ComponentRecordSelDlg = 
 { 
 	&SR_NAME_NULL, &s_ComponentRecordTypes[0], _T("Select Record..."), s_ComponentListInit, &CSrIdRecord::s_FieldMap, SR_FIELD_EDITORID, l_IsComponentRecord, 0 
+};
+/*===========================================================================
+ *		End of Component Data
+ *=========================================================================*/
+
+
+/*===========================================================================
+ *
+ * Begin Component Dialog Data
+ *
+ *=========================================================================*/
+static srreclistcolinit_t s_OutfitListInit[] = {
+	{ SR_FIELD_EDITORID,	200,	LVCFMT_LEFT },
+	{ SR_FIELD_FORMID,		75,		LVCFMT_LEFT },
+	{ SR_FIELD_FLAGS,		50,		LVCFMT_CENTER },
+	{ SR_FIELD_ITEMNAME,	75,		LVCFMT_CENTER },
+	{ SR_FIELD_RECORDTYPE,	60,		LVCFMT_CENTER },
+	{ SR_FIELD_NONE, 0, 0 }
+  };
+
+
+static const srrectype_t* s_OutfitRecordTypes[] = {
+		&SR_NAME_ARMO, &SR_NAME_LVLI, NULL
+};
+
+static srselrecdlginfo_t s_OutfitRecordSelDlg = 
+{ 
+	&SR_NAME_NULL, &s_OutfitRecordTypes[0], _T("Select Record..."), s_OutfitListInit, &CSrIdRecord::s_FieldMap, SR_FIELD_EDITORID, NULL, 0 
 };
 /*===========================================================================
  *		End of Component Data
@@ -992,6 +1013,24 @@ bool SrSelectWeaponEnchant (CString& EditorID, CSrRecordHandler* pRecordHandler)
 /*===========================================================================
  *		End of Function SrSelectWeaponEnchant()
  *=========================================================================*/
+
+
+bool SrSelectOutfitItem (CString& EditorID, CSrRecordHandler* pRecordHandler) 
+{
+	CSrSelectRecordDlg  Dlg;
+	int					Result;
+	
+	Dlg.SetInitialEditorID(EditorID);
+	Dlg.SetRecordHandler(pRecordHandler);
+	Dlg.SetDlgInfo(s_OutfitRecordSelDlg);
+	Dlg.SetAllowNull(true);
+	
+	Result = Dlg.DoModal();
+	if (Result != IDOK) return (false);
+	
+	EditorID = Dlg.GetCurrentEditorID();
+	return (true);
+}
 
 
 bool SrSelectRecord (CString& EditorID, CSrRecordHandler* pRecordHandler, const srrectype_t Type, const srrecfieldmap_t* pFieldMap) 

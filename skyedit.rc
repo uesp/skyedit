@@ -1817,6 +1817,20 @@ BEGIN
     RTEXT           "Data 22-24",IDC_DATALABEL8,6,120,45,9
 END
 
+IDD_OTFT_VIEW DIALOGEX 0, 0, 378, 227
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    RTEXT           "Form ID",-1,5,9,49,9
+    EDITTEXT        IDC_FORMID,57,7,64,12,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "Editor ID",-1,5,25,49,9
+    EDITTEXT        IDC_EDITORID,57,23,138,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_ITEM_LIST,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | WS_TABSTOP,6,65,364,155,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "Save",ID_SAVE_BUTTON,320,7,50,14
+    PUSHBUTTON      "Apply",ID_APPLY_BUTTON,320,25,50,14
+    PUSHBUTTON      "Cancel",ID_CANCEL_BUTTON,320,43,50,14
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2316,6 +2330,14 @@ BEGIN
         RIGHTMARGIN, 272
         TOPMARGIN, 7
         BOTTOMMARGIN, 131
+    END
+
+    IDD_OTFT_VIEW, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 371
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 220
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -3128,6 +3150,18 @@ BEGIN
         MENUITEM "Delete",                      ID_SNDDLIST_DELETE
         MENUITEM SEPARATOR
         MENUITEM "Edit Base Record",            ID_SNDDLIST_EDITRECORD
+    END
+END
+
+IDR_OUTFITLIST_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "New",                         ID_OUTFITLIST_ADD
+        MENUITEM "Edit",                        ID_OUTFITLIST_EDIT
+        MENUITEM "Delete",                      ID_OUTFITLIST_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "Edit Record...",              ID_OUTFITLIST_EDITBASE
     END
 END
 

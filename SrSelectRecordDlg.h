@@ -129,8 +129,6 @@ public:
   void SetDlgInfo         (srselrecdlginfo_t& DlgInfo)  { m_DlgInfo         = DlgInfo; }
   void SetAllowNull       (const bool         Value)    { m_AllowNullRecord = Value; }
 
-
-  //{{AFX_DATA(CSrSelectRecordDlg)
   enum { IDD = IDD_SELECTRECORD_DLG };
   CEdit			m_CurrentFormIDText;
   CEdit			m_PreviousFormIDText;
@@ -138,18 +136,11 @@ public:
   CEdit			m_CurrentText;
   CEdit			m_PreviousText;
   CSrRecordListCtrl	m_RecordList;
-  //}}AFX_DATA
 
-	/* ClassWizard generated virtual function overrides */
-  //{{AFX_VIRTUAL(CSrSelectRecordDlg)
 protected:
   virtual void DoDataExchange(CDataExchange* pDX);
-  //}}AFX_VIRTUAL
 
 protected:
-
-	/* Generated message map functions */
-  //{{AFX_MSG(CSrSelectRecordDlg)
   virtual BOOL OnInitDialog();
   afx_msg void OnClearButton();
   virtual void OnOK();
@@ -157,7 +148,6 @@ protected:
   afx_msg LRESULT OnEditRecord (WPARAM lParam, LPARAM wParam);
   afx_msg void OnChangeCurrentText();
   afx_msg HBRUSH OnCtlColor (CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-  //}}AFX_MSG
 
   DECLARE_MESSAGE_MAP();
 
@@ -190,14 +180,11 @@ public:
   bool SrSelectComponent      (CString& EditorID, CSrRecordHandler* pRecordHandler);
   bool SrSelectEquipSlot      (CString& EditorID, CSrRecordHandler* pRecordHandler);
   bool SrSelectRecord         (CString& EditorID, CSrRecordHandler* pRecordHandler, const srrectype_t Type, const srrecfieldmap_t* pFieldMap);
+  bool SrSelectOutfitItem     (CString& EditorID, CSrRecordHandler* pRecordHandler);
 
 /*===========================================================================
  *		End of Function Prototypes
  *=========================================================================*/
-
-
-//{{AFX_INSERT_LOCATION}}
-//}}AFX_INSERT_LOCATION
 
 
 #endif

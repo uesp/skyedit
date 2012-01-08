@@ -893,6 +893,9 @@
     <ClCompile Include="srprogressdlg.cpp">
       <Filter>Source Files\Forms\CommonDlg</Filter>
     </ClCompile>
+    <ClCompile Include="dialogs\SrOtftView.cpp">
+      <Filter>Source Files\Forms\Dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">
@@ -1862,6 +1865,9 @@
     </ClInclude>
     <ClInclude Include="dialogs\SrSopmEditDlg.h">
       <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="dialogs\SrOtftView.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
