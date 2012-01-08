@@ -21,13 +21,7 @@
  * Begin Local Definitions
  *
  *=========================================================================*/
-//#ifdef _DEBUG
-//  #define new DEBUG_NEW
-//  #undef THIS_FILE
-//  static char THIS_FILE[] = __FILE__;
-//#endif
-
-  IMPLEMENT_DYNCREATE(CSrLvlnView, CSrRecordDialog)
+IMPLEMENT_DYNCREATE(CSrLvlnView, CSrRecordDialog)
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -39,7 +33,6 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrLvlnView, CSrRecordDialog)
-	//{{AFX_MSG_MAP(CSrLvlnView)
 	ON_WM_CONTEXTMENU()
 	ON_COMMAND(ID_LVLLIST_EDIT, OnLvllistEdit)
 	ON_UPDATE_COMMAND_UI(ID_LVLLIST_EDIT, OnUpdateLvllistEdit)
@@ -58,7 +51,6 @@ BEGIN_MESSAGE_MAP(CSrLvlnView, CSrRecordDialog)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_ITEM_LIST, OnDropItemList)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_ITEM_LIST, OnDropItemList)
 	ON_NOTIFY(ID_SRRECORDLIST_KEYDOWN, IDC_ITEM_LIST, OnKeydownItemList)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -229,39 +221,42 @@ static int __stdcall l_SortLevelRecords (long lParam1, long lParam2, long lParam
  *=========================================================================*/
 void CSrLvlnView::GetControlData (void) 
 {
-  CSrLvlnRecord*		pLevelItem;
-  CSrLvloSubrecord*		pItem;
-  CSrRefSubrecordArray	SortLevelRecords;
-  int					ItemPos;
-  
-  CSrRecordDialog::GetControlData();
-
-  if (m_EditInfo.pNewRecord == NULL) return;
-
-  pLevelItem = SrCastClass(CSrLvlnRecord, m_EditInfo.pNewRecord);
-  if (pLevelItem == NULL) return;
-
+	CSrLvlnRecord*			pLevelItem;
+	CSrLvloSubrecord*		pItem;
+	CSrRefSubrecordArray	SortLevelRecords;
+	int						ItemPos;
+	
+	CSrRecordDialog::GetControlData();
+	
+	if (m_EditInfo.pNewRecord == NULL) return;
+	
+	pLevelItem = SrCastClass(CSrLvlnRecord, m_EditInfo.pNewRecord);
+	if (pLevelItem == NULL) return;
+	
 		/* Ensure the count subreecord is created in the correct place */
-  pLevelItem->DeleteSubrecords(SR_NAME_LLCT);
-  pLevelItem->DeleteSubrecords(SR_NAME_LVLO);
-  pLevelItem->UpdateListCount();
-
+	pLevelItem->DeleteSubrecords(SR_NAME_LLCT);
+	pLevelItem->DeleteSubrecords(SR_NAME_LVLO);
+	pLevelItem->UpdateListCount();
+	
 		/* Copy all subrecords into the new record */
-  for (pItem = m_CopyRecord.GetFirstItem(ItemPos); pItem != NULL; pItem = m_CopyRecord.GetNextItem(ItemPos)) 
-  {
+	for (pItem = m_CopyRecord.GetFirstItem(ItemPos); pItem != NULL; pItem = m_CopyRecord.GetNextItem(ItemPos)) 
+	{
 	  SortLevelRecords.Add(pItem);
-  }
-
-  SortLevelRecords.Sort(l_SortLevelRecords, 0);
-
-  for (dword i = 0; i < SortLevelRecords.GetSize(); ++i)
-  {
+	}
+	
+	SortLevelRecords.Sort(l_SortLevelRecords, 0);
+	
+	for (dword i = 0; i < SortLevelRecords.GetSize(); ++i)
+	{
 	  pItem = SrCastClass(CSrLvloSubrecord, SortLevelRecords[i]);
 	  if (pItem == NULL) continue;
 	  pLevelItem->AddItem(pItem->GetFormID(), pItem->GetLevel(), pItem->GetCount());
-  }  
-
-  pLevelItem->UpdateListCount();
+	}  
+	
+	pLevelItem->UpdateListCount();
+	
+	pLevelItem->MoveToEnd(SR_NAME_MODL);
+	pLevelItem->MoveToEnd(SR_NAME_MODT);
 }
 /*===========================================================================
  *		End of Class Method CSrLvlnView::GetControlData()
