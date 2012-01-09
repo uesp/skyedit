@@ -46,6 +46,9 @@ BEGIN_MESSAGE_MAP(CSrOtftView, CSrRecordDialog)
 	ON_UPDATE_COMMAND_UI(ID_OUTFITLIST_DELETE, &CSrOtftView::OnUpdateOutfitlistMenu)
 	ON_UPDATE_COMMAND_UI(ID_OUTFITLIST_EDIT, &CSrOtftView::OnUpdateOutfitlistMenu)
 	ON_UPDATE_COMMAND_UI(ID_OUTFITLIST_EDITBASE, &CSrOtftView::OnUpdateOutfitlistMenu)
+	ON_BN_CLICKED(ID_ADD_BUTTON, &CSrOtftView::OnBnClickedAddButton)
+	ON_BN_CLICKED(ID_EDIT_BUTTON, &CSrOtftView::OnBnClickedEditButton)
+	ON_BN_CLICKED(ID_DELETE_BUTTON4, &CSrOtftView::OnBnClickedDeleteButton4)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -511,4 +514,22 @@ void CSrOtftView::OnOutfitlistEditBase()
 void CSrOtftView::OnUpdateOutfitlistMenu(CCmdUI *pCmdUI)
 {
 	pCmdUI->Enable(m_ItemList.GetSelectedRecord() != NULL);
+}
+
+
+void CSrOtftView::OnBnClickedAddButton()
+{
+	OnOutfitlistAdd();
+}
+
+
+void CSrOtftView::OnBnClickedEditButton()
+{
+	OnOutfitlistEdit();
+}
+
+
+void CSrOtftView::OnBnClickedDeleteButton4()
+{
+	OnOutfitlistDelete();
 }

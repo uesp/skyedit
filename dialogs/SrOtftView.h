@@ -96,6 +96,9 @@ public:
 	afx_msg void OnOutfitlistEdit();
 	afx_msg void OnOutfitlistEditBase();
 	afx_msg void OnUpdateOutfitlistMenu(CCmdUI *pCmdUI);
+	afx_msg void OnBnClickedAddButton();
+	afx_msg void OnBnClickedEditButton();
+	afx_msg void OnBnClickedDeleteButton4();
 };
 /*===========================================================================
  *		End of Class CSrOtftView Definition

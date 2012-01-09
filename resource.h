@@ -15,8 +15,11 @@
 #define IDS_TT_EFFECTTYPE               5
 #define ID_MOVEUP_BUTTON                5
 #define ID_DELETE_BUTTON2               5
+#define ID_EDIT_BUTTON                  5
 #define ID_MOVEDOWN_BUTTON              6
 #define IDS_TT_TYPE                     6
+#define ID_EDIT_BUTTON2                 6
+#define ID_DELETE_BUTTON4               6
 #define IDD_ABOUTBOX                    100
 #define IDD_SREDIT_FORM                 101
 #define IDD_ERRORBAR                    103
