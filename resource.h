@@ -18,7 +18,6 @@
 #define ID_EDIT_BUTTON                  5
 #define ID_MOVEDOWN_BUTTON              6
 #define IDS_TT_TYPE                     6
-#define ID_EDIT_BUTTON2                 6
 #define ID_DELETE_BUTTON4               6
 #define IDD_ABOUTBOX                    100
 #define IDD_SREDIT_FORM                 101
@@ -106,6 +105,8 @@
 #define IDD_SOPM_VIEW                   222
 #define IDD_SOPMEDIT_DLG                223
 #define IDD_OTFT_VIEW                   224
+#define IDD_MISC_VIEW1                  225
+#define IDD_CLFM_VIEW                   225
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002

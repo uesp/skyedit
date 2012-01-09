@@ -1836,6 +1836,7 @@
     <ClCompile Include="..\tes5lib\windows\srrecordtreectrl.cpp" />
     <ClCompile Include="..\tes5lib\windows\srrecordvirtuallistctrl.cpp" />
     <ClCompile Include="..\tes5lib\windows\tabctrlsheet.cpp" />
+    <ClCompile Include="dialogs\SrClfmView.cpp" />
     <ClCompile Include="dialogs\SrOtftView.cpp" />
     <ClCompile Include="dialogs\SrSopmEditDlg.cpp" />
     <ClCompile Include="dialogs\SrActiView.cpp" />
@@ -2175,6 +2176,7 @@
     <ClInclude Include="..\tes5lib\windows\srrecordtreectrl.h" />
     <ClInclude Include="..\tes5lib\windows\srrecordvirtuallistctrl.h" />
     <ClInclude Include="..\tes5lib\windows\tabctrlsheet.h" />
+    <ClInclude Include="dialogs\SrClfmView.h" />
     <ClInclude Include="dialogs\SrOtftView.h" />
     <ClInclude Include="dialogs\SrSopmEditDlg.h" />
     <ClInclude Include="dialogs\SrActiView.h" />

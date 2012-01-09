@@ -38,6 +38,7 @@
   #include "srbookview.h"
   #include "srcamsview.h"
   #include "srclasview.h"
+  #include "srclfmview.h"
   #include "srcobjview.h"
   #include "srcontview.h"
   #include "srenchview.h"
