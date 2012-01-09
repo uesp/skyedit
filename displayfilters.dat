@@ -65,6 +65,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "Color"
+	DisplayName = "Color"
+	RecName = CLFM
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Container"
 	DisplayName = "Container"
 	RecName = CONT
@@ -295,12 +301,6 @@ DisplayFilter
 	ID = "BodyPart"
 	DisplayName = "Body Part"
 	RecName = BPTD
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "Color"
-	DisplayName = "Color"
-	RecName = CLFM
 	Parent = NoEdit
 End	
 DisplayFilter
