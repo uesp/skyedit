@@ -135,7 +135,7 @@ static srreclistcolinit_t s_LevelListInit[] = {
 	{ SR_FIELD_LEVEL,		40,		LVCFMT_CENTER, s_ItemLevelRecListSort},
 	{ SR_FIELD_ITEMCOUNT,	40,		LVCFMT_CENTER, s_ItemCountRecListSort},
 	{ SR_FIELD_ITEMNAME,	190,	LVCFMT_LEFT },
-	{ SR_FIELD_RECORDTYPE,	40,		LVCFMT_CENTER },
+	{ SR_FIELD_RECORDTYPE,	60,		LVCFMT_CENTER },
 	{ SR_FIELD_NONE, 0, 0 }
  };
 

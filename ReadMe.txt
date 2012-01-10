@@ -150,7 +150,7 @@ can be found at:
 =======================================
 0.05alpha - ? January 2021
 	- New editable records: Sound Categories (SNCT), Sound Markers (SOPM), Outfits,
-	  Colors (CLFM)
+	  Colors (CLFM), Form Lists (FLST)
 
 0.046alpha - 7 January 2021
 	- Fix saving crash.
