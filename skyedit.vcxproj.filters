@@ -902,6 +902,9 @@
     <ClCompile Include="SrSelectRecordDlg.cpp">
       <Filter>Source Files\Forms\CommonDlg</Filter>
     </ClCompile>
+    <ClCompile Include="dialogs\SrEcznView.cpp">
+      <Filter>Source Files\Forms\Dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">
@@ -1879,6 +1882,9 @@
       <Filter>Header Files\Forms.\Dialogs.</Filter>
     </ClInclude>
     <ClInclude Include="dialogs\SrFlstView.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="dialogs\SrEcznView.h">
       <Filter>Header Files\Forms.\Dialogs.</Filter>
     </ClInclude>
   </ItemGroup>

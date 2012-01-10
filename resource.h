@@ -70,7 +70,6 @@
 #define IDR_MGEFSOUNDLIST_MENU          189
 #define IDD_SPEL_VIEW                   190
 #define IDC_GOODDROP_CURSOR             190
-#define IDR_FLSTLIST_MENU1              190
 #define IDR_FLSTLIST_MENU               190
 #define IDD_AMMO_VIEW                   191
 #define IDR_OUTFITLIST_MENU             191
@@ -109,6 +108,7 @@
 #define IDD_OTFT_VIEW                   224
 #define IDD_CLFM_VIEW                   225
 #define IDD_FLST_VIEW                   226
+#define IDD_ECZN_VIEW                   227
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -629,7 +629,19 @@
 #define IDC_DATALABEL8                  1342
 #define IDC_ANAMDATA_BUTTON             1343
 #define IDC_ONAMDATA_BUTTON             1344
+#define IDC_RANK                        1344
 #define IDC_SNAMDATA_BUTTON             1345
+#define IDC_MINLEVEL                    1345
+#define IDC_ZONERESET                   1346
+#define IDC_ZONEUNKNOWN1                1347
+#define IDC_ZONEUNKNOWN2                1348
+#define IDC_PFACTION                    1349
+#define IDC_FACTION                     1349
+#define IDC_EDIT_FACTION                1350
+#define IDC_SELECT_FACTION              1351
+#define IDC_LOCATION                    1352
+#define IDC_EDIT_LOCATION               1353
+#define IDC_SELECT_LOCATION             1354
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -847,7 +859,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        224
 #define _APS_NEXT_COMMAND_VALUE         32882
-#define _APS_NEXT_CONTROL_VALUE         1344
+#define _APS_NEXT_CONTROL_VALUE         1355
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

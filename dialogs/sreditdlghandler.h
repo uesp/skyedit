@@ -42,6 +42,7 @@
   #include "srcobjview.h"
   #include "srcontview.h"
   #include "srenchview.h"
+  #include "srecznview.h"
   #include "srflstview.h"
   #include "srglobview.h"
   #include "srgmstview.h"
