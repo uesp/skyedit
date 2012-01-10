@@ -83,6 +83,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "EncounterZone"
+	DisplayName = "Encounter Zone"
+	RecName = ECZN
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "FormList"
 	DisplayName = "Form List"
 	RecName = FLST
@@ -373,12 +379,6 @@ DisplayFilter
 	ID = "DualCast"
 	DisplayName = "Dual Cast"
 	RecName = DUAL
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "EncounterZone"
-	DisplayName = "Encounter Zone"
-	RecName = ECZN
 	Parent = NoEdit
 End	
 DisplayFilter
