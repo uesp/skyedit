@@ -47,6 +47,7 @@ srdlgcreateinfo_t l_SrDlgCreateInfo[] = {
 	{ &SR_NAME_CLAS, "Class",			 CSrClasView::IDD,   RUNTIME_CLASS(CSrClasView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Class"),			_T("Class") },
 	{ &SR_NAME_CLFM, "Color",			 CSrClfmView::IDD,   RUNTIME_CLASS(CSrClfmView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Color"),			_T("Color") },
 	{ &SR_NAME_CONT, "Container",		 CSrContView::IDD,   RUNTIME_CLASS(CSrContView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Container"),		_T("Container") },
+	{ &SR_NAME_FLST, "Form List",	     CSrFlstView::IDD,   RUNTIME_CLASS(CSrFlstView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Form_List"),		_T("Form_List") },
 	{ &SR_NAME_ENCH, "Enchantment",		 CSrEnchView::IDD,   RUNTIME_CLASS(CSrEnchView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Enchantment"),	_T("Enchantment") },
 	{ &SR_NAME_GLOB, "Global",		     CSrGlobView::IDD,   RUNTIME_CLASS(CSrGlobView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Global"),		_T("Global") },
 	{ &SR_NAME_GMST, "Game Setting",     CSrGmstView::IDD,   RUNTIME_CLASS(CSrGmstView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Game_Setting"),	_T("Game_Setting") },

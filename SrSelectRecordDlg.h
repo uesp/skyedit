@@ -86,6 +86,7 @@ protected:
 
   bool				m_AllowNullRecord;		/* Allow a null record to be selected */
   bool				m_IsInitialized;
+  bool				m_ListAllOption;
 
   CSrRecordHandler*	m_pRecordHandler;
 
@@ -121,6 +122,7 @@ public:
   const TCHAR* GetCurrentEditorID (void) { return (m_CurrentEditorID); }
   
 	/* Set class members */
+  void SetListAllOption   (const bool         Value)    { m_ListAllOption   = Value; }
   void SetInitialFormID   (const srformid_t   FormID)   { m_InitialFormID   = FormID; }
   void SetInitialEditorID (const TCHAR*      pString)   { m_InitialEditorID = pString; }
   void SetPrevRecord      (CSrRecord*         pRecord)  { m_pPrevRecord     = pRecord; }
@@ -181,6 +183,7 @@ public:
   bool SrSelectEquipSlot      (CString& EditorID, CSrRecordHandler* pRecordHandler);
   bool SrSelectRecord         (CString& EditorID, CSrRecordHandler* pRecordHandler, const srrectype_t Type, const srrecfieldmap_t* pFieldMap);
   bool SrSelectOutfitItem     (CString& EditorID, CSrRecordHandler* pRecordHandler);
+  bool SrSelectFormListItem   (srformid_t& FormID, CSrRecordHandler* pRecordHandler);
 
 /*===========================================================================
  *		End of Function Prototypes

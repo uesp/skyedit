@@ -83,6 +83,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "FormList"
+	DisplayName = "Form List"
+	RecName = FLST
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Global"
 	DisplayName = "Globals"
 	RecName = GLOB
@@ -529,12 +535,6 @@ DisplayFilter
 	ID = "MaterialObj"
 	DisplayName = "Material Objects"
 	RecName = MATO
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "FormList"
-	DisplayName = "Non-Levelled List"
-	RecName = FLST
 	Parent = NoEdit
 End	
 DisplayFilter

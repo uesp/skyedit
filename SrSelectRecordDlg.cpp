@@ -12,6 +12,7 @@
 #include "stdafx.h"
 #include "resource.h"
 #include "SrSelectRecordDlg.h"
+#include "dialogs\SrEditDlgHandler.h"
 
 
 /*===========================================================================
@@ -56,19 +57,9 @@ static srreclistcolinit_t s_ScptListInit[] = {
   };
 
 
-bool s_IsTypeScript (CSrRecord* pRecord, long UserData) 
-{
-	/*
-  CSrScptRecord* pScript = SrCastClass(CSrScptRecord, pRecord);
-  if (pScript == NULL) return (false);
-  return (pScript->GetType() == (dword)UserData);
-  */
-	return false;
-}
-
 static srselrecdlginfo_t s_ItemScriptSelDlg = { 
  // &SR_NAME_SCPT, NULL, _T("Select Item Script..."), s_ScptListInit, &CSrScptRecord::s_FieldMap, SR_FIELD_FLAGS, s_IsTypeScript, SR_SCRIPTTYPE_OBJECT 
-	&SR_NAME_NULL, NULL, _T("Select Item Script..."), s_ScptListInit, NULL, SR_FIELD_FLAGS, s_IsTypeScript, 0 
+	&SR_NAME_NULL, NULL, _T("Select Item Script..."), s_ScptListInit, NULL, SR_FIELD_FLAGS, NULL, 0 
 };
   
 /*===========================================================================
@@ -167,7 +158,7 @@ static srreclistcolinit_t s_ComponentListInit[] = {
 	{ SR_FIELD_FORMID,		75,		LVCFMT_LEFT },
 	{ SR_FIELD_ITEMNAME,	75,		LVCFMT_CENTER },
 	{ SR_FIELD_FLAGS,		50,		LVCFMT_CENTER },
-	{ SR_FIELD_RECORDTYPE,	60,		LVCFMT_CENTER },
+	{ SR_FIELD_RECORDTYPE,	75,		LVCFMT_CENTER },
 	{ SR_FIELD_NONE, 0, 0 }
   };
 
@@ -193,7 +184,7 @@ static srselrecdlginfo_t s_ComponentRecordSelDlg =
 
 /*===========================================================================
  *
- * Begin Component Dialog Data
+ * Begin Outfit Dialog Data
  *
  *=========================================================================*/
 static srreclistcolinit_t s_OutfitListInit[] = {
@@ -201,7 +192,7 @@ static srreclistcolinit_t s_OutfitListInit[] = {
 	{ SR_FIELD_FORMID,		75,		LVCFMT_LEFT },
 	{ SR_FIELD_FLAGS,		50,		LVCFMT_CENTER },
 	{ SR_FIELD_ITEMNAME,	75,		LVCFMT_CENTER },
-	{ SR_FIELD_RECORDTYPE,	60,		LVCFMT_CENTER },
+	{ SR_FIELD_RECORDTYPE,	75,		LVCFMT_CENTER },
 	{ SR_FIELD_NONE, 0, 0 }
   };
 
@@ -215,7 +206,51 @@ static srselrecdlginfo_t s_OutfitRecordSelDlg =
 	&SR_NAME_NULL, &s_OutfitRecordTypes[0], _T("Select Record..."), s_OutfitListInit, &CSrIdRecord::s_FieldMap, SR_FIELD_EDITORID, NULL, 0 
 };
 /*===========================================================================
- *		End of Component Data
+ *		End of Outfit Data
+ *=========================================================================*/
+
+
+/*===========================================================================
+ *
+ * Begin Form List Dialog Data
+ *
+ *=========================================================================*/
+static srreclistcolinit_t s_FormListInit[] = 
+{
+	{ SR_FIELD_EDITORID,	200,	LVCFMT_LEFT },
+	{ SR_FIELD_FORMID,		75,		LVCFMT_LEFT },
+	{ SR_FIELD_FLAGS,		50,		LVCFMT_CENTER },
+	{ SR_FIELD_ITEMNAME,	75,		LVCFMT_CENTER },
+	{ SR_FIELD_RECORDTYPE,	75,		LVCFMT_CENTER },
+	{ SR_FIELD_NONE, 0, 0 }
+  };
+
+
+static const srrectype_t* s_FormListRecordTypes[] = 
+{
+	&SR_NAME_AACT, &SR_NAME_ACHR, &SR_NAME_ACTI, &SR_NAME_ADDN, &SR_NAME_ALCH, &SR_NAME_AMMO, &SR_NAME_ANIO, &SR_NAME_APPA, &SR_NAME_ARMA, &SR_NAME_ARMO, 
+	&SR_NAME_ARTO, &SR_NAME_ASPC, &SR_NAME_ASTP, &SR_NAME_AVIF, &SR_NAME_BOOK, &SR_NAME_BPTD, &SR_NAME_CAMS, &SR_NAME_CELL, &SR_NAME_CLAS, 
+	&SR_NAME_CLFM, &SR_NAME_CLMT, &SR_NAME_COBJ, &SR_NAME_COLL, &SR_NAME_CONT, &SR_NAME_CPTH, &SR_NAME_CSTY, &SR_NAME_DEBR, &SR_NAME_DIAL, &SR_NAME_DLBR, 
+	&SR_NAME_DLVW, &SR_NAME_DOBJ, &SR_NAME_DOOR, &SR_NAME_DUAL, &SR_NAME_ECZN, &SR_NAME_EFSH, &SR_NAME_ENCH, &SR_NAME_EQUP, &SR_NAME_EXPL, &SR_NAME_EYES, 
+	&SR_NAME_FACT, &SR_NAME_FLOR, &SR_NAME_FLST, &SR_NAME_FSTP, &SR_NAME_FSTS, &SR_NAME_FURN, &SR_NAME_GLOB, &SR_NAME_GMST, &SR_NAME_GRAS, 
+	&SR_NAME_HAZD, &SR_NAME_HAZD, &SR_NAME_HDPT, &SR_NAME_IDLE, &SR_NAME_IDLM, &SR_NAME_IMAD, &SR_NAME_IMGS, &SR_NAME_INFO, &SR_NAME_INGR, &SR_NAME_IPCT, 
+	&SR_NAME_IPDS, &SR_NAME_KEYM, &SR_NAME_KYWD, &SR_NAME_LAND, &SR_NAME_LCRT, &SR_NAME_LCTN, &SR_NAME_LGTM, &SR_NAME_LIGH, &SR_NAME_LSCR, &SR_NAME_LTEX, 
+	&SR_NAME_LVLI, &SR_NAME_LVLN, &SR_NAME_LVSP, &SR_NAME_MATO, &SR_NAME_MATT, &SR_NAME_MESG, &SR_NAME_MGEF, &SR_NAME_MISC, &SR_NAME_MOVT, &SR_NAME_MSTT, 
+	&SR_NAME_MUSC, &SR_NAME_MUST, &SR_NAME_NAVI, &SR_NAME_NAVM, &SR_NAME_NPC_, &SR_NAME_OTFT, &SR_NAME_PACK, &SR_NAME_PERK, &SR_NAME_PGRE, &SR_NAME_PHZD, 
+	&SR_NAME_PROJ, &SR_NAME_QUST, &SR_NAME_RACE, &SR_NAME_REFR, &SR_NAME_REGN, &SR_NAME_RELA, &SR_NAME_REVB, &SR_NAME_RFCT,  
+	&SR_NAME_SCEN, &SR_NAME_SCRL, &SR_NAME_SHOU, &SR_NAME_SLGM, &SR_NAME_SMBN, &SR_NAME_SMEN, &SR_NAME_SMQN, &SR_NAME_SNCT, 
+	&SR_NAME_SNDR, &SR_NAME_SOPM, &SR_NAME_SOUN, &SR_NAME_SPEL, &SR_NAME_SPGD, &SR_NAME_STAT, &SR_NAME_TACT, &SR_NAME_TREE, &SR_NAME_TXST, &SR_NAME_VTYP, 
+	&SR_NAME_WATR, &SR_NAME_WEAP, &SR_NAME_WOOP, &SR_NAME_WRLD, &SR_NAME_WTHR, 
+	NULL
+};
+
+
+static srselrecdlginfo_t s_FormListRecordSelDlg = 
+{ 
+	&SR_NAME_NULL, &s_FormListRecordTypes[0], _T("Select Record..."), s_FormListInit, &CSrRecord::s_FieldMap, SR_FIELD_EDITORID, NULL, 0 
+};
+/*===========================================================================
+ *		End of Form List Data
  *=========================================================================*/
 
 
@@ -324,9 +359,6 @@ static srselrecdlginfo_t s_SoundSelDlg =
  *
  *=========================================================================*/
 CSrSelectRecordDlg::CSrSelectRecordDlg (CWnd* pParent) : CDialog(CSrSelectRecordDlg::IDD, pParent) {
-  //{{AFX_DATA_INIT(CSrSelectRecordDlg)
-  //}}AFX_DATA_INIT
-
   m_pRecordHandler = NULL;
   m_pPrevRecord    = NULL;
   m_pCurrentRecord = NULL;
@@ -336,6 +368,7 @@ CSrSelectRecordDlg::CSrSelectRecordDlg (CWnd* pParent) : CDialog(CSrSelectRecord
   m_CurrentTypeFilter = SR_NAME_NULL;
 
   m_UpdateListOnChange = false;
+  m_ListAllOption      = true;
 
   m_InitialFormID  = SR_FORMID_NULL;
   m_CurrentFormID  = SR_FORMID_NULL;
@@ -353,14 +386,12 @@ CSrSelectRecordDlg::CSrSelectRecordDlg (CWnd* pParent) : CDialog(CSrSelectRecord
 void CSrSelectRecordDlg::DoDataExchange(CDataExchange* pDX) {
 	CDialog::DoDataExchange(pDX);
 
-	//{{AFX_DATA_MAP(CSrSelectRecordDlg)
 	DDX_Control(pDX, IDC_CURRENT_FORMID, m_CurrentFormIDText);
 	DDX_Control(pDX, IDC_PREVIOUS_FORMID, m_PreviousFormIDText);
 	DDX_Control(pDX, ID_CLEAR_BUTTON, m_ClearButton);
 	DDX_Control(pDX, IDC_CURRENT_TEXT, m_CurrentText);
 	DDX_Control(pDX, IDC_PREVIOUS_TEXT, m_PreviousText);
 	DDX_Control(pDX, IDC_RECORDLIST, m_RecordList);
-	//}}AFX_DATA_MAP
 	DDX_Control(pDX, IDC_TYPEFILTER_STATIC, m_TypeFilterLabel);
 	DDX_Control(pDX, IDC_TYPEFILTER_LIST, m_TypeFilterList);
 }
@@ -444,9 +475,25 @@ void CSrSelectRecordDlg::FillFilterList (void)
 		if (ListIndex >= 0) m_TypeFilterList.SetItemData(ListIndex, m_DlgInfo.ppRecordArray[i]->Value);
     }
 
-	int ListIndex = m_TypeFilterList.InsertString(0, "All");
-	if (ListIndex >= 0) m_TypeFilterList.SetItemData(ListIndex, 0);
-	m_TypeFilterList.SelectString(-1, "All");
+	if (m_ListAllOption)
+	{
+		int ListIndex = m_TypeFilterList.InsertString(0, "All");
+		if (ListIndex >= 0) m_TypeFilterList.SetItemData(ListIndex, 0);
+
+		if (m_CurrentTypeFilter != SR_NAME_NULL)
+		    FindComboBoxItemData (m_TypeFilterList, m_CurrentTypeFilter.Value, true);
+		else
+			m_TypeFilterList.SelectString(-1, "All");
+	}
+	else if (m_CurrentTypeFilter != SR_NAME_NULL)
+	{
+	    FindComboBoxItemData (m_TypeFilterList, m_CurrentTypeFilter.Value, true);
+	}
+	else
+	{
+		m_TypeFilterList.SetCurSel(0);
+	}
+
 }
 
 
@@ -552,25 +599,41 @@ LRESULT CSrSelectRecordDlg::OnEditRecord (WPARAM lParam, LPARAM wParam) {
 BOOL CSrSelectRecordDlg::OnInitDialog() {
   CDialog::OnInitDialog();	
 
-  bool ShowFilter = m_DlgInfo.ppRecordArray != NULL;
-  m_TypeFilterLabel.ShowWindow(ShowFilter);
-  m_TypeFilterList.ShowWindow(ShowFilter);
-  if (ShowFilter) FillFilterList();
-
   m_UpdateListOnChange = false;
   SetWindowText(m_DlgInfo.pTitle);
   m_ClearButton.ShowWindow(m_AllowNullRecord ? SW_SHOW : SW_HIDE);
 
-  if (m_pRecordHandler != NULL) {
-    if (!m_InitialEditorID.IsEmpty()) {
+  if (m_pRecordHandler != NULL) 
+  {
+    if (!m_InitialEditorID.IsEmpty()) 
+	{
       m_pPrevRecord = m_pRecordHandler->FindEditorID(m_InitialEditorID);
     }
-    else {
+    else 
+	{
       m_pPrevRecord = m_pRecordHandler->FindFormID(m_InitialFormID);
     }
 
     m_pCurrentRecord = m_pPrevRecord;
   }
+
+  if (m_pCurrentRecord != NULL)
+  {
+	  m_CurrentTypeFilter = m_pCurrentRecord->GetRecordType();
+  }
+  else if (m_DlgInfo.ppRecordArray != NULL)
+  {
+	  m_CurrentTypeFilter = *m_DlgInfo.ppRecordArray[0];
+  }
+  else if (m_DlgInfo.pRecordType != NULL)
+  {
+	  m_CurrentTypeFilter = *m_DlgInfo.pRecordType;
+  }
+  
+  bool ShowFilter = m_DlgInfo.ppRecordArray != NULL;
+  m_TypeFilterLabel.ShowWindow(ShowFilter);
+  m_TypeFilterList.ShowWindow(ShowFilter);
+  if (ShowFilter) FillFilterList();
 
 	/* Initialize the record list */
   m_RecordList.SetListName("SelectRecordList");
@@ -1013,6 +1076,25 @@ bool SrSelectWeaponEnchant (CString& EditorID, CSrRecordHandler* pRecordHandler)
 /*===========================================================================
  *		End of Function SrSelectWeaponEnchant()
  *=========================================================================*/
+
+
+bool SrSelectFormListItem (srformid_t& FormID, CSrRecordHandler* pRecordHandler) 
+{
+	CSrSelectRecordDlg  Dlg;
+	int					Result;
+	
+	Dlg.SetListAllOption(false);
+	Dlg.SetInitialFormID(FormID);
+	Dlg.SetRecordHandler(pRecordHandler);
+	Dlg.SetDlgInfo(s_FormListRecordSelDlg);
+	Dlg.SetAllowNull(true);
+	
+	Result = Dlg.DoModal();
+	if (Result != IDOK) return (false);
+	
+	FormID = Dlg.GetCurrentFormID();
+	return (true);
+}
 
 
 bool SrSelectOutfitItem (CString& EditorID, CSrRecordHandler* pRecordHandler) 
