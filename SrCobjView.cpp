@@ -323,14 +323,14 @@ void CSrCobjView::SetComponentList (void)
  *=========================================================================*/
 int CSrCobjView::AddComponentList (CSrCntoSubrecord* pComponent) 
 {
-  srrlcustomdata_t	CustomData = { 0 };
+  srrlcustomdata_t	CustomData;
   CString           Buffer;
   int		        ListIndex;
 
   CustomData.pRecord = GetInputRecord();
 
 		/* Setup the custom data structure for the list */
-  CustomData.pSubrecords[0] = pComponent;
+  CustomData.Subrecords.Add(pComponent);
   
 	/* Add the custom record to the list */
   ListIndex = m_ComponentList.AddCustomRecord(CustomData);
@@ -362,7 +362,7 @@ void CSrCobjView::UpdateComponentList (const int ListIndex, const bool Update)
 
 	if (Update) m_ComponentList.UpdateRecord(ListIndex);
 
-	CSrCntoSubrecord* pCondition = SrCastClassNull(CSrCntoSubrecord, pCustomData->pSubrecords[0]);
+	CSrCntoSubrecord* pCondition = SrCastClassNull(CSrCntoSubrecord, pCustomData->Subrecords[0]);
 	if (pCondition == NULL) return;
 
 	FormID = pCondition->GetFormID();
@@ -570,7 +570,7 @@ CSrCntoSubrecord* CSrCobjView::GetSelectedComponent (void)
 	srrlcustomdata_t* pCustomData = m_ComponentList.GetCustomData(SelIndex);
 	if (pCustomData == NULL) return NULL;
 
-	CSrCntoSubrecord* pComponent = SrCastClassNull(CSrCntoSubrecord, pCustomData->pSubrecords[0]);
+	CSrCntoSubrecord* pComponent = SrCastClassNull(CSrCntoSubrecord, pCustomData->Subrecords[0]);
 	return pComponent;
 }
 
@@ -657,7 +657,7 @@ void CSrCobjView::OnLvnItemchangedComponentList(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 	else
 	{
-		CSrCntoSubrecord* pComponent = SrCastClassNull(CSrCntoSubrecord, pCustomData->pSubrecords[0]);
+		CSrCntoSubrecord* pComponent = SrCastClassNull(CSrCntoSubrecord, pCustomData->Subrecords[0]);
 		SetCurrentComponent(pComponent);
 	}
 }
@@ -725,7 +725,7 @@ void CSrCobjView::GetCurrentComponent (void)
 		srrlcustomdata_t* pCustomData = (srrlcustomdata_t *) m_ComponentList.GetItemData(i);
 		if (pCustomData == NULL) continue;
 
-		CSrCntoSubrecord* pComponent = SrCastClassNull(CSrCntoSubrecord, pCustomData->pSubrecords[0]);
+		CSrCntoSubrecord* pComponent = SrCastClassNull(CSrCntoSubrecord, pCustomData->Subrecords[0]);
 		if (pComponent == NULL) continue;
 		if (pComponent != m_pCurrentComponent) continue;
 
@@ -923,10 +923,9 @@ int CSrCobjView::OnDropCustomComponentData (srrldroprecords_t& DropItems)
     pCustomData = DropItems.pCustomDatas->GetAt(Index);
 
     if (pCustomData->pRecord        == NULL) return (SRRL_DROPCHECK_ERROR);
-    if (pCustomData->pSubrecords    == NULL) return (SRRL_DROPCHECK_ERROR);
 
 		/* Check for dragging another component subrecord */
-    pComponent = SrCastClassNull(CSrCntoSubrecord, pCustomData->pSubrecords[0]);
+    pComponent = SrCastClassNull(CSrCntoSubrecord, pCustomData->Subrecords[0]);
     if (pComponent == NULL) return SRRL_DROPCHECK_ERROR;
 
 		/* If we're just checking */

@@ -268,38 +268,38 @@ void CSrPerkView::SetPerkSectionList (void)
 
 void CSrPerkView::SetSectionCustomData(srrlcustomdata_t& CustomData, srperk_section_t* pSection)
 {
-	memset(CustomData.pSubrecords, 0, sizeof(CustomData.pSubrecords));
+	CustomData.Subrecords.Destroy();
 
 	CustomData.UserCount = pSection->Subsections.GetSize();
 	CustomData.pRecord = GetInputRecord();
-	CustomData.pSubrecords[0] = &pSection->Prke;
-	CustomData.pSubrecords[1] = &pSection->Data;
+	CustomData.Subrecords.Add(&pSection->Prke);
+	CustomData.Subrecords.Add(&pSection->Data);
   
-	for (dword i = 0, j = 2; i < pSection->Subsections.GetSize() && j < SR_RLMAX_SUBRECORDS; ++i)
+	for (dword i = 0; i < pSection->Subsections.GetSize(); ++i)
 	{
 		srperk_subsection_t* pSubsection = pSection->Subsections[i];
-		CustomData.pSubrecords[j++] = &pSubsection->Prkc;
+		CustomData.Subrecords.Add(&pSubsection->Prkc);
 
-		for (dword k = 0; k < pSubsection->Conditions.GetSize() && j+3 < SR_RLMAX_SUBRECORDS; ++k)
+		for (dword k = 0; k < pSubsection->Conditions.GetSize(); ++k)
 		{
 			srconditioninfo_t* pCondInfo = pSubsection->Conditions[k];
-			CustomData.pSubrecords[j++] = &pCondInfo->Condition;
-			if (pCondInfo->pParam1) CustomData.pSubrecords[j++] = pCondInfo->pParam1;
-			if (pCondInfo->pParam2) CustomData.pSubrecords[j++] = pCondInfo->pParam2;
+			CustomData.Subrecords.Add(&pCondInfo->Condition);
+			if (pCondInfo->pParam1) CustomData.Subrecords.Add(pCondInfo->pParam1);
+			if (pCondInfo->pParam2) CustomData.Subrecords.Add(pCondInfo->pParam2);
 		}
 
-		if (j < SR_RLMAX_SUBRECORDS && pSection->pEpft) CustomData.pSubrecords[j++] = pSection->pEpft;
-		if (j < SR_RLMAX_SUBRECORDS && pSection->pEpf2) CustomData.pSubrecords[j++] = pSection->pEpf2;
-		if (j < SR_RLMAX_SUBRECORDS && pSection->pEpf3) CustomData.pSubrecords[j++] = pSection->pEpf3;
-		if (j < SR_RLMAX_SUBRECORDS && pSection->pEpfd) CustomData.pSubrecords[j++] = pSection->pEpfd;
-		if (j < SR_RLMAX_SUBRECORDS) CustomData.pSubrecords[j++] = &pSection->Prkf;
+		if (pSection->pEpft) CustomData.Subrecords.Add(pSection->pEpft);
+		if (pSection->pEpf2) CustomData.Subrecords.Add(pSection->pEpf2);
+		if (pSection->pEpf3) CustomData.Subrecords.Add(pSection->pEpf3);
+		if (pSection->pEpfd) CustomData.Subrecords.Add(pSection->pEpfd);
+		CustomData.Subrecords.Add(&pSection->Prkf);
 	}
 }
 
 
 int CSrPerkView::AddPerkSectionList (srperk_section_t* pSection)
 {
-	srrlcustomdata_t  CustomData = { 0 };
+	srrlcustomdata_t  CustomData;
 	CString           Buffer;
 	int		          ListIndex;
 
@@ -338,7 +338,7 @@ void CSrPerkView::UpdatePerkSectionList (const int ListIndex, const bool Update)
 
 	if (Update) m_SectionList.UpdateRecord(ListIndex);
 
-	pPrke = SrCastClassNull(CSrPrkeSubrecord, pCustomData->pSubrecords[0]);
+	pPrke = SrCastClassNull(CSrPrkeSubrecord, pCustomData->Subrecords[0]);
 	if (pPrke == NULL) return;
 
 	pSection = FindPerkSection(pPrke);
@@ -599,7 +599,7 @@ void CSrPerkView::UpdateSectionList (srperk_section_t* pSection)
 		srrlcustomdata_t* pData = m_SectionList.GetCustomData(i);
 		if (pData == NULL) continue;
 
-		if (pData->pSubrecords[0] == &pSection->Prke)
+		if (pData->Subrecords[0] == &pSection->Prke)
 		{
 			SetSectionCustomData(*pData, pSection);
 			UpdatePerkSectionList(i, true);
@@ -1164,11 +1164,8 @@ int CSrPerkView::OnDropCustomSectionData (srrldroprecords_t& DropItems)
 	{
 		pCustomData = DropItems.pCustomDatas->GetAt(Index);
 
-		if (pCustomData->pSubrecords    == NULL) return SRRL_DROPCHECK_ERROR;
-		if (pCustomData->pSubrecords[0] == NULL) return SRRL_DROPCHECK_ERROR;
-
 			/* Check for dragging another effect record */
-		pPrke = SrCastClassNull(CSrPrkeSubrecord, pCustomData->pSubrecords[0]);
+		pPrke = SrCastClassNull(CSrPrkeSubrecord, pCustomData->Subrecords[0]);
 		if (pPrke == NULL) return SRRL_DROPCHECK_ERROR;
 
 		pSrcPrke = SrCastClassNull(CSrPrkeSubrecord, pPrke);
@@ -1182,10 +1179,10 @@ int CSrPerkView::OnDropCustomSectionData (srrldroprecords_t& DropItems)
 
 		pSection->Prke.Copy(pSrcPrke);
 
-		for (dword i = 1; i < SR_RLMAX_SUBRECORDS; ++i)
+		for (dword i = 1; i < pCustomData->Subrecords.GetSize(); ++i)
 		{
-			if (pCustomData->pSubrecords[i] == NULL) break;
-			pSubrecord = pCustomData->pSubrecords[i];
+			if (pCustomData->Subrecords[i] == NULL) break;
+			pSubrecord = pCustomData->Subrecords[i];
 
 			if (pSubrecord->GetRecordType() == SR_NAME_DATA)
 			{

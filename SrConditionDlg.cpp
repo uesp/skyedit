@@ -276,16 +276,16 @@ void CSrConditionDlg::SetConditionList (void)
  *=========================================================================*/
 int CSrConditionDlg::AddConditionList (srconditioninfo_t* pCondition) 
 {
-  srrlcustomdata_t	CustomData = { 0 };
+  srrlcustomdata_t	CustomData;
   CString           Buffer;
   int		        ListIndex;
 
   CustomData.pRecord = m_pRecord;
 
 		/* Setup the custom data structure for the list */
-  CustomData.pSubrecords[0] = &pCondition->Condition;
-  CustomData.pSubrecords[1] = pCondition->pParam1;
-  CustomData.pSubrecords[2] = pCondition->pParam2;
+  CustomData.Subrecords.Add(&pCondition->Condition);
+  CustomData.Subrecords.Add(pCondition->pParam1);
+  CustomData.Subrecords.Add(pCondition->pParam2);
   
 	/* Add the custom record to the list */
   ListIndex = m_ConditionList.AddCustomRecord(CustomData);
@@ -315,15 +315,15 @@ void CSrConditionDlg::UpdateConditionList (const int ListIndex, const bool Updat
 
   if (Update) m_ConditionList.UpdateRecord(ListIndex);
 
-  CSrCtdaSubrecord* pCondition = SrCastClassNull(CSrCtdaSubrecord, pCustomData->pSubrecords[0]);
+  CSrCtdaSubrecord* pCondition = SrCastClassNull(CSrCtdaSubrecord, pCustomData->Subrecords[0]);
   if (pCondition == NULL) return;
 
   pFunction = GetSrFunction(pCondition->GetCtdtData().Function + SR_CTDA_FUNCOFFSET);
   if (pFunction == NULL) return;
 
-  if (pCustomData->pSubrecords[1] != NULL && pCustomData->pSubrecords[1]->GetRecordType() == SR_NAME_CIS1)
+  if (pCustomData->Subrecords[1] != NULL && pCustomData->Subrecords[1]->GetRecordType() == SR_NAME_CIS1)
   {
-	  CSrStringSubrecord* pString = SrCastClass(CSrStringSubrecord, pCustomData->pSubrecords[1]);
+	  CSrStringSubrecord* pString = SrCastClass(CSrStringSubrecord, pCustomData->Subrecords[1]);
 	  if (pString) m_ConditionList.SetCustomField(ListIndex, SR_FIELD_PARAM1, pString->GetString().c_str());
   }
   else if (pFunction->NumParams >= 1 && IsSrFunctionParamFormID(pFunction->Params[0].Type)) 
@@ -332,14 +332,14 @@ void CSrConditionDlg::UpdateConditionList (const int ListIndex, const bool Updat
 	if (pEditorID != NULL) m_ConditionList.SetCustomField(ListIndex, SR_FIELD_PARAM1, pEditorID);
   }
   
-  if (pCustomData->pSubrecords[2] != NULL && pCustomData->pSubrecords[2]->GetRecordType() == SR_NAME_CIS2)
+  if (pCustomData->Subrecords[2] != NULL && pCustomData->Subrecords[2]->GetRecordType() == SR_NAME_CIS2)
   {
-	  CSrStringSubrecord* pString = SrCastClass(CSrStringSubrecord, pCustomData->pSubrecords[2]);
+	  CSrStringSubrecord* pString = SrCastClassNull(CSrStringSubrecord, pCustomData->Subrecords[2]);
 	  if (pString) m_ConditionList.SetCustomField(ListIndex, SR_FIELD_PARAM2, pString->GetString().c_str());
   }
-  else if (pCustomData->pSubrecords[1] != NULL && pCustomData->pSubrecords[1]->GetRecordType() == SR_NAME_CIS2)
+  else if (pCustomData->Subrecords[1] != NULL && pCustomData->Subrecords[1]->GetRecordType() == SR_NAME_CIS2)
   {
-	  CSrStringSubrecord* pString = SrCastClass(CSrStringSubrecord, pCustomData->pSubrecords[1]);
+	  CSrStringSubrecord* pString = SrCastClass(CSrStringSubrecord, pCustomData->Subrecords[1]);
 	  if (pString) m_ConditionList.SetCustomField(ListIndex, SR_FIELD_PARAM2, pString->GetString().c_str());
   }  
   else if (pFunction->NumParams >= 2 && IsSrFunctionParamFormID(pFunction->Params[1].Type)) 
@@ -513,15 +513,15 @@ void CSrConditionDlg::GetCurrentCondition (void)
 		 srrlcustomdata_t* pCustomData = (srrlcustomdata_t *) m_ConditionList.GetItemData(i);
 		 if (pCustomData == NULL) continue;
 
-		 CSrCtdaSubrecord* pCondition = SrCastClassNull(CSrCtdaSubrecord, pCustomData->pSubrecords[0]);
+		 CSrCtdaSubrecord* pCondition = SrCastClassNull(CSrCtdaSubrecord, pCustomData->Subrecords[0]);
 		 if (pCondition == NULL) continue;
 
 		 srconditioninfo_t* pCondInfo = FindConditionInfo(pCondition);
 		 if (pCondInfo == NULL) continue;
 		 if (pCondInfo != m_pCurrentCondition) continue;
 
-		 pCustomData->pSubrecords[1] = pCondInfo->pParam1;
-		 pCustomData->pSubrecords[2] = pCondInfo->pParam2;
+		 pCustomData->Subrecords.Add(pCondInfo->pParam1);
+		 pCustomData->Subrecords.Add(pCondInfo->pParam2);
 
 		 UpdateConditionList(i, true);
 		 break;
@@ -712,7 +712,7 @@ void CSrConditionDlg::OnLvnItemchangedConditionList(NMHDR *pNMHDR, LRESULT *pRes
 	}
 	else
 	{
-		CSrCtdaSubrecord* pCondition = SrCastClassNull(CSrCtdaSubrecord, pCustomData->pSubrecords[0]);
+		CSrCtdaSubrecord* pCondition = SrCastClassNull(CSrCtdaSubrecord, pCustomData->Subrecords[0]);
 		SetCurrentCondition(FindConditionInfo(pCondition));
 	}
 
@@ -813,7 +813,7 @@ srconditioninfo_t* CSrConditionDlg::GetSelectedCondition()
 	srrlcustomdata_t* pCustomData = m_ConditionList.GetCustomData(SelIndex);
 	if (pCustomData == NULL) return NULL;
 
-	CSrCtdaSubrecord* pCondition = SrCastClassNull(CSrCtdaSubrecord, pCustomData->pSubrecords[0]);
+	CSrCtdaSubrecord* pCondition = SrCastClassNull(CSrCtdaSubrecord, pCustomData->Subrecords[0]);
 	return FindConditionInfo(pCondition);
 }
 
@@ -978,7 +978,7 @@ void CSrConditionDlg::SelectCondition (const int Index)
 	srrlcustomdata_t* pCustomData = m_ConditionList.GetCustomData(ListIndex);
 	if (pCustomData == NULL) return;
 
-	CSrCtdaSubrecord* pCondition = SrCastClassNull(CSrCtdaSubrecord, pCustomData->pSubrecords[0]);
+	CSrCtdaSubrecord* pCondition = SrCastClassNull(CSrCtdaSubrecord, pCustomData->Subrecords[0]);
 	m_pCurrentCondition = FindConditionInfo(pCondition);
 }
 

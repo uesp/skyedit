@@ -308,18 +308,18 @@ void CSrAlchView::SetEffectList (void)
  *=========================================================================*/
 int CSrAlchView::AddEffectList (sralch_effectdata_t* pEffectData) 
 {
-  srrlcustomdata_t	CustomData = { 0 };
+  srrlcustomdata_t	CustomData;
   CString           Buffer;
   int		        ListIndex;
 
   CustomData.UserCount = pEffectData->Conditions.GetSize();
   CustomData.pRecord = GetInputRecord();
-  CustomData.pSubrecords[0] = pEffectData->pEffect;
-  CustomData.pSubrecords[1] = pEffectData->pEffectData;
+  CustomData.Subrecords.Add(pEffectData->pEffect);
+  CustomData.Subrecords.Add(pEffectData->pEffectData);
   
-  for (int i = 0; i < SR_RLMAX_SUBRECORDS-3 && i < (int) pEffectData->Conditions.GetSize(); ++i)
+  for (int i = 0; i < (int) pEffectData->Conditions.GetSize(); ++i)
   {
-	  CustomData.pSubrecords[i+2] = &pEffectData->Conditions[i]->Condition;
+	  CustomData.Subrecords.Add(&pEffectData->Conditions[i]->Condition);
   }
   
   ListIndex = m_EffectList.AddCustomRecord(CustomData);
@@ -352,7 +352,7 @@ void CSrAlchView::UpdateEffectList (const int ListIndex, const bool Update)
 
 	if (Update) m_EffectList.UpdateRecord(ListIndex);
 
-	pEffectID = SrCastClassNull(CSrFormidSubrecord, pCustomData->pSubrecords[0]);
+	pEffectID = SrCastClassNull(CSrFormidSubrecord, pCustomData->Subrecords[0]);
 	if (pEffectID == NULL) return;
 		
 	FormID = pEffectID->GetValue();
@@ -502,32 +502,19 @@ void CSrAlchView::GetCurrentEffect (void)
 		srrlcustomdata_t* pCustomData = (srrlcustomdata_t *) m_EffectList.GetItemData(i);
 		if (pCustomData == NULL) continue;
 
-		CSrFormidSubrecord* pEffect = SrCastClassNull(CSrFormidSubrecord, pCustomData->pSubrecords[0]);
+		CSrFormidSubrecord* pEffect = SrCastClassNull(CSrFormidSubrecord, pCustomData->Subrecords[0]);
 		if (pEffect == NULL) continue;
 		if (pEffect != m_pCurrentEffect->pEffect) continue;
 
 		pCustomData->UserCount = m_pCurrentEffect->Conditions.GetSize();
-		memset(pCustomData->pSubrecords + 2, 0, sizeof(pCustomData->pSubrecords) - 2*sizeof(pCustomData->pSubrecords[0]));
+		pCustomData->Subrecords.Truncate(2);
 
-		int CDIndex = 2;
-
-		for (int j = 0; CDIndex < SR_RLMAX_SUBRECORDS && j < (int) m_pCurrentEffect->Conditions.GetSize(); ++j)
+		for (int j = 0; j < (int) m_pCurrentEffect->Conditions.GetSize(); ++j)
 		{
 			srconditioninfo_t* pCondInfo = m_pCurrentEffect->Conditions[j];
-			pCustomData->pSubrecords[CDIndex] = &pCondInfo->Condition;
-			++CDIndex;
-
-			if (pCondInfo->pParam1 != NULL && CDIndex < SR_RLMAX_SUBRECORDS)
-			{
-				pCustomData->pSubrecords[CDIndex] = pCondInfo->pParam1;
-				++CDIndex;
-			}
-
-			if (pCondInfo->pParam2 != NULL && CDIndex < SR_RLMAX_SUBRECORDS)
-			{
-				pCustomData->pSubrecords[CDIndex] = pCondInfo->pParam2;
-				++CDIndex;
-			}
+			pCustomData->Subrecords.Add(&pCondInfo->Condition);
+			if (pCondInfo->pParam1 != NULL) pCustomData->Subrecords.Add(pCondInfo->pParam1);
+			if (pCondInfo->pParam2 != NULL)	pCustomData->Subrecords.Add(pCondInfo->pParam2);
 		}
 
 		UpdateEffectList(i, true);
@@ -715,12 +702,11 @@ int CSrAlchView::OnDropCustomEffectData (srrldroprecords_t& DropItems)
     pCustomData = DropItems.pCustomDatas->GetAt(Index);
 
     if (pCustomData->pRecord        == NULL) return (SRRL_DROPCHECK_ERROR);
-    if (pCustomData->pSubrecords    == NULL) return (SRRL_DROPCHECK_ERROR);
 
 		/* Check for dragging another effect record */
-    pEffect = SrCastClassNull(CSrFormidSubrecord, pCustomData->pSubrecords[0]);
+    pEffect = SrCastClassNull(CSrFormidSubrecord, pCustomData->Subrecords[0]);
     if (pEffect == NULL) return (SRRL_DROPCHECK_ERROR);
-    pEffectData = SrCastClassNull(CSrEfitSubrecord, pCustomData->pSubrecords[1]);
+    pEffectData = SrCastClassNull(CSrEfitSubrecord, pCustomData->Subrecords[1]);
     if (pEffectData == NULL) return (SRRL_DROPCHECK_ERROR);
         
 		/* If we're just checking */
@@ -744,25 +730,25 @@ int CSrAlchView::OnDropCustomEffectData (srrldroprecords_t& DropItems)
 	pEffectInfo->pEffect->Copy(pEffect);
 	pEffectInfo->pEffectData->Copy(pEffectData);
 
-	for (int i = 2; i < SR_RLMAX_SUBRECORDS; ++i)
+	for (dword i = 2; i < pCustomData->Subrecords.GetSize(); ++i)
 	{
-		if (pCustomData->pSubrecords[i] == NULL) continue;
-		if (pCustomData->pSubrecords[i]->GetRecordType() != SR_NAME_CTDA) continue;
+		if (pCustomData->Subrecords[i] == NULL) continue;
+		if (pCustomData->Subrecords[i]->GetRecordType() != SR_NAME_CTDA) continue;
 
 		srconditioninfo_t* pNewCond = pEffectInfo->Conditions.AddNew();
-		pNewCond->Condition.Copy(pCustomData->pSubrecords[i]);
+		pNewCond->Condition.Copy(pCustomData->Subrecords[i]);
 
-		if (pCustomData->pSubrecords[i+1] == NULL) continue;
+		if (pCustomData->Subrecords[i+1] == NULL) continue;
 
-		if (pCustomData->pSubrecords[i+1]->GetRecordType() == SR_NAME_CIS1)
-			pNewCond->CopyParam1(pCustomData->pSubrecords[i+1]);
-		else if (pCustomData->pSubrecords[i+1]->GetRecordType() == SR_NAME_CIS2)
-			pNewCond->CopyParam2(pCustomData->pSubrecords[i+1]);
+		if (pCustomData->Subrecords[i+1]->GetRecordType() == SR_NAME_CIS1)
+			pNewCond->CopyParam1(pCustomData->Subrecords[i+1]);
+		else if (pCustomData->Subrecords[i+1]->GetRecordType() == SR_NAME_CIS2)
+			pNewCond->CopyParam2(pCustomData->Subrecords[i+1]);
 	
-		if (pCustomData->pSubrecords[i+2] == NULL) continue;
+		if (pCustomData->Subrecords[i+2] == NULL) continue;
 
-		if (pCustomData->pSubrecords[i+2]->GetRecordType() == SR_NAME_CIS2 && pNewCond->pParam2 == NULL)
-			pNewCond->CopyParam2(pCustomData->pSubrecords[i+1]);
+		if (pCustomData->Subrecords[i+2]->GetRecordType() == SR_NAME_CIS2 && pNewCond->pParam2 == NULL)
+			pNewCond->CopyParam2(pCustomData->Subrecords[i+1]);
 	}
     
     AddEffectList(pEffectInfo);

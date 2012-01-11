@@ -83,8 +83,8 @@ END_SRRECUIFIELDS()
 static int CALLBACK s_ItemCountRecListSort(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort) 
 {
 	SRRL_SORTFUNC_GETPARAMS(lParam1, lParam2, lParamSort);
-	CSrLvloSubrecord* pItem1 = SrCastClass(CSrLvloSubrecord, pCustomData1->pSubrecords[0]);
-	CSrLvloSubrecord* pItem2 = SrCastClass(CSrLvloSubrecord, pCustomData2->pSubrecords[0]);
+	CSrLvloSubrecord* pItem1 = SrCastClassNull(CSrLvloSubrecord, pCustomData1->Subrecords[0]);
+	CSrLvloSubrecord* pItem2 = SrCastClassNull(CSrLvloSubrecord, pCustomData2->Subrecords[0]);
 
 	if (pItem1 == NULL || pItem2 == NULL) return (0);
   
@@ -96,8 +96,8 @@ static int CALLBACK s_ItemCountRecListSort(LPARAM lParam1, LPARAM lParam2, LPARA
 static int CALLBACK s_ItemLevelRecListSort(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort) 
 {
 	SRRL_SORTFUNC_GETPARAMS(lParam1, lParam2, lParamSort);
-	CSrLvloSubrecord* pItem1 = SrCastClass(CSrLvloSubrecord, pCustomData1->pSubrecords[0]);
-	CSrLvloSubrecord* pItem2 = SrCastClass(CSrLvloSubrecord, pCustomData2->pSubrecords[0]);
+	CSrLvloSubrecord* pItem1 = SrCastClassNull(CSrLvloSubrecord, pCustomData1->Subrecords[0]);
+	CSrLvloSubrecord* pItem2 = SrCastClassNull(CSrLvloSubrecord, pCustomData2->Subrecords[0]);
   
 	if (pItem1 == NULL || pItem2 == NULL) return (0);
 
@@ -109,8 +109,8 @@ static int CALLBACK s_ItemLevelRecListSort(LPARAM lParam1, LPARAM lParam2, LPARA
 static int CALLBACK s_ItemFormIDRecListSort(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort) 
 {
 	SRRL_SORTFUNC_GETPARAMS(lParam1, lParam2, lParamSort);
-	CSrLvloSubrecord* pItem1 = SrCastClass(CSrLvloSubrecord, pCustomData1->pSubrecords[0]);
-	CSrLvloSubrecord* pItem2 = SrCastClass(CSrLvloSubrecord, pCustomData2->pSubrecords[0]);
+	CSrLvloSubrecord* pItem1 = SrCastClassNull(CSrLvloSubrecord, pCustomData1->Subrecords[0]);
+	CSrLvloSubrecord* pItem2 = SrCastClassNull(CSrLvloSubrecord, pCustomData2->Subrecords[0]);
   
 	if (pItem1 == NULL || pItem2 == NULL) return (0);
 
@@ -368,15 +368,15 @@ int CSrLvspView::AddItemList (CSrLvloSubrecord* pItem)
 {
   CSrBaseRecord*    pBaseRecord;
   CSrIdRecord*	    pIdRecord;
-  srrlcustomdata_t  CustomData = { 0 };
+  srrlcustomdata_t  CustomData;
   int               ListIndex;
 
   pBaseRecord = m_pRecordHandler->FindFormID(pItem->GetFormID());
   pIdRecord   = NULL;
   if (pBaseRecord != NULL) pIdRecord = SrCastClass(CSrIdRecord, pBaseRecord);
 
-  CustomData.pRecord        = pIdRecord;
-  CustomData.pSubrecords[0] = pItem;
+  CustomData.pRecord = pIdRecord;
+  CustomData.Subrecords.Add(pItem);
 
   ListIndex = m_ItemList.AddCustomRecord(CustomData);
   if (ListIndex < 0) return (-1);
@@ -472,7 +472,7 @@ void CSrLvspView::OnLvllistEdit()
   pCustomData = m_ItemList.GetCustomData(ListIndex);
   if (pCustomData == NULL) return;
 
-  pSubrecord = SrCastClass(CSrLvloSubrecord, pCustomData->pSubrecords[0]);
+  pSubrecord = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
   if (pSubrecord == NULL) return;
 
   Result = SrEditLvlSpellDlg(pSubrecord, m_pRecordHandler, m_CopyRecord.GetFormID());
@@ -553,7 +553,7 @@ void CSrLvspView::OnLvllistDelete()
     pCustomData = m_ItemList.GetCustomData(ListIndex);
     if (pCustomData == NULL) continue;
 
-    pItem = SrCastClass(CSrLvloSubrecord, pCustomData->pSubrecords[0]);
+    pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
     if (pItem != NULL) m_CopyRecord.DeleteItem(pItem);
   }
 
@@ -615,7 +615,7 @@ void CSrLvspView::OnAddCount()
     pCustomData = m_ItemList.GetCustomData(ListIndex);
     if (pCustomData == NULL) continue;
 
-    pItem = SrCastClass(CSrLvloSubrecord, pCustomData->pSubrecords[0]);
+    pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
     if (pItem == NULL) continue; 
 
     if (pItem->GetCount() >= 32768) continue;
@@ -651,7 +651,7 @@ void CSrLvspView::OnMinusCount() {
     pCustomData = m_ItemList.GetCustomData(ListIndex);
     if (pCustomData == NULL) continue;
 
-    pItem = SrCastClass(CSrLvloSubrecord, pCustomData->pSubrecords[0]);
+    pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
     if (pItem == NULL) continue; 
 
     if (pItem->GetCount() == 0) continue;
@@ -687,7 +687,7 @@ void CSrLvspView::OnAddLevel() {
     pCustomData = m_ItemList.GetCustomData(ListIndex);
     if (pCustomData == NULL) continue;
 
-    pItem = SrCastClass(CSrLvloSubrecord, pCustomData->pSubrecords[0]);
+    pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
     if (pItem == NULL) continue; 
 
     if (pItem->GetLevel() >= 32768) continue;
@@ -723,7 +723,7 @@ void CSrLvspView::OnMinusLevel() {
     pCustomData = m_ItemList.GetCustomData(ListIndex);
     if (pCustomData == NULL) continue;
 
-    pItem = SrCastClass(CSrLvloSubrecord, pCustomData->pSubrecords[0]);
+    pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
     if (pItem == NULL) continue; 
 
     if (pItem->GetLevel() == 0) continue;
@@ -857,12 +857,10 @@ int CSrLvspView::OnDropCustomData (srrldroprecords_t& DropItems)
     pCustomData = DropItems.pCustomDatas->GetAt(Index);
 
     if (pCustomData->pRecord        == NULL) return (SRRL_DROPCHECK_ERROR);
-    if (pCustomData->pSubrecords    == NULL) return (SRRL_DROPCHECK_ERROR);
-    if (pCustomData->pSubrecords[0] == NULL) return (SRRL_DROPCHECK_ERROR);
 
 		/* Check for dragging another lvlo record */
     if (!SrIsValidLvspRecord(pCustomData->pRecord->GetRecordType())) return (SRRL_DROPCHECK_ERROR);
-    pItem = SrCastClass(CSrLvloSubrecord, pCustomData->pSubrecords[0]);
+    pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
     if (pItem == NULL) return (SRRL_DROPCHECK_ERROR);
     
 		/* If we're just checking */

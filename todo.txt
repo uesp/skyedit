@@ -2,6 +2,7 @@ v0.046a
 	- Conditions: Batch edit? drag-and-drop?
 	- MoveToEnd(Type), move MODL/MODT in LVLN to end of record
 	- List drags grab the "old" item data instead of the current one
+	- Change list "customdata" to use a CSrRefSubrecordArray instead of a native array
 
 v0.045a
 	- Implement an "editorid" control derived from a CEdit. Replace all current read-only CEdits with

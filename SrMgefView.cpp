@@ -436,21 +436,18 @@ void CSrMgefView::SetSoundList (void)
  *=========================================================================*/
 int CSrMgefView::AddSoundList (srmgefsndddata_t* pSoundData) 
 {
-  srrlcustomdata_t	CustomData = { 0 };
-  CString           Buffer;
-  int		        ListIndex;
-
-  //CustomData.UserCount = pSoundData->Conditions.GetSize();
-  CustomData.pRecord   = GetInputRecord();
-  CustomData.pUserData = (void *) pSoundData;
-  //CustomData.pSubrecords[0] = pEffectData->pEffect;
-  //CustomData.pSubrecords[1] = pEffectData->pEffectData;
-      
-  ListIndex = m_Sounds.AddCustomRecord(CustomData);
-  if (ListIndex < 0) return (-1);
-
-  UpdateSoundList(ListIndex, false);
-  return (ListIndex);
+	srrlcustomdata_t CustomData;
+	CString          Buffer;
+	int				 ListIndex;
+	
+	CustomData.pRecord   = GetInputRecord();
+	CustomData.pUserData = (void *) pSoundData;
+	    
+	ListIndex = m_Sounds.AddCustomRecord(CustomData);
+	if (ListIndex < 0) return (-1);
+	
+	UpdateSoundList(ListIndex, false);
+	return (ListIndex);
 }
 /*===========================================================================
  *		End of Class Method CSrMgefView::AddSoundList()

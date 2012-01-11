@@ -92,8 +92,8 @@ END_SRRECUIFIELDS()
 static int CALLBACK s_ItemCountRecListSort(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort) 
 {
 	SRRL_SORTFUNC_GETPARAMS(lParam1, lParam2, lParamSort);
-	CSrCntoSubrecord* pItem1 = SrCastClass(CSrCntoSubrecord, pCustomData1->pSubrecords[0]);
-	CSrCntoSubrecord* pItem2 = SrCastClass(CSrCntoSubrecord, pCustomData2->pSubrecords[0]);
+	CSrCntoSubrecord* pItem1 = SrCastClassNull(CSrCntoSubrecord, pCustomData1->Subrecords[0]);
+	CSrCntoSubrecord* pItem2 = SrCastClassNull(CSrCntoSubrecord, pCustomData2->Subrecords[0]);
 
 	if (pItem1 == NULL || pItem2 == NULL) return (0);
   
@@ -105,8 +105,8 @@ static int CALLBACK s_ItemCountRecListSort(LPARAM lParam1, LPARAM lParam2, LPARA
 static int CALLBACK s_ItemFormIDRecListSort(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort) 
 {
 	SRRL_SORTFUNC_GETPARAMS(lParam1, lParam2, lParamSort);
-	CSrCntoSubrecord* pItem1 = SrCastClass(CSrCntoSubrecord, pCustomData1->pSubrecords[0]);
-	CSrCntoSubrecord* pItem2 = SrCastClass(CSrCntoSubrecord, pCustomData2->pSubrecords[0]);
+	CSrCntoSubrecord* pItem1 = SrCastClassNull(CSrCntoSubrecord, pCustomData1->Subrecords[0]);
+	CSrCntoSubrecord* pItem2 = SrCastClassNull(CSrCntoSubrecord, pCustomData2->Subrecords[0]);
   
 	if (pItem1 == NULL || pItem2 == NULL) return (0);
 
@@ -338,15 +338,15 @@ int CSrContView::AddItemList (CSrCntoSubrecord* pItem)
 {
   CSrBaseRecord*    pBaseRecord;
   CSrIdRecord*	    pIdRecord;
-  srrlcustomdata_t  CustomData = { 0 };
+  srrlcustomdata_t  CustomData;
   int               ListIndex;
 
   pBaseRecord = m_pRecordHandler->FindFormID(pItem->GetFormID());
   pIdRecord   = NULL;
   if (pBaseRecord != NULL) pIdRecord = SrCastClass(CSrIdRecord, pBaseRecord);
 
-  CustomData.pRecord        = pIdRecord;
-  CustomData.pSubrecords[0] = pItem;
+  CustomData.pRecord = pIdRecord;
+  CustomData.Subrecords.Add(pItem);
 
   ListIndex = m_ItemList.AddCustomRecord(CustomData);
   if (ListIndex < 0) return (-1);
@@ -439,7 +439,7 @@ void CSrContView::OnLvllistEdit()
   pCustomData = m_ItemList.GetCustomData(ListIndex);
   if (pCustomData == NULL) return;
 
-  pSubrecord = SrCastClass(CSrCntoSubrecord, pCustomData->pSubrecords[0]);
+  pSubrecord = SrCastClassNull(CSrCntoSubrecord, pCustomData->Subrecords[0]);
   if (pSubrecord == NULL) return;
 
   Result = SrEditContItemDlg(pSubrecord, m_pRecordHandler, m_CopyRecord.GetFormID());
@@ -521,7 +521,7 @@ void CSrContView::OnLvllistDelete()
     pCustomData = m_ItemList.GetCustomData(ListIndex);
     if (pCustomData == NULL) continue;
 
-    pItem = SrCastClass(CSrCntoSubrecord, pCustomData->pSubrecords[0]);
+    pItem = SrCastClassNull(CSrCntoSubrecord, pCustomData->Subrecords[0]);
     if (pItem != NULL) m_CopyRecord.DeleteItem(pItem);
   }
 
@@ -583,7 +583,7 @@ void CSrContView::OnAddCount()
     pCustomData = m_ItemList.GetCustomData(ListIndex);
     if (pCustomData == NULL) continue;
 
-    pItem = SrCastClass(CSrCntoSubrecord, pCustomData->pSubrecords[0]);
+    pItem = SrCastClassNull(CSrCntoSubrecord, pCustomData->Subrecords[0]);
     if (pItem == NULL) continue; 
 
     if (pItem->GetCount() >= 32768) continue;
@@ -619,7 +619,7 @@ void CSrContView::OnMinusCount() {
     pCustomData = m_ItemList.GetCustomData(ListIndex);
     if (pCustomData == NULL) continue;
 
-    pItem = SrCastClass(CSrCntoSubrecord, pCustomData->pSubrecords[0]);
+    pItem = SrCastClassNull(CSrCntoSubrecord, pCustomData->Subrecords[0]);
     if (pItem == NULL) continue; 
 
     if (pItem->GetCount() == 0) continue;
@@ -756,13 +756,11 @@ int CSrContView::OnDropCustomData (srrldroprecords_t& DropItems)
   {
     pCustomData = DropItems.pCustomDatas->GetAt(Index);
 
-    if (pCustomData->pRecord        == NULL) return (SRRL_DROPCHECK_ERROR);
-    if (pCustomData->pSubrecords    == NULL) return (SRRL_DROPCHECK_ERROR);
-    if (pCustomData->pSubrecords[0] == NULL) return (SRRL_DROPCHECK_ERROR);
+    if (pCustomData->pRecord       == NULL) return (SRRL_DROPCHECK_ERROR);
 
 		/* Check for dragging another lvlo record */
     if (!SrIsValidContainerRecord(pCustomData->pRecord->GetRecordType())) return (SRRL_DROPCHECK_ERROR);
-    pItem = SrCastClass(CSrCntoSubrecord, pCustomData->pSubrecords[0]);
+    pItem = SrCastClassNull(CSrCntoSubrecord, pCustomData->Subrecords[0]);
     if (pItem == NULL) return (SRRL_DROPCHECK_ERROR);
     
 		/* If we're just checking */
