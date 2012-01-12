@@ -1181,7 +1181,7 @@ int CSrPerkView::OnDropCustomSectionData (srrldroprecords_t& DropItems)
 
 		for (dword i = 1; i < pCustomData->Subrecords.GetSize(); ++i)
 		{
-			if (pCustomData->Subrecords[i] == NULL) break;
+			if (pCustomData->Subrecords[i] == NULL) continue;
 			pSubrecord = pCustomData->Subrecords[i];
 
 			if (pSubrecord->GetRecordType() == SR_NAME_DATA)
@@ -1250,7 +1250,6 @@ int CSrPerkView::OnDropCustomSectionData (srrldroprecords_t& DropItems)
 				 pCurrentCondInfo   = NULL;
 
 				 pSection->Prkf.Copy(pSubrecord);
-				 break;
 			}
 		}		
 
