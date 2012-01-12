@@ -49,6 +49,8 @@ protected:
 	CSrRecordHandler&	m_RecordHandler;
 	CFont				m_TextFont;
 
+	CString				m_FullTextCopy;
+
 	CHARFORMAT2 m_HexFmt1;
 	CHARFORMAT2 m_HexFmt2;
 	CHARFORMAT2 m_StringFmt;
@@ -58,6 +60,8 @@ protected:
 
 	bool		m_UpdateSelection;
 	bool		m_SummaryOnly;
+
+	static bool		g_UseFastText;
 
 	CLineInfoArray	m_LineInfos;
 	

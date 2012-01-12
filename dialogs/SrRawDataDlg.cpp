@@ -20,7 +20,9 @@
  * Begin Local Definitions
  *
  *=========================================================================*/
-IMPLEMENT_DYNAMIC(CSrRawDataDlg, CDialogEx)
+	IMPLEMENT_DYNAMIC(CSrRawDataDlg, CDialogEx)
+
+	bool CSrRawDataDlg::g_UseFastText = true;
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -45,6 +47,7 @@ CSrRawDataDlg::CSrRawDataDlg(CSrRecordHandler&	Handler, CWnd* pParent)
 	m_pRecord = NULL;
 	m_UpdateSelection = false;
 	m_SummaryOnly = true;
+
 
 	m_HexFmt1.cbSize = sizeof(m_HexFmt1);
 	m_HexFmt2.cbSize = sizeof(m_HexFmt2);
@@ -92,6 +95,13 @@ void CSrRawDataDlg::AddText (const char* pString, ...)
 	va_start(Args, pString);
 	Buffer.FormatV(pString, Args);
 	va_end(Args);
+
+	m_FullTextCopy += Buffer;
+
+	if (g_UseFastText)
+	{
+		return;
+	}
 
 	long OrigTextLength = m_Text.GetTextLengthEx(GTL_NUMCHARS);
 	TextLength = m_Text.GetTextLength();
@@ -180,6 +190,12 @@ void CSrRawDataDlg::SetControlData (void)
 	DestroySrProgressDlg(pProgress);
 	m_Text.SetEventMask(EventMask);
 	m_Text.SetRedraw(TRUE);
+
+	if (g_UseFastText)
+	{
+		m_Text.SetWindowTextA(m_FullTextCopy);
+	}
+
 	m_UpdateSelection = true;
 }
 
@@ -203,7 +219,7 @@ void CSrRawDataDlg::OutputSubrecord (CSrSubrecord* pSubrecord, const int i)
 
 		LineInfo.DataOffset = j;
 		LineInfo.pSubrecord = pSubrecord;
-		LineInfo.SelIndex   = m_Text.GetTextLengthEx(GTL_NUMCHARS);
+		LineInfo.SelIndex   = g_UseFastText ? m_FullTextCopy.GetLength() : m_Text.GetTextLengthEx(GTL_NUMCHARS);
 		LineInfo.SubrecordIndex = i;
 		m_LineInfos.push_back(LineInfo);
 
