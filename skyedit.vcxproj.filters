@@ -1887,6 +1887,27 @@
     <ClInclude Include="dialogs\SrEcznView.h">
       <Filter>Header Files\Forms.\Dialogs.</Filter>
     </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srracedatasubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\sratkdsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\sreczndatasubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srmpavsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srphwtsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srsndrbnamsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srspedsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="skyedit.rc">

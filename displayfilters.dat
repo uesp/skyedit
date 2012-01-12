@@ -173,6 +173,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "Race"
+	DisplayName = "Races"
+	RecName = RACE
+	Parent = NULL
+End
+DisplayFilter
 	ID = "Recipes"
 	DisplayName = "Recipes"
 	RecName = COBJ
@@ -541,12 +547,6 @@ DisplayFilter
 	ID = "Projectile"
 	DisplayName = "Projectiles"
 	RecName = PROJ
-	Parent = NoEdit
-End	
-DisplayFilter
-	ID = "Race"
-	DisplayName = "Races"
-	RecName = RACE
 	Parent = NoEdit
 End	
 #
