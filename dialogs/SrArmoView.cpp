@@ -21,14 +21,7 @@
  * Begin Local Definitions
  *
  *=========================================================================*/
-//#ifdef _DEBUG
-//  #define new DEBUG_NEW
-//  #undef THIS_FILE
-//  static char THIS_FILE[] = __FILE__;
-//#endif
-
-  IMPLEMENT_DYNCREATE(CSrArmoView, CSrRecordDialog);
-
+	IMPLEMENT_DYNCREATE(CSrArmoView, CSrRecordDialog);
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -40,12 +33,13 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrArmoView, CSrRecordDialog)
-	//{{AFX_MSG_MAP(CSrArmoView)
-	//}}AFX_MSG_MAP	
 	ON_BN_CLICKED(IDC_EDIT_EQUIPSLOT, &CSrArmoView::OnBnClickedEditEquipslot)
 	ON_BN_CLICKED(IDC_SELECTEQUIPSLOT_BUTTON, &CSrArmoView::OnBnClickedSelectequipslotButton)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EQUIPSLOT, OnDropEquipSlot)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EQUIPSLOT, OnDropEquipSlot)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EQUIPSLOT, OnDropEquipSlot)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EQUIPSLOT, OnDropEquipSlot)
+	
 
 	ON_BN_CLICKED(IDC_EDIT_MATERIAL, &CSrArmoView::OnBnClickedEditMaterial)
 	ON_BN_CLICKED(IDC_SELECTMATERIAL_BUTTON, &CSrArmoView::OnBnClickedSelectMaterial)
@@ -69,10 +63,13 @@ BEGIN_MESSAGE_MAP(CSrArmoView, CSrRecordDialog)
 
 	ON_BN_CLICKED(IDC_BODYPARTS, &CSrArmoView::OnBnClickedBodyparts)
 
-	ON_BN_CLICKED(IDC_EDIT_ARMMODEL, &CSrArmoView::OnBnClickedEditArmmodel)
-	ON_BN_CLICKED(IDC_SELECTARMMODEL_BUTTON, &CSrArmoView::OnBnClickedSelectarmmodelButton)
-	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_ARMMODEL, OnDropArmModel)
-	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_ARMMODEL, OnDropArmModel)
+	ON_BN_CLICKED(IDC_ADD_ARMAMODEL, &CSrArmoView::OnBnClickedAddArmamodel)
+	ON_BN_CLICKED(IDC_EDIT_ARMAMODEL, &CSrArmoView::OnBnClickedEditArmamodel)
+	ON_BN_CLICKED(IDC_DEL_ARMAMODEL, &CSrArmoView::OnBnClickedDelArmamodel)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_ARMAMODELS, OnDropArmaModel)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_ARMAMODELS, OnDropArmaModel)
+	ON_LBN_DBLCLK(IDC_ARMAMODELS, &CSrArmoView::OnLbnDblclkArmamodels)
+	ON_LBN_DBLCLK(IDC_KEYWORDS, &CSrArmoView::OnLbnDblclkKeywords)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrArmoView Message Map
@@ -94,7 +91,6 @@ BEGIN_SRRECUIFIELDS(CSrArmoView)
 	ADD_SRRECUIFIELDS( SR_FIELD_ENCHANTMENT,	IDC_ENCHANTMENT,	128,	IDS_TT_ENCHANTMENT)
 	ADD_SRRECUIFIELDS( SR_FIELD_RATING,			IDC_RATING,	        8,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_TYPE,			IDC_ARMORTYPE,	    32,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_ARMMODEL,		IDC_ARMMODEL,	    200,	IDS_TT_MODEL)
 	ADD_SRRECUIFIELDS( SR_FIELD_QUESTITEM,		IDC_QUESTITEM,		0,		IDS_TT_QUESTITEM)
 	ADD_SRRECUIFIELDS( SR_FIELD_KEYWORDS,		IDC_KEYWORDS,		0,		IDS_TT_KEYWORDS)
 	ADD_SRRECUIFIELDS( SR_FIELD_EQUIPSLOT,		IDC_EQUIPSLOT,		128,	0)
@@ -168,8 +164,8 @@ void CSrArmoView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_IMPACTDATA, m_ImpactData);
 	DDX_Control(pDX, IDC_RATING, m_Rating);
 	DDX_Control(pDX, IDC_BODYPARTS, m_BodyParts);
-	DDX_Control(pDX, IDC_ARMMODEL, m_ArmModel);
-}
+	DDX_Control(pDX, IDC_ARMAMODELS, m_ArmaModels);
+ }
 /*===========================================================================
  *		End of Class Method CSrArmoView::DoDataExchange()
  *=========================================================================*/
@@ -210,6 +206,19 @@ void CSrArmoView::GetControlData (void)
 	}
 
 	CSrRecordDialog::GetControlData();
+
+	GetOutputRecord()->DeleteSubrecords(SR_NAME_MODL);
+
+	for (int i = 0; i < m_ArmaModels.GetCount(); ++i)
+	{
+		m_ArmaModels.GetText(i, Buffer);
+		CSrIdRecord* pRecord = m_pRecordHandler->FindEditorID(Buffer);
+		if (pRecord == NULL) continue;
+
+		CSrSubrecord* pSubrecord = GetOutputRecord()->AddInitNewSubrecord(SR_NAME_MODL);
+		CSrFormidSubrecord* pFormid = SrCastClassNull(CSrFormidSubrecord, pSubrecord);
+		if (pFormid != NULL) pFormid->SetValue(pRecord->GetFormID());
+	}
 }
 
 
@@ -229,6 +238,32 @@ void CSrArmoView::OnInitialUpdate (void)
 /*===========================================================================
  *		End of Class Event CSrArmoView::OnInitialUpdate()
  *=========================================================================*/
+
+
+void CSrArmoView::SetControlData (void)
+{
+	CSrSubrecord* pSubrecord;
+	int           Position;
+
+	CSrRecordDialog::SetControlData();
+
+	m_ArmaModels.ResetContent();
+	pSubrecord = GetInputRecord()->FindFirstSubrecord(SR_NAME_MODL, Position);
+
+	while (pSubrecord)
+	{
+		CSrFormidSubrecord* pFormid = SrCastClass(CSrFormidSubrecord, pSubrecord);
+
+		if (pFormid != NULL)
+		{
+			const SSCHAR* pString = m_pRecordHandler->GetEditorID(pFormid->GetValue());
+			if (pString) m_ArmaModels.AddString(pString);
+		}
+
+		pSubrecord = GetInputRecord()->FindNextSubrecord(SR_NAME_MODL, Position);
+	}
+
+}
 
 
  void CSrArmoView::OnBnClickedEditEquipslot()
@@ -307,6 +342,13 @@ void CSrArmoView::OnDropImpactData (NMHDR* pNotifyStruct, LRESULT* pResult)
 }
 
 
+void CSrArmoView::OnDropArmaModel (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	*pResult = DropRecordHelper(pDropItems, &m_ImpactData, SR_NAME_ARMA, true);
+}
+
+
 void CSrArmoView::OnBnClickedEditTemplate()
  {
 	 if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_Template, SR_NAME_ARMO);
@@ -340,20 +382,49 @@ void CSrArmoView::OnBnClickedBodyparts()
 }
 
 
-void CSrArmoView::OnBnClickedEditArmmodel()
+void CSrArmoView::OnBnClickedAddArmamodel()
 {
-	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_ArmModel, SR_NAME_ARMA);
+	CString Buffer;
+
+	if (m_pDlgHandler == NULL) return;
+
+	if (!m_pDlgHandler->SelectRecord(Buffer, SR_NAME_ARMA, &CSrArmaRecord::s_FieldMap)) return;
+	m_ArmaModels.AddString(Buffer);
 }
 
 
-void CSrArmoView::OnBnClickedSelectarmmodelButton()
+void CSrArmoView::OnBnClickedEditArmamodel()
 {
-	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_ArmModel, SR_NAME_ARMA, &CSrArmaRecord::s_FieldMap);
+	CString Buffer;
+
+	if (m_pDlgHandler == NULL) return;
+
+	int ListIndex = m_ArmaModels.GetCurSel();
+	if (ListIndex < 0) return;
+
+	m_ArmaModels.GetText(ListIndex, Buffer);
+
+	if (!m_pDlgHandler->SelectRecord(Buffer, SR_NAME_ARMA, &CSrArmaRecord::s_FieldMap)) return;
+
+	m_ArmaModels.DeleteString(ListIndex);
+	m_ArmaModels.InsertString(ListIndex, Buffer);
 }
 
 
-void CSrArmoView::OnDropArmModel (NMHDR* pNotifyStruct, LRESULT* pResult) 
+void CSrArmoView::OnBnClickedDelArmamodel()
 {
-	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
-	*pResult = DropRecordHelper(pDropItems, &m_ArmModel, SR_NAME_ARMA, 1);
+	int ListIndex = m_ArmaModels.GetCurSel();
+	if (ListIndex >= 0) m_ArmaModels.DeleteString(ListIndex);
+}
+
+
+void CSrArmoView::OnLbnDblclkArmamodels()
+{
+	OnBnClickedEditArmamodel();
+}
+
+
+void CSrArmoView::OnLbnDblclkKeywords()
+{
+	OnBnClickedEditkeywordButton();
 }

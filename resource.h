@@ -225,6 +225,8 @@
 #define IDC_BLUESPIN                    1121
 #define IDC_KEYWORDS                    1124
 #define IDC_ITEMNAME                    1125
+#define IDC_KEYWORDS2                   1125
+#define IDC_ARMAMODELS                  1125
 #define IDC_DNAME                       1126
 #define IDC_RESULTCOUNT                 1126
 #define IDC_MAGNITUDE                   1126
@@ -282,14 +284,17 @@
 #define IDC_SELECTARMMODEL_BUTTON       1140
 #define IDC_SELECTSTATICMODEL_BUTTON    1140
 #define IDC_SELECT_DRAWSOUND            1140
+#define IDC_ADD_ARMAMODEL               1140
 #define IDC_VALUE_TEXT                  1141
 #define IDC_SELECTUSESOUND_BUTTON       1141
 #define IDC_SELECTSTATICMODEL_BUTTON2   1141
 #define IDC_SELECTSPELL_BUTTON          1141
 #define IDC_SELECT_SHEATHSOUND          1141
+#define IDC_EDIT_ARMAMODEL              1141
 #define IDC_VALUE_LABEL                 1142
 #define IDC_SELECT_SWINGSOUND           1142
 #define IDC_SELECT_WATER                1142
+#define IDC_DEL_ARMAMODEL               1142
 #define IDC_OPERATOR_LIST               1143
 #define IDC_SELECT_BOUNDSOUND           1143
 #define IDC_OR_CHECK                    1144
@@ -635,7 +640,6 @@
 #define IDC_ZONERESET                   1346
 #define IDC_ZONEUNKNOWN1                1347
 #define IDC_ZONEUNKNOWN2                1348
-#define IDC_PFACTION                    1349
 #define IDC_FACTION                     1349
 #define IDC_EDIT_FACTION                1350
 #define IDC_SELECT_FACTION              1351

@@ -41,6 +41,9 @@ protected:
 
 		/* Protected constructor used by dynamic creation */
   CSrArmoView();
+
+  virtual void GetControlData (void);
+  virtual void SetControlData (void);
   
 
   /*---------- Begin Public Class Methods ------------------------*/
@@ -75,8 +78,6 @@ protected:
   virtual void OnInitialUpdate();
   virtual void DoDataExchange(CDataExchange* pDX);
 
-  virtual void GetControlData (void);
-
 protected:
   virtual ~CSrArmoView();
 
@@ -105,15 +106,19 @@ public:
 	afx_msg void OnBnClickedEditImpactData();
 	afx_msg void OnBnClickedSelectImpactData();
 	afx_msg void OnDropImpactData (NMHDR* pNotifyStruct, LRESULT* pResult);
-	afx_msg void OnBnClickedEditArmmodel();
-	afx_msg void OnBnClickedSelectarmmodelButton();
-	afx_msg void OnDropArmModel (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnDropArmaModel (NMHDR* pNotifyStruct, LRESULT* pResult);
 	
 	CEdit m_Rating;
 	CButton m_BodyParts;
 	afx_msg void OnBnClickedBodyparts();
 	CEdit m_ArmModel;
 	
+	CListBox m_ArmaModels;
+	afx_msg void OnBnClickedAddArmamodel();
+	afx_msg void OnBnClickedEditArmamodel();
+	afx_msg void OnBnClickedDelArmamodel();
+	afx_msg void OnLbnDblclkArmamodels();
+	afx_msg void OnLbnDblclkKeywords();
 };
 /*===========================================================================
  *		End of Class CSrArmoView Definition

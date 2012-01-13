@@ -1,6 +1,8 @@
 v0.046a
 	- Conditions: Batch edit? drag-and-drop?
 	- List drags grab the "old" item data instead of the current one
+	- Get fieldmap from a record type
+	- Get english name from a record type
 
 v0.045a
 	- Implement an "editorid" control derived from a CEdit. Replace all current read-only CEdits with
