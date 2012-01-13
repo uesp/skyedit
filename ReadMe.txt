@@ -153,6 +153,7 @@ can be found at:
 	  Colors (CLFM), Form Lists (FLST), Encounter Zone (ECZN)
 	- Raw data view is faster for larger records (like RACEs) but is without color.
 	- Multiple MODL subrecords in ARMO can now be edited properly.
+	- Fixed main view resizing issue...again.
 
 0.046alpha - 7 January 2021
 	- Fix saving crash.

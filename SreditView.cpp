@@ -713,7 +713,7 @@ void CSrEditView::OnSize (UINT nType, int CX, int CY)
 
   if (m_IsInitialized) 
   {
-    m_RecordList.AutoResize(CX, CY);
+	m_RecordList.SetWindowPos(NULL, 0, 0, CX - 191, CY, SWP_NOMOVE | SWP_NOZORDER);
     m_RecordTree.SetWindowPos(NULL, 0, 0, 188, CY - 48, SWP_NOMOVE | SWP_NOZORDER);
     m_VertEdge.SetWindowPos(NULL, 0, 0, 3, CY+2, SWP_NOMOVE | SWP_NOZORDER);
   }
