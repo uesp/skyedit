@@ -152,6 +152,7 @@ can be found at:
 	- New editable records: Sound Categories (SNCT), Sound Markers (SOPM), Outfits,
 	  Colors (CLFM), Form Lists (FLST), Encounter Zone (ECZN)
 	- Raw data view is faster for larger records (like RACEs) but is without color.
+	- Multiple MODL subrecords in ARMO can now be edited properly.
 
 0.046alpha - 7 January 2021
 	- Fix saving crash.
