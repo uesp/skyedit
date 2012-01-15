@@ -329,6 +329,8 @@ void CSrRacePageFace::OnLbnDblclkFacekeys()
 
 void CSrRacePageFace::OnBnClickedAddFaceweight()
 {
+	GetWeightControlData();
+
 	CSrPhwtSubrecord* pWeight = m_RaceInfo.FacialWeights.AddNew();
 	pWeight->Initialize(SR_NAME_PHWT, SR_PHWT_SUBRECORD_SIZE);
 	pWeight->InitializeNew();
