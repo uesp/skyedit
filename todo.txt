@@ -3,6 +3,9 @@ v0.046a
 	- List drags grab the "old" item data instead of the current one
 	- Get fieldmap from a record type
 	- Get english name from a record type
+	- Proper tab handling within tab controls
+	- Duplicate/copy perks within the same record
+	- Duplicate/copy conditions within the same record
 
 v0.045a
 	- Implement an "editorid" control derived from a CEdit. Replace all current read-only CEdits with

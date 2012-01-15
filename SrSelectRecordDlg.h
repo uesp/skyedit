@@ -181,6 +181,7 @@ public:
   bool SrSelectKeyword        (CString& EditorID, CSrRecordHandler* pRecordHandler, const char* pFilter);
   bool SrSelectComponent      (CString& EditorID, CSrRecordHandler* pRecordHandler);
   bool SrSelectEquipSlot      (CString& EditorID, CSrRecordHandler* pRecordHandler);
+  bool SrSelectRecord         (CString& EditorID, CSrRecordHandler* pRecordHandler, const srrectype_t** ppType, const srrecfieldmap_t* pFieldMap);
   bool SrSelectRecord         (CString& EditorID, CSrRecordHandler* pRecordHandler, const srrectype_t Type, const srrecfieldmap_t* pFieldMap);
   bool SrSelectOutfitItem     (CString& EditorID, CSrRecordHandler* pRecordHandler);
   bool SrSelectFormListItem   (srformid_t& FormID, CSrRecordHandler* pRecordHandler);

@@ -16,9 +16,10 @@
  * Begin Required Includes
  *
  *=========================================================================*/
-  #include "modfile/srespfile.h"
-  #include "modfile/srmultirecordhandler.h"
-  #include "windows/srrecordlistctrl.h"
+	#include "modfile/srespfile.h"
+	#include "modfile/srmultirecordhandler.h"
+	#include "windows/srrecordlistctrl.h"
+	#include "windows/tabctrlsheet.h"
 /*===========================================================================
  *		End of Required Includes
  *=========================================================================*/
@@ -195,8 +196,11 @@ class CSrRecordDialog : public CFormView, public ISrListener {
   /*---------- Begin Protected Class Members --------------------*/
 protected:
   sreditrecinfo_t			m_EditInfo;		/* Holds information on the record being edited */
+
+public:
   CSrMultiRecordHandler*	m_pRecordHandler;	/* Main record handler object */
 
+protected:
   HACCEL				m_hAccelerator;		/* Optional custom accelerator table for the dialog */
   int					m_AcceleratorID;
 
@@ -227,6 +231,8 @@ protected:
   CWnd*			m_pBoundsField;
   CWnd*			m_pKeywordsField;
   srboundsdata_t m_BoundsCopy;
+
+  CTabCtrlSheet*	m_pTabControl;
 
   bool			m_InitialSetData;
   bool			m_NoActivateRecord;
@@ -269,6 +275,8 @@ public:
 
 	/* Close the window */
   virtual void Close (void);
+
+  void AddTabControl (CTabCtrlSheet& TabCtrl) { m_pTabControl = &TabCtrl; }
 
 	/* Access the UI field array */
   //virtual sruirecfields_t* GetUIFields (void) { return (NULL); }
@@ -382,7 +390,7 @@ protected:
 	afx_msg void OnDropDropSound (NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnDropKeywords (NMHDR* pNotifyStruct, LRESULT* pResult);
 
-  DECLARE_MESSAGE_MAP();
+	DECLARE_MESSAGE_MAP();
 
  public:
 	 afx_msg void OnEditFind();

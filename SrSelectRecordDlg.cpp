@@ -1115,6 +1115,38 @@ bool SrSelectOutfitItem (CString& EditorID, CSrRecordHandler* pRecordHandler)
 }
 
 
+bool SrSelectRecord (CString& EditorID, CSrRecordHandler* pRecordHandler, const srrectype_t** ppType, const srrecfieldmap_t* pFieldMap) 
+{
+	
+srreclistcolinit_t GeneralListInit[] = {
+	{ SR_FIELD_EDITORID,	200,	LVCFMT_LEFT },
+	{ SR_FIELD_FORMID,		75,		LVCFMT_LEFT },
+	{ SR_FIELD_FLAGS,		60,		LVCFMT_CENTER },
+	{ SR_FIELD_FULLNAME,	120,	LVCFMT_CENTER },
+	{ SR_FIELD_RECORDTYPE,	60,		LVCFMT_CENTER },
+	{ SR_FIELD_NONE, 0, 0 }
+  };
+
+srselrecdlginfo_t GeneralSelDlg = {
+	NULL, ppType, _T("Select Record..."), GeneralListInit, pFieldMap, SR_FIELD_EDITORID, NULL, 0 
+};
+
+	CSrSelectRecordDlg Dlg;
+	int				   Result;
+
+	Dlg.SetInitialEditorID(EditorID);
+	Dlg.SetRecordHandler(pRecordHandler);
+	Dlg.SetDlgInfo(GeneralSelDlg);
+	Dlg.SetAllowNull(true);
+
+	Result = Dlg.DoModal();
+	if (Result != IDOK) return (false);
+
+	EditorID = Dlg.GetCurrentEditorID();
+	return (true);
+}
+
+
 bool SrSelectRecord (CString& EditorID, CSrRecordHandler* pRecordHandler, const srrectype_t Type, const srrecfieldmap_t* pFieldMap) 
 {
 	srrectype_t ThisType(Type);

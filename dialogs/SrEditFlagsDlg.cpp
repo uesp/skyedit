@@ -1,8 +1,8 @@
 /*===========================================================================
  *
- * File:		SrBodypartslistdlg.CPP
+ * File:		SrEditFlagsDlg.CPP
  * Author:		Dave Humphrey (uesp@sympatico.ca)
- * Created On:	17 December 2011
+ * Created On:  12 January 2012
  *
  * Description
  *
@@ -11,7 +11,7 @@
 	/* Include Files */
 #include "stdafx.h"
 #include "resource.h"
-#include "SrBodyPartsListDlg.h"
+#include "SrEditFlagsDlg.h"
 #include "dialogs/sreditdlghandler.h"
 
 
@@ -35,7 +35,7 @@
  * Begin Message Map
  *
  *=========================================================================*/
-BEGIN_MESSAGE_MAP(CSrBodyPartsDlg, CDialog)
+BEGIN_MESSAGE_MAP(CSrEditFlagsDlg, CDialog)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -44,99 +44,107 @@ END_MESSAGE_MAP()
 
 /*===========================================================================
  *
- * Class CSrBodyPartsDlg Constructor
+ * Class CSrEditFlagsDlg Constructor
  *
  *=========================================================================*/
-CSrBodyPartsDlg::CSrBodyPartsDlg(CWnd* pParent) : CDialog(CSrBodyPartsDlg::IDD, pParent) 
+CSrEditFlagsDlg::CSrEditFlagsDlg(CWnd* pParent) : CDialog(CSrEditFlagsDlg::IDD, pParent) 
 {
-	m_BodyParts = 0;
+	m_Flags = 0;
+	m_Mask = 0xFFFFFFFF;
 }
 /*===========================================================================
- *		End of Class CSrBodyPartsDlg Constructor
+ *		End of Class CSrEditFlagsDlg Constructor
  *=========================================================================*/
 
 
 /*===========================================================================
  *
- * Class CSrBodyPartsDlg Method - void DoDataExchange (pDX);
+ * Class CSrEditFlagsDlg Method - void DoDataExchange (pDX);
  *
  *=========================================================================*/
-void CSrBodyPartsDlg::DoDataExchange(CDataExchange* pDX) {
+void CSrEditFlagsDlg::DoDataExchange(CDataExchange* pDX) {
 	CDialog::DoDataExchange(pDX);
 
-	DDX_Control(pDX, IDC_PARTS_LIST, m_PartsList);
+	DDX_Control(pDX, IDC_FLAGS_LIST, m_FlagsList);
 }
 /*===========================================================================
- *		End of Class Method CSrBodyPartsDlg::DoDataExchange()
+ *		End of Class Method CSrEditFlagsDlg::DoDataExchange()
  *=========================================================================*/
 
 
 /*===========================================================================
  *
- * Class CSrBodyPartsDlg Method - void GetControlData (void);
+ * Class CSrEditFlagsDlg Method - void GetControlData (void);
  *
  *=========================================================================*/
-void CSrBodyPartsDlg::GetControlData (void) {
+void CSrEditFlagsDlg::GetControlData (void) {
   int   Index;
   
-  m_BodyParts = 0;
+  m_Flags = 0;
 
-  for (Index = 0; Index < m_PartsList.GetCount(); ++Index) 
+  for (Index = 0; Index < m_FlagsList.GetCount(); ++Index) 
   {
-    if (m_PartsList.GetSel(Index)) m_BodyParts |= m_PartsList.GetItemData(Index);
+    if (m_FlagsList.GetSel(Index)) m_Flags |= m_FlagsList.GetItemData(Index);
   }
 
 }
 /*===========================================================================
- *		End of Class Method CSrBodyPartsDlg::GetControlData()
+ *		End of Class Method CSrEditFlagsDlg::GetControlData()
  *=========================================================================*/
 
 
 /*===========================================================================
  *
- * Class CSrBodyPartsDlg Event - BOOL OnInitDialog ();
+ * Class CSrEditFlagsDlg Event - BOOL OnInitDialog ();
  *
  *=========================================================================*/
-BOOL CSrBodyPartsDlg::OnInitDialog() 
+BOOL CSrEditFlagsDlg::OnInitDialog() 
 {
-  CDialog::OnInitDialog();
+	CString Buffer;
 
-  for (dword i = 0; s_SrBodyParts[i].pString != NULL; ++i)
-  {
-	  SrAddListBoxItem(m_PartsList, s_SrBodyParts[i].pString, s_SrBodyParts[i].Value);
-  }  
+	CDialog::OnInitDialog();
 
-  SetControlData();
-	
-  return (TRUE);
+	for (dword i = 0, j = 1; i < 32; ++i, j <<= 1)
+	{
+		if (j & m_Mask)
+		{
+			Buffer.Format("0x%08X", j);
+			SrAddListBoxItem(m_FlagsList, Buffer, j);
+		}
+	 
+	}  
+
+	SetControlData();
+
+	return TRUE;
 }
 /*===========================================================================
- *		End of Class Event CSrBodyPartsDlg::OnInitDialog()
+ *		End of Class Event CSrEditFlagsDlg::OnInitDialog()
  *=========================================================================*/
 
 
 /*===========================================================================
  *
- * Class CSrBodyPartsDlg Event - void OnOK (void);
+ * Class CSrEditFlagsDlg Event - void OnOK (void);
  *
  *=========================================================================*/
-void CSrBodyPartsDlg::OnOK (void) 
+void CSrEditFlagsDlg::OnOK (void) 
 {
   GetControlData();
 
   CDialog::OnOK();
 }
 /*===========================================================================
- *		End of Class Event CSrBodyPartsDlg::OnOK()
+ *		End of Class Event CSrEditFlagsDlg::OnOK()
  *=========================================================================*/
 
 
 /*===========================================================================
  *
- * Class CSrBodyPartsDlg Method - void SetControlData (void);
+ * Class CSrEditFlagsDlg Method - void SetControlData (void);
  *
  *=========================================================================*/
-void CSrBodyPartsDlg::SetControlData (void) 
+void CSrEditFlagsDlg::SetControlData (void) 
 {
 	dword Index;
 	int   ListIndex;
@@ -145,10 +153,10 @@ void CSrBodyPartsDlg::SetControlData (void)
 	for (Index = 0; Index < 32; ++Index) 
 	{
 	
-		if ((m_BodyParts & Mask) != 0) 
+		if ((m_Flags & Mask) != 0) 
 		{
-			ListIndex = FindListBoxItemData(m_PartsList, Mask, false);
-			if (ListIndex >= 0) m_PartsList.SetSel(ListIndex, TRUE);
+			ListIndex = FindListBoxItemData(m_FlagsList, Mask, false);
+			if (ListIndex >= 0) m_FlagsList.SetSel(ListIndex, TRUE);
 		}
 	
 		Mask <<= 1;
@@ -156,29 +164,30 @@ void CSrBodyPartsDlg::SetControlData (void)
 	
 }
 /*===========================================================================
- *		End of Class Method CSrBodyPartsDlg::SetControlData()
+ *		End of Class Method CSrEditFlagsDlg::SetControlData()
  *=========================================================================*/
 
 
 /*===========================================================================
  *
- * Function - bool SrEditBodyPartsDlg (BodyParts);
+ * Function - bool SrEditFlagsDlg (Flags, Mask);
  *
  *=========================================================================*/
-bool SrEditBodyPartsDlg (dword& BodyParts) 
+bool SrEditFlagsDlg (dword& Flags, const dword Mask) 
 {
-  CSrBodyPartsDlg Dlg;
-  int             Result;
-
-  Dlg.SetBodyParts(BodyParts);
-
-  Result = Dlg.DoModal();
-  if (Result != IDOK) return (false);
-
-  BodyParts = Dlg.GetBodyParts();
-  return (true);
+	CSrEditFlagsDlg Dlg;
+	int             Result;
+	
+	Dlg.SetFlags(Flags);
+	Dlg.SetMask(Mask);
+	
+	Result = Dlg.DoModal();
+	if (Result != IDOK) return (false);
+	
+	Flags = Dlg.GetFlags();
+	return true;
 }
 /*===========================================================================
- *		End of Function SrEditBodyPartsDlg()
+ *		End of Function SrEditFlagsDlg()
  *=========================================================================*/
 

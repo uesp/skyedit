@@ -56,6 +56,7 @@
   #include "srmiscview.h"
   #include "srotftview.h"
   #include "srperkview.h"
+  #include "srraceview.h"
   #include "srscrlview.h"
   #include "srshouview.h"
   #include "srslgmview.h"

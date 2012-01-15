@@ -211,6 +211,8 @@ CSrRecordDialog::CSrRecordDialog (const int ID) : CFormView(ID)
   m_pMaleIconField         = NULL;
   m_pFemaleIconField       = NULL;
 
+  m_pTabControl = NULL;
+
   m_pKeywordsField = NULL;
 
   m_NoActivateRecord = false;
@@ -323,7 +325,12 @@ void CSrRecordDialog::GetUIFieldData (void) {
     if (pFields[Index].FieldID == SR_FIELD_EDITORID) continue;
 
     pWnd = GetDlgItem(pFields[Index].ControlID);
-    if (pWnd == NULL) continue;
+
+    if (pWnd == NULL)
+	{	
+		if (m_pTabControl != NULL) pWnd = m_pTabControl->FindChild(pFields[Index].ControlID);
+		if (pWnd == NULL) continue;
+	}
 	
     if (pWnd->IsKindOf(RUNTIME_CLASS(CEdit))) {
       pWnd->GetWindowText(Buffer);
@@ -862,7 +869,12 @@ void CSrRecordDialog::SetUIFieldData (void) {
 
   for (Index = 0; pFields[Index].FieldID != SR_FIELD_NONE; ++Index) {
     pWnd = this->GetDlgItem(pFields[Index].ControlID);
-    if (pWnd == NULL) continue;
+
+    if (pWnd == NULL) 
+	{	
+		if (m_pTabControl != NULL) pWnd = m_pTabControl->FindChild(pFields[Index].ControlID);
+		if (pWnd == NULL) continue;
+	}
 
 		/* Save special fields for later use */
     switch (pFields[Index].FieldID) {
@@ -2412,3 +2424,4 @@ void CSrRecordDialog::OnBnClickedBounds()
 		m_BoundsCopy.X2, m_BoundsCopy.Y2, m_BoundsCopy.Z2);
 	m_pBoundsField->SetWindowText(Buffer);
 }
+

@@ -24,6 +24,7 @@
 #include "windows/scbarg.h"
 #include "windows/scbarcf.h"
 #include <afxcontrolbars.h>
+#include <afxdlgs.h>
 
 
 

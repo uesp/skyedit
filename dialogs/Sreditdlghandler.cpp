@@ -63,6 +63,7 @@ srdlgcreateinfo_t l_SrDlgCreateInfo[] = {
 	{ &SR_NAME_OTFT, "Outfit",		     CSrOtftView::IDD,   RUNTIME_CLASS(CSrOtftView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Outfit"),		_T("Outfit") },
 	{ &SR_NAME_PERK, "Perk",			 CSrPerkView::IDD,   RUNTIME_CLASS(CSrPerkView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Perk"),			_T("Perk") },
 	{ &SR_NAME_ALCH, "Potion",			 CSrAlchView::IDD,   RUNTIME_CLASS(CSrAlchView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Potion"),		_T("Potion") },
+	{ &SR_NAME_RACE, "Race",			 CSrRaceView::IDD,   RUNTIME_CLASS(CSrRaceView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Race"),			_T("Race") },
 	{ &SR_NAME_COBJ, "Recipe",		     CSrCobjView::IDD,   RUNTIME_CLASS(CSrCobjView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Recipe"),		_T("Recipe") },
 	{ &SR_NAME_SCRL, "Scroll",			 CSrScrlView::IDD,   RUNTIME_CLASS(CSrScrlView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Scroll"),		_T("Scroll") },
 	{ &SR_NAME_SHOU, "Shout",			 CSrShouView::IDD,   RUNTIME_CLASS(CSrShouView),  RUNTIME_CLASS(CChildFrameFix),	_T("Tes5Mod:SkyEdit/User_Interface/Shout"),			_T("Shout") },
