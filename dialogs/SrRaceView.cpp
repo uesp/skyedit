@@ -250,3 +250,46 @@ void CSrRaceView::SetControlData (void)
 	m_UnknownPage.SetControlData();
 	m_FacePage.SetControlData();
 }
+
+
+CWnd* CSrRaceView::GetNextControl (const bool Previous)
+{
+	CWnd* pWnd = GetFocus();
+	if (pWnd == NULL) return NULL;
+
+	CWnd* pParent = pWnd->GetParent();
+	if (pParent == NULL) return NULL;
+
+	CWnd* pParent1 = pParent->GetParent();
+	if (pParent1 == NULL) return NULL;
+
+	if (pParent1 == &m_TabControl)
+	{
+		if (m_TabControl.GetCurrentPage() == NULL) return NULL;
+		return m_TabControl.GetCurrentPage()->GetNextDlgTabItem(pWnd, Previous);
+	}
+	else
+	{
+		return GetNextDlgTabItem(pWnd, Previous);
+	}
+
+	return NULL;
+}
+
+
+BOOL CSrRaceView::PreTranslateMessage(MSG* pMsg)
+{
+
+	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB)
+	{
+		CWnd* pWnd = GetNextControl(GetKeyState(VK_SHIFT) != 0);
+
+		if (pWnd)
+		{
+			pWnd->SetFocus();
+			return TRUE;
+		}
+	}
+
+	return CSrRecordDialog::PreTranslateMessage(pMsg);
+}

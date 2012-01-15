@@ -61,6 +61,8 @@ protected:
 
 	virtual void GetControlData (void);
 	virtual void SetControlData (void);
+
+	CWnd* GetNextControl (const bool Previous);
   
 
   /*---------- Begin Public Class Methods ------------------------*/
@@ -84,6 +86,7 @@ protected:
 public:
 
 	CTabCtrlSheet m_TabControl;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
 /*===========================================================================
  *		End of Class CSrRaceView Definition
