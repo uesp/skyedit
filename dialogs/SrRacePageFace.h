@@ -9,7 +9,6 @@ class CSrRacePageFace : public CPropertyPage
 
 	bool				m_IsInitialized;
 	srraceinfo_t&		m_RaceInfo;
-	srracemoveinfo_t*	m_pCurrentMoveType;
 	CSrPhwtSubrecord*	m_pCurrentWeight;
 
 	int  AddWeightList (CSrPhwtSubrecord* pWeight);

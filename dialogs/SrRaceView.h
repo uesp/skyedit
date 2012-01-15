@@ -26,6 +26,7 @@
 	#include "SrRacePageModel.h"
 	#include "SrRacePageUnknown.h"
 	#include "SrRacePageFace.h"
+	#include "SrRacePageHead1.h"
 /*===========================================================================
  *		End of Required Includes
  *=========================================================================*/
@@ -49,6 +50,8 @@ protected:
 	CSrRacePageModel	m_ModelPage;
 	CSrRacePageUnknown	m_UnknownPage;
 	CSrRacePageFace		m_FacePage;
+	CSrRacePageHead1	m_MaleHead1Page;
+	CSrRacePageHead1	m_FemaleHead1Page;
 
 	srraceinfo_t		m_RaceInfo;
 

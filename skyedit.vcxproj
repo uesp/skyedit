@@ -1842,6 +1842,7 @@
     <ClCompile Include="dialogs\SrFlstView.cpp" />
     <ClCompile Include="dialogs\SrOtftView.cpp" />
     <ClCompile Include="dialogs\SrRacePageFace.cpp" />
+    <ClCompile Include="dialogs\SrRacePageHead1.cpp" />
     <ClCompile Include="dialogs\SrRacePageModel.cpp" />
     <ClCompile Include="dialogs\SrRacePageAttack.cpp" />
     <ClCompile Include="dialogs\SrRacePageBasic.cpp" />
@@ -2199,6 +2200,7 @@
     <ClInclude Include="dialogs\SrFlstView.h" />
     <ClInclude Include="dialogs\SrOtftView.h" />
     <ClInclude Include="dialogs\SrRacePageFace.h" />
+    <ClInclude Include="dialogs\SrRacePageHead1.h" />
     <ClInclude Include="dialogs\SrRacePageModel.h" />
     <ClInclude Include="dialogs\SrRacePageAttack.h" />
     <ClInclude Include="dialogs\SrRacePageBasic.h" />

@@ -929,6 +929,9 @@
     <ClCompile Include="dialogs\SrRacePageFace.cpp">
       <Filter>Source Files\Forms\Dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="dialogs\SrRacePageHead1.cpp">
+      <Filter>Source Files\Forms\Dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">
@@ -1954,6 +1957,9 @@
       <Filter>Header Files\Forms.\Dialogs.</Filter>
     </ClInclude>
     <ClInclude Include="dialogs\SrRacePageFace.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="dialogs\SrRacePageHead1.h">
       <Filter>Header Files\Forms.\Dialogs.</Filter>
     </ClInclude>
   </ItemGroup>

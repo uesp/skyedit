@@ -105,7 +105,8 @@ END_SRRECUIFIELDS()
  *
  *=========================================================================*/
 CSrRaceView::CSrRaceView() : CSrRecordDialog(CSrRaceView::IDD), m_BasicPage(m_RaceInfo), m_ModelPage(m_RaceInfo), 
-	m_MovePage(m_RaceInfo), m_UnknownPage(m_RaceInfo), m_AttackPage(m_RaceInfo), m_FacePage(m_RaceInfo)
+	m_MovePage(m_RaceInfo), m_UnknownPage(m_RaceInfo), m_AttackPage(m_RaceInfo), m_FacePage(m_RaceInfo),
+	m_MaleHead1Page(m_RaceInfo, true), m_FemaleHead1Page(m_RaceInfo, false)
 {
 	m_InitialSetData = false;
 }
@@ -182,12 +183,16 @@ void CSrRaceView::OnInitialUpdate (void)
 	m_BasicPage.m_pDlgHandler = m_pDlgHandler;
 	m_UnknownPage.m_pDlgHandler = m_pDlgHandler;
 	m_FacePage.m_pDlgHandler = m_pDlgHandler;
+	m_MaleHead1Page.m_pDlgHandler = m_pDlgHandler;
+	m_FemaleHead1Page.m_pDlgHandler = m_pDlgHandler;
 	m_ModelPage.m_pParent = this;
 	m_AttackPage.m_pParent = this;
 	m_MovePage.m_pParent = this;
 	m_BasicPage.m_pParent = this;
 	m_UnknownPage.m_pParent = this;
 	m_FacePage.m_pParent = this;
+	m_MaleHead1Page.m_pParent = this;
+	m_FemaleHead1Page.m_pParent = this;
 
 	m_BasicPage.Create(IDD_RACE_BASICPAGE, &m_TabControl);
 	m_MovePage.Create(IDD_RACE_MOVEPAGE, &m_TabControl);
@@ -195,12 +200,16 @@ void CSrRaceView::OnInitialUpdate (void)
 	m_ModelPage.Create(IDD_RACE_MODELPAGE, &m_TabControl);
 	m_UnknownPage.Create(IDD_RACE_UNKNOWNPAGE, &m_TabControl);
 	m_FacePage.Create(IDD_RACE_FACEPAGE, &m_TabControl);
+	m_MaleHead1Page.Create(IDD_RACE_HEADPAGE1, &m_TabControl);
+	m_FemaleHead1Page.Create(IDD_RACE_HEADPAGE1, &m_TabControl);
   
 	m_TabControl.AddTab("Basic Data", &m_BasicPage);
 	m_TabControl.AddTab("Model", &m_ModelPage);
 	m_TabControl.AddTab("Attack", &m_AttackPage);
 	m_TabControl.AddTab("Movement", &m_MovePage);
 	m_TabControl.AddTab("Face", &m_FacePage);
+	m_TabControl.AddTab("Male Head", &m_MaleHead1Page);
+	m_TabControl.AddTab("Female Head", &m_FemaleHead1Page);
 	m_TabControl.AddTab("Unknown", &m_UnknownPage);
 	m_TabControl.SetPage(0);
 
@@ -223,6 +232,8 @@ void CSrRaceView::GetControlData (void)
 	m_MovePage.GetControlData();
 	m_UnknownPage.GetControlData();
 	m_FacePage.GetControlData();
+	m_MaleHead1Page.GetControlData();
+	m_FemaleHead1Page.GetControlData();
 
 	CSrRaceRecord* pRace = SrCastClass(CSrRaceRecord, GetOutputRecord());
 
@@ -249,6 +260,8 @@ void CSrRaceView::SetControlData (void)
 	m_MovePage.SetControlData();
 	m_UnknownPage.SetControlData();
 	m_FacePage.SetControlData();
+	m_MaleHead1Page.SetControlData();
+	m_FemaleHead1Page.SetControlData();
 }
 
 
