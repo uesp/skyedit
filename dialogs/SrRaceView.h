@@ -27,6 +27,7 @@
 	#include "SrRacePageUnknown.h"
 	#include "SrRacePageFace.h"
 	#include "SrRacePageHead1.h"
+	#include "SrRacePageTint.h"
 /*===========================================================================
  *		End of Required Includes
  *=========================================================================*/
@@ -52,6 +53,8 @@ protected:
 	CSrRacePageFace		m_FacePage;
 	CSrRacePageHead1	m_MaleHead1Page;
 	CSrRacePageHead1	m_FemaleHead1Page;
+	CSrRacePageTint		m_MaleTintPage;
+	CSrRacePageTint		m_FemaleTintPage;
 
 	srraceinfo_t		m_RaceInfo;
 

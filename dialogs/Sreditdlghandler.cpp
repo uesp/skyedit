@@ -1089,6 +1089,32 @@ bool CSrEditDlgHandler::SelectModelHelper (CWnd* pWnd) {
  *=========================================================================*/
 
 
+bool CSrEditDlgHandler::SelectResource (const char* pString, const char* pPath) 
+{
+  CString Buffer(pPath);
+
+  Buffer += pString;
+
+  GetSrEditApp().OpenResourceView(Buffer);
+  return (true);
+}
+
+
+bool CSrEditDlgHandler::SelectResourceHelper (CWnd* pWnd, const char* pPath) 
+{
+  CString Buffer(pPath);
+  CString Model;
+
+  if (pWnd == NULL) return false;
+  pWnd->GetWindowText(Model);
+
+  Buffer += Model;
+
+  GetSrEditApp().OpenResourceView(Buffer);
+  return (true);
+}
+
+
 /*===========================================================================
  *
  * Class CSrEditDlgHandler Method - bool SelectIcon (pString);

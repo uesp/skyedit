@@ -6,6 +6,7 @@ v0.046a
 	- Proper tab handling within tab controls
 	- Duplicate/copy perks within the same record
 	- Duplicate/copy conditions within the same record
+	- Proper perk section condition counts
 
 v0.045a
 	- Implement an "editorid" control derived from a CEdit. Replace all current read-only CEdits with

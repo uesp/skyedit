@@ -118,6 +118,7 @@
 #define IDD_RACE_UNKNOWNPAGE            197
 #define IDD_RACE_FACEPAGE               198
 #define IDD_RACE_HEADPAGE1              199
+#define IDD_RACE_TINTPAGE               200
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -226,7 +227,9 @@
 #define IDC_EDIT_TRAPSOUND              1105
 #define IDC_MODEL                       1106
 #define IDC_BASEWEAPON                  1107
+#define IDC_TINTINDEX                   1107
 #define IDC_DESTROYMODEL                1108
+#define IDC_TINTTINP                    1108
 #define IDC_EDIT_BASEWEAPON             1109
 #define IDC_FLICKERTYPE                 1110
 #define IDC_REDSPIN                     1111
@@ -238,7 +241,9 @@
 #define IDC_ITEMNAME                    1117
 #define IDC_ARMAMODELS                  1118
 #define IDC_DNAME                       1119
+#define IDC_DATATINV                    1119
 #define IDC_RESULTCOUNT                 1120
+#define IDC_DATATIRS                    1120
 #define IDC_MAGNITUDE                   1121
 #define IDC_TRANSLATION                 1122
 #define IDC_ACTORSKILL1                 1123
@@ -817,8 +822,22 @@
 #define IDC_DEL_HEADPART                1735
 #define IDC_MPALIST                     1736
 #define IDC_ADD_MPA                     1737
-#define IDC_DELETE_MPAOVETYPE           1738
 #define IDC_DELETE_MPA                  1738
+#define IDC_TINTLIST                    1739
+#define IDC_ADD_TINT                    1740
+#define IDC_DELETE_TINT                 1741
+#define IDC_TINTMASK                    1742
+#define IDC_SELECT_TINTMASK             1743
+#define IDC_TINDCOLOR                   1744
+#define IDC_EDIT_TINDCOLOR              1745
+#define IDC_SELECT_TINDCOLOR            1746
+#define IDC_TINTDATALIST                1747
+#define IDC_ADD_TINTDATA                1748
+#define IDC_DELETE_TINTDATA             1749
+#define IDC_DATATINC                    1750
+#define IDC_EDIT_DATATINC               1751
+#define IDC_SELECT_TINDCOLOR2           1752
+#define IDC_SELECT_DATATINC             1752
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -1036,7 +1055,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        224
 #define _APS_NEXT_COMMAND_VALUE         32882
-#define _APS_NEXT_CONTROL_VALUE         1739
+#define _APS_NEXT_CONTROL_VALUE         1747
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

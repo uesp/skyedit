@@ -153,7 +153,7 @@ void CSrRacePageHead1::GetControlData (void)
 		m_HeadInfo.AddFeatureSet(pRecord->GetFormID());
 	}
 
-	for (dword i = 0; i < m_HeadParts.GetCount(); ++i)
+	for (int i = 0; i < m_HeadParts.GetCount(); ++i)
 	{
 		m_HeadParts.GetText(i, Buffer);
 		pRecord = m_pParent->m_pRecordHandler->FindEditorID(Buffer);
@@ -573,7 +573,7 @@ void CSrRacePageHead1::OnBnClickedAddMpa()
 
 void CSrRacePageHead1::OnBnClickedDeleteMpa()
 {
-std::vector<int> IndexList;
+	std::vector<int> IndexList;
 	POSITION		 Pos;
 	int				 ListIndex;
 

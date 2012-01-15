@@ -791,34 +791,41 @@ bool CSrEditApp::InitResourceHandler (void) {
   SrEndTimer(Timer, "Added resource \\data path contents in ");
 
 		/* Add known BSA files for now */
-  Filename = Buffer + "Skyrim - Misc.bsa";
+  Filename = Buffer + "Skyrim - Animations.bsa";
   AddBsaFile(Filename);
   if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(20);
 
-  Filename = Buffer + "Skyrim - Meshes.bsa";
+  Filename = Buffer + "Skyrim - Interfaces.bsa";
   AddBsaFile(Filename);
   if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(30);
-
-  Filename = Buffer + "Skyrim - Sounds.bsa";
+    
+  Filename = Buffer + "Skyrim - Misc.bsa";
   AddBsaFile(Filename);
   if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(40);
 
-  //Filename = Buffer + "Skyrim - Shaders.bsa";
-  //AddBsaFile(Filename);
-  //if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(50);
+  Filename = Buffer + "Skyrim - Meshes.bsa";
+  AddBsaFile(Filename);
+  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(50);
 
-  //Filename = Buffer + "Skyrim - Textures.bsa";
-  //AddBsaFile(Filename);
-  //if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(60);
+  Filename = Buffer + "Skyrim - Sounds.bsa";
+  AddBsaFile(Filename);
+  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(60);
 
-  //Filename = Buffer + "Oblivion - Voices1.bsa";
-  //AddBsaFile(Filename);
-  //Filename = Buffer + "Oblivion - Voices2.bsa";
-  //AddBsaFile(Filename);
+  Filename = Buffer + "Skyrim - Shaders.bsa";
+  AddBsaFile(Filename);
+  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(70);
 
-  //Filename = Buffer + "Skyrim - Textures - Compressed.bsa";
-  //AddBsaFile(Filename);
-  //if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(50);
+  Filename = Buffer + "Skyrim - Textures.bsa";
+  AddBsaFile(Filename);
+  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(80);
+
+  Filename = Buffer + "Skyrim - Voices.bsa";
+  AddBsaFile(Filename);
+  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(90);
+
+  Filename = Buffer + "Skyrim - VoicesExtra.bsa";
+  AddBsaFile(Filename);
+  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(95);
   
   m_InitResourceHandler = true;
   return (true);

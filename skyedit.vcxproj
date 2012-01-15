@@ -1847,6 +1847,7 @@
     <ClCompile Include="dialogs\SrRacePageAttack.cpp" />
     <ClCompile Include="dialogs\SrRacePageBasic.cpp" />
     <ClCompile Include="dialogs\SrRacePageMove.cpp" />
+    <ClCompile Include="dialogs\SrRacePageTint.cpp" />
     <ClCompile Include="dialogs\SrRacePageUnknown.cpp" />
     <ClCompile Include="dialogs\SrRaceView.cpp" />
     <ClCompile Include="dialogs\SrSopmEditDlg.cpp" />
@@ -2205,6 +2206,7 @@
     <ClInclude Include="dialogs\SrRacePageAttack.h" />
     <ClInclude Include="dialogs\SrRacePageBasic.h" />
     <ClInclude Include="dialogs\SrRacePageMove.h" />
+    <ClInclude Include="dialogs\SrRacePageTint.h" />
     <ClInclude Include="dialogs\SrRacePageUnknown.h" />
     <ClInclude Include="dialogs\SrRaceView.h" />
     <ClInclude Include="dialogs\SrSopmEditDlg.h" />
