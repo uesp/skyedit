@@ -16,10 +16,10 @@
  * Begin Required Includes
  *
  *=========================================================================*/
-  #include "modfile/srespfile.h"
-  #include "windows/srrecordlistctrl.h"
-  #include "modfile/srmultirecordhandler.h"
-#include "afxwin.h"
+	#include "modfile/srespfile.h"
+	#include "windows/srrecordvirtuallistctrl.h"
+	#include "modfile/srmultirecordhandler.h"
+	#include "afxwin.h"
 /*===========================================================================
  *		End of Required Includes
  *=========================================================================*/
@@ -137,7 +137,8 @@ public:
   CButton		m_ClearButton;
   CEdit			m_CurrentText;
   CEdit			m_PreviousText;
-  CSrRecordListCtrl	m_RecordList;
+
+  CSrRecordVirtualListCtrl	m_RecordList;
 
 protected:
   virtual void DoDataExchange(CDataExchange* pDX);

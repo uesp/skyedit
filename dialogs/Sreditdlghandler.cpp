@@ -1132,6 +1132,29 @@ bool CSrEditDlgHandler::SelectSoundFile (const char* pString) {
  *=========================================================================*/
 
 
+bool CSrEditDlgHandler::EditRecordHelper (CEdit& Edit, const srrectype_t Type)
+{
+	CString    Buffer;
+	CSrRecord* pRecord;
+
+	if (m_pDocument == NULL) return false;
+	Edit.GetWindowText(Buffer);
+
+	if (Buffer.IsEmpty()) 
+	{
+	    EditNewRecord(Type);
+	}	
+	else 
+	{
+		pRecord = m_pDocument->GetRecordHandler().FindEditorID(Buffer);
+		if (pRecord == NULL) return false;
+		EditRecord(pRecord);
+	}
+
+	return true;
+}
+
+
 bool CSrEditDlgHandler::EditRecordHelper (CWnd* pWnd, const srrectype_t Type)
 {
 	CString    Buffer;
@@ -1139,6 +1162,30 @@ bool CSrEditDlgHandler::EditRecordHelper (CWnd* pWnd, const srrectype_t Type)
 
 	if (m_pDocument == NULL || pWnd == NULL) return false;
 	pWnd->GetWindowText(Buffer);
+
+	if (Buffer.IsEmpty()) 
+	{
+	    EditNewRecord(Type);
+	}	
+	else 
+	{
+		pRecord = m_pDocument->GetRecordHandler().FindEditorID(Buffer);
+		if (pRecord == NULL) return false;
+		EditRecord(pRecord);
+	}
+
+	return true;
+}
+
+
+bool CSrEditDlgHandler::EditRecordHelper (CListBox& ListBox, const srrectype_t Type)
+{
+	CString    Buffer;
+	CSrRecord* pRecord;
+	int        ListIndex = ListBox.GetCurSel();
+
+	if (m_pDocument == NULL || ListIndex < 0) return false;
+	ListBox.GetText(ListIndex, Buffer);
 
 	if (Buffer.IsEmpty()) 
 	{

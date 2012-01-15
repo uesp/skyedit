@@ -433,15 +433,15 @@ void CSrRacePageAttack::OnBnClickedDeleteAttack()
 
 	m_pCurrentAttack = NULL;
 
-	if (ListIndex > 0)
+	if (ListIndex < (int) m_RaceInfo.Attacks.GetSize())
 	{
-		SetCurrentAttack(m_RaceInfo.Attacks[ListIndex - 1]);
-		m_AttackList.SelectRecord(ListIndex - 1);
+		SetCurrentAttack(m_RaceInfo.Attacks[ListIndex]);
+		m_AttackList.SelectRecord(ListIndex);
 	}
 	else
 	{
-		SetCurrentAttack(m_RaceInfo.Attacks[0]);
-		m_AttackList.SelectRecord(0);
+		SetCurrentAttack(m_RaceInfo.Attacks[ListIndex - 1]);
+		m_AttackList.SelectRecord(ListIndex - 1);
 	}
 }
 

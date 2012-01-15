@@ -811,6 +811,14 @@
 #define IDC_ADD_HAIRCOLOR               1729
 #define IDC_EDIT_HAIRCOLOR              1730
 #define IDC_DEL_HAIRCOLOR               1731
+#define IDC_HEADPARTS                   1732
+#define IDC_ADD_HEADPART                1733
+#define IDC_EDIT_HEADPART               1734
+#define IDC_DEL_HEADPART                1735
+#define IDC_MPALIST                     1736
+#define IDC_ADD_MPA                     1737
+#define IDC_DELETE_MPAOVETYPE           1738
+#define IDC_DELETE_MPA                  1738
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -1028,7 +1036,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        224
 #define _APS_NEXT_COMMAND_VALUE         32882
-#define _APS_NEXT_CONTROL_VALUE         1732
+#define _APS_NEXT_CONTROL_VALUE         1739
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

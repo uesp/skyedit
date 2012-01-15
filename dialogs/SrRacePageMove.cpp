@@ -513,7 +513,8 @@ void CSrRacePageMove::OnBnClickedAddMovetype()
 	srracemoveinfo_t* pNewMoveType = m_RaceInfo.MovementTypes.AddNew();
 	pNewMoveType->InitializeNew();
 
-	AddMoveTypeList(pNewMoveType);
+	int ListIndex = AddMoveTypeList(pNewMoveType);
+	m_MoveTypeList.SelectRecord(ListIndex);
 	SetCurrentMoveType(pNewMoveType);
 }
 
@@ -543,7 +544,6 @@ void CSrRacePageMove::OnBnClickedDeleteMovetype()
 		m_MoveTypeList.SelectRecord(-1);
 		SetCurrentMoveType(NULL);
 	}
-
 	
 }
 

@@ -215,6 +215,8 @@ public:
   bool EditNewRecord (const srrectype_t RecordType);
 
   bool EditRecordHelper (CWnd* pWnd, const srrectype_t Type);
+  bool EditRecordHelper (CEdit& Edit, const srrectype_t Type);
+  bool EditRecordHelper (CListBox& ListBox, const srrectype_t Type);
   bool SelectRecordHelper (CWnd* pWnd, const srrectype_t Type, const srrecfieldmap_t* pFieldMap);
 
 	/* Get class members */
