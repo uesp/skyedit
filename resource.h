@@ -119,6 +119,8 @@
 #define IDD_RACE_FACEPAGE               198
 #define IDD_RACE_HEADPAGE1              199
 #define IDD_RACE_TINTPAGE               200
+#define IDR_MENU1                       224
+#define IDR_PERKSECTION_MENU            224
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -836,7 +838,6 @@
 #define IDC_DELETE_TINTDATA             1749
 #define IDC_DATATINC                    1750
 #define IDC_EDIT_DATATINC               1751
-#define IDC_SELECT_TINDCOLOR2           1752
 #define IDC_SELECT_DATATINC             1752
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
@@ -1047,14 +1048,18 @@
 #define ID_FLSTLIST_EDIT                32879
 #define ID_FLSTLIST_DELETE              32880
 #define ID_FLSTTLIST_EDITBASE           32881
+#define ID_PERKSECTION_ADD              32882
+#define ID_PERKSECTION_DELETE           32883
+#define ID_PERKSECTION_DUPLICATE        32884
+#define ID_PERKSECTION_EDIT             32885
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        224
-#define _APS_NEXT_COMMAND_VALUE         32882
+#define _APS_NEXT_RESOURCE_VALUE        225
+#define _APS_NEXT_COMMAND_VALUE         32886
 #define _APS_NEXT_CONTROL_VALUE         1747
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

@@ -14,6 +14,7 @@
 #include "srperkview.h"
 #include "dialogs/sreditdlghandler.h"
 #include "../SrConditionDlg.h"
+#include <vector>
 
 
 /*===========================================================================
@@ -47,6 +48,12 @@ BEGIN_MESSAGE_MAP(CSrPerkView, CSrRecordDialog)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_PERKDATA_LIST, &CSrPerkView::OnLvnItemchangedPerkdataList)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_PERKDATA_LIST, OnDropSectionList)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_PERKDATA_LIST, OnDropSectionList)	
+	ON_COMMAND(ID_PERKSECTION_ADD, &CSrPerkView::OnPerksectionAdd)
+	ON_COMMAND(ID_PERKSECTION_DELETE, &CSrPerkView::OnPerksectionDelete)
+	ON_COMMAND(ID_PERKSECTION_DUPLICATE, &CSrPerkView::OnPerksectionDuplicate)
+	ON_UPDATE_COMMAND_UI(ID_PERKSECTION_DELETE, &CSrPerkView::OnUpdatePerksectionEdit)
+	ON_UPDATE_COMMAND_UI(ID_PERKSECTION_DUPLICATE, &CSrPerkView::OnUpdatePerksectionEdit)
+	ON_WM_CONTEXTMENU()
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrPerkView Message Map
@@ -1285,3 +1292,158 @@ void CSrPerkView::OnDropSectionList (NMHDR* pNotifyStruct, LRESULT* pResult)
 /*===========================================================================
  *		End of Class Event CSrPerkView::OnDropSectionList()
  *=========================================================================*/
+
+
+ void CSrPerkView::OnPerksectionAdd()
+ {
+	 OnBnClickedAddperkButton();
+ }
+
+ 
+ void CSrPerkView::OnPerksectionDelete()
+ {
+	 OnBnClickedDeleteperkButton();
+ }
+
+
+ void CSrPerkView::OnPerksectionDuplicate()
+ {
+	 std::vector<srperk_section_t*> NewSections;
+	 POSITION Pos;
+	 int      ListIndex;
+	
+	 GetSectionData();
+	 
+	 Pos = m_SectionList.GetFirstSelectedItemPosition();
+
+	 while (Pos)
+	 {
+		ListIndex = m_SectionList.GetNextSelectedItem(Pos);
+		srrlcustomdata_t* pCustomData = m_SectionList.GetCustomData(ListIndex);
+		if (pCustomData == NULL) continue;
+
+		srperk_subsection_t*	pCurrentSubsection = NULL;
+		srconditioninfo_t*		pCurrentCondInfo = NULL;
+		srperk_section_t*   	pSection;
+		CSrSubrecord*			pSubrecord;
+
+		pSection = m_Sections.AddNew();
+		if (pSection == NULL) continue;	
+
+		for (dword i = 0; i < pCustomData->Subrecords.GetSize(); ++i)
+		{
+			if (pCustomData->Subrecords[i] == NULL) continue;
+			pSubrecord = pCustomData->Subrecords[i];
+
+			if (pSubrecord->GetRecordType() == SR_NAME_PRKE)
+			{
+				pSection->Prke.Copy(pSubrecord);
+			}
+			else if (pSubrecord->GetRecordType() == SR_NAME_DATA)
+			{
+				pSection->Data.Copy(pSubrecord);
+			}
+			else if (pSubrecord->GetRecordType() == SR_NAME_PRKC)
+			{
+				 pCurrentSubsection = pSection->Subsections.AddNew();
+				 pCurrentSubsection->Prkc.Copy(pSubrecord);
+				 pCurrentCondInfo = NULL;
+			}
+			else if (pSubrecord->GetRecordType() == SR_NAME_CTDA && pCurrentSubsection != NULL)
+			{
+				pCurrentCondInfo = pCurrentSubsection->Conditions.AddNew();
+				pCurrentCondInfo->Condition.Copy(pSubrecord);
+				pCurrentCondInfo->Condition.SetPrkc(pCurrentSubsection->Prkc.GetValue());
+			}
+			else if (pSubrecord->GetRecordType() == SR_NAME_CIS1 && pCurrentCondInfo != NULL)
+			{
+				 pCurrentCondInfo->CopyParam1(pSubrecord);
+			}
+			else if (pSubrecord->GetRecordType() == SR_NAME_CIS2 && pCurrentCondInfo != NULL)
+			{
+				 pCurrentCondInfo->CopyParam2(pSubrecord);
+			}
+			else if (pSubrecord->GetRecordType() == SR_NAME_EPFT)
+			{
+				 pCurrentSubsection = NULL;
+				 pCurrentCondInfo   = NULL;
+
+				 CSrSubrecord* pTmp = pSubrecord->CreateCopy();
+				 pSection->pEpft = SrCastClass(CSrByteSubrecord, pTmp);
+				 if (pSection->pEpft == NULL) delete pTmp;
+			}
+			else if (pSubrecord->GetRecordType() == SR_NAME_EPF2)
+			{
+				 pCurrentSubsection = NULL;
+				 pCurrentCondInfo   = NULL;
+
+				 CSrSubrecord* pTmp = pSubrecord->CreateCopy();
+				 pSection->pEpf2 = SrCastClass(CSrLStringSubrecord, pTmp);
+				 if (pSection->pEpf2 == NULL) delete pTmp;
+			}
+			else if (pSubrecord->GetRecordType() == SR_NAME_EPF3)
+			{
+				 pCurrentSubsection = NULL;
+				 pCurrentCondInfo   = NULL;
+
+				 CSrSubrecord* pTmp = pSubrecord->CreateCopy();
+				 pSection->pEpf3 = SrCastClass(CSrDwordSubrecord, pTmp);
+				 if (pSection->pEpf3 == NULL) delete pTmp;
+			}
+			else if (pSubrecord->GetRecordType() == SR_NAME_EPFD)
+			{
+				 pCurrentSubsection = NULL;
+				 pCurrentCondInfo   = NULL;
+
+				 CSrSubrecord* pTmp = pSubrecord->CreateCopy();
+				 pSection->pEpfd = SrCastClass(CSrEpfdSubrecord, pTmp);
+				 if (pSection->pEpfd == NULL) delete pTmp;
+			}
+			else if (pSubrecord->GetRecordType() == SR_NAME_PRKF)
+			{
+				 pCurrentSubsection = NULL;
+				 pCurrentCondInfo   = NULL;
+
+				 pSection->Prkf.Copy(pSubrecord);
+			}
+		}
+
+		NewSections.push_back(pSection);
+	 }
+	 
+	 for (auto i = NewSections.begin(); i != NewSections.end(); ++i)
+	 {
+		AddPerkSectionList(*i);
+	 }
+
+ }
+
+
+ void CSrPerkView::OnUpdatePerksectionEdit(CCmdUI *pCmdUI)
+ {
+	pCmdUI->Enable(m_pCurrentSection != NULL);
+ }
+
+
+ void CSrPerkView::OnContextMenu(CWnd* pWnd, CPoint Point)
+ {
+ 	CMenu  Menu;
+	CMenu* pSubMenu;
+	int    Result;
+	
+	if (pWnd->GetDlgCtrlID() == IDC_PERKDATA_LIST) 
+	{
+		Result = Menu.LoadMenu(IDR_PERKSECTION_MENU);
+		if (!Result) return;
+		
+		pSubMenu = Menu.GetSubMenu(0);
+		if (pSubMenu == NULL) return;
+		
+		pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this, NULL);
+	}
+	else 
+	{
+		CSrRecordDialog::OnContextMenu(pWnd, Point);
+	}
+	  
+ }

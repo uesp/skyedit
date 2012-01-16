@@ -353,6 +353,11 @@ public:
 	afx_msg void OnLvnItemchangedPerkdataList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnDropSectionList (NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg int OnDropCustomSectionData (srrldroprecords_t& DropItems);
+	afx_msg void OnPerksectionAdd();
+	afx_msg void OnPerksectionDelete();
+	afx_msg void OnPerksectionDuplicate();
+	afx_msg void OnUpdatePerksectionEdit(CCmdUI *pCmdUI);
+	afx_msg void OnContextMenu(CWnd* /*pWnd*/, CPoint /*point*/);
 };
 /*===========================================================================
  *		End of Class CSrPerkView Definition

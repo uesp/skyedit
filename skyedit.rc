@@ -2346,6 +2346,17 @@ BEGIN
     END
 END
 
+IDR_PERKSECTION_MENU MENU
+BEGIN
+    POPUP "PerkSection"
+    BEGIN
+        MENUITEM "Add...",                      ID_PERKSECTION_ADD
+        MENUITEM "Delete",                      ID_PERKSECTION_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "Duplicate",                   ID_PERKSECTION_DUPLICATE
+    END
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
