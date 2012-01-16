@@ -350,7 +350,7 @@ void CSrPerkView::UpdatePerkSectionList (const int ListIndex, const bool Update)
 	Buffer.Format("%d", (int) pSection->Prke.GetPrkeData().Index);
 	m_SectionList.SetCustomField(ListIndex, SR_FIELD_PERKINDEX, Buffer);
 
-	Buffer.Format("%d", (int) pSection->Subsections.GetSize());
+	Buffer.Format("%d", (int) pSection->CountSubsections());
 	m_SectionList.SetCustomField(ListIndex, SR_FIELD_CONDITIONCOUNT, Buffer);
 		
 	if (pSection->Data.GetPerkDataType() == SR_PERKDATA_TYPE02)
@@ -636,7 +636,7 @@ void CSrPerkView::SetSectionData (void)
 	Buffer.Format("%u", (dword) m_pCurrentSection->Prke.GetPrkeData().Index);
 	m_SectionIndex.SetWindowText(Buffer);
 
-	Buffer.Format("%u", m_pCurrentSection->Subsections.GetSize());
+	Buffer.Format("%u", m_pCurrentSection->CountSubsections());
 	m_SectionConditions.SetWindowText(Buffer);
 	
 	if (m_pCurrentSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE00)
@@ -1007,7 +1007,7 @@ void CSrPerkView::OnBnClickedSectionConditions()
 	m_ConditionsChanged = true;
 
 	CString Buffer;
-	Buffer.Format("%d", m_pCurrentSection->Subsections.GetSize());
+	Buffer.Format("%d", m_pCurrentSection->CountSubsections());
 	m_SectionConditions.SetWindowText(Buffer);
 
 			/* Recreate the subsection structure */
@@ -1034,7 +1034,7 @@ void CSrPerkView::OnBnClickedSectionConditions()
 		pNewCond->Copy(*pCond);
 	}
 
-	Buffer.Format("%d", m_pCurrentSection->Subsections.GetSize());
+	Buffer.Format("%d", m_pCurrentSection->CountSubsections());
 	m_SectionConditions.SetWindowText(Buffer);
 
 	GetSectionData();

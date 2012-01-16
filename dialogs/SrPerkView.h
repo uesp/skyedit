@@ -67,6 +67,18 @@ struct srperk_section_t
 		CopyFrom(pRecord, Index);
 	}
 
+	dword CountSubsections (void)
+	{
+		dword Count = 0;
+
+		for (dword i = 0; i < Subsections.GetSize(); ++i)
+		{
+			Count += Subsections[i]->Conditions.GetSize();
+		}
+
+		return Count;
+	}
+
 	void InitializeNew (void)
 	{
 		pEpft = NULL;
