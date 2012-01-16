@@ -1,12 +1,9 @@
 v0.046a
 	- Conditions: Batch edit? drag-and-drop?
-	- List drags grab the "old" item data instead of the current one
+	- List drags grab the "old" item data instead of the current one (double-check if this occurs and where)
 	- Get fieldmap from a record type
 	- Get english name from a record type
-	- Proper tab handling within tab controls
-	- Duplicate/copy perks within the same record
 	- Duplicate/copy conditions within the same record
-	- Proper perk section condition counts
 
 v0.045a
 	- Implement an "editorid" control derived from a CEdit. Replace all current read-only CEdits with
@@ -17,9 +14,8 @@ v0.045a
 v0.04a
 	- Update web site help 
 	- CIS1 appears to be GMST editorIDs and not script variables (figure out exact format in CTDA or function calls)
-	- Raw view to handle array subrecords
 	- Change all "old" manual fields to use field macros
-	- More handling of function parameters in condition dialog (i.e., actor values)
+	- Better handling of function parameters in condition dialog (i.e., actor values)
 	- Rare crash when closing a main file view (thread is not being closed and accesses view after destruction)
 	- Bounds editing in dialogs
 	- Permit resource viewer to display outside of main frame
