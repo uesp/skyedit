@@ -166,6 +166,7 @@ CSrEditView::CSrEditView() : CFormView(CSrEditView::IDD)
   m_UpdateFilterCounts = false;
   m_hFilterUpdateThreadID = 0;
   m_hFilterUpdateThread = 0;
+  m_ThreadCloseEvent = 0;
 }
 /*===========================================================================
  *		End of Class CSrEditView Constructor

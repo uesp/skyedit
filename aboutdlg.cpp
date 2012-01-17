@@ -193,4 +193,3 @@ void CAboutDlg::OnLink (NMHDR *pNotify, LRESULT *pResult) {
  *		End of Class Event CAboutDlg::OnLink()
  *=========================================================================*/
 
-

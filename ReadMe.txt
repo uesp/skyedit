@@ -155,6 +155,8 @@ can be found at:
 	- Multiple MODL subrecords in ARMO can now be edited properly.
 	- Fixed main view resizing issue...again (probably).
 	- Containers/Leveled lists now support COED subrecords.
+	- Can copy text from the error/log control bar.
+	- Many small fixes and improvements.
 
 0.046alpha - 7 January 2021
 	- Fix saving crash.

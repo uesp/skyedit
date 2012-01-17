@@ -56,7 +56,6 @@ protected:
   DECLARE_MESSAGE_MAP()
 
 public:
-
 };
 /*===========================================================================
  *		End of Class CAboutDlg Definition

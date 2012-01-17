@@ -37,6 +37,7 @@
 BEGIN_MESSAGE_MAP(CSrErrorDlg, CDialog)
   //{{AFX_MSG_MAP(CSrErrorDlg)
 	//}}AFX_MSG_MAP
+	ON_WM_CONTEXTMENU()
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrErrorDlg Message Map
@@ -204,3 +205,9 @@ BOOL CSrErrorDlg::OnInitDialog() {
 /*===========================================================================
  *		End of Class Event CSrErrorDlg::OnInitDialog()
  *=========================================================================*/
+
+
+ void CSrErrorDlg::OnContextMenu(CWnd* /*pWnd*/, CPoint /*point*/)
+ {
+	 
+ }

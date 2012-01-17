@@ -53,7 +53,7 @@ public:
   /*---------- Begin Protected Class Members ----------------------*/
 protected:
   CStatusBar		m_wndStatusBar;
-  CToolBar		m_wndToolBar;
+  CToolBar			m_wndToolBar;
   CSrErrorBar		m_wndErrorBar;
   CSrUndoBar		m_wndUndoBar;
 
@@ -74,15 +74,10 @@ public:
   virtual void Dump(CDumpContext& dc) const;
 #endif
 
-
-	/* ClassWizard generated virtual function overrides */
-  //{{AFX_VIRTUAL(CMainFrame)
   virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
-  //}}AFX_VIRTUAL
 
-	/* Generated message map functions */
 protected:
-  //{{AFX_MSG(CMainFrame)
+
   afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
   afx_msg void OnDestroy();
   afx_msg void OnViewErrorBar();
@@ -98,18 +93,15 @@ protected:
   afx_msg void OnHelpUespwiki();
   afx_msg void OnHelpCswiki();
 	afx_msg void OnViewResetlists();
-	//}}AFX_MSG
 
   DECLARE_MESSAGE_MAP();
+
+public:
 
 };
 /*===========================================================================
  *		End of Class CMainFrame Definition
  *=========================================================================*/
-
-
-//{{AFX_INSERT_LOCATION}}
-//}}AFX_INSERT_LOCATION
 
 
 #endif

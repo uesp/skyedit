@@ -120,6 +120,7 @@
 #define IDD_RACE_HEADPAGE1              199
 #define IDD_RACE_TINTPAGE               200
 #define IDR_PERKSECTION_MENU            224
+#define IDR_ERRORBAR_MENU               225
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -172,7 +173,6 @@
 #define IDC_USEALL                      1049
 #define IDC_COUNT                       1050
 #define IDC_FIND_LABEL                  1051
-#define IDC_COUNT2                      1051
 #define IDC_MINRANK                     1051
 #define IDC_CHANCENONE                  1052
 #define IDC_CONDITION                   1052
@@ -1054,14 +1054,15 @@
 #define ID_PERKSECTION_DELETE           32883
 #define ID_PERKSECTION_DUPLICATE        32884
 #define ID_PERKSECTION_EDIT             32885
+#define ID_ERRORBAR_COPY                32886
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        225
-#define _APS_NEXT_COMMAND_VALUE         32886
+#define _APS_NEXT_RESOURCE_VALUE        226
+#define _APS_NEXT_COMMAND_VALUE         32887
 #define _APS_NEXT_CONTROL_VALUE         1747
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

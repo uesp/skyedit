@@ -23,15 +23,9 @@
  *
  *=========================================================================*/
 
-	/* Debug defines */
-//#ifdef _DEBUG
-//  #define new DEBUG_NEW
-//  #undef THIS_FILE
-//  static char THIS_FILE[] = __FILE__;
-//#endif
-
 	/* Status bar setup */
-  static UINT indicators[] = {
+  static UINT indicators[] = 
+  {
 	ID_SEPARATOR,
 	ID_INDICATOR_CAPS,
 	ID_INDICATOR_NUM,
@@ -84,7 +78,6 @@ void l_ErrorBarErrorCallback (CSrError* pError, const dword UserData) {
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
-	//{{AFX_MSG_MAP(CMainFrame)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_COMMAND(ID_VIEW_ERROR_BAR, OnViewErrorBar)
@@ -100,7 +93,6 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_COMMAND(ID_HELP_UESPWIKI, OnHelpUespwiki)
 	ON_COMMAND(ID_HELP_CSWIKI, OnHelpCswiki)
 	ON_COMMAND(ID_VIEW_RESETLISTS, OnViewResetlists)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Class CMainFrame Message Map

@@ -31,7 +31,7 @@ class CSrErrorBar : public CSizingControlBarCF {
   /*---------- Protected Class Members -----------------------*/
 protected:
   CRichEditCtrl m_wndChild;
-  CFont		m_font;
+  CFont			m_font;
   CHARFORMAT	m_BoldFormat;
   CHARFORMAT	m_DefaultFormat;
 
@@ -47,17 +47,14 @@ public:
   void AddText     (const TCHAR* pString);
   void AddBoldText (const TCHAR* pString);
 
+  CRichEditCtrl& GetRichEdit (void) { return m_wndChild; }
 
-	/* ClassWizard generated virtual function overrides */
-  //{{AFX_VIRTUAL(CSrErrorBar)
-  //}}AFX_VIRTUAL
-
-
-	/* Generated message map functions */
 protected:
-  //{{AFX_MSG(CSrErrorBar)
-  afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-  //}}AFX_MSG
+  
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnUpdateErrorbarCopy(CCmdUI *pCmdUI);
+	afx_msg void OnErrorbarCopy();
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint Point);
 
   DECLARE_MESSAGE_MAP();
 
@@ -65,10 +62,6 @@ protected:
 /*===========================================================================
  *		End of Class CSrErrorBar Definition
  *=========================================================================*/
-
-
-//{{AFX_INSERT_LOCATION}}
-//}}AFX_INSERT_LOCATION
 
 
 #endif

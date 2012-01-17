@@ -10,6 +10,7 @@
 
 	/* Include Files */
 #include "stdafx.h"
+#include "resource.h"
 #include "errorbar.h"
 
 
@@ -34,9 +35,10 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrErrorBar, CSizingControlBarG)
-	//{{AFX_MSG_MAP(CSrErrorBar)
 	ON_WM_CREATE()
-	//}}AFX_MSG_MAP
+	ON_WM_CONTEXTMENU()
+	ON_COMMAND(ID_ERRORBAR_COPY, OnErrorbarCopy)
+	ON_UPDATE_COMMAND_UI(ID_ERRORBAR_COPY, OnUpdateErrorbarCopy)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrErrorBar Message Map
@@ -167,8 +169,37 @@ int CSrErrorBar::OnCreate(LPCREATESTRUCT lpCreateStruct) {
   m_wndChild.SetBackgroundColor(FALSE, RGB(212,208,200));
   m_wndChild.GetDefaultCharFormat(m_DefaultFormat);
   m_wndChild.SetFont(&m_font);
+
   return 0;
 }
 /*===========================================================================
  *		End of Class Event CSrErrorBar::OnCreate()
  *=========================================================================*/
+
+
+void CSrErrorBar::OnContextMenu(CWnd* pWnd, CPoint Point)
+{
+ 	CMenu  Menu;
+	CMenu* pSubMenu;
+	int    Result;
+
+	Result = Menu.LoadMenu(IDR_ERRORBAR_MENU);
+	if (!Result) return;
+
+	pSubMenu = Menu.GetSubMenu(0);
+	if (pSubMenu == NULL) return;
+
+	pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this, NULL);
+}
+
+
+ void CSrErrorBar::OnErrorbarCopy()
+ {
+	 m_wndChild.Copy();
+ }
+
+
+ void CSrErrorBar::OnUpdateErrorbarCopy(CCmdUI *pCmdUI)
+ {
+	 pCmdUI->Enable(!m_wndChild.GetSelText().IsEmpty());
+ }
