@@ -58,6 +58,8 @@ protected:
 	CSrRecordHandler*	m_pRecordHandler;
 	CSrEditDlgHandler*	m_pDlgHandler;
 
+	srrectype_t			m_CurrentTypeFilter;
+
 	const srrectype_t*	m_pRecordTypes;
 
 	bool				m_UpdateListOnChange;
@@ -75,6 +77,8 @@ protected:
 	void FillRecordList (void);
 	void FillRecordList (const srrectype_t RecordType);
 	int  UpdateEditorID (void);
+
+	void FillFilterList (void);
   
 
   /*---------- Begin Public Class Methods -----------------------------*/
@@ -125,6 +129,8 @@ public:
 	CEdit m_Condition;
 	afx_msg void OnBnClickedEditFaction();
 	afx_msg void OnBnClickedSelectFaction();
+	CComboBox m_TypeFilterList;
+	afx_msg void OnCbnSelchangeTypefilterList();
 };
 /*===========================================================================
  *		End of Class CSrLvlEditDlg Definition

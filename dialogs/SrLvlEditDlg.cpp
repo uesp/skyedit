@@ -39,6 +39,7 @@ BEGIN_MESSAGE_MAP(CSrLvlEditDlg, CDialog)
 	ON_MESSAGE(ID_SRRECORDLIST_ACTIVATE, OnActivateList)
 	ON_BN_CLICKED(IDC_EDIT_FACTION, &CSrLvlEditDlg::OnBnClickedEditFaction)
 	ON_BN_CLICKED(IDC_SELECT_FACTION, &CSrLvlEditDlg::OnBnClickedSelectFaction)
+	ON_CBN_SELCHANGE(IDC_TYPEFILTER_LIST, &CSrLvlEditDlg::OnCbnSelchangeTypefilterList)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -76,7 +77,8 @@ CSrLvlEditDlg::CSrLvlEditDlg(CWnd* pParent) : CDialog(CSrLvlEditDlg::IDD, pParen
 	m_EditorIDCheck   = SR_CHECKRESULT_NOCHANGE;
 	m_pRecordTypes    = NULL;
 	m_ParentFormID    = SR_FORMID_NULL;
-	
+	m_CurrentTypeFilter   = SR_NAME_NULL;
+
 	m_UpdateListOnChange = false;
 }
 /*===========================================================================
@@ -101,7 +103,8 @@ void CSrLvlEditDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_FACTION, m_Faction);
 	DDX_Control(pDX, IDC_MINRANK, m_MinRank);
 	DDX_Control(pDX, IDC_CONDITION, m_Condition);
-}
+	DDX_Control(pDX, IDC_TYPEFILTER_LIST, m_TypeFilterList);
+ }
 /*===========================================================================
  *		End of Class Method CSrLvlEditDlg::DoDataExchange()
  *=========================================================================*/
@@ -131,6 +134,8 @@ void CSrLvlEditDlg::FillRecordList (void)
 {
 	dword		 Index;
 
+	m_RecordList.SetRedraw(false);
+
 		/* Clear the current content */
 	m_RecordList.DeleteAllItems();
 
@@ -140,10 +145,37 @@ void CSrLvlEditDlg::FillRecordList (void)
 		FillRecordList(m_pRecordTypes[Index]);
 	}
 
+	m_RecordList.SetRedraw(true);
 }
 /*===========================================================================
  *		End of Class Method CSrLvlEditDlg::FillRecordList()
  *=========================================================================*/
+
+
+void CSrLvlEditDlg::FillFilterList (void)
+{
+	CSrRecord* pRecord;
+	CString    Buffer;
+	int        ListIndex;
+
+	m_TypeFilterList.ResetContent();
+	if (m_pRecordTypes == NULL) return;
+
+	pRecord = m_pRecordHandler->FindFormID(m_pListInfo->GetFormID());
+	if (pRecord) m_CurrentTypeFilter = pRecord->GetRecordType();
+
+	for (dword i = 0; m_pRecordTypes[i] != SR_NAME_NULL; ++i)
+	{
+		Buffer.Format("%4.4s", m_pRecordTypes[i].Name);
+		ListIndex = m_TypeFilterList.AddString(Buffer);
+		if (ListIndex >= 0) m_TypeFilterList.SetItemData(ListIndex, m_pRecordTypes[i].Value);
+	}
+
+	ListIndex = m_TypeFilterList.InsertString(0, "All");
+	if (ListIndex >= 0) m_TypeFilterList.SetItemData(ListIndex, 0);
+
+	FindComboBoxItemData(m_TypeFilterList, m_CurrentTypeFilter.Value, true);	
+}
 
 
 /*===========================================================================
@@ -153,10 +185,12 @@ void CSrLvlEditDlg::FillRecordList (void)
  *=========================================================================*/
 void CSrLvlEditDlg::FillRecordList (const srrectype_t RecordType) 
 {
-	CSrTypeGroup*  pGroup;
-	CSrBaseRecord* pBaseRecord;
-	CSrRecord*	 pRecord;
-	dword          Index;
+	CSrTypeGroup*	pGroup;
+	CSrBaseRecord*	pBaseRecord;
+	CSrRecord*		pRecord;
+	dword			Index;
+
+	if (m_CurrentTypeFilter != SR_NAME_NULL && m_CurrentTypeFilter != RecordType) return;
 
   		/* Get the type group for the given record type */
 	pGroup = m_pRecordHandler->GetTopGroup()->GetTypeGroup(RecordType);
@@ -285,6 +319,8 @@ BOOL CSrLvlEditDlg::OnInitDialog()
 
 	SetWindowText(m_TitleValue);
 
+	FillFilterList();
+
   		/* Initialize the record list */
 	m_RecordList.SetListName("LvlEditList");
 	m_RecordList.DefaultSettings();
@@ -298,7 +334,7 @@ BOOL CSrLvlEditDlg::OnInitDialog()
 	m_Faction.SetLimitText(128);
 	m_Condition.SetLimitText(10);
 	m_MinRank.SetLimitText(10);
-
+		
 	SetControlData();
 
 	m_UpdateListOnChange = true;
@@ -513,6 +549,17 @@ void CSrLvlEditDlg::OnBnClickedSelectFaction()
 }
 
 
+void CSrLvlEditDlg::OnCbnSelchangeTypefilterList()
+{
+	int ListIndex = m_TypeFilterList.GetCurSel();
+	if (ListIndex < 0) return;
+
+	m_CurrentTypeFilter = (srrectype_t) m_TypeFilterList.GetItemData(ListIndex);
+
+	FillRecordList();
+}
+
+
 /*===========================================================================
  *
  * Function - int SrEditLvlItemDlg (pListInfo, pHandler, ParentFormID);
@@ -607,4 +654,5 @@ int SrEditLvlActorDlg (srlvllistinfo_t* pListInfo, CSrEditDlgHandler* pHandler, 
 /*===========================================================================
  *		End of Function SrEditLvlActorDlg()
  *=========================================================================*/
+
 

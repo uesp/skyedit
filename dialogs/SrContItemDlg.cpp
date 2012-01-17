@@ -39,6 +39,7 @@ BEGIN_MESSAGE_MAP(CSrContItemDlg, CDialog)
 	ON_MESSAGE(ID_SRRECORDLIST_ACTIVATE, OnActivateList)
 	ON_BN_CLICKED(IDC_EDIT_FACTION, &CSrContItemDlg::OnBnClickedEditFaction)
 	ON_BN_CLICKED(IDC_SELECT_FACTION, &CSrContItemDlg::OnBnClickedSelectFaction)
+	ON_CBN_SELCHANGE(IDC_TYPEFILTER_LIST, &CSrContItemDlg::OnCbnSelchangeTypefilterList)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -76,6 +77,7 @@ CSrContItemDlg::CSrContItemDlg(CWnd* pParent) : CDialog(CSrContItemDlg::IDD, pPa
 	m_EditorIDCheck   = SR_CHECKRESULT_NOCHANGE;
 	m_pRecordTypes    = NULL;
 	m_ParentFormID    = SR_FORMID_NULL;
+	m_CurrentTypeFilter = SR_NAME_NULL;
 
 	m_UpdateListOnChange = false;
 }
@@ -100,7 +102,8 @@ void CSrContItemDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_FACTION, m_Faction);
 	DDX_Control(pDX, IDC_MINRANK, m_MinRank);
 	DDX_Control(pDX, IDC_CONDITION, m_Condition);
-}
+	DDX_Control(pDX, IDC_TYPEFILTER_LIST, m_TypeFilterList);
+ }
 /*===========================================================================
  *		End of Class Method CSrContItemDlg::DoDataExchange()
  *=========================================================================*/
@@ -130,6 +133,8 @@ void CSrContItemDlg::FillRecordList (void)
 {
 	dword		 Index;
 
+	m_RecordList.SetRedraw(false);
+
 		/* Clear the current content */
 	m_RecordList.DeleteAllItems();
 
@@ -138,6 +143,8 @@ void CSrContItemDlg::FillRecordList (void)
 	{
 		FillRecordList(m_pRecordTypes[Index]);
 	}
+
+	m_RecordList.SetRedraw(true);
 
 }
 /*===========================================================================
@@ -152,10 +159,12 @@ void CSrContItemDlg::FillRecordList (void)
  *=========================================================================*/
 void CSrContItemDlg::FillRecordList (const srrectype_t RecordType) 
 {
-	CSrTypeGroup*  pGroup;
-	CSrBaseRecord* pBaseRecord;
-	CSrRecord*	 pRecord;
-	dword          Index;
+	CSrTypeGroup*	pGroup;
+	CSrBaseRecord*	pBaseRecord;
+	CSrRecord*		pRecord;
+	dword			Index;
+
+	if (m_CurrentTypeFilter != SR_NAME_NULL && m_CurrentTypeFilter != RecordType) return;
 
   		/* Get the type group for the given record type */
 	pGroup = m_pRecordHandler->GetTopGroup()->GetTypeGroup(RecordType);
@@ -176,6 +185,32 @@ void CSrContItemDlg::FillRecordList (const srrectype_t RecordType)
 /*===========================================================================
  *		End of Class Method CSrContItemDlg::FillRecordList()
  *=========================================================================*/
+
+
+void CSrContItemDlg::FillFilterList (void)
+{
+	CSrRecord* pRecord;
+	CString    Buffer;
+	int        ListIndex;
+
+	m_TypeFilterList.ResetContent();
+	if (m_pRecordTypes == NULL) return;
+
+	pRecord = m_pRecordHandler->FindFormID(m_pListInfo->GetFormID());
+	if (pRecord) m_CurrentTypeFilter = pRecord->GetRecordType();
+
+	for (dword i = 0; m_pRecordTypes[i] != SR_NAME_NULL; ++i)
+	{
+		Buffer.Format("%4.4s", m_pRecordTypes[i].Name);
+		ListIndex = m_TypeFilterList.AddString(Buffer);
+		if (ListIndex >= 0) m_TypeFilterList.SetItemData(ListIndex, m_pRecordTypes[i].Value);
+	}
+
+	ListIndex = m_TypeFilterList.InsertString(0, "All");
+	if (ListIndex >= 0) m_TypeFilterList.SetItemData(ListIndex, 0);
+
+	FindComboBoxItemData(m_TypeFilterList, m_CurrentTypeFilter.Value, true);	
+}
 
 
 /*===========================================================================
@@ -279,6 +314,7 @@ BOOL CSrContItemDlg::OnInitDialog()
 	m_UpdateListOnChange = false;
 
 	SetWindowText(m_TitleValue);
+	FillFilterList();
 
   		/* Initialize the record list */
 	m_RecordList.SetListName("ContItemList");
@@ -504,6 +540,17 @@ void CSrContItemDlg::OnBnClickedEditFaction()
 void CSrContItemDlg::OnBnClickedSelectFaction()
 {
 	m_pDlgHandler->SelectRecordHelper(&m_Faction, SR_NAME_FACT, &CSrFactRecord::s_FieldMap);
+}
+
+
+void CSrContItemDlg::OnCbnSelchangeTypefilterList()
+{
+	int ListIndex = m_TypeFilterList.GetCurSel();
+	if (ListIndex < 0) return;
+
+	m_CurrentTypeFilter = (srrectype_t) m_TypeFilterList.GetItemData(ListIndex);
+
+	FillRecordList();
 }
 
 
