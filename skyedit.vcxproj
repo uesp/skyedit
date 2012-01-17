@@ -1889,6 +1889,7 @@
     <ClCompile Include="SrFunctionDlg.cpp" />
     <ClCompile Include="SrGlobView.cpp" />
     <ClCompile Include="SrGmstView.cpp" />
+    <ClCompile Include="SrLvlListInfo.cpp" />
     <ClCompile Include="SrMgefView.cpp" />
     <ClCompile Include="SrWeapView.cpp" />
     <ClCompile Include="SrKywdView.cpp" />
@@ -2247,6 +2248,7 @@
     <ClInclude Include="SrFunctionDlg.h" />
     <ClInclude Include="SrGlobView.h" />
     <ClInclude Include="SrGmstView.h" />
+    <ClInclude Include="SrLvlListInfo.h" />
     <ClInclude Include="SrMgefView.h" />
     <ClInclude Include="SrWeapView.h" />
     <ClInclude Include="SrKywdView.h" />

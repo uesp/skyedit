@@ -298,6 +298,7 @@ void CSrLvliView::OnInitialUpdate (void)
   m_ItemList.SetupCustomList(s_LevelListInit, &CSrLvliRecord::s_FieldMap, s_LevelListFields);
   m_ItemList.SetOwner(this);
   m_ItemList.SetDragType(SR_RLDRAG_CUSTOM | SR_RLDRAG_RECORD);
+  m_ItemList.SetSortEnable(false);
 
   m_pRecordHandler->GetEventHandler().AddListener(this);
 

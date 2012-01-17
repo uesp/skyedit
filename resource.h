@@ -119,7 +119,6 @@
 #define IDD_RACE_FACEPAGE               198
 #define IDD_RACE_HEADPAGE1              199
 #define IDD_RACE_TINTPAGE               200
-#define IDR_MENU1                       224
 #define IDR_PERKSECTION_MENU            224
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
@@ -173,7 +172,10 @@
 #define IDC_USEALL                      1049
 #define IDC_COUNT                       1050
 #define IDC_FIND_LABEL                  1051
+#define IDC_COUNT2                      1051
+#define IDC_MINRANK                     1051
 #define IDC_CHANCENONE                  1052
+#define IDC_CONDITION                   1052
 #define IDC_OBJECT_FORMID               1053
 #define IDC_ITEM_LIST                   1054
 #define IDC_FORMID2                     1055

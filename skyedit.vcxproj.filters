@@ -935,6 +935,9 @@
     <ClCompile Include="dialogs\SrRacePageTint.cpp">
       <Filter>Source Files\Forms\Dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="SrLvlListInfo.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">
@@ -1967,6 +1970,9 @@
     </ClInclude>
     <ClInclude Include="dialogs\SrRacePageTint.h">
       <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrLvlListInfo.h">
+      <Filter>Header Files\Forms.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

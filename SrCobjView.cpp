@@ -21,14 +21,7 @@
  * Begin Local Definitions
  *
  *=========================================================================*/
-//#ifdef _DEBUG
-//  #define new DEBUG_NEW
-//  #undef THIS_FILE
-//  static char THIS_FILE[] = __FILE__;
-//#endif
-
-  IMPLEMENT_DYNCREATE(CSrCobjView, CSrRecordDialog);
-
+	IMPLEMENT_DYNCREATE(CSrCobjView, CSrRecordDialog);
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -40,8 +33,6 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrCobjView, CSrRecordDialog)
-  //{{AFX_MSG_MAP(CSrCobjView)
-  //}}AFX_MSG_MAP
 	ON_BN_CLICKED(IDC_EDIT_RESULTITEM, &CSrCobjView::OnBnClickedEditResultitem)
 	ON_BN_CLICKED(IDC_SELECTRESULTITEM_BUTTON, &CSrCobjView::OnBnClickedSelectresultitemButton)
 	ON_BN_CLICKED(IDC_EDIT_CRAFTSTATION, &CSrCobjView::OnBnClickedEditCraftstation)
