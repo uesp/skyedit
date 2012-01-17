@@ -315,24 +315,6 @@ void CSrContView::FillItemList (void)
  *=========================================================================*/
 
 
-void CSrContView::CreateItemCustomData (srrlcustomdata_t& CustomData, srlvllistinfo_t* pInfo) 
-{
-	CSrBaseRecord*    pBaseRecord;
-	CSrIdRecord*	  pIdRecord;
-
-	CustomData.Subrecords.Destroy();
-	
-	if (pInfo->pCnto != NULL) CustomData.Subrecords.Add(pInfo->pCnto);
-	if (pInfo->pLvlo != NULL) CustomData.Subrecords.Add(pInfo->pLvlo);
-	
-	pBaseRecord = m_pRecordHandler->FindFormID(pInfo->GetFormID());
-	pIdRecord = SrCastClassNull(CSrIdRecord, pBaseRecord);
-	CustomData.pRecord = pIdRecord;
-
-	if (pInfo->pCoed != NULL) CustomData.Subrecords.Add(pInfo->pCoed);
-}
-
-
 /*===========================================================================
  *
  * Class CSrContView Method - int AddItemList (pInfo);
@@ -343,8 +325,8 @@ int CSrContView::AddItemList (srlvllistinfo_t* pInfo)
 	srrlcustomdata_t  CustomData;
 	int               ListIndex;
 
-	if (pInfo->pCnto == NULL && pInfo->pLvlo == NULL) return -1;
-	CreateItemCustomData(CustomData, pInfo);
+	if (pInfo->pCnto == NULL) return -1;
+	SrCreateLvlListInfoCustomData(CustomData, *pInfo, m_pRecordHandler);
 
 	ListIndex = m_ItemList.AddCustomRecord(CustomData);
 	if (ListIndex < 0) return -1;
@@ -472,7 +454,7 @@ void CSrContView::OnLvllistEdit()
 		return;
 	}
   
-	CreateItemCustomData(*pCustomData, pListInfo);
+	SrCreateLvlListInfoCustomData(*pCustomData, *pListInfo, m_pRecordHandler);
 	UpdateItem(ListIndex, pListInfo); 
 }
 /*===========================================================================
@@ -776,7 +758,7 @@ int CSrContView::OnDropCustomData (srrldroprecords_t& DropItems)
 	for (Index = 0; Index < DropItems.pCustomDatas->GetSize(); ++Index) 
 	{
 		pCustomData = DropItems.pCustomDatas->GetAt(Index);
-
+		if (pCustomData == NULL) return (SRRL_DROPCHECK_ERROR);
 		if (pCustomData->pRecord == NULL) return (SRRL_DROPCHECK_ERROR);
 
 		if (!SrIsValidContainerRecord(pCustomData->pRecord->GetRecordType())) return (SRRL_DROPCHECK_ERROR);

@@ -12,6 +12,7 @@
 #include "stdafx.h"
 #include "sredit.h"
 #include "SrLvlEditDlg.h"
+#include "sreditdlghandler.h"
 
 
 /*===========================================================================
@@ -19,12 +20,6 @@
  * Begin Local Definitions
  *
  *=========================================================================*/
-//#ifdef _DEBUG
-//  #define new DEBUG_NEW
-//  #undef THIS_FILE
-//  static char THIS_FILE[] = __FILE__;
-//#endif
-
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -42,6 +37,8 @@ BEGIN_MESSAGE_MAP(CSrLvlEditDlg, CDialog)
 	ON_WM_CTLCOLOR()
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_RECORDLIST, OnItemchangedRecordlist)
 	ON_MESSAGE(ID_SRRECORDLIST_ACTIVATE, OnActivateList)
+	ON_BN_CLICKED(IDC_EDIT_FACTION, &CSrLvlEditDlg::OnBnClickedEditFaction)
+	ON_BN_CLICKED(IDC_SELECT_FACTION, &CSrLvlEditDlg::OnBnClickedSelectFaction)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -53,11 +50,12 @@ END_MESSAGE_MAP()
  * Begin Record List Data
  *
  *=========================================================================*/
-static srreclistcolinit_t s_LvlListInit[] = {
+static srreclistcolinit_t s_LvlListInit[] = 
+{
 	{ SR_FIELD_EDITORID,	200,	LVCFMT_LEFT },
 	{ SR_FIELD_FORMID,		75,		LVCFMT_LEFT },
 	{ SR_FIELD_FLAGS,		60,		LVCFMT_CENTER },
-	{ SR_FIELD_TYPE,		75,		LVCFMT_CENTER },
+	{ SR_FIELD_RECORDTYPE,	75,		LVCFMT_CENTER },
 	{ SR_FIELD_NONE, 0, 0 }
   };
 /*===========================================================================
@@ -72,14 +70,14 @@ static srreclistcolinit_t s_LvlListInit[] = {
  *=========================================================================*/
 CSrLvlEditDlg::CSrLvlEditDlg(CWnd* pParent) : CDialog(CSrLvlEditDlg::IDD, pParent) 
 {
-  m_TitleValue      = _T("Edit Leveled Object");
-  m_pSubrecord      = NULL;
-  m_pRecordHandler  = NULL;
-  m_EditorIDCheck   = SR_CHECKRESULT_NOCHANGE;
-  m_pRecordTypes    = NULL;
-  m_ParentFormID    = SR_FORMID_NULL;
-
-  m_UpdateListOnChange = false;
+	m_TitleValue      = _T("Edit Leveled Object");
+	m_pListInfo       = NULL;
+	m_pRecordHandler  = NULL;
+	m_EditorIDCheck   = SR_CHECKRESULT_NOCHANGE;
+	m_pRecordTypes    = NULL;
+	m_ParentFormID    = SR_FORMID_NULL;
+	
+	m_UpdateListOnChange = false;
 }
 /*===========================================================================
  *		End of Class CSrLvlEditDlg Constructor
@@ -100,6 +98,9 @@ void CSrLvlEditDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COUNT, m_Count);
 	DDX_Control(pDX, IDC_EDITORID, m_ObjectID);
 	DDX_Control(pDX, IDC_RECORDLIST, m_RecordList);
+	DDX_Control(pDX, IDC_FACTION, m_Faction);
+	DDX_Control(pDX, IDC_MINRANK, m_MinRank);
+	DDX_Control(pDX, IDC_CONDITION, m_Condition);
 }
 /*===========================================================================
  *		End of Class Method CSrLvlEditDlg::DoDataExchange()
@@ -113,8 +114,8 @@ void CSrLvlEditDlg::DoDataExchange(CDataExchange* pDX)
  *=========================================================================*/
 void CSrLvlEditDlg::AddListColumns (void) 
 {
-  m_RecordList.DeleteAllColumns();    
-  m_RecordList.SetupList(SR_NAME_NULL, s_LvlListInit, NULL);
+	m_RecordList.DeleteAllColumns();    
+	m_RecordList.SetupList(SR_NAME_NULL, s_LvlListInit, NULL);
 }
 /*===========================================================================
  *		End of Class Method CSrLvlEditDlg::AddListColumns()
@@ -128,15 +129,16 @@ void CSrLvlEditDlg::AddListColumns (void)
  *=========================================================================*/
 void CSrLvlEditDlg::FillRecordList (void) 
 {
-  dword		 Index;
+	dword		 Index;
 
-	/* Clear the current content */
-  m_RecordList.DeleteAllItems();
+		/* Clear the current content */
+	m_RecordList.DeleteAllItems();
 
-	/* Add all matching records */
-  for (Index = 0; m_pRecordTypes[Index] != SR_NAME_NULL; ++Index) {
-    FillRecordList(m_pRecordTypes[Index]);
-  }
+		/* Add all matching records */
+	for (Index = 0; m_pRecordTypes[Index] != SR_NAME_NULL; ++Index) 
+	{
+		FillRecordList(m_pRecordTypes[Index]);
+	}
 
 }
 /*===========================================================================
@@ -151,25 +153,25 @@ void CSrLvlEditDlg::FillRecordList (void)
  *=========================================================================*/
 void CSrLvlEditDlg::FillRecordList (const srrectype_t RecordType) 
 {
-  CSrTypeGroup*  pGroup;
-  CSrBaseRecord* pBaseRecord;
-  CSrRecord*	 pRecord;
-  dword          Index;
+	CSrTypeGroup*  pGroup;
+	CSrBaseRecord* pBaseRecord;
+	CSrRecord*	 pRecord;
+	dword          Index;
 
-  	/* Get the type group for the given record type */
-  pGroup = m_pRecordHandler->GetTopGroup()->GetTypeGroup(RecordType);
-  if (pGroup == NULL) return;
+  		/* Get the type group for the given record type */
+	pGroup = m_pRecordHandler->GetTopGroup()->GetTypeGroup(RecordType);
+	if (pGroup == NULL) return;
 
-	/* Add all matching records in the group */
-  for (Index = 0; Index < pGroup->GetNumRecords(); ++Index) {
-    pBaseRecord = pGroup->GetRecord(Index);
-    pRecord     = SrCastRecord(pBaseRecord);
-    if (pRecord == NULL) continue;
-    if (pRecord->GetFormID() == m_ParentFormID) continue;
+		/* Add all matching records in the group */
+	for (Index = 0; Index < pGroup->GetNumRecords(); ++Index) 
+	{
+		pBaseRecord = pGroup->GetRecord(Index);
+		pRecord     = SrCastRecord(pBaseRecord);
+		if (pRecord == NULL) continue;
+		if (pRecord->GetFormID() == m_ParentFormID) continue;
 
-		/* Add the record */
-    m_RecordList.AddRecord(pRecord);
-  }
+		m_RecordList.AddRecord(pRecord);
+	}
 
 }
 /*===========================================================================
@@ -184,21 +186,36 @@ void CSrLvlEditDlg::FillRecordList (const srrectype_t RecordType)
  *=========================================================================*/
 void CSrLvlEditDlg::GetControlData (void) 
 {
-  CString	Buffer;
-  word		Value;
-  bool		Result;
+	CString		Buffer;
+	CSrRecord*  pRecord;
+	int		    MinRank;
+	float		Condition;
+	word		Value;
+	bool		Result;
 
-  if (m_pSubrecord == NULL) return;
+	if (m_pListInfo == NULL) return;
 
-  m_Count.GetWindowText(Buffer);
-  Result = SrFieldConvertWord(Buffer, Value);
-  if (Result) m_pSubrecord->SetCount(Value);
+	m_Count.GetWindowText(Buffer);
+	Result = SrFieldConvertWord(Buffer, Value);
+	if (Result) m_pListInfo->SetCount(Value);
 
-  m_Level.GetWindowText(Buffer);
-  Result = SrFieldConvertWord(Buffer, Value);
-  if (Result) m_pSubrecord->SetLevel(Value);
+	m_Level.GetWindowText(Buffer);
+	Result = SrFieldConvertWord(Buffer, Value);
+	if (Result) m_pListInfo->SetLevel(Value);
   
-  m_pSubrecord->SetFormID(m_ObjectFormID);
+	m_pListInfo->SetFormID(m_ObjectFormID);
+
+	m_Faction.GetWindowTextA(Buffer);
+	Buffer.Trim(" \t\r\n");
+	pRecord = m_pRecordHandler->FindEditorID(Buffer);
+
+	m_Condition.GetWindowTextA(Buffer);
+	Condition = (float) atof(Buffer);
+
+	m_MinRank.GetWindowTextA(Buffer);
+	MinRank = strtol(Buffer, NULL, 0);
+
+	m_pListInfo->SetCoedData(pRecord ? pRecord->GetFormID() : 0, MinRank, Condition);
 }
 /*===========================================================================
  *		End of Class Method CSrLvlEditDlg::GetControlData()
@@ -212,26 +229,28 @@ void CSrLvlEditDlg::GetControlData (void)
  *=========================================================================*/
 HBRUSH CSrLvlEditDlg::OnCtlColor (CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
 {
-  HBRUSH hBrush = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
+	HBRUSH hBrush = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
 
-  if (nCtlColor == CTLCOLOR_EDIT && pWnd == &m_ObjectID) {
-    switch (m_EditorIDCheck) {
-      case SR_CHECKRESULT_NOCHANGE:
-        hBrush = CreateSolidBrush(RGB(255,255,255));
-        pDC->SetBkColor(RGB(255,255,255));
-	break;
-      case SR_CHECKRESULT_OK:
-        hBrush = CreateSolidBrush(RGB(204,255,204));
-        pDC->SetBkColor(RGB(204,255,204));
-	break;
-      case SR_CHECKRESULT_ERROR:
-        hBrush = CreateSolidBrush(RGB(255,204,204));
-        pDC->SetBkColor(RGB(255,204,204));
-	break;
-    }
-  }
+	if (nCtlColor == CTLCOLOR_EDIT && pWnd == &m_ObjectID) 
+	{
+		switch (m_EditorIDCheck) 
+		{
+		case SR_CHECKRESULT_NOCHANGE:
+	        hBrush = CreateSolidBrush(RGB(255,255,255));
+		    pDC->SetBkColor(RGB(255,255,255));
+			break;
+		case SR_CHECKRESULT_OK:
+	        hBrush = CreateSolidBrush(RGB(204,255,204));
+			pDC->SetBkColor(RGB(204,255,204));
+			break;
+		case SR_CHECKRESULT_ERROR:
+			hBrush = CreateSolidBrush(RGB(255,204,204));
+			pDC->SetBkColor(RGB(255,204,204));
+			break;
+		}
+	}
 
-  return (hBrush);
+	return (hBrush);
 }
 /*===========================================================================
  *		End of Class Event CSrLvlEditDlg::OnCtlColor()
@@ -245,7 +264,7 @@ HBRUSH CSrLvlEditDlg::OnCtlColor (CDC* pDC, CWnd* pWnd, UINT nCtlColor)
  *=========================================================================*/
 void CSrLvlEditDlg::OnDeleteButton() 
 {
-  EndDialog(SR_LVLEDITDLG_RESULT_DELETE);
+	EndDialog(SR_LVLEDITDLG_RESULT_DELETE);
 }
 /*===========================================================================
  *		End of Class Event CSrLvlEditDlg::OnDeleteButton()
@@ -259,28 +278,31 @@ void CSrLvlEditDlg::OnDeleteButton()
  *=========================================================================*/
 BOOL CSrLvlEditDlg::OnInitDialog() 
 {
-  CDialog::OnInitDialog();
+	CDialog::OnInitDialog();
 
-  assert(m_pRecordHandler != NULL);
-  m_UpdateListOnChange = false;
+	assert(m_pRecordHandler != NULL);
+	m_UpdateListOnChange = false;
 
-  SetWindowText(m_TitleValue);
+	SetWindowText(m_TitleValue);
 
-  	/* Initialize the record list */
-  m_RecordList.SetListName("LvlEditList");
-  m_RecordList.DefaultSettings();
-  AddListColumns();
-  FillRecordList();
-  m_RecordList.SortList(SR_FIELD_EDITORID);
+  		/* Initialize the record list */
+	m_RecordList.SetListName("LvlEditList");
+	m_RecordList.DefaultSettings();
+	AddListColumns();
+	FillRecordList();
+	m_RecordList.SortList(SR_FIELD_EDITORID);
 
-  m_Count.SetLimitText(8);
-  m_Level.SetLimitText(8);
-  m_ObjectID.SetLimitText(128);
+	m_Count.SetLimitText(8);
+	m_Level.SetLimitText(8);
+	m_ObjectID.SetLimitText(128);
+	m_Faction.SetLimitText(128);
+	m_Condition.SetLimitText(10);
+	m_MinRank.SetLimitText(10);
 
-  SetControlData();
+	SetControlData();
 
-  m_UpdateListOnChange = true;
-  return (TRUE);
+	m_UpdateListOnChange = true;
+	return (TRUE);
 }
 /*===========================================================================
  *		End of Class Event CSrLvlEditDlg::OnInitDialog()
@@ -294,8 +316,8 @@ BOOL CSrLvlEditDlg::OnInitDialog()
  *=========================================================================*/
 void CSrLvlEditDlg::OnOK() 
 {
-  GetControlData();
-  CDialog::OnOK();
+	GetControlData();
+	CDialog::OnOK();
 }
 /*===========================================================================
  *		End of Class Event CSrLvlEditDlg::OnOK()
@@ -309,28 +331,28 @@ void CSrLvlEditDlg::OnOK()
  *=========================================================================*/
 void CSrLvlEditDlg::OnChangeEditorid() 
 {
-  CString   Buffer;
-  int		Result;
-  int		ListIndex;
+	CString   Buffer;
+	int		Result;
+	int		ListIndex;
   
-  Result = UpdateEditorID();
+	Result = UpdateEditorID();
 
-  if (Result != m_EditorIDCheck) 
-  {
-    m_EditorIDCheck = Result;
-    m_ObjectID.RedrawWindow();
-  }
+	if (Result != m_EditorIDCheck) 
+	{
+		m_EditorIDCheck = Result;
+		m_ObjectID.RedrawWindow();
+	}
 
-  if (m_UpdateListOnChange) 
-  {
-    m_UpdateListOnChange = false;
-    m_ObjectID.GetWindowText(Buffer);
+	if (m_UpdateListOnChange) 
+	{
+		m_UpdateListOnChange = false;
+		m_ObjectID.GetWindowText(Buffer);
     
-    ListIndex = m_RecordList.FindEditorID(Buffer);
+		ListIndex = m_RecordList.FindEditorID(Buffer);
 
-    if (ListIndex >= 0) m_RecordList.SelectRecord(ListIndex);
-    m_UpdateListOnChange = true;
-  }
+		if (ListIndex >= 0) m_RecordList.SelectRecord(ListIndex);
+		m_UpdateListOnChange = true;
+	}
 
 }
 /*===========================================================================
@@ -345,7 +367,6 @@ void CSrLvlEditDlg::OnChangeEditorid()
  *=========================================================================*/
 void CSrLvlEditDlg::OnKillfocusEditorid() 
 {
-
 }
 /*===========================================================================
  *		End of Class Event CSrLvlEditDlg::OnKillfocusEditorid()
@@ -359,24 +380,41 @@ void CSrLvlEditDlg::OnKillfocusEditorid()
  *=========================================================================*/
 void CSrLvlEditDlg::SetControlData (void) 
 {
-  CString Buffer;
+	CString Buffer;
 
-  if (m_pSubrecord == NULL) return;
+	if (m_pListInfo == NULL) return;
 
-  Buffer.Format(_T("%u"), (dword) m_pSubrecord->GetCount());
-  m_Count.SetWindowText(Buffer);
+	Buffer.Format(_T("%u"), (dword) m_pListInfo->GetCount());
+	m_Count.SetWindowText(Buffer);
 
-  Buffer.Format(_T("%u"), (dword) m_pSubrecord->GetLevel());
-  m_Level.SetWindowText(Buffer);
+	Buffer.Format(_T("%u"), (dword) m_pListInfo->GetLevel());
+	m_Level.SetWindowText(Buffer);
 
-  m_ObjectFormID = m_pSubrecord->GetFormID();
-  Buffer.Format(_T("0x%08X"), m_ObjectFormID);
-  m_FormID.SetWindowText(Buffer);
+	m_ObjectFormID = m_pListInfo->GetFormID();
+	Buffer.Format(_T("0x%08X"), m_ObjectFormID);
+	m_FormID.SetWindowText(Buffer);
 
-  Buffer = m_pRecordHandler->GetEditorID(m_ObjectFormID);  
-  m_ObjectID.SetWindowText(Buffer);
+	Buffer = m_pRecordHandler->GetEditorID(m_ObjectFormID);  
+	m_ObjectID.SetWindowText(Buffer);
 
-  m_RecordList.SelectRecord(m_pRecordHandler->FindFormID(m_ObjectFormID));
+	m_RecordList.SelectRecord(m_pRecordHandler->FindFormID(m_ObjectFormID));
+
+	if (m_pListInfo->pCoed != NULL)
+	{
+		m_Faction.SetWindowTextA(m_pRecordHandler->GetEditorID(m_pListInfo->pCoed->GetCoedData().FactionID));
+
+		Buffer.Format("%g", m_pListInfo->pCoed->GetCoedData().Condition);
+		m_Condition.SetWindowTextA(Buffer);
+
+		Buffer.Format("%d", (int) m_pListInfo->pCoed->GetCoedData().MinRank);
+		m_MinRank.SetWindowTextA(Buffer);
+	}
+	else
+	{
+		m_Faction.SetWindowTextA("");
+		m_Condition.SetWindowTextA("");
+		m_MinRank.SetWindowTextA("");
+	}
 }
 /*===========================================================================
  *		End of Class Method CSrLvlEditDlg::SetControlData()
@@ -390,32 +428,32 @@ void CSrLvlEditDlg::SetControlData (void)
  *=========================================================================*/
 int CSrLvlEditDlg::UpdateEditorID (void) 
 {
-  CString		Buffer;
-  CSString		EditorID;
-  CSrIdRecord*	pIdRecord;
-  bool			Result;
-  int			ListIndex;
+	CString			Buffer;
+	CSString		EditorID;
+	CSrIdRecord*	pIdRecord;
+	bool			Result;
+	int				ListIndex;
 
-  m_ObjectID.GetWindowText(Buffer);
-  EditorID = Buffer;
+	m_ObjectID.GetWindowText(Buffer);
+	EditorID = Buffer;
 
-  Result = SrPrepareEditorID(EditorID);
-  if (!Result) return (SR_CHECKRESULT_ERROR);
+	Result = SrPrepareEditorID(EditorID);
+	if (!Result) return (SR_CHECKRESULT_ERROR);
 
-  pIdRecord = m_pRecordHandler->FindEditorID(EditorID);
-  if (pIdRecord == NULL) return (SR_CHECKRESULT_ERROR);
-  if (pIdRecord->GetFormID() == m_ParentFormID) return (SR_CHECKRESULT_ERROR);
+	pIdRecord = m_pRecordHandler->FindEditorID(EditorID);
+	if (pIdRecord == NULL) return (SR_CHECKRESULT_ERROR);
+	if (pIdRecord->GetFormID() == m_ParentFormID) return (SR_CHECKRESULT_ERROR);
+	
+	ListIndex = m_RecordList.FindRecord(pIdRecord);
+	if (ListIndex < 0) return (SR_CHECKRESULT_ERROR);
 
-  ListIndex = m_RecordList.FindRecord(pIdRecord);
-  if (ListIndex < 0) return (SR_CHECKRESULT_ERROR);
+	m_ObjectFormID = pIdRecord->GetFormID();
+	if (m_ObjectFormID == m_pListInfo->GetFormID()) return (SR_CHECKRESULT_NOCHANGE);
 
-  m_ObjectFormID = pIdRecord->GetFormID();
-  if (m_ObjectFormID == m_pSubrecord->GetFormID()) return (SR_CHECKRESULT_NOCHANGE);
+	Buffer.Format(_T("0x%08X"), m_ObjectFormID);
+	m_FormID.SetWindowText(Buffer);
 
-  Buffer.Format(_T("0x%08X"), m_ObjectFormID);
-  m_FormID.SetWindowText(Buffer);
-
-  return (SR_CHECKRESULT_OK);
+	return (SR_CHECKRESULT_OK);
 }
 /*===========================================================================
  *		End of Class Method CSrLvlEditDlg::UpdateEditorID()
@@ -429,20 +467,20 @@ int CSrLvlEditDlg::UpdateEditorID (void)
  *=========================================================================*/
 void CSrLvlEditDlg::OnItemchangedRecordlist (NMHDR* pNMHDR, LRESULT* pResult)
 {
-  NM_LISTVIEW* pNMListView = (NM_LISTVIEW *) pNMHDR;
-  CSrRecord*   pRecord;
-  CSString     Buffer;
-  *pResult = 0;
+	NM_LISTVIEW* pNMListView = (NM_LISTVIEW *) pNMHDR;
+	CSrRecord*   pRecord;
+	CSString     Buffer;
+	*pResult = 0;
 
-  if (!m_UpdateListOnChange) return;
+	if (!m_UpdateListOnChange) return;
 
-  pRecord = m_RecordList.GetSelectedRecord();
-  if (pRecord == NULL) return;
+	pRecord = m_RecordList.GetSelectedRecord();
+	if (pRecord == NULL) return;
 
-  m_UpdateListOnChange = false;
-  pRecord->GetField(Buffer, SR_FIELD_EDITORID);
-  m_ObjectID.SetWindowText(Buffer);
-  m_UpdateListOnChange = true;
+	m_UpdateListOnChange = false;
+	pRecord->GetField(Buffer, SR_FIELD_EDITORID);
+	m_ObjectID.SetWindowText(Buffer);
+	m_UpdateListOnChange = true;
 }
 /*===========================================================================
  *		End of Class Event CSrLvlEditDlg::OnItemchangedRecordlist()
@@ -463,31 +501,48 @@ LRESULT CSrLvlEditDlg::OnActivateList (WPARAM wParam, LPARAM lParam)
 }
 
 
+void CSrLvlEditDlg::OnBnClickedEditFaction()
+{
+	m_pDlgHandler->EditRecordHelper(m_Faction, SR_NAME_FACT);
+}
+
+
+void CSrLvlEditDlg::OnBnClickedSelectFaction()
+{
+	m_pDlgHandler->SelectRecordHelper(&m_Faction, SR_NAME_FACT, &CSrFactRecord::s_FieldMap);
+}
+
+
 /*===========================================================================
  *
- * Function - int SrEditLvlItemDlg (pSubrecord, ParentFormID);
+ * Function - int SrEditLvlItemDlg (pListInfo, pHandler, ParentFormID);
  *
  * Displays a modal edit lvlo edit dialog for a leveled item.
  *
  *=========================================================================*/
-int SrEditLvlItemDlg (CSrLvloSubrecord* pSubrecord, CSrRecordHandler* pHandler, const srformid_t ParentFormID) 
+int SrEditLvlItemDlg (srlvllistinfo_t* pListInfo, CSrEditDlgHandler* pHandler, const srformid_t ParentFormID) 
 {
-  static const srrectype_t s_LvliRecordTypes[] = {
-	SR_NAME_ALCH,	SR_NAME_AMMO,	SR_NAME_APPA,	SR_NAME_ARMO,	SR_NAME_BOOK,	
-	SR_NAME_INGR,	SR_NAME_KEYM,	SR_NAME_LVLI,	SR_NAME_MISC,	SR_NAME_SLGM,
-	SR_NAME_WEAP,	SR_NAME_NULL };
+	static const srrectype_t s_LvliRecordTypes[] = 
+	{
+		SR_NAME_ALCH,	SR_NAME_AMMO,	SR_NAME_APPA,	SR_NAME_ARMO,	SR_NAME_BOOK,	
+		SR_NAME_INGR,	SR_NAME_KEYM,	SR_NAME_LVLI,	SR_NAME_MISC,	SR_NAME_SLGM,
+		SR_NAME_WEAP,	SR_NAME_NULL 
+	};
 
-  CSrLvlEditDlg Dlg;
-  int		Result;
+	CSrLvlEditDlg Dlg;
+	int		Result;
 
-  Dlg.SetRecordHandler(pHandler);
-  Dlg.SetSubrecord(pSubrecord);
-  Dlg.SetTitleValue(_T("Edit Leveled Item Entry"));
-  Dlg.SetRecordTypes(s_LvliRecordTypes);
-  Dlg.SetParentFormID(ParentFormID);
+	if (pHandler == NULL || pListInfo == NULL) return SR_LVLEDITDLG_RESULT_CANCEL;
 
-  Result = Dlg.DoModal();
-  return (Result);
+	Dlg.SetDlgHandler(pHandler);
+	Dlg.SetRecordHandler(&pHandler->GetDocument()->GetRecordHandler());
+	Dlg.SetListInfo(pListInfo);
+	Dlg.SetTitleValue(_T("Edit Leveled Item Entry"));
+	Dlg.SetRecordTypes(s_LvliRecordTypes);
+	Dlg.SetParentFormID(ParentFormID);
+
+	Result = Dlg.DoModal();
+	return (Result);
 }
 /*===========================================================================
  *		End of Function SrEditLvlItemDlg()
@@ -496,25 +551,28 @@ int SrEditLvlItemDlg (CSrLvloSubrecord* pSubrecord, CSrRecordHandler* pHandler, 
 
 /*===========================================================================
  *
- * Function - int SrEditLvlSpellDlg (pSubrecord, ParentFormID);
+ * Function - int SrEditLvlSpellDlg (pListInfo, pHandler, ParentFormID);
  *
  * Displays a modal edit lvlo edit dialog for a leveled spell.
  *
  *=========================================================================*/
-int SrEditLvlSpellDlg (CSrLvloSubrecord* pSubrecord, CSrRecordHandler* pHandler, const srformid_t ParentFormID) 
+int SrEditLvlSpellDlg (srlvllistinfo_t* pListInfo, CSrEditDlgHandler* pHandler, const srformid_t ParentFormID) 
 {
-  static const srrectype_t s_LvspRecordTypes[] = { SR_NAME_LVSP, SR_NAME_SPEL, SR_NAME_NULL };
-  CSrLvlEditDlg Dlg;
-  int		Result;
+	static const srrectype_t s_LvspRecordTypes[] = { SR_NAME_LVSP, SR_NAME_SPEL, SR_NAME_NULL };
+	CSrLvlEditDlg Dlg;
+	int		Result;
 
-  Dlg.SetRecordHandler(pHandler);
-  Dlg.SetSubrecord(pSubrecord);
-  Dlg.SetTitleValue(_T("Edit Leveled Spell Entry"));
-  Dlg.SetRecordTypes(s_LvspRecordTypes);
-  Dlg.SetParentFormID(ParentFormID);
+	if (pHandler == NULL || pListInfo == NULL) return SR_LVLEDITDLG_RESULT_CANCEL;
 
-  Result = Dlg.DoModal();
-  return (Result);
+	Dlg.SetDlgHandler(pHandler);
+	Dlg.SetRecordHandler(&pHandler->GetDocument()->GetRecordHandler());
+	Dlg.SetListInfo(pListInfo);
+	Dlg.SetTitleValue(_T("Edit Leveled Spell Entry"));
+	Dlg.SetRecordTypes(s_LvspRecordTypes);
+	Dlg.SetParentFormID(ParentFormID);
+
+	Result = Dlg.DoModal();
+	return (Result);
 }
 /*===========================================================================
  *		End of Function SrEditLvlSpellDlg()
@@ -523,28 +581,30 @@ int SrEditLvlSpellDlg (CSrLvloSubrecord* pSubrecord, CSrRecordHandler* pHandler,
 
 /*===========================================================================
  *
- * Function - int SrEditLvlActorDlg (pSubrecord, ParentFormID);
+ * Function - int SrEditLvlActorDlg (pListInfo, pHandler, ParentFormID);
  *
  * Displays a modal edit lvlo edit dialog for a leveled creature.
  *
  *=========================================================================*/
-int SrEditLvlActorDlg (CSrLvloSubrecord* pSubrecord, CSrRecordHandler* pHandler, const srformid_t ParentFormID) 
+int SrEditLvlActorDlg (srlvllistinfo_t* pListInfo, CSrEditDlgHandler* pHandler, const srformid_t ParentFormID) 
 {
-  static const srrectype_t s_LvlnRecordTypes[] = { SR_NAME_LVLN, SR_NAME_NPC_, SR_NAME_NULL };
-  CSrLvlEditDlg Dlg;
-  int		Result;
+	static const srrectype_t s_LvlnRecordTypes[] = { SR_NAME_LVLN, SR_NAME_NPC_, SR_NAME_NULL };
+	CSrLvlEditDlg Dlg;
+	int		Result;
 
-  Dlg.SetRecordHandler(pHandler);
-  Dlg.SetSubrecord(pSubrecord);
-  Dlg.SetTitleValue(_T("Edit Leveled Actor Entry"));
-  Dlg.SetRecordTypes(s_LvlnRecordTypes);
-  Dlg.SetParentFormID(ParentFormID);
+	if (pHandler == NULL || pListInfo == NULL) return SR_LVLEDITDLG_RESULT_CANCEL;
 
-  Result = Dlg.DoModal();
-  return (Result);
+	Dlg.SetDlgHandler(pHandler);
+	Dlg.SetRecordHandler(&pHandler->GetDocument()->GetRecordHandler());
+	Dlg.SetListInfo(pListInfo);
+	Dlg.SetTitleValue(_T("Edit Leveled Actor Entry"));
+	Dlg.SetRecordTypes(s_LvlnRecordTypes);
+	Dlg.SetParentFormID(ParentFormID);
+
+	Result = Dlg.DoModal();
+	return (Result);
 }
 /*===========================================================================
  *		End of Function SrEditLvlActorDlg()
  *=========================================================================*/
-
 

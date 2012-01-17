@@ -26,6 +26,7 @@
 	#include "modfile/records/srlvlnrecord.h"
 	#include "modfile/records/srlvsprecord.h"
 	#include "modfile/records/srnpc_record.h"
+	#include "windows/srrecordlistctrl.h"
 /*===========================================================================
  *		End of Required Includes
  *=========================================================================*/
@@ -196,6 +197,7 @@ void SrSaveLvlListInfo (CSrLvlListInfoArray& InfoArray, CSrLvlnRecord& Record);
 void SrSaveLvlListInfo (CSrLvlListInfoArray& InfoArray, CSrLvspRecord& Record);
 void SrSaveLvlListInfo (CSrLvlListInfoArray& InfoArray, CSrNpc_Record& Record);
 
+void SrCreateLvlListInfoCustomData (srrlcustomdata_t& CustomData, srlvllistinfo_t& Info, CSrRecordHandler* pHandler);
 
 #endif
 /*===========================================================================

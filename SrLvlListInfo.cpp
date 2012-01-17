@@ -13,6 +13,7 @@
 #include "SrLvlListInfo.h"
 
 
+
 bool SrCreateLvlListInfo (CSrLvlListInfoArray& InfoArray, CSrRecord* pRecord)
 {
 
@@ -192,7 +193,7 @@ void SrCreateLvlListInfo (CSrLvlListInfoArray& InfoArray, CSrLvliRecord& Record)
 			}
 		}
 
-		pSubrecord = Record.FindNextSubrecord(SR_NAME_CNTO, Position);
+		pSubrecord = Record.FindNextSubrecord(SR_NAME_LVLO, Position);
 	}
 }
 
@@ -228,7 +229,7 @@ void SrCreateLvlListInfo (CSrLvlListInfoArray& InfoArray, CSrLvlnRecord& Record)
 			}
 		}
 
-		pSubrecord = Record.FindNextSubrecord(SR_NAME_CNTO, Position);
+		pSubrecord = Record.FindNextSubrecord(SR_NAME_LVLO, Position);
 	}
 }
 
@@ -264,7 +265,7 @@ void SrCreateLvlListInfo (CSrLvlListInfoArray& InfoArray, CSrLvspRecord& Record)
 			}
 		}
 
-		pSubrecord = Record.FindNextSubrecord(SR_NAME_CNTO, Position);
+		pSubrecord = Record.FindNextSubrecord(SR_NAME_LVLO, Position);
 	}
 }
 
@@ -348,8 +349,11 @@ void SrSaveLvlListInfo (CSrLvlListInfoArray& InfoArray, CSrCobjRecord& Record)
 {
 	CSrSubrecord* pSubrecord;
 
+	Record.DeleteSubrecords(SR_NAME_COCT);
 	Record.DeleteSubrecords(SR_NAME_CNTO);
 	Record.DeleteSubrecords(SR_NAME_COED);
+
+	Record.AddInitNewSubrecord(SR_NAME_COCT);
 
 	for (dword i = 0; i < InfoArray.GetSize(); ++i)
 	{
@@ -374,8 +378,11 @@ void SrSaveLvlListInfo (CSrLvlListInfoArray& InfoArray, CSrContRecord& Record)
 {
 	CSrSubrecord* pSubrecord;
 
+	Record.DeleteSubrecords(SR_NAME_COCT);
 	Record.DeleteSubrecords(SR_NAME_CNTO);
 	Record.DeleteSubrecords(SR_NAME_COED);
+
+	Record.AddInitNewSubrecord(SR_NAME_COCT);
 
 	for (dword i = 0; i < InfoArray.GetSize(); ++i)
 	{
@@ -400,8 +407,11 @@ void SrSaveLvlListInfo (CSrLvlListInfoArray& InfoArray, CSrLvliRecord& Record)
 {
 	CSrSubrecord* pSubrecord;
 
+	Record.DeleteSubrecords(SR_NAME_LLCT);
 	Record.DeleteSubrecords(SR_NAME_LVLO);
 	Record.DeleteSubrecords(SR_NAME_COED);
+
+	Record.AddInitNewSubrecord(SR_NAME_LLCT);
 
 	for (dword i = 0; i < InfoArray.GetSize(); ++i)
 	{
@@ -426,8 +436,11 @@ void SrSaveLvlListInfo (CSrLvlListInfoArray& InfoArray, CSrLvlnRecord& Record)
 {
 	CSrSubrecord* pSubrecord;
 
+	Record.DeleteSubrecords(SR_NAME_LLCT);
 	Record.DeleteSubrecords(SR_NAME_LVLO);
 	Record.DeleteSubrecords(SR_NAME_COED);
+
+	Record.AddInitNewSubrecord(SR_NAME_LLCT);
 
 	for (dword i = 0; i < InfoArray.GetSize(); ++i)
 	{
@@ -452,8 +465,11 @@ void SrSaveLvlListInfo (CSrLvlListInfoArray& InfoArray, CSrLvspRecord& Record)
 {
 	CSrSubrecord* pSubrecord;
 
+	Record.DeleteSubrecords(SR_NAME_LLCT);
 	Record.DeleteSubrecords(SR_NAME_LVLO);
 	Record.DeleteSubrecords(SR_NAME_COED);
+
+	Record.AddInitNewSubrecord(SR_NAME_LLCT);
 
 	for (dword i = 0; i < InfoArray.GetSize(); ++i)
 	{
@@ -488,9 +504,27 @@ srlvllistinfo_t* SrFindLvlListInfo (CSrLvlListInfoArray& InfoArray, CSrSubrecord
 
 	for (dword i = 0; i < InfoArray.GetSize(); ++i)
 	{
-		if (InfoArray[i]->pCnto == pCnto) return InfoArray[i];
-		if (InfoArray[i]->pLvlo == pLvlo) return InfoArray[i];
+		if (pCnto != NULL && InfoArray[i]->pCnto == pCnto) return InfoArray[i];
+		if (pLvlo != NULL && InfoArray[i]->pLvlo == pLvlo) return InfoArray[i];
 	}
 
 	return NULL;
+}
+
+
+void SrCreateLvlListInfoCustomData (srrlcustomdata_t& CustomData, srlvllistinfo_t& Info, CSrRecordHandler* pHandler) 
+{
+	CSrBaseRecord*    pBaseRecord;
+	CSrIdRecord*	  pIdRecord;
+
+	CustomData.Subrecords.Destroy();
+	
+	if (Info.pCnto != NULL) CustomData.Subrecords.Add(Info.pCnto);
+	if (Info.pLvlo != NULL) CustomData.Subrecords.Add(Info.pLvlo);
+	if (Info.pCoed != NULL) CustomData.Subrecords.Add(Info.pCoed);
+	
+	if (pHandler == NULL) return;
+	pBaseRecord = pHandler->FindFormID(Info.GetFormID());
+	pIdRecord = SrCastClassNull(CSrIdRecord, pBaseRecord);
+	CustomData.pRecord = pIdRecord;	
 }

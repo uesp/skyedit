@@ -11,9 +11,10 @@
 	/* Include Files */
 #include "stdafx.h"
 #include "sredit.h"
-#include "srLvliView.h"
+#include "srLvspView.h"
 #include "dialogs/sreditdlghandler.h"
 #include "SrLvlEditDlg.h"
+#include <vector>
 
 
 /*===========================================================================
@@ -127,22 +128,29 @@ static int CALLBACK s_ItemFormIDRecListSort(LPARAM lParam1, LPARAM lParam2, LPAR
  * Begin List Column Definitions
  *
  *=========================================================================*/
-static srreclistcolinit_t s_LevelListInit[] = {
-	{ SR_FIELD_EDITORID,	150,	LVCFMT_LEFT },
-	{ SR_FIELD_FORMID,		5,		LVCFMT_LEFT,  s_ItemFormIDRecListSort},
-	{ SR_FIELD_FLAGS,		40,		LVCFMT_CENTER },
-	{ SR_FIELD_LEVEL,		40,		LVCFMT_CENTER, s_ItemLevelRecListSort},
-	{ SR_FIELD_ITEMCOUNT,	40,		LVCFMT_CENTER, s_ItemCountRecListSort},
-	{ SR_FIELD_ITEMNAME,	190,	LVCFMT_LEFT },
-	{ SR_FIELD_RECORDTYPE,	60,		LVCFMT_CENTER },
+static srreclistcolinit_t s_LevelListInit[] = 
+{
+	{ SR_FIELD_EDITORID,		150,	LVCFMT_LEFT },
+	{ SR_FIELD_FORMID,			5,		LVCFMT_LEFT,  s_ItemFormIDRecListSort},
+	{ SR_FIELD_FLAGS,			40,		LVCFMT_CENTER },
+	{ SR_FIELD_LEVEL,			40,		LVCFMT_CENTER, s_ItemLevelRecListSort},
+	{ SR_FIELD_ITEMCOUNT,		40,		LVCFMT_CENTER, s_ItemCountRecListSort},
+	{ SR_FIELD_RECORDTYPE,		50,		LVCFMT_CENTER },
+	{ SR_FIELD_LISTFACTION,		100,	LVCFMT_CENTER },
+	{ SR_FIELD_LISTMINRANK,		50,		LVCFMT_CENTER },
+	{ SR_FIELD_LISTCONDITION,	50,		LVCFMT_CENTER },
 	{ SR_FIELD_NONE, 0, 0 }
  };
 
-static srrecfield_t s_LevelListFields[] = {
-	{ "Item Name",	SR_FIELD_ITEMNAME,  0, NULL },
-	{ "Count",	SR_FIELD_ITEMCOUNT, 0, NULL },
-	{ "Level",	SR_FIELD_LEVEL,     0, NULL },
-	{ NULL,		SR_FIELD_NONE,      0, NULL }
+static srrecfield_t s_LevelListFields[] = 
+{
+	{ "Item Name",	SR_FIELD_ITEMNAME,		0, NULL },
+	{ "Count",		SR_FIELD_ITEMCOUNT,		0, NULL },
+	{ "Level",		SR_FIELD_LEVEL,			0, NULL },
+	{ "Faction",	SR_FIELD_LISTFACTION,	0, NULL },
+	{ "MinRank",	SR_FIELD_LISTMINRANK,	0, NULL },
+	{ "Condition",	SR_FIELD_LISTCONDITION, 0, NULL },
+	{ NULL, SR_FIELD_NONE, 0, NULL }
  };
 /*===========================================================================
  *		End of List Column Definitions
@@ -201,8 +209,8 @@ void CSrLvspView::DoDataExchange (CDataExchange* pDX)
 
 static int __stdcall l_SortLevelRecords (long lParam1, long lParam2, long lParamSort)
 {
-	CSrLvloSubrecord* pRecord1 = (CSrLvloSubrecord *) lParam1;
-	CSrLvloSubrecord* pRecord2 = (CSrLvloSubrecord *) lParam2;
+	srlvllistinfo_t* pRecord1 = (srlvllistinfo_t *) lParam1;
+	srlvllistinfo_t* pRecord2 = (srlvllistinfo_t *) lParam2;
 
 	if (pRecord1 == NULL || pRecord2 == NULL) return 0;
 
@@ -219,38 +227,20 @@ static int __stdcall l_SortLevelRecords (long lParam1, long lParam2, long lParam
  *=========================================================================*/
 void CSrLvspView::GetControlData (void) 
 {
-  CSrLvspRecord*		pLevelItem;
-  CSrLvloSubrecord*		pItem;
-  CSrRefSubrecordArray	SortLevelRecords;
-  int					ItemPos;
+	CSrLvspRecord*			pLevelItem;
+	CSrRefSubrecordArray	SortLevelRecords;
 
-  CSrRecordDialog::GetControlData();
-  if (m_EditInfo.pNewRecord == NULL) return;
+	CSrRecordDialog::GetControlData();
+	if (m_EditInfo.pNewRecord == NULL) return;
 
-  pLevelItem = SrCastClass(CSrLvspRecord, m_EditInfo.pNewRecord);
-  if (pLevelItem == NULL) return;
+	pLevelItem = SrCastClass(CSrLvspRecord, m_EditInfo.pNewRecord);
+	if (pLevelItem == NULL) return;
 
-  		/* Ensure the count subreecord is created in the correct place */
-  pLevelItem->DeleteSubrecords(SR_NAME_LLCT);
-  pLevelItem->DeleteSubrecords(SR_NAME_LVLO);
-  pLevelItem->UpdateListCount();
+	m_LvlListInfo.Sort(l_SortLevelRecords, 0);
+	SrSaveLvlListInfo(m_LvlListInfo, *pLevelItem);
 
-		/* Copy all subrecords into the new record */
-  for (pItem = m_CopyRecord.GetFirstItem(ItemPos); pItem != NULL; pItem = m_CopyRecord.GetNextItem(ItemPos)) 
-  {
-	  SortLevelRecords.Add(pItem);
-  }
-
-  SortLevelRecords.Sort(l_SortLevelRecords, 0);
-
-  for (dword i = 0; i < SortLevelRecords.GetSize(); ++i)
-  {
-	  pItem = SrCastClass(CSrLvloSubrecord, SortLevelRecords[i]);
-	  if (pItem == NULL) continue;
-	  pLevelItem->AddItem(pItem->GetFormID(), pItem->GetLevel(), pItem->GetCount());
-  }  
-
-  pLevelItem->UpdateListCount();
+		/* Update item list due to change in listinfo order*/
+	FillItemList();
 }
 /*===========================================================================
  *		End of Class Method CSrLvspView::GetControlData()
@@ -263,16 +253,8 @@ void CSrLvspView::GetControlData (void)
  *
  *=========================================================================*/
 #ifdef _DEBUG
-
-void CSrLvspView::AssertValid() const {
-  CSrRecordDialog::AssertValid();
-}
-
-
-void CSrLvspView::Dump(CDumpContext& dc) const {
-  CSrRecordDialog::Dump(dc);
-}
-
+	void CSrLvspView::AssertValid() const { CSrRecordDialog::AssertValid(); }
+	void CSrLvspView::Dump(CDumpContext& dc) const { CSrRecordDialog::Dump(dc); }
 #endif
 /*===========================================================================
  *		End of CSrLvspView Diagnostics
@@ -286,21 +268,20 @@ void CSrLvspView::Dump(CDumpContext& dc) const {
  *=========================================================================*/
 void CSrLvspView::OnInitialUpdate (void) 
 {
-  CSrRecordDialog::OnInitialUpdate();
+	CSrRecordDialog::OnInitialUpdate();
 
-	/* Setup the list */
-  m_ItemList.SetListName("LvspList");
-  m_ItemList.DefaultSettings();
-  m_ItemList.SetupCustomList(s_LevelListInit, &CSrLvspRecord::s_FieldMap, s_LevelListFields);
-  m_ItemList.SetOwner(this);
-  m_ItemList.SetDragType(SR_RLDRAG_CUSTOM | SR_RLDRAG_RECORD);
-  m_ItemList.SetSortEnable(false);
+		/* Setup the list */
+	m_ItemList.SetListName("LvspList");
+	m_ItemList.DefaultSettings();
+	m_ItemList.SetupCustomList(s_LevelListInit, &CSrLvspRecord::s_FieldMap, s_LevelListFields);
+	m_ItemList.SetOwner(this);
+	m_ItemList.SetDragType(SR_RLDRAG_CUSTOM | SR_RLDRAG_RECORD);
+	m_ItemList.SetSortEnable(false);
 
-  m_pRecordHandler->GetEventHandler().AddListener(this);
+	m_pRecordHandler->GetEventHandler().AddListener(this);
 
-  SaveSubrecords();
-
-  SetControlData();
+	SaveSubrecords();
+	SetControlData();
 }
 /*===========================================================================
  *		End of Class Event CSrLvspView::OnInitialUpdate()
@@ -314,8 +295,7 @@ void CSrLvspView::OnInitialUpdate (void)
  *=========================================================================*/
 void CSrLvspView::SaveSubrecords (void) 
 {
-	m_CopyRecord.Destroy();
-	m_CopyRecord.Copy(m_EditInfo.pOldRecord);
+	SrCreateLvlListInfo(m_LvlListInfo, GetInputRecord());
 }
 /*===========================================================================
  *		End of Class Method CSrLvspView::SaveSubrecords()
@@ -330,7 +310,6 @@ void CSrLvspView::SaveSubrecords (void)
 void CSrLvspView::SetControlData (void) 
 {
 	CSrRecordDialog::SetControlData();
-
 	FillItemList();
 }
 /*===========================================================================
@@ -343,17 +322,14 @@ void CSrLvspView::SetControlData (void)
  * Class CSrLvspView Method - void FillItemList (void);
  *
  *=========================================================================*/
-void CSrLvspView::FillItemList (void) {
-  CSrLvloSubrecord* pItem;
-  int               ItemPos;
-
-  m_ItemList.DeleteAllItems();
+void CSrLvspView::FillItemList (void)
+{
+	m_ItemList.DeleteAllItems();
   
-  for (pItem = m_CopyRecord.GetFirstItem(ItemPos); pItem != NULL; pItem = m_CopyRecord.GetNextItem(ItemPos)) 
-  {
-		AddItemList(pItem);
-  }
-
+	for (dword i = 0; i < m_LvlListInfo.GetSize(); ++i)
+	{
+		AddItemList(m_LvlListInfo[i]);
+	}
 }
 /*===========================================================================
  *		End of Class Method CSrLvspView::FillItemList()
@@ -362,28 +338,22 @@ void CSrLvspView::FillItemList (void) {
 
 /*===========================================================================
  *
- * Class CSrLvspView Method - int AddItemList (pItem);
+ * Class CSrLvspView Method - int AddItemList (pInfo);
  *
  *=========================================================================*/
-int CSrLvspView::AddItemList (CSrLvloSubrecord* pItem) 
+int CSrLvspView::AddItemList (srlvllistinfo_t* pInfo) 
 {
-  CSrBaseRecord*    pBaseRecord;
-  CSrIdRecord*	    pIdRecord;
-  srrlcustomdata_t  CustomData;
-  int               ListIndex;
+	srrlcustomdata_t  CustomData;
+	int               ListIndex;
 
-  pBaseRecord = m_pRecordHandler->FindFormID(pItem->GetFormID());
-  pIdRecord   = NULL;
-  if (pBaseRecord != NULL) pIdRecord = SrCastClass(CSrIdRecord, pBaseRecord);
+	if (pInfo->pLvlo == NULL) return -1;
+	SrCreateLvlListInfoCustomData(CustomData, *pInfo, m_pRecordHandler);
 
-  CustomData.pRecord = pIdRecord;
-  CustomData.Subrecords.Add(pItem);
+	ListIndex = m_ItemList.AddCustomRecord(CustomData);
+	if (ListIndex < 0) return (-1);
 
-  ListIndex = m_ItemList.AddCustomRecord(CustomData);
-  if (ListIndex < 0) return (-1);
-
-  UpdateItem(ListIndex, pItem);
-  return (ListIndex);
+	UpdateItem(ListIndex, pInfo);
+	return (ListIndex);
 }
 /*===========================================================================
  *		End of Class Method CSrLvspView::AddItemList()
@@ -392,33 +362,50 @@ int CSrLvspView::AddItemList (CSrLvloSubrecord* pItem)
 
 /*===========================================================================
  *
- * Class CSrLvspView Method - void UpdateItem (ListIndex, pItem);
+ * Class CSrLvspView Method - void UpdateItem (ListIndex, pInfo);
  *
  *=========================================================================*/
-void CSrLvspView::UpdateItem (const int ListIndex, CSrLvloSubrecord* pItem) 
+void CSrLvspView::UpdateItem (const int ListIndex, srlvllistinfo_t* pInfo) 
 {
-  CSrBaseRecord*    pBaseRecord;
-  CSrIdRecord*	    pRecord = NULL;
-  CString           Buffer;
+	CSrBaseRecord*    pBaseRecord;
+	CSrIdRecord*	  pRecord;
+	CString           Buffer;
 
-  m_ItemList.UpdateRecord(ListIndex);
+	m_ItemList.UpdateRecord(ListIndex);
 
-  pBaseRecord = m_pRecordHandler->FindFormID(pItem->GetFormID());
-  if (pBaseRecord != NULL) pRecord = SrCastClass(CSrIdRecord, pBaseRecord);
+	pBaseRecord = m_pRecordHandler->FindFormID(pInfo->GetFormID());
+	pRecord = SrCastClassNull(CSrIdRecord, pBaseRecord);
   
-  if (pRecord == NULL) {
-    Buffer.Format("0x%08X", pItem->GetFormID());
-    m_ItemList.SetCustomField(ListIndex, SR_FIELD_FORMID, Buffer);
-
-    m_ItemList.SetCustomField(ListIndex, SR_FIELD_EDITORID, "");
-  }
+	if (pRecord == NULL) 
+	{
+		Buffer.Format("0x%08X", pInfo->GetFormID());
+		m_ItemList.SetCustomField(ListIndex, SR_FIELD_FORMID, Buffer);
+		m_ItemList.SetCustomField(ListIndex, SR_FIELD_EDITORID, "");
+	}
 
 		/* Set custom fields */
-  Buffer.Format("%u", (dword) pItem->GetLevel());
-  m_ItemList.SetCustomField(ListIndex, SR_FIELD_LEVEL, Buffer);
+	Buffer.Format("%u", (dword) pInfo->GetLevel());
+	m_ItemList.SetCustomField(ListIndex, SR_FIELD_LEVEL, Buffer);
 
-  Buffer.Format("%u", (dword) pItem->GetCount());
-  m_ItemList.SetCustomField(ListIndex, SR_FIELD_ITEMCOUNT, Buffer);
+	Buffer.Format("%u", (dword) pInfo->GetCount());
+	m_ItemList.SetCustomField(ListIndex, SR_FIELD_ITEMCOUNT, Buffer);
+
+	if (pInfo->pCoed != NULL)
+	{
+		m_ItemList.SetCustomField(ListIndex, SR_FIELD_LISTFACTION, m_pRecordHandler->GetEditorID(pInfo->pCoed->GetCoedData().FactionID));
+
+		Buffer.Format("%d", (int) pInfo->pCoed->GetCoedData().MinRank);
+		m_ItemList.SetCustomField(ListIndex, SR_FIELD_LISTMINRANK, Buffer);
+
+		Buffer.Format("%g", pInfo->pCoed->GetCoedData().Condition);
+		m_ItemList.SetCustomField(ListIndex, SR_FIELD_LISTCONDITION, Buffer);
+	}
+	else
+	{
+		m_ItemList.SetCustomField(ListIndex, SR_FIELD_LISTFACTION, "");
+		m_ItemList.SetCustomField(ListIndex, SR_FIELD_LISTMINRANK, "");
+		m_ItemList.SetCustomField(ListIndex, SR_FIELD_LISTCONDITION, "");
+	}
 }
 /*===========================================================================
  *		End of Class Method CSrLvspView::UpdateItem()
@@ -432,23 +419,24 @@ void CSrLvspView::UpdateItem (const int ListIndex, CSrLvloSubrecord* pItem)
  *=========================================================================*/
 void CSrLvspView::OnContextMenu (CWnd* pWnd, CPoint Point) 
 {
-  CMenu  Menu;
-  CMenu* pSubMenu;
-  int    Result;
+	CMenu  Menu;
+	CMenu* pSubMenu;
+	int    Result;
 
-  if (pWnd->GetDlgCtrlID() == IDC_ITEM_LIST) {
-    Result = Menu.LoadMenu(IDR_LVLITEMLIST_MENU);
-    if (!Result) return;
+	if (pWnd->GetDlgCtrlID() == IDC_ITEM_LIST) 
+	{
+		Result = Menu.LoadMenu(IDR_LVLITEMLIST_MENU);
+		if (!Result) return;
 
-    pSubMenu = Menu.GetSubMenu(0);
-    if (pSubMenu == NULL) return;
+		pSubMenu = Menu.GetSubMenu(0);
+		if (pSubMenu == NULL) return;
 
-    pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this, NULL);
-  }
-  else {  
-    CSrRecordDialog::OnContextMenu(pWnd, Point);
-  }
-    
+		pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this, NULL);
+	}
+	else 
+	{
+		CSrRecordDialog::OnContextMenu(pWnd, Point);
+	}    
 }
 /*===========================================================================
  *		End of Class Event CSrLvspView::OnContextMenu()
@@ -462,31 +450,36 @@ void CSrLvspView::OnContextMenu (CWnd* pWnd, CPoint Point)
  *=========================================================================*/
 void CSrLvspView::OnLvllistEdit() 
 {
-  CSrLvloSubrecord* pSubrecord;
-  srrlcustomdata_t* pCustomData;
-  int		    ListIndex;
-  int		    Result;
+	CSrLvloSubrecord*	pSubrecord;
+	srlvllistinfo_t*	pListInfo;
+	srrlcustomdata_t*	pCustomData;
+	int					ListIndex;
+	int					Result;
 
-  ListIndex = m_ItemList.GetSelectedItem();
-  if (ListIndex < 0) return;
+	ListIndex = m_ItemList.GetSelectedItem();
+	if (ListIndex < 0) return;
 
-  pCustomData = m_ItemList.GetCustomData(ListIndex);
-  if (pCustomData == NULL) return;
+	pCustomData = m_ItemList.GetCustomData(ListIndex);
+	if (pCustomData == NULL) return;
 
-  pSubrecord = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
-  if (pSubrecord == NULL) return;
+	pSubrecord = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
+	if (pSubrecord == NULL) return;
 
-  Result = SrEditLvlSpellDlg(pSubrecord, m_pRecordHandler, m_CopyRecord.GetFormID());
-  if (Result == SR_LVLEDITDLG_RESULT_CANCEL) return;
+	pListInfo = SrFindLvlListInfo(m_LvlListInfo, pSubrecord);
+	if (pListInfo == NULL) return;
 
-  if (Result == SR_LVLEDITDLG_RESULT_DELETE) {
-    m_CopyRecord.DeleteItem(pSubrecord);
-    m_ItemList.RemoveItem(ListIndex);
-    return;
-  }
+	Result = SrEditLvlSpellDlg(pListInfo, m_pDlgHandler, GetInputRecord()->GetFormID());
+	if (Result == SR_LVLEDITDLG_RESULT_CANCEL) return;
+
+	if (Result == SR_LVLEDITDLG_RESULT_DELETE) 
+	{
+		m_LvlListInfo.Delete(pListInfo);
+		m_ItemList.RemoveItem(ListIndex);
+		return;
+	}
   
-  pCustomData->pRecord = m_pRecordHandler->FindFormID(pSubrecord->GetFormID());
-  UpdateItem(ListIndex, pSubrecord); 
+	SrCreateLvlListInfoCustomData(*pCustomData, *pListInfo, m_pRecordHandler);
+	UpdateItem(ListIndex, pListInfo); 
 }
 /*===========================================================================
  *		End of Class Event CSrLvspView::OnLvllistEdit()
@@ -500,8 +493,8 @@ void CSrLvspView::OnLvllistEdit()
  *=========================================================================*/
 LRESULT CSrLvspView::OnEditRecordMsg (WPARAM wParam, LPARAM lParam) 
 {
-  OnLvllistEdit();
-  return (0);
+	OnLvllistEdit();
+	return 0;
 }
 /*===========================================================================
  *		End of Class Event CSrLvspView::OnEditRecordMsg()
@@ -515,18 +508,20 @@ LRESULT CSrLvspView::OnEditRecordMsg (WPARAM wParam, LPARAM lParam)
  *=========================================================================*/
 void CSrLvspView::OnLvllistAdd() 
 {
-  CSrLvloSubrecord* pItem;
-  int		    Result;
+	srlvllistinfo_t*  pNewInfo;
+	int				  Result;
 
-  pItem = m_CopyRecord.AddItem(0, 1, 1);
-  Result = SrEditLvlSpellDlg(pItem, m_pRecordHandler, m_CopyRecord.GetFormID());
+	pNewInfo = m_LvlListInfo.AddNew();
+	pNewInfo->InitializeNew(SR_NAME_LVLI);
+	Result = SrEditLvlSpellDlg(pNewInfo, m_pDlgHandler, GetInputRecord()->GetFormID());
 
-  if (Result == SR_LVLEDITDLG_RESULT_CANCEL || Result == SR_LVLEDITDLG_RESULT_DELETE) {
-    m_CopyRecord.DeleteItem(pItem);
-    return;
-  }
+	if (Result == SR_LVLEDITDLG_RESULT_CANCEL || Result == SR_LVLEDITDLG_RESULT_DELETE) 
+	{
+		m_LvlListInfo.Delete(pNewInfo);
+		return;
+	}
 
-  AddItemList(pItem);
+	AddItemList(pNewInfo);
 }
 /*===========================================================================
  *		End of Class Event CSrLvspView::OnLvllistAdd()
@@ -540,27 +535,28 @@ void CSrLvspView::OnLvllistAdd()
  *=========================================================================*/
 void CSrLvspView::OnLvllistDelete() 
 {
-  srrlcustomdata_t*	pCustomData;
-  CSrLvloSubrecord*	pItem;
-  POSITION		ListPos;
-  int			ListIndex;
+	std::vector<int> IndexList;
+	POSITION         ListPos;
+	int				 ListIndex;
 
-	/* Delete all items in the record first */
-  ListPos = m_ItemList.GetFirstSelectedItemPosition();
+	ListPos = m_ItemList.GetFirstSelectedItemPosition();
 
-  while (ListPos != NULL) {
-    ListIndex = m_ItemList.GetNextSelectedItem(ListPos);
+	while (ListPos != NULL) 
+	{
+		ListIndex = m_ItemList.GetNextSelectedItem(ListPos);
+		IndexList.push_back(ListIndex);
+	}
 
-    pCustomData = m_ItemList.GetCustomData(ListIndex);
-    if (pCustomData == NULL) continue;
+	while (IndexList.size() > 0)
+	{
+		ListIndex = IndexList.back();
+		IndexList.pop_back();
 
-    pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
-    if (pItem != NULL) m_CopyRecord.DeleteItem(pItem);
-  }
+		m_ItemList.DeleteItem(ListIndex);
+		m_LvlListInfo.Delete(ListIndex);
+	}
 
-	/* Redraw the list */
-  FillItemList();
-  m_ItemList.SelectRecord(0);
+	m_ItemList.SelectRecord(0);
 }
 /*===========================================================================
  *		End of Class Event CSrLvspView::OnLvllistDelete()
@@ -574,7 +570,7 @@ void CSrLvspView::OnLvllistDelete()
  *=========================================================================*/
 void CSrLvspView::OnUpdateLvllistDelete (CCmdUI* pCmdUI) 
 {
-  pCmdUI->Enable(m_ItemList.GetSelectedCount() > 0);	
+	pCmdUI->Enable(m_ItemList.GetSelectedCount() > 0);	
 }
 /*===========================================================================
  *		End of Class Event CSrLvspView::OnUpdateLvllistDelete()
@@ -588,7 +584,7 @@ void CSrLvspView::OnUpdateLvllistDelete (CCmdUI* pCmdUI)
  *=========================================================================*/
 void CSrLvspView::OnUpdateLvllistEdit (CCmdUI* pCmdUI) 
 {
-  pCmdUI->Enable(m_ItemList.GetSelectedCount() > 0);	
+	pCmdUI->Enable(m_ItemList.GetSelectedCount() > 0);	
 }
 /*===========================================================================
  *		End of Class Event CSrLvspView::OnUpdateLvllistEdit()
@@ -602,29 +598,30 @@ void CSrLvspView::OnUpdateLvllistEdit (CCmdUI* pCmdUI)
  *=========================================================================*/
 void CSrLvspView::OnAddCount() 
 {
-  srrlcustomdata_t*	pCustomData;
-  CSrLvloSubrecord*	pItem;
-  POSITION		ListPos;
-  CString		Buffer;
-  int			ListIndex;
+	srrlcustomdata_t*	pCustomData;
+	CSrLvloSubrecord*	pItem;
+	POSITION			ListPos;
+	CString				Buffer;
+	int					ListIndex;
 
-  ListPos = m_ItemList.GetFirstSelectedItemPosition();
+	ListPos = m_ItemList.GetFirstSelectedItemPosition();
 
-  while (ListPos != NULL) {
-    ListIndex = m_ItemList.GetNextSelectedItem(ListPos);
+	while (ListPos != NULL) 
+	{
+		ListIndex = m_ItemList.GetNextSelectedItem(ListPos);
     
-    pCustomData = m_ItemList.GetCustomData(ListIndex);
-    if (pCustomData == NULL) continue;
+		pCustomData = m_ItemList.GetCustomData(ListIndex);
+		if (pCustomData == NULL) continue;
 
-    pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
-    if (pItem == NULL) continue; 
-
-    if (pItem->GetCount() >= 32768) continue;
-    pItem->SetCount(pItem->GetCount() + 1);
-
-    Buffer.Format("%u", (dword) pItem->GetCount());
-    m_ItemList.SetCustomField(ListIndex, SR_FIELD_ITEMCOUNT, Buffer);
-  }
+		pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
+		if (pItem == NULL) continue; 
+	
+	    if (pItem->GetCount() >= 32768) continue;
+	    pItem->SetCount(pItem->GetCount() + 1);
+	
+	    Buffer.Format("%u", (dword) pItem->GetCount());
+	    m_ItemList.SetCustomField(ListIndex, SR_FIELD_ITEMCOUNT, Buffer);
+	}
 	
 }
 /*===========================================================================
@@ -637,30 +634,32 @@ void CSrLvspView::OnAddCount()
  * Class CSrLvspView Event - void OnMinusCount ();
  *
  *=========================================================================*/
-void CSrLvspView::OnMinusCount() {
-  srrlcustomdata_t*	pCustomData;
-  CSrLvloSubrecord*	pItem;
-  POSITION		ListPos;
-  CString		Buffer;
-  int			ListIndex;
+void CSrLvspView::OnMinusCount() 
+{
+	srrlcustomdata_t*	pCustomData;
+	CSrLvloSubrecord*	pItem;
+	POSITION			ListPos;
+	CString				Buffer;
+	int					ListIndex;
 
-  ListPos = m_ItemList.GetFirstSelectedItemPosition();
+	ListPos = m_ItemList.GetFirstSelectedItemPosition();
 
-  while (ListPos != NULL) {
-    ListIndex = m_ItemList.GetNextSelectedItem(ListPos);
+	while (ListPos != NULL) 
+	{
+		ListIndex = m_ItemList.GetNextSelectedItem(ListPos);
     
-    pCustomData = m_ItemList.GetCustomData(ListIndex);
-    if (pCustomData == NULL) continue;
+		pCustomData = m_ItemList.GetCustomData(ListIndex);
+		if (pCustomData == NULL) continue;
 
-    pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
-    if (pItem == NULL) continue; 
+		pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
+		if (pItem == NULL) continue; 
 
-    if (pItem->GetCount() == 0) continue;
-    pItem->SetCount(pItem->GetCount() - 1);
-
-    Buffer.Format("%u", (dword) pItem->GetCount());
-    m_ItemList.SetCustomField(ListIndex, SR_FIELD_ITEMCOUNT, Buffer);
-  }
+		if (pItem->GetCount() == 0) continue;
+		pItem->SetCount(pItem->GetCount() - 1);
+	
+	    Buffer.Format("%u", (dword) pItem->GetCount());
+	    m_ItemList.SetCustomField(ListIndex, SR_FIELD_ITEMCOUNT, Buffer);
+	}
 
 }
 /*===========================================================================
@@ -673,30 +672,32 @@ void CSrLvspView::OnMinusCount() {
  * Class CSrLvspView Event - void OnAddLevel ();
  *
  *=========================================================================*/
-void CSrLvspView::OnAddLevel() {
-  srrlcustomdata_t*	pCustomData;
-  CSrLvloSubrecord*	pItem;
-  POSITION		ListPos;
-  CString		Buffer;
-  int			ListIndex;
+void CSrLvspView::OnAddLevel() 
+{
+	srrlcustomdata_t*	pCustomData;
+	CSrLvloSubrecord*	pItem;
+	POSITION			ListPos;
+	CString				Buffer;
+	int					ListIndex;
 
-  ListPos = m_ItemList.GetFirstSelectedItemPosition();
+	ListPos = m_ItemList.GetFirstSelectedItemPosition();
 
-  while (ListPos != NULL) {
-    ListIndex = m_ItemList.GetNextSelectedItem(ListPos);
+	while (ListPos != NULL) 
+	{
+		ListIndex = m_ItemList.GetNextSelectedItem(ListPos);
     
-    pCustomData = m_ItemList.GetCustomData(ListIndex);
-    if (pCustomData == NULL) continue;
+		pCustomData = m_ItemList.GetCustomData(ListIndex);
+		if (pCustomData == NULL) continue;
 
-    pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
-    if (pItem == NULL) continue; 
+		pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
+		if (pItem == NULL) continue; 
 
-    if (pItem->GetLevel() >= 32768) continue;
-    pItem->SetLevel(pItem->GetLevel() + 1);
+		if (pItem->GetLevel() >= 32768) continue;
+		pItem->SetLevel(pItem->GetLevel() + 1);
 
-    Buffer.Format("%u", (dword) pItem->GetLevel());
-    m_ItemList.SetCustomField(ListIndex, SR_FIELD_LEVEL, Buffer);
-  }
+		Buffer.Format("%u", (dword) pItem->GetLevel());
+		m_ItemList.SetCustomField(ListIndex, SR_FIELD_LEVEL, Buffer);
+	}
 	
 }
 /*===========================================================================
@@ -709,29 +710,31 @@ void CSrLvspView::OnAddLevel() {
  * Class CSrLvspView Event - void OnMinusLevel ();
  *
  *=========================================================================*/
-void CSrLvspView::OnMinusLevel() {
-  srrlcustomdata_t*	pCustomData;
-  CSrLvloSubrecord*	pItem;
-  POSITION		ListPos;
-  CString		Buffer;
-  int			ListIndex;
+void CSrLvspView::OnMinusLevel() 
+{
+	srrlcustomdata_t*	pCustomData;
+	CSrLvloSubrecord*	pItem;
+	POSITION			ListPos;
+	CString				Buffer;
+	int					ListIndex;
 
-  ListPos = m_ItemList.GetFirstSelectedItemPosition();
+	ListPos = m_ItemList.GetFirstSelectedItemPosition();
 
-  while (ListPos != NULL) {
-    ListIndex = m_ItemList.GetNextSelectedItem(ListPos);
+	while (ListPos != NULL) 
+	{
+		ListIndex = m_ItemList.GetNextSelectedItem(ListPos);
     
-    pCustomData = m_ItemList.GetCustomData(ListIndex);
-    if (pCustomData == NULL) continue;
+		pCustomData = m_ItemList.GetCustomData(ListIndex);
+		if (pCustomData == NULL) continue;
 
-    pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
-    if (pItem == NULL) continue; 
+		pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
+		if (pItem == NULL) continue; 
 
-    if (pItem->GetLevel() == 0) continue;
-    pItem->SetLevel(pItem->GetLevel() - 1);
+		if (pItem->GetLevel() == 0) continue;
+		pItem->SetLevel(pItem->GetLevel() - 1);
 
-    Buffer.Format("%u", (dword) pItem->GetLevel());
-    m_ItemList.SetCustomField(ListIndex, SR_FIELD_LEVEL, Buffer);
+		Buffer.Format("%u", (dword) pItem->GetLevel());
+		m_ItemList.SetCustomField(ListIndex, SR_FIELD_LEVEL, Buffer);
   }
 
 }
@@ -745,13 +748,14 @@ void CSrLvspView::OnMinusLevel() {
  * Class CSrLvspView Event - int OnListenCleanRecord (pEvent);
  *
  *=========================================================================*/
-int CSrLvspView::OnListenCleanRecord (CSrListenEvent* pEvent) {
-  int ListIndex;
+int CSrLvspView::OnListenCleanRecord (CSrListenEvent* pEvent) 
+{
+	int ListIndex;
 
-  ListIndex = m_ItemList.FindRecord(pEvent->GetOldRecord());
-  if (ListIndex >= 0) m_ItemList.UpdateRecord(pEvent->GetNewRecord(), pEvent->GetOldRecord());
+	ListIndex = m_ItemList.FindRecord(pEvent->GetOldRecord());
+	if (ListIndex >= 0) m_ItemList.UpdateRecord(pEvent->GetNewRecord(), pEvent->GetOldRecord());
 
-  return (SR_EVENT_RESULT_OK);
+	return (SR_EVENT_RESULT_OK);
 }
 /*===========================================================================
  *		End of Class Event CSrLvspView::OnListenCleanRecord()
@@ -763,13 +767,14 @@ int CSrLvspView::OnListenCleanRecord (CSrListenEvent* pEvent) {
  * Class CSrLvspView Event - int OnListenUpdateRecord (pEvent);
  *
  *=========================================================================*/
-int CSrLvspView::OnListenUpdateRecord (CSrListenEvent* pEvent) {
-  int ListIndex;
+int CSrLvspView::OnListenUpdateRecord (CSrListenEvent* pEvent) 
+{
+	int ListIndex;
 
-  ListIndex = m_ItemList.FindRecord(pEvent->GetOldRecord());
-  if (ListIndex >= 0) m_ItemList.UpdateRecord(pEvent->GetNewRecord(), pEvent->GetOldRecord());
+	ListIndex = m_ItemList.FindRecord(pEvent->GetOldRecord());
+	if (ListIndex >= 0) m_ItemList.UpdateRecord(pEvent->GetNewRecord(), pEvent->GetOldRecord());
 
-  return (SR_EVENT_RESULT_OK);
+	return (SR_EVENT_RESULT_OK);
 }
 /*===========================================================================
  *		End of Class Event CSrLvspView::OnListenUpdateRecord()
@@ -781,19 +786,16 @@ int CSrLvspView::OnListenUpdateRecord (CSrListenEvent* pEvent) {
  * Class CSrLvspView Event - void OnLvlEditrecord ();
  *
  *=========================================================================*/
-void CSrLvspView::OnLvlEditrecord() {
-  CSrRecord* pRecord;
-  CWnd*      pWnd;
+void CSrLvspView::OnLvlEditrecord() 
+{
+	CSrRecord* pRecord;
+	CWnd*      pWnd;
 
-  pRecord = m_ItemList.GetSelectedRecord();
-  if (pRecord == NULL) return;
+	pRecord = m_ItemList.GetSelectedRecord();
+	if (pRecord == NULL) return;
   
-  pWnd = GetOwner();
-
-  if (pWnd != NULL) {
-    m_pDlgHandler->EditRecord(pRecord);
-  }
-	
+	pWnd = GetOwner();
+	if (pWnd != NULL) m_pDlgHandler->EditRecord(pRecord);
 }
 /*===========================================================================
  *		End of Class Event CSrLvspView::OnLvlEditrecord()
@@ -805,9 +807,10 @@ void CSrLvspView::OnLvlEditrecord() {
  * Class CSrLvspView Event - LRESULT OnEditBaseRecordMsg (wParam, lParam);
  *
  *=========================================================================*/
-LRESULT CSrLvspView::OnEditBaseRecordMsg (WPARAM wParam, LPARAM lParam) {
-  OnLvlEditrecord();
-  return (0);
+LRESULT CSrLvspView::OnEditBaseRecordMsg (WPARAM wParam, LPARAM lParam) 
+{
+	OnLvlEditrecord();
+	return 0;
 }
 /*===========================================================================
  *		End of Class Event CSrLvspView::OnEditBaseRecordMsg()
@@ -821,19 +824,17 @@ LRESULT CSrLvspView::OnEditBaseRecordMsg (WPARAM wParam, LPARAM lParam) {
  *=========================================================================*/
 void CSrLvspView::OnDropItemList (NMHDR* pNotifyStruct, LRESULT* pResult) 
 {
-  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
-
-  *pResult = SRRL_DROPCHECK_ERROR;
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	*pResult = SRRL_DROPCHECK_ERROR;
   
-	/* Check for custom data */
-  if (pDropItems->pCustomDatas != NULL && pDropItems->pCustomDatas->GetSize() > 0) 
-  {
-    *pResult = OnDropCustomData(*pDropItems);
-  }	/* Check for records */
-  else if (pDropItems->pRecords != NULL) 
-  {
-    *pResult = OnDropRecords(*pDropItems);
-  } 
+	if (pDropItems->pCustomDatas != NULL && pDropItems->pCustomDatas->GetSize() > 0) 
+	{
+		*pResult = OnDropCustomData(*pDropItems);
+	}
+	else if (pDropItems->pRecords != NULL) 
+	{
+	    *pResult = OnDropRecords(*pDropItems);
+	}
 
 }
 /*===========================================================================
@@ -848,32 +849,32 @@ void CSrLvspView::OnDropItemList (NMHDR* pNotifyStruct, LRESULT* pResult)
  *=========================================================================*/
 int CSrLvspView::OnDropCustomData (srrldroprecords_t& DropItems) 
 {
-  CSrLvloSubrecord*  pItem;
-  srrlcustomdata_t*  pCustomData;
-  dword				 Index;
+	CSrLvloSubrecord*	pItem;
+	srrlcustomdata_t*	pCustomData;
+	srlvllistinfo_t*	pInfo;
+	dword				Index;
 
-	/* Check all custom data dropped */
-  for (Index = 0; Index < DropItems.pCustomDatas->GetSize(); ++Index) 
-  {
-    pCustomData = DropItems.pCustomDatas->GetAt(Index);
+		/* Check all custom data dropped */
+	for (Index = 0; Index < DropItems.pCustomDatas->GetSize(); ++Index) 
+	{
+		pCustomData = DropItems.pCustomDatas->GetAt(Index);
+		if (pCustomData == NULL) return (SRRL_DROPCHECK_ERROR);
+		if (pCustomData->pRecord == NULL) return (SRRL_DROPCHECK_ERROR);
 
-    if (pCustomData->pRecord        == NULL) return (SRRL_DROPCHECK_ERROR);
-
-		/* Check for dragging another lvlo record */
-    if (!SrIsValidLvspRecord(pCustomData->pRecord->GetRecordType())) return (SRRL_DROPCHECK_ERROR);
-    pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
-    if (pItem == NULL) return (SRRL_DROPCHECK_ERROR);
+			/* Check for dragging another lvlo record */
+		if (!SrIsValidLvspRecord(pCustomData->pRecord->GetRecordType())) return (SRRL_DROPCHECK_ERROR);
+		pItem = SrCastClassNull(CSrLvloSubrecord, pCustomData->Subrecords[0]);
+		if (pItem == NULL) return (SRRL_DROPCHECK_ERROR);
     
-		/* If we're just checking */
-    if (DropItems.Notify.code == ID_SRRECORDLIST_CHECKDROP) continue;
+			/* If we're just checking */
+		if (DropItems.Notify.code == ID_SRRECORDLIST_CHECKDROP) continue;
 
-    pItem = m_CopyRecord.AddItem(pItem->GetFormID(), pItem->GetLevel(), pItem->GetCount());
-    if (pItem == NULL) continue;
+		pInfo = m_LvlListInfo.AddNew();
+		pInfo->CopyFrom(pCustomData->Subrecords);
+		AddItemList(pInfo);
+	}
 
-    AddItemList(pItem);
-  }
-
-  return (SRRL_DROPCHECK_OK);
+	return (SRRL_DROPCHECK_OK);
 }
 /*===========================================================================
  *		End of Class Event CSrLvspView::OnDropCustomData()
@@ -887,31 +888,31 @@ int CSrLvspView::OnDropCustomData (srrldroprecords_t& DropItems)
  *=========================================================================*/
 int CSrLvspView::OnDropRecords (srrldroprecords_t& DropItems) 
 {
-  CSrLvloSubrecord*  pItem;
-  CSrRecord*	     pRecord;
-  dword		     Index;
+	CSrRecord*			pRecord;
+	srlvllistinfo_t*	pInfo;
+	dword				Index;
 
-  for (Index = 0; Index < DropItems.pRecords->GetSize(); ++Index) 
-  {
-    pRecord = DropItems.pRecords->GetAt(Index);
+	for (Index = 0; Index < DropItems.pRecords->GetSize(); ++Index) 
+	{
+		pRecord = DropItems.pRecords->GetAt(Index);
     
-		/* Don't drag onto ourself */
-    if (pRecord == m_EditInfo.pOldRecord) return (SRRL_DROPCHECK_ERROR);
-    if (pRecord->GetFormID() == m_EditInfo.pOldRecord->GetFormID()) return (SRRL_DROPCHECK_ERROR);
+			/* Don't drag onto ourself */
+		if (pRecord == m_EditInfo.pOldRecord) return (SRRL_DROPCHECK_ERROR);
+		if (pRecord->GetFormID() == m_EditInfo.pOldRecord->GetFormID()) return (SRRL_DROPCHECK_ERROR);
 
-		/* Ignore any invalid record types */
-    if (!SrIsValidLvspRecord(pRecord->GetRecordType())) return (SRRL_DROPCHECK_ERROR);
+			/* Ignore any invalid record types */
+		if (!SrIsValidLvspRecord(pRecord->GetRecordType())) return (SRRL_DROPCHECK_ERROR);
 
-		/* If we're just checking */
-    if (DropItems.Notify.code == ID_SRRECORDLIST_CHECKDROP) continue;
+			/* If we're just checking */
+		if (DropItems.Notify.code == ID_SRRECORDLIST_CHECKDROP) continue;
 
-    pItem = m_CopyRecord.AddItem(pRecord->GetFormID(), 1, 1);
-    if (pItem == NULL) continue;
+		pInfo = m_LvlListInfo.AddNew();
+		pInfo->InitializeNew(SR_NAME_LVSP);
+		pInfo->SetFormID(pRecord->GetFormID());
+		AddItemList(pInfo);
+	}
 
-    AddItemList(pItem);
-  }
-
-  return (SRRL_DROPCHECK_OK);
+	return (SRRL_DROPCHECK_OK);
 }
 /*===========================================================================
  *		End of Class Event CSrLvspView::OnDropRecords()
@@ -925,27 +926,27 @@ int CSrLvspView::OnDropRecords (srrldroprecords_t& DropItems)
  *=========================================================================*/
 void CSrLvspView::OnKeydownItemList (NMHDR* pHdr, LRESULT* lResult) 
 {
-  srrlkeydown_t* pNotify = (srrlkeydown_t *) pHdr;
-  *lResult = 0;
+	srrlkeydown_t* pNotify = (srrlkeydown_t *) pHdr;
+	*lResult = 0;
 	
-  if (pNotify->KeyDown.nVKey == VK_DELETE || pNotify->KeyDown.nVKey == VK_BACK) 
-  {
-    if (!pNotify->Ctrl && !pNotify->Alt) OnLvllistDelete();
-  }
-  else if (pNotify->KeyDown.nVKey == VK_ADD) 
-  {
-    if (pNotify->Shift) 
-      OnAddCount();
-    else
-      OnAddLevel();
-  }
-  else if (pNotify->KeyDown.nVKey == VK_SUBTRACT) 
-  {
-    if (pNotify->Shift) 
-      OnMinusCount();
-    else
-      OnMinusLevel();
-  }
+	if (pNotify->KeyDown.nVKey == VK_DELETE || pNotify->KeyDown.nVKey == VK_BACK) 
+	{
+		if (!pNotify->Ctrl && !pNotify->Alt) OnLvllistDelete();
+	}
+	else if (pNotify->KeyDown.nVKey == VK_ADD) 
+	{
+		if (pNotify->Shift) 
+			OnAddCount();
+		else
+			OnAddLevel();
+	}
+	else if (pNotify->KeyDown.nVKey == VK_SUBTRACT) 
+	{
+		if (pNotify->Shift) 
+			OnMinusCount();
+		else
+			OnMinusLevel();
+	}
 
 }
 /*===========================================================================

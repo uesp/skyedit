@@ -53,8 +53,6 @@ protected:
 	int  AddItemList    (srlvllistinfo_t* pInfo);
 	void UpdateItem     (const int ListIndex, srlvllistinfo_t* pInfo);
 
-	void CreateItemCustomData (srrlcustomdata_t& CustomData, srlvllistinfo_t* pInfo);
-
 		/* Drag/drop helpers */
 	int OnDropCustomData (srrldroprecords_t& DropItems);
 	int OnDropRecords    (srrldroprecords_t& DropItems);
@@ -73,8 +71,8 @@ public:
 	virtual int GetListenEvents         (void) { return (SR_EVENT_CLEANRECORD | SR_EVENT_UPDATERECORD); }
 
 	enum { IDD = IDD_CONT_VIEW };
-	CEdit			m_EditorID;
-	CEdit			m_FormID;
+	CEdit				m_EditorID;
+	CEdit				m_FormID;
 	CSrRecordListCtrl	m_ItemList;
 
 protected:

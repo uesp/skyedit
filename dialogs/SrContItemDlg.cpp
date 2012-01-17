@@ -55,7 +55,7 @@ static srreclistcolinit_t s_ContListInit[] =
 	{ SR_FIELD_EDITORID,	200,	LVCFMT_LEFT },
 	{ SR_FIELD_FORMID,		75,		LVCFMT_LEFT },
 	{ SR_FIELD_FLAGS,		60,		LVCFMT_CENTER },
-	{ SR_FIELD_TYPE,		75,		LVCFMT_CENTER },
+	{ SR_FIELD_RECORDTYPE,	75,		LVCFMT_CENTER },
 	{ SR_FIELD_NONE, 0, 0 }
 };
 /*===========================================================================
@@ -291,6 +291,9 @@ BOOL CSrContItemDlg::OnInitDialog()
 
 	m_Count.SetLimitText(8);
 	m_ObjectID.SetLimitText(128);
+	m_Faction.SetLimitText(128);
+	m_Condition.SetLimitText(10);
+	m_MinRank.SetLimitText(10);
 
 	SetControlData();
 
