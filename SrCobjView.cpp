@@ -145,7 +145,8 @@ CSrCobjView::~CSrCobjView()
  * Class CSrCobjView Method - void DoDataExchange (pDX);
  *
  *=========================================================================*/
-void CSrCobjView::DoDataExchange (CDataExchange* pDX) {
+void CSrCobjView::DoDataExchange (CDataExchange* pDX) 
+{
 	CSrRecordDialog::DoDataExchange(pDX);
 
 	DDX_Control(pDX, IDC_EDITORID, m_EditorID);

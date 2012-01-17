@@ -18,9 +18,7 @@
  *=========================================================================*/
 	#include "dialogs/srrecorddialog.h"
 	#include "windows/srrecordlistctrl.h"
-#include "afxwin.h"
-//#include "afxcmn.h"
-	//#include "afxwin.h"
+	#include "afxwin.h"
 /*===========================================================================
  *		End of Required Includes
  *=========================================================================*/
@@ -31,9 +29,10 @@
  * Begin Class CSrCobjView Definition
  *
  *=========================================================================*/
-class CSrCobjView : public CSrRecordDialog {
-  DECLARE_DYNCREATE(CSrCobjView);
-  DECLARE_SRRECUIFIELDS();
+class CSrCobjView : public CSrRecordDialog 
+{
+	DECLARE_DYNCREATE(CSrCobjView);
+	DECLARE_SRRECUIFIELDS();
 
   /*---------- Begin Protected Class Members ---------------------*/
 protected:
@@ -50,26 +49,26 @@ protected:
   /*---------- Begin Protected Class Methods ---------------------*/
 protected:
 
-	/* Protected constructor used by dynamic creation */
-  CSrCobjView();
-  void CopyComponents (void);
+		/* Protected constructor used by dynamic creation */
+	CSrCobjView();
+	void CopyComponents (void);
 
-  CSrCntoSubrecord* GetSelectedComponent (void);
+	CSrCntoSubrecord* GetSelectedComponent (void);
   
 
   /*---------- Begin Public Class Methods ------------------------*/
 public:
 
-  enum { IDD = IDD_COBJ_VIEW };
-  CEdit				m_ResultItem;
-  CEdit				m_EditorID;
-  CEdit				m_FormID;
-  CButton			m_Conditions;
-  CEdit				m_ResultCount;
-  CSrRecordListCtrl m_ComponentList;
-  CEdit				m_CraftStation;
+	enum { IDD = IDD_COBJ_VIEW };
+	CEdit				m_ResultItem;
+	CEdit				m_EditorID;
+	CEdit				m_FormID;
+	CButton				m_Conditions;
+	CEdit				m_ResultCount;
+	CSrRecordListCtrl	m_ComponentList;
+	CEdit				m_CraftStation;
 
-  CSrCntoSubrecord*	m_pCurrentComponent;
+	CSrCntoSubrecord*	m_pCurrentComponent;
 
 public:
 
@@ -89,20 +88,19 @@ public:
 	int  OnDropRecordComponentData (srrldroprecords_t& DropItems);
 	void OnDropComponentList (NMHDR* pNotifyStruct, LRESULT* pResult);
 
-	/* ClassWizard generated virtual function overrides */
 protected:
-  virtual void OnInitialUpdate();
-  virtual void DoDataExchange(CDataExchange* pDX);
+	virtual void OnInitialUpdate();
+	virtual void DoDataExchange(CDataExchange* pDX);
 
 protected:
-  virtual ~CSrCobjView();
+	virtual ~CSrCobjView();
 
 #ifdef _DEBUG
-  virtual void AssertValid() const;
-  virtual void Dump(CDumpContext& dc) const;
+	virtual void AssertValid() const;
+	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-  DECLARE_MESSAGE_MAP();
+	DECLARE_MESSAGE_MAP();
 
 public:
 
@@ -137,11 +135,7 @@ public:
  *=========================================================================*/
 
 
-//{{AFX_INSERT_LOCATION}}
-//}}AFX_INSERT_LOCATION
-
-
 #endif
 /*===========================================================================
- *		End of File SrMgefView.H
+ *		End of File SrCobjView.H
  *=========================================================================*/
