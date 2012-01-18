@@ -1219,43 +1219,58 @@ void CSrEditView::OnTestTokenscripts() {
  *
  *=========================================================================*/
 void CSrEditView::OnRecordClean() {
-  CSrProgressDlg* pProgressDlg = NULL;
-  POSITION        ListPos;
-  CSrRecord*      pRecord;
-  CSrRecord*      pNewRecord;
-  dword           Count = 0;
-  dword           SelectedCount = m_RecordList.GetSelectedCount();
-  int             ListIndex;
+	std::vector<CSrRecord*> Records;
+	CSrProgressDlg* pProgressDlg = NULL;
+	POSITION        ListPos;
+	CSrRecord*      pRecord;
+	CSrRecord*      pNewRecord;
+	dword           Count = 0;
+	dword           SelectedCount = m_RecordList.GetSelectedCount();
+	int             ListIndex;
 
-  if (SelectedCount > SREDIT_MINIMUM_PROGRESS_COUNT) {
-    pProgressDlg = ShowSrProgressDlg("Clean Records", "Cleaning selected records from active file...");
-  }
+	if (SelectedCount > SREDIT_MINIMUM_PROGRESS_COUNT) 
+	{
+		pProgressDlg = ShowSrProgressDlg("Clean Records", "Cleaning selected records from active file...");
+	}
 
-  ListPos = m_RecordList.GetFirstSelectedItemPosition();
-  SrLockUndoUpdates(true);
+		/* Create the list of records to be cleaned */
+	ListPos = m_RecordList.GetFirstSelectedItemPosition();
 
-  while (ListPos != NULL) {
-    ListIndex = m_RecordList.GetNextSelectedItem(ListPos);
-    pRecord   = m_RecordList.GetRecord(ListIndex);
-    ++Count;
-    if (pRecord == NULL) continue;
+	while (ListPos != NULL)
+	{
+		ListIndex = m_RecordList.GetNextSelectedItem(ListPos);
+		pRecord   = m_RecordList.GetRecord(ListIndex);
+		Records.push_back(pRecord);
+	}
 
-    	/* Update the operation progress if required */
-    if (pProgressDlg != NULL) {
-      pProgressDlg->Update(Count * 100.0f / SelectedCount);
-      if (pProgressDlg->GetIsCancelled()) break;
-    }
+	SrLockUndoUpdates(true);
 
-		/* Ignore non-active records */
-    if (!pRecord->IsActive()) continue;
+		/* Clean the records */
+	while (Records.size() > 0)
+	{
+		pRecord = Records.back();
+		Records.pop_back();
+				
+		++Count;
+		if (pRecord == NULL) continue;
 
-		/* Perform the clean */
-    pNewRecord = GetDocument()->GetRecordHandler().CleanRecord(pRecord);
-    GetDocument()->SetModifiedFlag(TRUE);
-  }
+    		/* Update the operation progress if required */
+		if (pProgressDlg != NULL) 
+		{
+			pProgressDlg->Update(Count * 100.0f / SelectedCount);
+			if (pProgressDlg->GetIsCancelled()) break;
+		}
 
-  DestroySrProgressDlg(pProgressDlg);
-  SrLockUndoUpdates(false);
+			/* Ignore non-active records */
+		if (!pRecord->IsActive()) continue;
+
+			/* Perform the clean */
+		pNewRecord = GetDocument()->GetRecordHandler().CleanRecord(pRecord);
+		GetDocument()->SetModifiedFlag(TRUE);
+	}
+
+	DestroySrProgressDlg(pProgressDlg);
+	SrLockUndoUpdates(false);
 }
 /*===========================================================================
  *		End of Class Event CSrEditView::OnRecordClean()
