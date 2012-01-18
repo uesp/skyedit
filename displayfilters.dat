@@ -29,6 +29,12 @@ DisplayFilter
 	Parent = NULL
 End	
 DisplayFilter
+	ID = "ActorValue"
+	DisplayName = "Actor Values"
+	RecName = AVIF
+	Parent = NULL
+End	
+DisplayFilter
 	ID = "Ammo"
 	DisplayName = "Ammo"
 	RecName = AMMO

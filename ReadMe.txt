@@ -52,7 +52,10 @@ basic set of features is included.
 	- Shouts				- Words of Power
 	- Camera Shots			- Sounds
 	- Sound Descriptors		- Sound Markers (SOPM)
-	
+	- Sound Categories		- Outfits
+	- Colors				- Form Lists
+	- Encounter Zones		- Races
+
 
   What it Can Do
 =======================================

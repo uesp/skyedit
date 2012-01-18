@@ -20,14 +20,7 @@
  * Begin Local Definitions
  *
  *=========================================================================*/
-//#ifdef _DEBUG
-//  #define new DEBUG_NEW
-//  #undef THIS_FILE
-//  static char THIS_FILE[] = __FILE__;
-//#endif
-
-  IMPLEMENT_DYNCREATE(CSrAmmoView, CSrRecordDialog);
-
+	IMPLEMENT_DYNCREATE(CSrAmmoView, CSrRecordDialog);
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/

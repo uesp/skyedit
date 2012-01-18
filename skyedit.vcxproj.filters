@@ -1974,6 +1974,12 @@
     <ClInclude Include="SrLvlListInfo.h">
       <Filter>Header Files\Forms.</Filter>
     </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\sranamsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\sravsksubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="skyedit.rc">
