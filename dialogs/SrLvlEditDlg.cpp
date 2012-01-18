@@ -572,8 +572,8 @@ int SrEditLvlItemDlg (srlvllistinfo_t* pListInfo, CSrEditDlgHandler* pHandler, c
 	static const srrectype_t s_LvliRecordTypes[] = 
 	{
 		SR_NAME_ALCH,	SR_NAME_AMMO,	SR_NAME_APPA,	SR_NAME_ARMO,	SR_NAME_BOOK,	
-		SR_NAME_INGR,	SR_NAME_KEYM,	SR_NAME_LVLI,	SR_NAME_MISC,	SR_NAME_SLGM,
-		SR_NAME_WEAP,	SR_NAME_NULL 
+		SR_NAME_INGR,	SR_NAME_KEYM,	SR_NAME_LVLI,	SR_NAME_MISC,	SR_NAME_SCRL,
+		SR_NAME_SLGM,	SR_NAME_WEAP,	SR_NAME_NULL 
 	};
 
 	CSrLvlEditDlg Dlg;
