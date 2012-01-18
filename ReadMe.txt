@@ -1,5 +1,5 @@
  
-	              ackage: SkyEdit v0.046 alpha, 7 January 2012
+	              ackage: SkyEdit v0.050 alpha, 17 January 2012
 	               Author: Dave Humphrey, dave@uesp.net
                   Website: www.uesp.net/wiki/Tes5Mod:SkyEdit
 
@@ -148,7 +148,7 @@ can be found at:
 
   Version History
 =======================================
-0.05alpha - ? January 2021
+0.05alpha - 17 January 2021
 	- New editable records: Sound Categories (SNCT), Sound Markers (SOPM), Outfits,
 	  Colors (CLFM), Form Lists (FLST), Encounter Zone (ECZN), Races (needs testing)
 	- Raw data view is faster for larger records (like RACEs) but is without color.
