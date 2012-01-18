@@ -119,6 +119,7 @@
 #define IDD_RACE_FACEPAGE               198
 #define IDD_RACE_HEADPAGE1              199
 #define IDD_RACE_TINTPAGE               200
+#define IDD_AVIF_VIEW                   201
 #define IDR_PERKSECTION_MENU            224
 #define IDR_ERRORBAR_MENU               225
 #define IDC_RECORDTREE                  1000
@@ -197,6 +198,8 @@
 #define IDC_DATA6                       1071
 #define IDC_CNAME                       1072
 #define IDC_NNAME                       1073
+#define IDC_CNAME2                      1073
+#define IDC_ANAME                       1073
 #define IDC_RECHARGE1                   1074
 #define IDC_Z2                          1075
 #define IDC_DATA9                       1076
@@ -836,8 +839,11 @@
 #define IDC_EDIT_TINDCOLOR              1745
 #define IDC_SELECT_TINDCOLOR            1746
 #define IDC_TINTDATALIST                1747
+#define IDC_AVIFDATA_LIST               1747
 #define IDC_ADD_TINTDATA                1748
+#define ID_ADD_AVIFSECTION              1748
 #define IDC_DELETE_TINTDATA             1749
+#define ID_DELETE_AVIFSECTION           1749
 #define IDC_DATATINC                    1750
 #define IDC_EDIT_DATATINC               1751
 #define IDC_SELECT_DATATINC             1752
@@ -1063,7 +1069,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        226
 #define _APS_NEXT_COMMAND_VALUE         32887
-#define _APS_NEXT_CONTROL_VALUE         1747
+#define _APS_NEXT_CONTROL_VALUE         1750
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

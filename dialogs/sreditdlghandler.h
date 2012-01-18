@@ -31,6 +31,7 @@
   #include "srfinddlg.h"
 
   #include "sractiview.h"
+  #include "sravifview.h"
   #include "sralchview.h"
   #include "srammoview.h"
   #include "srarmaview.h"

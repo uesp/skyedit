@@ -938,6 +938,9 @@
     <ClCompile Include="SrLvlListInfo.cpp">
       <Filter>Source Files\Forms</Filter>
     </ClCompile>
+    <ClCompile Include="dialogs\SrAvifView.cpp">
+      <Filter>Source Files\Forms\Dialogs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">
@@ -1979,6 +1982,9 @@
     </ClInclude>
     <ClInclude Include="..\tes5lib\modfile\subrecords\sravsksubrecord.h">
       <Filter>Header Files\ESP.\Subrecords.</Filter>
+    </ClInclude>
+    <ClInclude Include="dialogs\SrAvifView.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
