@@ -198,14 +198,19 @@
 #define IDC_DATA6                       1071
 #define IDC_CNAME                       1072
 #define IDC_NNAME                       1073
-#define IDC_CNAME2                      1073
 #define IDC_ANAME                       1073
 #define IDC_RECHARGE1                   1074
+#define IDC_SECTFNAM                    1074
 #define IDC_Z2                          1075
+#define IDC_SECTXNAM                    1075
 #define IDC_DATA9                       1076
+#define IDC_SECTYNAM                    1076
 #define IDC_NAME2                       1077
+#define IDC_SECTINAM                    1077
 #define IDC_RECHARGE2                   1078
+#define IDC_SECTHNAM                    1078
 #define IDC_DATA12                      1079
+#define IDC_SECTVNAM                    1079
 #define IDC_RECHARGE3                   1080
 #define IDC_DATA15                      1081
 #define IDC_DATA18                      1082
@@ -845,8 +850,19 @@
 #define IDC_DELETE_TINTDATA             1749
 #define ID_DELETE_AVIFSECTION           1749
 #define IDC_DATATINC                    1750
+#define IDC_SECTPERK                    1750
 #define IDC_EDIT_DATATINC               1751
+#define IDC_EDIT_SECTPERK               1751
 #define IDC_SELECT_DATATINC             1752
+#define IDC_SELECT_SECTPERK             1752
+#define IDC_SECTSNAM                    1753
+#define IDC_EDIT_SECTSNAM               1754
+#define IDC_SELECT_SECTSNAM             1755
+#define IDC_SECTCNAM                    1756
+#define ID_ADD_SECTCNAM                 1757
+#define ID_DELETE_SECTCNAM              1758
+#define ID_ADD_SECTCNAM2                1759
+#define ID_EDIT_SECTCNAM                1759
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -1069,7 +1085,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        226
 #define _APS_NEXT_COMMAND_VALUE         32887
-#define _APS_NEXT_CONTROL_VALUE         1750
+#define _APS_NEXT_CONTROL_VALUE         1760
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
