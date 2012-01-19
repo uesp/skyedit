@@ -771,12 +771,14 @@ void CSrSelectRecordDlg::OnChangeCurrentText() {
   
   Result = UpdateEditorID();
 
-  if (Result != m_EditorIDCheck) {
+  if (Result != m_EditorIDCheck) 
+  {
     m_EditorIDCheck = Result;
     m_CurrentText.RedrawWindow();
   }
 
-  if (m_UpdateListOnChange) {
+  if (m_UpdateListOnChange) 
+  {
     m_UpdateListOnChange = false;
     m_CurrentText.GetWindowText(Buffer);
     
@@ -853,16 +855,19 @@ int CSrSelectRecordDlg::UpdateEditorID (void) {
 
   SrPrepareEditorID(EditorID);
 
-  if (EditorID.IsEmpty()) {
+  if (EditorID.IsEmpty()) 
+  {
     m_CurrentFormID = 0;
   }
-  else {  
+  else 
+  {  
     pIdRecord = m_pRecordHandler->FindEditorID(EditorID);
     if (pIdRecord == NULL) return (SR_CHECKRESULT_ERROR);
 
     ListIndex = m_RecordList.FindRecord(pIdRecord);
     if (ListIndex < 0) return (SR_CHECKRESULT_ERROR);
 
+	m_CurrentEditorID = pIdRecord->GetEditorID();
     m_CurrentFormID = pIdRecord->GetFormID();
   }
 
