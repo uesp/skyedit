@@ -239,9 +239,6 @@
     <ClCompile Include="..\tes5lib\modfile\subrecords\srstringsubrecord.cpp">
       <Filter>Source Files\ESP\Subrecords</Filter>
     </ClCompile>
-    <ClCompile Include="..\tes5lib\modfile\subrecords\srsubrecord.cpp">
-      <Filter>Source Files\ESP\Subrecords</Filter>
-    </ClCompile>
     <ClCompile Include="..\tes5lib\modfile\subrecords\srsubreccont.cpp">
       <Filter>Source Files\ESP\Subrecords</Filter>
     </ClCompile>
@@ -940,6 +937,9 @@
     </ClCompile>
     <ClCompile Include="dialogs\SrAvifView.cpp">
       <Filter>Source Files\Forms\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\srsubrecord.cpp">
+      <Filter>Source Files\ESP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

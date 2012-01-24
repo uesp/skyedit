@@ -2601,7 +2601,7 @@ void CSrEditView::ThreadUpdateFilterProc (void)
 
 	while (1)
 	{
-		DWORD dwWaitResult = WaitForSingleObject(m_ThreadCloseEvent, 2000);
+		DWORD dwWaitResult = WaitForSingleObject(m_ThreadCloseEvent, 500);
 
 		if (dwWaitResult == WAIT_OBJECT_0) 
 		{

@@ -163,9 +163,11 @@
 #define IDC_EDITORID                    1038
 #define IDC_SECTIONINDEX                1039
 #define IDC_BINARY_CHECK                1040
+#define IDC_SECTIONRANK                 1040
 #define IDC_SECTIONVALUE                1041
 #define IDC_FORMID                      1042
 #define IDC_SEARCH_COMBO                1043
+#define IDC_SECTIONVALUE2               1043
 #define IDC_CALCULATEALL                1044
 #define IDC_LEVEL                       1045
 #define IDC_CASESENSITIVE_CHECK         1046
@@ -313,9 +315,12 @@
 #define IDC_UNKNOWNFLAG3                1173
 #define IDC_SELECT_IMPACTSET            1174
 #define IDC_SECTION_CONDITIONS          1175
+#define IDC_SECTION_CONDITIONS1         1175
 #define IDC_ADD_SPELL                   1176
+#define IDC_SECTION_CONDITIONS2         1176
 #define IDC_SELECTPARAM2_BUTTON         1177
 #define IDC_ADD_EQUIPSLOT               1177
+#define IDC_SECTION_CONDITIONS3         1177
 #define IDC_SELECTPICKUPSOUND_BUTTON    1178
 #define IDC_SELECTSOUND_BUTTON          1179
 #define IDC_SELECT_STATICMODEL          1180
@@ -657,7 +662,9 @@
 #define IDC_SECTION_VALUELABEL1         1510
 #define IDC_SECTIONEFFECTTYPE           1511
 #define IDC_SECTIONAPPLYTYPE            1512
+#define IDC_SECTIONFUNCTIONTYPE         1512
 #define IDC_SECTIONUNKNOWNTYPE          1513
+#define IDC_SECTION_VALUELABEL2         1513
 #define IDC_SECTION_EDITORIDLABEL       1514
 #define IDC_PRKC_LABEL                  1515
 #define IDC_RICHEDIT21                  1516
@@ -861,8 +868,8 @@
 #define IDC_SECTCNAM                    1756
 #define ID_ADD_SECTCNAM                 1757
 #define ID_DELETE_SECTCNAM              1758
-#define ID_ADD_SECTCNAM2                1759
 #define ID_EDIT_SECTCNAM                1759
+#define IDC_CONDITION_LABEL             1760
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -1085,7 +1092,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        226
 #define _APS_NEXT_COMMAND_VALUE         32887
-#define _APS_NEXT_CONTROL_VALUE         1760
+#define _APS_NEXT_CONTROL_VALUE         1761
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -151,6 +151,10 @@ can be found at:
 
   Version History
 =======================================
+0.06alpha - ? January 2021
+	- New editable records: Actor Values (AVIF)
+	- Fixed bug when creating a copy of a record
+
 0.05alpha - 17 January 2021
 	- New editable records: Sound Categories (SNCT), Sound Markers (SOPM), Outfits,
 	  Colors (CLFM), Form Lists (FLST), Encounter Zone (ECZN), Races (needs testing)

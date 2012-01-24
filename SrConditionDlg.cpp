@@ -350,7 +350,7 @@ void CSrConditionDlg::UpdateConditionList (const int ListIndex, const bool Updat
 
   if (m_PermitPrkc)
   {
-	  m_ConditionList.SetCustomField(ListIndex, SR_FIELD_PRKC, GetSrPrkcTypeString((dword) pCondition->GetPrkc()));
+	  //m_ConditionList.SetCustomField(ListIndex, SR_FIELD_PRKC, GetSrPrkcCustomTypeString((dword) pCondition->GetPrkc()));
   }
 
 }
@@ -1106,5 +1106,5 @@ void CSrConditionDlg::EnablePrkcControls (void)
 		return;
 	}
 
-	SrFillComboList(m_PrkcList, s_SrPrkcTypes, 0);
+	//SrFillComboList(m_PrkcList, s_SrPrkcCustomTypes, 0);
 }

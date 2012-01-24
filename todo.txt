@@ -1,3 +1,13 @@
+v0.050a
+	- Context menu in resource viewer: extract all BSA resources to individual files
+	- Edit base record in Armor ARMA list (add context menu)
+	- Active only toolbar item?
+	- Filter test toolbar item?
+	- Clear log manually (right-click)
+	- Record count in TES4 is not being updated correctly?
+	- Shortcut key for toggling "active only"
+	- Drag records between files to copy
+
 v0.046a
 	- Conditions: Batch edit? drag-and-drop?
 	- List drags grab the "old" item data instead of the current one (double-check if this occurs and where)

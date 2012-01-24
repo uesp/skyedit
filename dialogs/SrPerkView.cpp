@@ -23,6 +23,9 @@
  *
  *=========================================================================*/
 	IMPLEMENT_DYNCREATE(CSrPerkView, CSrRecordDialog);
+
+	srperkeffectinfo_t CSrPerkView::s_EffectInfoQuest = { 0xff, 0, 0, { 0, 0, 0 } };
+	srperkeffectinfo_t CSrPerkView::s_EffectInfoSpell = { 0xff, 0, 0, { 0, 0, 0 } };
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -40,11 +43,13 @@ BEGIN_MESSAGE_MAP(CSrPerkView, CSrRecordDialog)
 	ON_BN_CLICKED(IDC_SELECT_NEXTPERK, &CSrPerkView::OnBnClickedSelectNextperk)
 	ON_BN_CLICKED(ID_ADDPERK_BUTTON, &CSrPerkView::OnBnClickedAddperkButton)
 	ON_BN_CLICKED(ID_DELETEPERK_BUTTON, &CSrPerkView::OnBnClickedDeleteperkButton)
-	ON_BN_CLICKED(IDC_SECTION_CONDITIONS, &CSrPerkView::OnBnClickedSectionConditions)
+	ON_BN_CLICKED(IDC_SECTION_CONDITIONS1, &CSrPerkView::OnBnClickedSectionConditions1)
+	ON_BN_CLICKED(IDC_SECTION_CONDITIONS2, &CSrPerkView::OnBnClickedSectionConditions2)
+	ON_BN_CLICKED(IDC_SECTION_CONDITIONS3, &CSrPerkView::OnBnClickedSectionConditions3)
 	ON_BN_CLICKED(IDC_EDIT_SECTIONEDITORID, &CSrPerkView::OnBnClickedEditSectioneditorid)
 	ON_BN_CLICKED(IDC_SELECT_SECTIONEDITORID, &CSrPerkView::OnBnClickedSelectSectioneditorid)
-	ON_CBN_SELCHANGE(IDC_SECTIONTYPE, &CSrPerkView::OnCbnSelchangeSectiontype)
-	ON_CBN_SELCHANGE(IDC_SECTIONAPPLYTYPE, &CSrPerkView::OnCbnSelchangeSectionapplytype)
+	ON_CBN_SELCHANGE(IDC_SECTIONEFFECTTYPE, &CSrPerkView::OnCbnSelchangeSectionEffectType)
+	ON_CBN_SELCHANGE(IDC_SECTIONFUNCTIONTYPE, &CSrPerkView::OnCbnSelchangeSectionFunctionType)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_PERKDATA_LIST, &CSrPerkView::OnLvnItemchangedPerkdataList)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_PERKDATA_LIST, OnDropSectionList)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_PERKDATA_LIST, OnDropSectionList)	
@@ -66,24 +71,22 @@ END_MESSAGE_MAP()
  *
  *=========================================================================*/
 static srreclistcolinit_t s_SectionListInit[] = {
-	{ SR_FIELD_PERKSECTYPE,		50,		LVCFMT_CENTER },
-	{ SR_FIELD_PERKINDEX,		40,		LVCFMT_CENTER },
-	{ SR_FIELD_PERKEFFTYPE,		100,	LVCFMT_CENTER },
-	{ SR_FIELD_PERKAPPLYTYPE,	80,		LVCFMT_CENTER },
-	{ SR_FIELD_UNKNOWN1,		40,		LVCFMT_CENTER },
-	{ SR_FIELD_PERKSEFFDATA,	150,	LVCFMT_CENTER },
-	{ SR_FIELD_CONDITIONCOUNT,	60,		LVCFMT_CENTER },
+	{ SR_FIELD_PERKRANK,			40,		LVCFMT_CENTER },
+	{ SR_FIELD_PERKPRIORITY,		40,		LVCFMT_CENTER },
+	{ SR_FIELD_PERKEFFECTTYPE,		100,	LVCFMT_CENTER },
+	{ SR_FIELD_PERKFUNCTIONTYPE,	80,		LVCFMT_CENTER },
+	{ SR_FIELD_PERKSEFFDATA,		150,	LVCFMT_CENTER },
+	{ SR_FIELD_CONDITIONCOUNT,		60,		LVCFMT_CENTER },
 	{ SR_FIELD_NONE, 0, 0 }
  };
 
 static srrecfield_t s_SectionFields[] = {
-	{ "Type",			SR_FIELD_PERKSECTYPE,			0, NULL },
-	{ "Index",			SR_FIELD_PERKINDEX,				0, NULL },
-	{ "Conditions",		SR_FIELD_CONDITIONCOUNT,		0, NULL },
-	{ "EffectType",		SR_FIELD_PERKEFFTYPE,			0, NULL },
-	{ "ApplyType",		SR_FIELD_PERKAPPLYTYPE,			0, NULL },
-	{ "UnknownType",	SR_FIELD_UNKNOWN1,				0, NULL },
+	{ "Rank",			SR_FIELD_PERKRANK,				0, NULL },
+	{ "Priority",		SR_FIELD_PERKPRIORITY,			0, NULL },
+	{ "EffectType",		SR_FIELD_PERKEFFECTTYPE,		0, NULL },
+	{ "Function",		SR_FIELD_PERKFUNCTIONTYPE,		0, NULL },
 	{ "EffectData",		SR_FIELD_PERKSEFFDATA,			0, NULL },
+	{ "Conditions",		SR_FIELD_CONDITIONCOUNT,		0, NULL },
 	{ NULL,				SR_FIELD_NONE,					0, NULL }
  };
 /*===========================================================================
@@ -161,9 +164,11 @@ void CSrPerkView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_UNKNOWN3, m_Unknown3);
 	DDX_Control(pDX, IDC_CONDITION_BUTTON, m_Conditions);
 	DDX_Control(pDX, IDC_PERKDATA_LIST, m_SectionList);
-	DDX_Control(pDX, IDC_SECTIONTYPE, m_SectionType);
-	DDX_Control(pDX, IDC_SECTIONINDEX, m_SectionIndex);
-	DDX_Control(pDX, IDC_SECTION_CONDITIONS, m_SectionConditions);
+	DDX_Control(pDX, IDC_SECTIONINDEX, m_SectionPriority);
+	DDX_Control(pDX, IDC_SECTIONRANK, m_SectionRank);
+	DDX_Control(pDX, IDC_SECTION_CONDITIONS1, m_SectionConditions[0]);
+	DDX_Control(pDX, IDC_SECTION_CONDITIONS2, m_SectionConditions[1]);
+	DDX_Control(pDX, IDC_SECTION_CONDITIONS3, m_SectionConditions[2]);
 	DDX_Control(pDX, IDC_SECTION_EDITORIDLABEL, m_SectionEditorIDLabel);
 	DDX_Control(pDX, IDC_SECTION_EDITORID, m_SectionEditorID);
 	DDX_Control(pDX, IDC_EDIT_SECTIONEDITORID, m_EditEditorIDButton);
@@ -172,8 +177,9 @@ void CSrPerkView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SECTIONVALUE, m_SectionValue);
 	DDX_Control(pDX, IDC_SECTION_VALUELABEL1, m_SectionValueLabel);
 	DDX_Control(pDX, IDC_SECTIONEFFECTTYPE, m_SectionEffectType);
-	DDX_Control(pDX, IDC_SECTIONAPPLYTYPE, m_SectionApplyType);
-	DDX_Control(pDX, IDC_SECTIONUNKNOWNTYPE, m_SectionUnknownType);
+	DDX_Control(pDX, IDC_SECTIONFUNCTIONTYPE, m_SectionFunctionType);
+	DDX_Control(pDX, IDC_SECTION_VALUELABEL2, m_SectionValueLabel2);
+	DDX_Control(pDX, IDC_SECTIONVALUE2, m_SectionValue2);
 }
 /*===========================================================================
  *		End of Class Method CSrPerkView::DoDataExchange()
@@ -186,16 +192,8 @@ void CSrPerkView::DoDataExchange (CDataExchange* pDX)
  *
  *=========================================================================*/
 #ifdef _DEBUG
-
-void CSrPerkView::AssertValid() const {
-  CSrRecordDialog::AssertValid();
-}
-
-
-void CSrPerkView::Dump(CDumpContext& dc) const {
-  CSrRecordDialog::Dump(dc);
-}
-
+	void CSrPerkView::AssertValid() const { CSrRecordDialog::AssertValid(); }
+	void CSrPerkView::Dump(CDumpContext& dc) const { CSrRecordDialog::Dump(dc); }
 #endif
 /*===========================================================================
  *		End of CSrPerkView Diagnostics
@@ -226,11 +224,10 @@ void CSrPerkView::OnInitialUpdate (void)
 	SrFillComboList(m_Unknown2, s_SrPerkDataUnknown2Types, 0);
 	SrFillComboList(m_Unknown3, s_SrPerkDataUnknown3Types, 0);
 
-	SrFillComboList(m_SectionType, s_SrPerkDataTypes, 0);
-	SrFillComboList(m_SectionEffectType, s_SrPerkDataEffectTypes, 0);
-	SrFillComboList(m_SectionApplyType, s_SrPerkDataApplyTypes, 0);
-	SrFillComboList(m_SectionUnknownType, s_SrPerkDataUnknownTypes, 0);
+	FillPerkEffectList();
+	FillPerkFunctionList();	
 	SrFillComboList(m_SectionActorValue, s_SrActorValues, 0);
+	m_SectionActorValue.SetCurSel(0);
 
 	CopyPerkSections();
 	
@@ -242,24 +239,79 @@ void CSrPerkView::OnInitialUpdate (void)
  *=========================================================================*/
 
 
-void CSrPerkView::CopyPerkSections (void)
+void CSrPerkView::FillPerkEffectList (void)
 {
-	m_Sections.Destroy();
+	int ListIndex; 
 
-	for (dword i = 0; i < GetInputRecord()->GetNumSubrecords(); ++i)
-	{
-		CSrSubrecord* pSubrecord = GetInputRecord()->GetSubrecord(i);
+	m_SectionEffectType.ResetContent();
 
-		if (pSubrecord->GetRecordType() == SR_NAME_PRKE)
-		{
-			m_Sections.AddNew()->CopyFrom(GetInputRecord(), i);
-		}
-	}
+		/* Fill standard effects */
+	SrFillComboList(m_SectionEffectType, s_SrPerkEffectTypes, 0);
 
+		/* Add custom "quest" type */
+	ListIndex = m_SectionEffectType.AddString("Quest");
+	if (ListIndex >= 0) m_SectionEffectType.SetItemData(ListIndex, SRPERK_EFFECTTYPE_CUSTOMQUEST);
+
+		/* Add custom "spell" type */
+	ListIndex = m_SectionEffectType.AddString("Spell");
+	if (ListIndex >= 0) m_SectionEffectType.SetItemData(ListIndex, SRPERK_EFFECTTYPE_CUSTOMSPELL);
 }
 
 
-void CSrPerkView::SetPerkSectionList (void)
+void CSrPerkView::FillPerkFunctionList (void)
+{
+	CString            CurrentSelString;
+	srperkeffectinfo_t EffectInfo;
+	
+	m_SectionFunctionType.GetWindowText(CurrentSelString);	
+	m_SectionFunctionType.ResetContent();
+
+	int ListIndex = m_SectionEffectType.GetCurSel();
+	if (ListIndex < 0) return;
+	int EffectType = m_SectionEffectType.GetItemData(ListIndex);
+
+	if (EffectType == SRPERK_EFFECTTYPE_CUSTOMQUEST) 
+	{
+		EffectInfo = s_EffectInfoQuest;
+	}
+	else if (EffectType == SRPERK_EFFECTTYPE_CUSTOMSPELL) 
+	{
+		EffectInfo = s_EffectInfoSpell;
+	}
+	else
+	{
+		EffectInfo = GetSrPerkEffectInfo(m_SectionEffectType.GetItemData(ListIndex));
+		if (EffectInfo.EffectType == 0xff) return;
+	}
+
+	for (dword i = 1; i <= SRPERK_EFFECT_FUNCTION_MAX; ++i)
+	{
+		if (EffectInfo.IsFunctionType(i))
+		{
+			CString Buffer(GetSrPerkFunctionTypeString(i));
+			ListIndex = m_SectionFunctionType.AddString(Buffer);
+			if (ListIndex >= 0) m_SectionFunctionType.SetItemData(ListIndex, i);
+		}
+	}
+
+	if (CurrentSelString.IsEmpty())
+		m_SectionFunctionType.SetCurSel(0);
+	else
+	{
+		int Result = m_SectionFunctionType.SelectString(-1, CurrentSelString);
+		if (Result < 0) m_SectionFunctionType.SetCurSel(0);
+	}
+}
+
+
+void CSrPerkView::CopyPerkSections (void)
+{
+	CSrPerkRecord* pPerk = SrCastClass(CSrPerkRecord, GetInputRecord());
+	if (pPerk) pPerk->CreateInfo(m_Sections);
+}
+
+
+void CSrPerkView::FillPerkSectionList (void)
 {
 	m_SectionList.DeleteAllItems();
 	
@@ -273,38 +325,31 @@ void CSrPerkView::SetPerkSectionList (void)
 }
 
 
-void CSrPerkView::SetSectionCustomData(srrlcustomdata_t& CustomData, srperk_section_t* pSection)
+void CSrPerkView::SetSectionCustomData (srrlcustomdata_t& CustomData, srperksectioninfo_t* pSection)
 {
 	CustomData.Subrecords.Destroy();
 
-	CustomData.UserCount = pSection->Subsections.GetSize();
 	CustomData.pRecord = GetInputRecord();
 	CustomData.Subrecords.Add(&pSection->Prke);
 	CustomData.Subrecords.Add(&pSection->Data);
   
-	for (dword i = 0; i < pSection->Subsections.GetSize(); ++i)
+	for (dword k = 0; k < pSection->Conditions.GetSize(); ++k)
 	{
-		srperk_subsection_t* pSubsection = pSection->Subsections[i];
-		CustomData.Subrecords.Add(&pSubsection->Prkc);
-
-		for (dword k = 0; k < pSubsection->Conditions.GetSize(); ++k)
-		{
-			srconditioninfo_t* pCondInfo = pSubsection->Conditions[k];
-			CustomData.Subrecords.Add(&pCondInfo->Condition);
-			if (pCondInfo->pParam1) CustomData.Subrecords.Add(pCondInfo->pParam1);
-			if (pCondInfo->pParam2) CustomData.Subrecords.Add(pCondInfo->pParam2);
-		}
-
-		if (pSection->pEpft) CustomData.Subrecords.Add(pSection->pEpft);
-		if (pSection->pEpf2) CustomData.Subrecords.Add(pSection->pEpf2);
-		if (pSection->pEpf3) CustomData.Subrecords.Add(pSection->pEpf3);
-		if (pSection->pEpfd) CustomData.Subrecords.Add(pSection->pEpfd);
-		CustomData.Subrecords.Add(&pSection->Prkf);
+		srconditioninfo_t* pCondInfo = pSection->Conditions[k];
+		CustomData.Subrecords.Add(&pCondInfo->Condition);
+		if (pCondInfo->pParam1) CustomData.Subrecords.Add(pCondInfo->pParam1);
+		if (pCondInfo->pParam2) CustomData.Subrecords.Add(pCondInfo->pParam2);
 	}
+
+	if (pSection->pEpft) CustomData.Subrecords.Add(pSection->pEpft);
+	if (pSection->pEpf2) CustomData.Subrecords.Add(pSection->pEpf2);
+	if (pSection->pEpf3) CustomData.Subrecords.Add(pSection->pEpf3);
+	if (pSection->pEpfd) CustomData.Subrecords.Add(pSection->pEpfd);
+	CustomData.Subrecords.Add(&pSection->Prkf);
 }
 
 
-int CSrPerkView::AddPerkSectionList (srperk_section_t* pSection)
+int CSrPerkView::AddPerkSectionList (srperksectioninfo_t* pSection)
 {
 	srrlcustomdata_t  CustomData;
 	CString           Buffer;
@@ -320,7 +365,7 @@ int CSrPerkView::AddPerkSectionList (srperk_section_t* pSection)
 }
 
 
-srperk_section_t* CSrPerkView::FindPerkSection(CSrPrkeSubrecord* pPrke)
+srperksectioninfo_t* CSrPerkView::FindPerkSection(CSrPrkeSubrecord* pPrke)
 {
 	for (dword i = 0; i < m_Sections.GetSize(); ++i)
 	{
@@ -334,7 +379,7 @@ srperk_section_t* CSrPerkView::FindPerkSection(CSrPrkeSubrecord* pPrke)
 void CSrPerkView::UpdatePerkSectionList (const int ListIndex, const bool Update)
 {
 	srrlcustomdata_t*	pCustomData;
-	srperk_section_t*	pSection;
+	srperksectioninfo_t*	pSection;
 	CSrPrkeSubrecord*	pPrke;
 	CString				Buffer;
 
@@ -351,33 +396,36 @@ void CSrPerkView::UpdatePerkSectionList (const int ListIndex, const bool Update)
 	pSection = FindPerkSection(pPrke);
 	if (pSection == NULL) return;
 
-	Buffer.Format("%s", (int) GetSrPerkDataTypeString(pSection->Prke.GetPrkeData().Type));
-	m_SectionList.SetCustomField(ListIndex, SR_FIELD_PERKSECTYPE, Buffer);
+	Buffer.Format("%d", (int) pSection->Prke.GetPrkeData().Rank);
+	m_SectionList.SetCustomField(ListIndex, SR_FIELD_PERKRANK, Buffer);
 
-	Buffer.Format("%d", (int) pSection->Prke.GetPrkeData().Index);
-	m_SectionList.SetCustomField(ListIndex, SR_FIELD_PERKINDEX, Buffer);
+	Buffer.Format("%d", (int) pSection->Prke.GetPrkeData().Priority);
+	m_SectionList.SetCustomField(ListIndex, SR_FIELD_PERKPRIORITY, Buffer);
 
-	Buffer.Format("%d", (int) pSection->CountSubsections());
+	Buffer.Format("%d", (int) pSection->CountConditions());
 	m_SectionList.SetCustomField(ListIndex, SR_FIELD_CONDITIONCOUNT, Buffer);
 		
 	if (pSection->Data.GetPerkDataType() == SR_PERKDATA_TYPE02)
 	{
-		m_SectionList.SetCustomField(ListIndex, SR_FIELD_PERKEFFTYPE, GetSrPerkDataEffectTypeString(pSection->Data.GetPerkData02().Effect));
-		m_SectionList.SetCustomField(ListIndex, SR_FIELD_PERKAPPLYTYPE, GetSrPerkDataApplyTypeString(pSection->Data.GetPerkData02().ModType));
-		m_SectionList.SetCustomField(ListIndex, SR_FIELD_UNKNOWN1, GetSrPerkDataUnknownTypeString(pSection->Data.GetPerkData02().Unknown));
+		m_SectionList.SetCustomField(ListIndex, SR_FIELD_PERKEFFECTTYPE, GetSrPerkEffectTypeString(pSection->Data.GetPerkData02().EffectType));
+		m_SectionList.SetCustomField(ListIndex, SR_FIELD_PERKFUNCTIONTYPE, GetSrPerkFunctionTypeString(pSection->Data.GetPerkData02().FunctionType));
 	}
-	else
+	else if (pSection->Data.GetPerkDataType() == SR_PERKDATA_TYPE01)
 	{
-		m_SectionList.SetCustomField(ListIndex, SR_FIELD_PERKEFFTYPE, "");
-		m_SectionList.SetCustomField(ListIndex, SR_FIELD_PERKAPPLYTYPE, "");
-		m_SectionList.SetCustomField(ListIndex, SR_FIELD_UNKNOWN1, "");
+		m_SectionList.SetCustomField(ListIndex, SR_FIELD_PERKEFFECTTYPE, "Spell");
+		m_SectionList.SetCustomField(ListIndex, SR_FIELD_PERKFUNCTIONTYPE, "");
+	}
+	else if (pSection->Data.GetPerkDataType() == SR_PERKDATA_TYPE00)
+	{
+		m_SectionList.SetCustomField(ListIndex, SR_FIELD_PERKEFFECTTYPE, "Quest");
+		m_SectionList.SetCustomField(ListIndex, SR_FIELD_PERKFUNCTIONTYPE, "");
 	}
 
 	m_SectionList.SetCustomField(ListIndex, SR_FIELD_PERKSEFFDATA, GetPerkSectionDataString(*pSection));	
 }
 
 
-CString CSrPerkView::GetPerkSectionDataString (srperk_section_t& Section)
+CString CSrPerkView::GetPerkSectionDataString (srperksectioninfo_t& Section)
 {
 	CString Result;
 
@@ -391,12 +439,31 @@ CString CSrPerkView::GetPerkSectionDataString (srperk_section_t& Section)
 	}
 	else if (Section.Data.GetPerkDataType() == SR_PERKDATA_TYPE02)
 	{
-		switch (Section.Data.GetPerkData02().ModType)
+		switch (Section.Data.GetPerkData02().FunctionType)
 		{
 		case 0x01:
+			if (Section.pEpfd && Section.pEpfd->GetDataType() == 1) Result.Format("=%g", Section.pEpfd->GetEpfdData01().Value);
+			break;
 		case 0x02:
+			if (Section.pEpfd && Section.pEpfd->GetDataType() == 1) Result.Format("+%g", Section.pEpfd->GetEpfdData01().Value);
+			break;
 		case 0x03:
-			if (Section.pEpfd && Section.pEpfd->GetDataType() == 1) Result.Format("%g", Section.pEpfd->GetEpfdData01().Value);
+			if (Section.pEpfd && Section.pEpfd->GetDataType() == 1) Result.Format("*%g", Section.pEpfd->GetEpfdData01().Value);
+			break;
+		case 0x04:
+			if (Section.pEpfd && Section.pEpfd->GetDataType() == 2) Result.Format("+random(%g, %g)", Section.pEpfd->GetEpfdData02().Value1, Section.pEpfd->GetEpfdData02().Value2);
+			break;
+		case 0x05:
+			if (Section.pEpfd && Section.pEpfd->GetDataType() == 2) Result.Format("+%s * %g", ::GetSrActorValueString((int)Section.pEpfd->GetEpfdData02().Value1), Section.pEpfd->GetEpfdData02().Value2);
+			break;
+		case 0x06:
+			Result.Format("=abs()");
+			break;
+		case 0x07:
+			Result.Format("=-abs()");
+			break;
+		case 0x08:
+			if (Section.pEpfd && Section.pEpfd->GetDataType() == 3) Result.Format("%s", GetInputRecord()->GetParent()->GetEditorID(Section.pEpfd->GetEpfdData03().FormID));
 			break;
 		case 0x09:
 			if (Section.pEpfd && Section.pEpfd->GetDataType() == 4) Result.Format("%s  ", GetInputRecord()->GetParent()->GetEditorID(Section.pEpfd->GetEpfdData04().FormID));
@@ -408,8 +475,14 @@ CString CSrPerkView::GetPerkSectionDataString (srperk_section_t& Section)
 		case 0x0B:
 			if (Section.pEpfd && Section.pEpfd->GetDataType() == 6) Result.Format("%s", Section.pEpfd->GetEpfdData06().String.c_str());
 			break;
+		case 0x0C:
+			if (Section.pEpfd && Section.pEpfd->GetDataType() == 2) Result.Format("=%s * %g", GetSrActorValueString((int)Section.pEpfd->GetEpfdData02().Value1), Section.pEpfd->GetEpfdData02().Value2);
+			break;
+		case 0x0D:
+			if (Section.pEpfd && Section.pEpfd->GetDataType() == 2) Result.Format("*%s * %g", GetSrActorValueString((int)Section.pEpfd->GetEpfdData02().Value1), Section.pEpfd->GetEpfdData02().Value2);
+			break;
 		case 0x0E:
-			if (Section.pEpfd && Section.pEpfd->GetDataType() == 2) Result.Format("%s * %g", GetSrActorValueString((int)Section.pEpfd->GetEpfdData02().ActorValue), Section.pEpfd->GetEpfdData02().Factor);
+			if (Section.pEpfd && Section.pEpfd->GetDataType() == 2) Result.Format("*(1+%s * %g)", GetSrActorValueString((int)Section.pEpfd->GetEpfdData02().Value1), Section.pEpfd->GetEpfdData02().Value2);
 			break;
 		case 0x0F:
 			if (Section.pEpfd && Section.pEpfd->GetDataType() == 7) Result.Format("%s", Section.pEpfd->GetEpfdData07().String.c_str());
@@ -421,15 +494,12 @@ CString CSrPerkView::GetPerkSectionDataString (srperk_section_t& Section)
 }
 
 
-void CSrPerkView::SetCurrentSection (srperk_section_t* pSection)
+void CSrPerkView::SetCurrentSection (srperksectioninfo_t* pSection)
 {
 	GetSectionData();
 
 	m_pCurrentSection = pSection;
-
-	EnableSectionControls();
-	UpdateSectionLabels();
-
+	
 	SetSectionData();
 }
 
@@ -438,18 +508,39 @@ void CSrPerkView::GetSectionData (void)
 {
 	CString      Buffer;
 	CSrIdRecord* pRecord;
+	dword        EffectType;
 	int          ListIndex;
+	int			 Value;
 
 	if (m_pCurrentSection == NULL) return;
 	
-	ListIndex = m_SectionType.GetCurSel();
-	if (ListIndex >= 0)	m_pCurrentSection->Prke.GetPrkeData().Type = (word) m_SectionType.GetItemData(ListIndex);
+	m_SectionPriority.GetWindowText(Buffer);
+	Value = strtol(Buffer, 0, NULL);
+	if (Value < 0) Value = 0;
+	if (Value > 255) Value = 255;
+	m_pCurrentSection->Prke.GetPrkeData().Priority = Value;
 
-	m_SectionIndex.GetWindowText(Buffer);
-	m_pCurrentSection->Prke.GetPrkeData().Index = (byte) atoi(Buffer);
+	m_SectionRank.GetWindowText(Buffer);
+	Value = strtol(Buffer, 0, NULL);
+	if (Value < 0) Value = 0;
+	if (Value > 255) Value = 255;
+	m_pCurrentSection->Prke.GetPrkeData().Rank = Value;
+
+	ListIndex = m_SectionEffectType.GetCurSel();
+	EffectType = m_SectionEffectType.GetItemData(ListIndex);
+
+	delete m_pCurrentSection->pEpft;
+	delete m_pCurrentSection->pEpf2;
+	delete m_pCurrentSection->pEpf3;
+	delete m_pCurrentSection->pEpfd;
+	m_pCurrentSection->pEpft = NULL;
+	m_pCurrentSection->pEpf2 = NULL;
+	m_pCurrentSection->pEpf3 = NULL;
+	m_pCurrentSection->pEpfd = NULL;
 	
-	if (m_pCurrentSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE00)
+	if (EffectType == SRPERK_EFFECTTYPE_CUSTOMQUEST)
 	{
+		m_pCurrentSection->Prke.GetPrkeData().Type = SR_PERKDATA_TYPE00;
 		m_pCurrentSection->Data.SetDataType(SR_PERKDATA_TYPE00);
 		m_SectionEditorID.GetWindowText(Buffer);
 		Buffer.Trim(" \t\n\r");
@@ -459,19 +550,10 @@ void CSrPerkView::GetSectionData (void)
 		
 		m_SectionValue.GetWindowText(Buffer);
 		m_pCurrentSection->Data.GetPerkData00().Stage = atoi(Buffer);
-		
-		m_pCurrentSection->Subsections.Destroy();
-		delete m_pCurrentSection->pEpft;
-		delete m_pCurrentSection->pEpf2;
-		delete m_pCurrentSection->pEpf3;
-		delete m_pCurrentSection->pEpfd;
-		m_pCurrentSection->pEpft = NULL;
-		m_pCurrentSection->pEpf2 = NULL;
-		m_pCurrentSection->pEpf3 = NULL;
-		m_pCurrentSection->pEpfd = NULL;
 	}
-	else if (m_pCurrentSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE01)
+	else if (EffectType == SRPERK_EFFECTTYPE_CUSTOMSPELL)
 	{
+		m_pCurrentSection->Prke.GetPrkeData().Type = SR_PERKDATA_TYPE01;
 		m_pCurrentSection->Data.SetDataType(SR_PERKDATA_TYPE01);
 		m_SectionEditorID.GetWindowText(Buffer);
 		Buffer.Trim(" \t\n\r");
@@ -479,36 +561,25 @@ void CSrPerkView::GetSectionData (void)
 		pRecord = m_pRecordHandler->FindEditorID(Buffer);
 		m_pCurrentSection->Data.GetPerkData01().RecordID = pRecord ? pRecord->GetFormID() : SR_FORMID_NULL;
 
-		m_pCurrentSection->Subsections.Destroy();
-		delete m_pCurrentSection->pEpft;
-		delete m_pCurrentSection->pEpf2;
-		delete m_pCurrentSection->pEpf3;
-		delete m_pCurrentSection->pEpfd;
-		m_pCurrentSection->pEpft = NULL;
-		m_pCurrentSection->pEpf2 = NULL;
-		m_pCurrentSection->pEpf3 = NULL;
-		m_pCurrentSection->pEpfd = NULL;
 	}
-	else if (m_pCurrentSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE02)
+	else if (EffectType >= 0 && EffectType <= SRPERK_EFFECT_TYPE_MAX)
 	{
+		m_pCurrentSection->Prke.GetPrkeData().Type = SR_PERKDATA_TYPE02;
 		m_pCurrentSection->Data.SetDataType(SR_PERKDATA_TYPE02);
+		m_pCurrentSection->Data.GetPerkData02().EffectType = (byte) (EffectType & 0xFF);
 
-		ListIndex = m_SectionEffectType.GetCurSel();
-		if (ListIndex >= 0)	m_pCurrentSection->Data.GetPerkData02().Effect = (byte) m_SectionEffectType.GetItemData(ListIndex);
+		const srperkeffectinfo_t EffectInfo = GetSrPerkEffectInfo(EffectType & 0xFF);
+		m_pCurrentSection->Data.GetPerkData02().CondTypeCount = EffectInfo.ConditionTypeCounts;
 
-		ListIndex = m_SectionApplyType.GetCurSel();
-		if (ListIndex >= 0) m_pCurrentSection->Data.GetPerkData02().ModType = (byte) m_SectionApplyType.GetItemData(ListIndex);
-		
-		ListIndex = m_SectionUnknownType.GetCurSel();
-		if (ListIndex >= 0)	m_pCurrentSection->Data.GetPerkData02().Unknown = (byte) m_SectionUnknownType.GetItemData(ListIndex);
-
-		if (m_pCurrentSection->pEpft == NULL) m_pCurrentSection->CreateNewEpft();
+		ListIndex = m_SectionFunctionType.GetCurSel();
+		if (ListIndex >= 0) m_pCurrentSection->Data.GetPerkData02().FunctionType = (byte) m_SectionFunctionType.GetItemData(ListIndex);
 						
-		switch (m_pCurrentSection->Data.GetPerkData02().ModType)
+		switch (m_pCurrentSection->Data.GetPerkData02().FunctionType)
 		{
 		case 0x01:
 		case 0x02:
 		case 0x03:
+			if (m_pCurrentSection->pEpft == NULL) m_pCurrentSection->CreateNewEpft();
 			if (m_pCurrentSection->pEpfd == NULL) m_pCurrentSection->CreateNewEpfd();
 			m_pCurrentSection->pEpft->SetValue(0x01);
 			m_pCurrentSection->pEpfd->SetDataType(0x01);
@@ -516,7 +587,23 @@ void CSrPerkView::GetSectionData (void)
 			m_SectionValue.GetWindowText(Buffer);
 			m_pCurrentSection->pEpfd->GetEpfdData01().Value = (float) atof(Buffer);
 			break;
+		case 0x06:
+		case 0x07:
+			break;
+		case 0x08:
+			if (m_pCurrentSection->pEpft == NULL) m_pCurrentSection->CreateNewEpft();
+			if (m_pCurrentSection->pEpfd == NULL) m_pCurrentSection->CreateNewEpfd();
+			m_pCurrentSection->pEpft->SetValue(0x03);
+			m_pCurrentSection->pEpfd->SetDataType(0x03);
+
+			m_SectionEditorID.GetWindowText(Buffer);
+			Buffer.Trim(" \t\n\r");
+
+			pRecord = m_pRecordHandler->FindEditorID(Buffer);
+			m_pCurrentSection->pEpfd->GetEpfdData03().FormID = pRecord ? pRecord->GetFormID() : SR_FORMID_NULL;
+			break;
 		case 0x09:
+			if (m_pCurrentSection->pEpft == NULL) m_pCurrentSection->CreateNewEpft();
 			if (m_pCurrentSection->pEpf3 == NULL) m_pCurrentSection->CreateNewEpf3();
 			m_pCurrentSection->pEpft->SetValue(0x04);			
 
@@ -554,6 +641,7 @@ void CSrPerkView::GetSectionData (void)
 
 			break;
 		case 0x0A:
+			if (m_pCurrentSection->pEpft == NULL) m_pCurrentSection->CreateNewEpft();
 			if (m_pCurrentSection->pEpfd == NULL) m_pCurrentSection->CreateNewEpfd();
 			m_pCurrentSection->pEpft->SetValue(0x05);
 			m_pCurrentSection->pEpfd->SetDataType(0x05);
@@ -565,6 +653,7 @@ void CSrPerkView::GetSectionData (void)
 			m_pCurrentSection->pEpfd->GetEpfdData05().FormID = pRecord ? pRecord->GetFormID() : SR_FORMID_NULL;
 			break;
 		case 0x0B:
+			if (m_pCurrentSection->pEpft == NULL) m_pCurrentSection->CreateNewEpft();
 			if (m_pCurrentSection->pEpfd == NULL) m_pCurrentSection->CreateNewEpfd();
 			m_pCurrentSection->pEpft->SetValue(0x06);
 			m_pCurrentSection->pEpfd->SetDataType(0x06);
@@ -573,18 +662,34 @@ void CSrPerkView::GetSectionData (void)
 			Buffer.Trim(" \t\n\r");
 			m_pCurrentSection->pEpfd->GetEpfdData06().String = Buffer;
 			break;
+		case 0x04:
+			if (m_pCurrentSection->pEpft == NULL) m_pCurrentSection->CreateNewEpft();
+			if (m_pCurrentSection->pEpfd == NULL) m_pCurrentSection->CreateNewEpfd();
+			m_pCurrentSection->pEpft->SetValue(0x02);
+			m_pCurrentSection->pEpfd->SetDataType(0x02);
+
+			m_SectionValue.GetWindowText(Buffer);
+			m_pCurrentSection->pEpfd->GetEpfdData02().Value1 = (float) atof(Buffer);
+			m_SectionValue2.GetWindowText(Buffer);
+			m_pCurrentSection->pEpfd->GetEpfdData02().Value2 = (float) atof(Buffer);
+			break;
+		case 0x05:
+		case 0x0C:
+		case 0x0D:
 		case 0x0E:
+			if (m_pCurrentSection->pEpft == NULL) m_pCurrentSection->CreateNewEpft();
 			if (m_pCurrentSection->pEpfd == NULL) m_pCurrentSection->CreateNewEpfd();
 			m_pCurrentSection->pEpft->SetValue(0x02);
 			m_pCurrentSection->pEpfd->SetDataType(0x02);
 
 			ListIndex = m_SectionActorValue.GetCurSel();
-			if (ListIndex >= 0)	m_pCurrentSection->pEpfd->GetEpfdData02().ActorValue = (float) m_SectionActorValue.GetItemData(ListIndex);
+			if (ListIndex >= 0)	m_pCurrentSection->pEpfd->GetEpfdData02().Value1 = (float) m_SectionActorValue.GetItemData(ListIndex);
 			
 			m_SectionValue.GetWindowText(Buffer);
-			m_pCurrentSection->pEpfd->GetEpfdData02().Factor = (float) atof(Buffer);
+			m_pCurrentSection->pEpfd->GetEpfdData02().Value2 = (float) atof(Buffer);
 			break;
 		case 0x0F:
+			if (m_pCurrentSection->pEpft == NULL) m_pCurrentSection->CreateNewEpft();
 			if (m_pCurrentSection->pEpfd == NULL) m_pCurrentSection->CreateNewEpfd();
 			m_pCurrentSection->pEpft->SetValue(0x07);
 			m_pCurrentSection->pEpfd->SetDataType(0x07);
@@ -594,12 +699,16 @@ void CSrPerkView::GetSectionData (void)
 			break;
 		}	
 	}
+	else
+	{
+		SystemLog.Printf("PerkDialog: Unknown effect type 0x%08X!", EffectType);
+	}
 
 	UpdateSectionList(m_pCurrentSection);
 }
 
 
-void CSrPerkView::UpdateSectionList (srperk_section_t* pSection)
+void CSrPerkView::UpdateSectionList (srperksectioninfo_t* pSection)
 {
 	for (int i = 0; i < m_SectionList.GetItemCount(); ++i)
 	{
@@ -616,21 +725,57 @@ void CSrPerkView::UpdateSectionList (srperk_section_t* pSection)
 }
 
 
+void CSrPerkView::UpdateSectionConditionLabels (void)
+{
+	CString Buffer;
+	int ListIndex = m_SectionEffectType.GetCurSel();
+	const srperkeffectinfo_t EffectInfo = GetSrPerkEffectInfo(ListIndex >= 0 ? m_SectionEffectType.GetItemData(ListIndex) : SRPERK_EFFECT_TYPE_MAX);
+
+	for (dword i = 0; i < SRPERK_EFFECT_MAXCONDTYPES; ++i)
+	{
+		if (i >= EffectInfo.ConditionTypeCounts)
+		{
+			m_SectionConditions[i].SetWindowText("");
+			m_SectionConditions[i].EnableWindow(false);
+		}
+		else
+		{
+			const char* pString = GetPerkConditionTypeString(EffectInfo.ConditionTypes[i]);
+
+			if (pString == NULL || *pString == '\0')
+			{
+				m_SectionConditions[i].SetWindowText("");
+				m_SectionConditions[i].EnableWindow(false);
+			}
+			else
+			{
+				Buffer.Format("%d %s", m_pCurrentSection->CountSubsections(i), pString);
+				m_SectionConditions[i].SetWindowText(Buffer);
+				m_SectionConditions[i].EnableWindow(true);
+			}
+		}
+	}
+
+}
+
+
 void CSrPerkView::SetSectionData (void)
 {
 	CString Buffer;
 
 	m_IsUpdating = true;
 
-	m_SectionType.SetCurSel(-1);
 	m_SectionEffectType.SetCurSel(-1);
-	m_SectionApplyType.SetCurSel(-1);
-	m_SectionUnknownType.SetCurSel(-1);
-	m_SectionActorValue.SetCurSel(-1);
-	m_SectionIndex.SetWindowText("");
+	m_SectionFunctionType.SetCurSel(-1);
+	m_SectionActorValue.SetCurSel(0);
+	m_SectionPriority.SetWindowText("");
+	m_SectionRank.SetWindowText("");
 	m_SectionEditorID.SetWindowText("");
 	m_SectionValue.SetWindowText("");
-	m_SectionConditions.SetWindowText("");
+	m_SectionValue2.SetWindowText("");
+	m_SectionConditions[0].SetWindowText("");
+	m_SectionConditions[1].SetWindowText("");
+	m_SectionConditions[2].SetWindowText("");
 
 	if (m_pCurrentSection == NULL) 
 	{
@@ -638,32 +783,36 @@ void CSrPerkView::SetSectionData (void)
 		return;	
 	}
 
-	FindComboBoxItemData(m_SectionType, m_pCurrentSection->Prke.GetPrkeData().Type, true);
+	Buffer.Format("%u", (dword) m_pCurrentSection->Prke.GetPrkeData().Priority);
+	m_SectionPriority.SetWindowText(Buffer);
 
-	Buffer.Format("%u", (dword) m_pCurrentSection->Prke.GetPrkeData().Index);
-	m_SectionIndex.SetWindowText(Buffer);
+	Buffer.Format("%u", (dword) m_pCurrentSection->Prke.GetPrkeData().Rank);
+	m_SectionRank.SetWindowText(Buffer);
 
-	Buffer.Format("%u", m_pCurrentSection->CountSubsections());
-	m_SectionConditions.SetWindowText(Buffer);
-	
 	if (m_pCurrentSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE00)
 	{
+		FindComboBoxItemData(m_SectionEffectType, SRPERK_EFFECTTYPE_CUSTOMQUEST, true);
 		m_SectionEditorID.SetWindowText(GetInputRecord()->GetParent()->GetEditorID(m_pCurrentSection->Data.GetPerkData00().QuestID));
 
 		Buffer.Format("%d", (int) m_pCurrentSection->Data.GetPerkData00().Stage);
 		m_SectionValue.SetWindowText(Buffer);
+
+		FillPerkFunctionList();
 	}
 	else if (m_pCurrentSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE01)
 	{
+		FindComboBoxItemData(m_SectionEffectType, SRPERK_EFFECTTYPE_CUSTOMSPELL, true);
 		m_SectionEditorID.SetWindowText(GetInputRecord()->GetParent()->GetEditorID(m_pCurrentSection->Data.GetPerkData01().RecordID));
+
+		FillPerkFunctionList();
 	}
 	else if (m_pCurrentSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE02)
 	{
-		FindComboBoxItemData(m_SectionEffectType,  m_pCurrentSection->Data.GetPerkData02().Effect,  true);
-		FindComboBoxItemData(m_SectionApplyType,   m_pCurrentSection->Data.GetPerkData02().ModType, true);
-		FindComboBoxItemData(m_SectionUnknownType, m_pCurrentSection->Data.GetPerkData02().Unknown, true);
+		FindComboBoxItemData(m_SectionEffectType,    m_pCurrentSection->Data.GetPerkData02().EffectType,  true);
+		FillPerkFunctionList();
+		FindComboBoxItemData(m_SectionFunctionType,  m_pCurrentSection->Data.GetPerkData02().FunctionType, true);
 
-		switch (m_pCurrentSection->Data.GetPerkData02().ModType)
+		switch (m_pCurrentSection->Data.GetPerkData02().FunctionType)
 		{
 		case 0x01:
 		case 0x02:
@@ -673,6 +822,13 @@ void CSrPerkView::SetSectionData (void)
 				Buffer.Format("%g", m_pCurrentSection->pEpfd->GetEpfdData01().Value);
 				m_SectionValue.SetWindowText(Buffer);
 			}
+			break;
+		case 0x06:
+		case 0x07:
+				//No Data
+			break;
+		case 0x08:
+			if (m_pCurrentSection->pEpfd != NULL) m_SectionEditorID.SetWindowTextA(GetInputRecord()->GetParent()->GetEditorID(m_pCurrentSection->pEpfd->GetEpfdData03().FormID));
 			break;
 		case 0x09:
 			if (m_pCurrentSection->pEpfd != NULL)
@@ -687,11 +843,26 @@ void CSrPerkView::SetSectionData (void)
 		case 0x0B:
 			if (m_pCurrentSection->pEpfd != NULL)m_SectionEditorID.SetWindowTextA(m_pCurrentSection->pEpfd->GetEpfdData06().String.c_str());
 			break;
+		case 0x04:
+			if (m_pCurrentSection->pEpfd != NULL)
+			{
+				Buffer.Format("%g", m_pCurrentSection->pEpfd->GetEpfdData02().Value1);
+				m_SectionValue.SetWindowText(Buffer);
+
+				Buffer.Format("%g", m_pCurrentSection->pEpfd->GetEpfdData02().Value2);
+				m_SectionValue2.SetWindowText(Buffer);
+			}
+			break;
+			break;
+		case 0x05:
+		case 0x0C:
+		case 0x0D:
 		case 0x0E:
 			if (m_pCurrentSection->pEpfd != NULL)
 			{
-				FindComboBoxItemData(m_SectionActorValue, (dword) m_pCurrentSection->pEpfd->GetEpfdData02().ActorValue, true);
-				Buffer.Format("%g",  m_pCurrentSection->pEpfd->GetEpfdData02().Factor);
+				int Result = FindComboBoxItemData(m_SectionActorValue, (dword) m_pCurrentSection->pEpfd->GetEpfdData02().Value1, true);
+				if (Result < 0) m_SectionActorValue.SetCurSel(0);
+				Buffer.Format("%g",  m_pCurrentSection->pEpfd->GetEpfdData02().Value2);
 				m_SectionValue.SetWindowText(Buffer);
 			}
 			break;
@@ -703,7 +874,11 @@ void CSrPerkView::SetSectionData (void)
 			break;
 		}	
 	}
+
+	EnableSectionControls();
+	UpdateSectionLabels();
 	
+	UpdateSectionConditionLabels();
 	m_IsUpdating = false;
 }
 
@@ -714,27 +889,32 @@ void CSrPerkView::EnableSectionControls (void)
 	bool EnableActorValue = false;
 	bool EnableEditorID = false;
 	bool EnableValue = false;
+	bool EnableValue2 = false;
 
-	m_SectionType.EnableWindow(Enable);
-	m_SectionIndex.EnableWindow(Enable);
+	m_SectionPriority.EnableWindow(Enable);
+	m_SectionRank.EnableWindow(Enable);
 	m_SectionEffectType.EnableWindow(Enable);
-	m_SectionApplyType.EnableWindow(Enable);
-	m_SectionUnknownType.EnableWindow(Enable);
+	m_SectionFunctionType.EnableWindow(Enable);
 	m_SectionEditorID.EnableWindow(Enable);
 	m_EditEditorIDButton.EnableWindow(Enable);
 	m_SelectEditorIDButton.EnableWindow(Enable);
 	m_SectionActorValue.EnableWindow(Enable);
 	m_SectionValue.EnableWindow(Enable);	
-	m_SectionConditions.EnableWindow(Enable);
+	m_SectionValue2.EnableWindow(Enable);	
+	m_SectionConditions[0].EnableWindow(Enable);
+	m_SectionConditions[1].EnableWindow(Enable);
+	m_SectionConditions[2].EnableWindow(Enable);
 
 	if (!Enable || m_pCurrentSection == NULL) return;
 
+	m_SectionEffectType.EnableWindow(true);
+	m_SectionFunctionType.EnableWindow(true);
+
 	if (m_pCurrentSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE00)
 	{
-		m_SectionEffectType.EnableWindow(false);
-		m_SectionApplyType.EnableWindow(false);
-		m_SectionUnknownType.EnableWindow(false);
-		m_SectionConditions.EnableWindow(false);
+		m_SectionConditions[0].EnableWindow(false);
+		m_SectionConditions[1].EnableWindow(false);
+		m_SectionConditions[2].EnableWindow(false);
 		m_SectionActorValue.EnableWindow(false);
 
 		EnableEditorID = true;
@@ -742,27 +922,25 @@ void CSrPerkView::EnableSectionControls (void)
 	}
 	else if (m_pCurrentSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE01)
 	{
-		m_SectionEffectType.EnableWindow(false);
-		m_SectionApplyType.EnableWindow(false);
-		m_SectionUnknownType.EnableWindow(false);
-		m_SectionConditions.EnableWindow(false);
+		m_SectionConditions[0].EnableWindow(false);
+		m_SectionConditions[1].EnableWindow(false);
+		m_SectionConditions[2].EnableWindow(false);
 		m_SectionActorValue.EnableWindow(false);
 
 		EnableEditorID = true;
 	}
 	else if (m_pCurrentSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE02)
 	{
-		m_SectionEffectType.EnableWindow(true);
-		m_SectionApplyType.EnableWindow(true);
-		m_SectionUnknownType.EnableWindow(true);
-		m_SectionConditions.EnableWindow(true);
-
-		switch (m_pCurrentSection->Data.GetPerkData02().ModType)
+		switch (m_pCurrentSection->Data.GetPerkData02().FunctionType)
 		{
 			case 0x01:
 			case 0x02:
 			case 0x03:
 				EnableValue = true;
+				break;
+			case 0x08:
+				EnableValue = false;
+				EnableEditorID = true;
 				break;
 			case 0x09:
 				EnableValue = true;
@@ -774,6 +952,14 @@ void CSrPerkView::EnableSectionControls (void)
 			case 0x0B:
 				EnableEditorID = true;
 				break;
+			case 0x04:
+				EnableValue = true;
+				EnableValue2 = true;
+				EnableActorValue = false;
+				break;
+			case 0x05:
+			case 0x0C:
+			case 0x0D:
 			case 0x0E:
 				EnableValue = true;
 				EnableActorValue = true;
@@ -789,6 +975,7 @@ void CSrPerkView::EnableSectionControls (void)
 	m_EditEditorIDButton.EnableWindow(EnableEditorID);
 	m_SelectEditorIDButton.EnableWindow(EnableEditorID);
 	m_SectionValue.EnableWindow(EnableValue);
+	m_SectionValue2.EnableWindow(EnableValue2);
 }
 
 
@@ -797,6 +984,7 @@ void CSrPerkView::UpdateSectionLabels (void)
 	if (m_pCurrentSection == NULL) 
 	{
 		m_SectionValueLabel.SetWindowText("None");
+		m_SectionValueLabel2.SetWindowText("None");
 		m_SectionEditorIDLabel.SetWindowText("None");
 		return;
 	}
@@ -804,42 +992,68 @@ void CSrPerkView::UpdateSectionLabels (void)
 	if (m_pCurrentSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE00)
 	{
 		m_SectionValueLabel.SetWindowText("Stage");
+		m_SectionValueLabel2.SetWindowText("None");
 		m_SectionEditorIDLabel.SetWindowText("Quest");
 	}
 	else if (m_pCurrentSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE01)
 	{
 		m_SectionEditorIDLabel.SetWindowText("Spell");
+		m_SectionValueLabel2.SetWindowText("None");
 		m_SectionValueLabel.SetWindowText("None");
 	}
 	else if (m_pCurrentSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE02)
 	{
-		switch (m_pCurrentSection->Data.GetPerkData02().ModType)
+		switch (m_pCurrentSection->Data.GetPerkData02().FunctionType)
 		{
 			case 0x01:
 			case 0x02:
 			case 0x03:
 				m_SectionEditorIDLabel.SetWindowText("None");
+				m_SectionValueLabel2.SetWindowText("None");
 				m_SectionValueLabel.SetWindowText("Value");
 				break;
+			case 0x06:
+			case 0x07:
+				m_SectionValueLabel.SetWindowText("None");
+				m_SectionValueLabel2.SetWindowText("None");
+				m_SectionEditorIDLabel.SetWindowText("None");
+				break;
+			case 0x08:
+				m_SectionEditorIDLabel.SetWindowText("LevelList");
+				m_SectionValueLabel2.SetWindowText("None");
+				m_SectionValueLabel.SetWindowText("None");
+				break;
 			case 0x09:
-				m_SectionEditorIDLabel.SetWindowText("Spell?");
-				m_SectionValueLabel.SetWindowText("Verb String?");
+				m_SectionEditorIDLabel.SetWindowText("Spell");
+				m_SectionValueLabel2.SetWindowText("None");
+				m_SectionValueLabel.SetWindowText("Activate");
 				break;
 			case 0x0A:
 				m_SectionEditorIDLabel.SetWindowText("Spell");
+				m_SectionValueLabel2.SetWindowText("None");
 				m_SectionValueLabel.SetWindowText("None");
 				break;
 			case 0x0B:
 				m_SectionEditorIDLabel.SetWindowText("Game Setting");
+				m_SectionValueLabel2.SetWindowText("None");
 				m_SectionValueLabel.SetWindowText("None");
 				break;
+			case 0x04:
+				m_SectionValueLabel.SetWindowText("Min");
+				m_SectionValueLabel2.SetWindowText("Max");				
+				break;
+			case 0x05:
+			case 0x0C:
+			case 0x0D:
 			case 0x0E:
 				m_SectionEditorIDLabel.SetWindowText("None");
 				m_SectionValueLabel.SetWindowText("Skill Adjust");
+				m_SectionValueLabel2.SetWindowText("None");
 				break;
 			case 0x0F:
 				m_SectionEditorIDLabel.SetWindowText("None");
-				m_SectionValueLabel.SetWindowText("Verb String?");
+				m_SectionValueLabel.SetWindowText("Text");
+				m_SectionValueLabel2.SetWindowText("None");
 				break;
 		}
 	}
@@ -862,13 +1076,15 @@ void CSrPerkView::CopyConditions (void)
 		if (pCondition != NULL) CreateConditionInfo(pCondition, GetInputRecord(), i);
 	}
 
-		/* Always save conditions in PERKs */
+		/* Always save base conditions in PERKs */
 	m_ConditionsChanged = true;
 }
 
 
 void CSrPerkView::GetControlData (void)
 {
+	byte MaxPrkc = 0;
+
 	GetSectionData();
 
 		/* Force delete of subrecords to ensure proper order */
@@ -893,23 +1109,40 @@ void CSrPerkView::GetControlData (void)
 		/* Save all the perk section data */
 	for (dword i = 0; i < m_Sections.GetSize(); ++i)
 	{
-		srperk_section_t* pSection = m_Sections[i];
+		srperksectioninfo_t* pSection = m_Sections[i];
 
 		GetOutputRecord()->GetSubrecordArray().Add(pSection->Prke.CreateCopy());
 		GetOutputRecord()->GetSubrecordArray().Add(pSection->Data.CreateCopy());
+		byte LastPrkc = -1;
 
-		for (dword j = 0; j < pSection->Subsections.GetSize(); ++j)
+				/* Ignore conditions if required */
+		if (pSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE00 || pSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE01) 
 		{
-			srperk_subsection_t* pSubsection = pSection->Subsections[j];
-			GetOutputRecord()->GetSubrecordArray().Add(pSubsection->Prkc.CreateCopy());
+			MaxPrkc = 0;
+		}
+		else
+		{
+			const srperkeffectinfo_t EffectInfo = GetSrPerkEffectInfo(pSection->Data.GetPerkData02().EffectType);
+			MaxPrkc = EffectInfo.ConditionTypeCounts;
+		}
 
-			for (dword k = 0; k < pSubsection->Conditions.GetSize(); ++k)
+		for (dword k = 0; k < pSection->Conditions.GetSize(); ++k)
+		{
+			srconditioninfo_t* pCondInfo = pSection->Conditions[k];
+
+			if (pCondInfo->Condition.GetPrkc() != LastPrkc)
 			{
-				srconditioninfo_t* pCondInfo = pSubsection->Conditions[k];
-				GetOutputRecord()->GetSubrecordArray().Add(pCondInfo->Condition.CreateCopy());
-				if (pCondInfo->pParam1) GetOutputRecord()->GetSubrecordArray().Add(pCondInfo->pParam1->CreateCopy());
-				if (pCondInfo->pParam2) GetOutputRecord()->GetSubrecordArray().Add(pCondInfo->pParam2->CreateCopy());
-			}			
+				LastPrkc = pCondInfo->Condition.GetPrkc();
+				if (LastPrkc >= MaxPrkc) break;
+
+				CSrSubrecord* pSubrecord = GetOutputRecord()->AddInitNewSubrecord(SR_NAME_PRKC);
+				CSrByteSubrecord* pPrkc = SrCastClassNull(CSrByteSubrecord, pSubrecord);
+				if (pPrkc) pPrkc->SetValue(LastPrkc);				
+			}
+
+			GetOutputRecord()->GetSubrecordArray().Add(pCondInfo->Condition.CreateCopy());
+			if (pCondInfo->pParam1) GetOutputRecord()->GetSubrecordArray().Add(pCondInfo->pParam1->CreateCopy());
+			if (pCondInfo->pParam2) GetOutputRecord()->GetSubrecordArray().Add(pCondInfo->pParam2->CreateCopy());
 		}
 
 		if (pSection->pEpft) GetOutputRecord()->GetSubrecordArray().Add(pSection->pEpft->CreateCopy());
@@ -924,7 +1157,7 @@ void CSrPerkView::GetControlData (void)
 void CSrPerkView::SetControlData (void)
 {
 	CSrRecordDialog::SetControlData();
-	SetPerkSectionList();
+	FillPerkSectionList();
 }
 
 
@@ -958,7 +1191,7 @@ void CSrPerkView::OnBnClickedAddperkButton()
 	GetSectionData();
 	m_pCurrentSection = NULL;
 
-	srperk_section_t* pSection = m_Sections.AddNew();
+	srperksectioninfo_t* pSection = m_Sections.AddNew();
 	pSection->InitializeNew();
 
 	int ListIndex = AddPerkSectionList(pSection);
@@ -989,61 +1222,65 @@ void CSrPerkView::OnBnClickedDeleteperkButton()
 }
 
 
-void CSrPerkView::OnBnClickedSectionConditions()
+void CSrPerkView::OnBnClickedSectionConditions1()
 {
-	if (m_pCurrentSection == NULL) return;
+	OnEditSectionConditions(0);
+}
+
+
+void CSrPerkView::OnBnClickedSectionConditions2()
+{
+	OnEditSectionConditions(1);
+}
+
+
+void CSrPerkView::OnBnClickedSectionConditions3()
+{
+	OnEditSectionConditions(2);
+}
+
+
+void CSrPerkView::OnEditSectionConditions(const dword Index)
+{
 	CSrConditionArray Conditions;
 
-	for (dword i = 0; i < m_pCurrentSection->Subsections.GetSize(); ++i)
+	if (m_pCurrentSection == NULL) return;
+	if (Index >= 3) return;	
+
+		/* Copy conditions to edit */
+	for (dword j = 0; j < m_pCurrentSection->Conditions.GetSize(); ++j)
 	{
-		srperk_subsection_t* pSubsection = m_pCurrentSection->Subsections[i];
+		srconditioninfo_t* pCond = m_pCurrentSection->Conditions[j];
 
-		for (dword j = 0; j < pSubsection->Conditions.GetSize(); ++j)
+		if (pCond->Condition.GetPrkc() == Index)
 		{
-			srconditioninfo_t* pCond = pSubsection->Conditions[j];
-			pCond->Condition.SetPrkc(pSubsection->Prkc.GetValue());
-
 			srconditioninfo_t* pNewCond = Conditions.AddNew();
 			pNewCond->Copy(*pCond);
 		}
 	}
 
 	CSrConditionDlg ConditionDlg;
-	int Result = ConditionDlg.DoModal(GetInputRecord(), &Conditions, true);
+	int Result = ConditionDlg.DoModal(GetInputRecord(), &Conditions, false);
 	if (Result != IDOK) return;
 	m_ConditionsChanged = true;
 
-	CString Buffer;
-	Buffer.Format("%d", m_pCurrentSection->CountSubsections());
-	m_SectionConditions.SetWindowText(Buffer);
+		/* Delete "old" conditions */
+	for (int i = (int)m_pCurrentSection->Conditions.GetSize() - 1; i >= 0; --i)
+	{
+		srconditioninfo_t* pCond = m_pCurrentSection->Conditions[i];
+		if (pCond->Condition.GetPrkc() == Index) m_pCurrentSection->Conditions.Delete(i);
+	}
 
-			/* Recreate the subsection structure */
-	m_pCurrentSection->Subsections.Destroy();
-	byte CurrentPrkc = 0xff;
-
-	srperk_subsection_t* pCurrentSubsection = NULL;
-
+		/* Recreate the conditions data just edited/deleted */
 	for (dword i = 0; i < Conditions.GetSize(); ++i)
 	{
 		srconditioninfo_t* pCond = Conditions[i];
-
-		if (pCond->Condition.GetPrkc() != CurrentPrkc || pCurrentSubsection == NULL)
-		{
-			pCurrentSubsection = m_pCurrentSection->Subsections.AddNew();
-			CurrentPrkc = pCond->Condition.GetPrkc();
-
-			pCurrentSubsection->Prkc.Initialize(SR_NAME_PRKC, 1);
-			pCurrentSubsection->Prkc.InitializeNew();
-			pCurrentSubsection->Prkc.SetValue(pCond->Condition.GetPrkc());
-		}
-
-		srconditioninfo_t* pNewCond = pCurrentSubsection->Conditions.AddNew();
+		srconditioninfo_t* pNewCond = m_pCurrentSection->Conditions.AddNew();
 		pNewCond->Copy(*pCond);
+		pNewCond->Condition.SetPrkc(Index);
 	}
 
-	Buffer.Format("%d", m_pCurrentSection->CountSubsections());
-	m_SectionConditions.SetWindowText(Buffer);
-
+	UpdateSectionConditionLabels();
 	GetSectionData();
 }
 
@@ -1064,12 +1301,14 @@ void CSrPerkView::OnBnClickedEditSectioneditorid()
 	}
 	else if (m_pCurrentSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE02)
 	{
-		if (m_pCurrentSection->Data.GetPerkData02().ModType == 0x09) 
+		if (m_pCurrentSection->Data.GetPerkData02().FunctionType == 0x09) 
 			RecordType = SR_NAME_SPEL;
-		else if (m_pCurrentSection->Data.GetPerkData02().ModType == 0x0A) 
+		else if (m_pCurrentSection->Data.GetPerkData02().FunctionType == 0x0A) 
 			RecordType = SR_NAME_SPEL;
-		else if (m_pCurrentSection->Data.GetPerkData02().ModType == 0x0B) 
+		else if (m_pCurrentSection->Data.GetPerkData02().FunctionType == 0x0B) 
 			RecordType = SR_NAME_GMST;
+		else if (m_pCurrentSection->Data.GetPerkData02().FunctionType == 0x08) 
+			RecordType = SR_NAME_LVLI;
 	}
 
 	if (RecordType != SR_NAME_NULL) m_pDlgHandler->EditRecordHelper(&m_SectionEditorID, RecordType);
@@ -1095,17 +1334,22 @@ void CSrPerkView::OnBnClickedSelectSectioneditorid()
 	}
 	else if (m_pCurrentSection->Prke.GetPrkeData().Type == SR_PERKDATA_TYPE02)
 	{
-		if (m_pCurrentSection->Data.GetPerkData02().ModType == 0x09) 
+		if (m_pCurrentSection->Data.GetPerkData02().FunctionType == 0x09) 
 		{
 			RecordType = SR_NAME_SPEL;
 			pFieldMap = &CSrSpelRecord::s_FieldMap;
 		}
-		else if (m_pCurrentSection->Data.GetPerkData02().ModType == 0x0A) 
+		else if (m_pCurrentSection->Data.GetPerkData02().FunctionType == 0x08)
+		{
+			RecordType = SR_NAME_LVLI;
+			pFieldMap = &CSrLvliRecord::s_FieldMap;
+		}
+		else if (m_pCurrentSection->Data.GetPerkData02().FunctionType == 0x0A) 
 		{
 			RecordType = SR_NAME_SPEL;
 			pFieldMap = &CSrSpelRecord::s_FieldMap;
 		}
-		else if (m_pCurrentSection->Data.GetPerkData02().ModType == 0x0B) 
+		else if (m_pCurrentSection->Data.GetPerkData02().FunctionType == 0x0B) 
 		{
 			RecordType = SR_NAME_GMST;
 			pFieldMap = &CSrGmstRecord::s_FieldMap;
@@ -1116,21 +1360,30 @@ void CSrPerkView::OnBnClickedSelectSectioneditorid()
 }
 
 
-void CSrPerkView::OnCbnSelchangeSectiontype()
+void CSrPerkView::OnCbnSelchangeSectionEffectType()
 {
 	if (m_IsUpdating) return;
+	m_IsUpdating = true;
+
 	GetSectionData();
+
+	FillPerkFunctionList();
+	UpdateSectionConditionLabels();
 	EnableSectionControls();
 	UpdateSectionLabels();
+
+	m_IsUpdating = false;
 }
 
 
-void CSrPerkView::OnCbnSelchangeSectionapplytype()
+void CSrPerkView::OnCbnSelchangeSectionFunctionType()
 {
 	if (m_IsUpdating) return;
+
 	GetSectionData();
-	EnableSectionControls();
+
 	UpdateSectionLabels();
+	EnableSectionControls();
 }
 
 
@@ -1142,9 +1395,7 @@ void CSrPerkView::OnLvnItemchangedPerkdataList(NMHDR *pNMHDR, LRESULT *pResult)
 	if (!m_IsInitialized) return;
 	if ((pNMLV->uNewState & LVIS_SELECTED) == 0) return;
 
-	GetSectionData();
 	SetCurrentSection(m_Sections[pNMLV->iItem]);
-	SetSectionData();
 }
 
 
@@ -1157,11 +1408,10 @@ int CSrPerkView::OnDropCustomSectionData (srrldroprecords_t& DropItems)
 {
 	CSrPrkeSubrecord*		pPrke;
 	srrlcustomdata_t*		pCustomData;
-	srperk_section_t*   	pSection;
+	srperksectioninfo_t*   	pSection;
 	dword					Index;
 	CSrPrkeSubrecord*		pSrcPrke;
 	CSrSubrecord*			pSubrecord;
-	srperk_subsection_t*	pCurrentSubsection = NULL;
 	srconditioninfo_t*		pCurrentCondInfo = NULL;
 
 	GetSectionData();
@@ -1195,17 +1445,10 @@ int CSrPerkView::OnDropCustomSectionData (srrldroprecords_t& DropItems)
 			{
 				pSection->Data.Copy(pSubrecord);
 			}
-			else if (pSubrecord->GetRecordType() == SR_NAME_PRKC)
+			else if (pSubrecord->GetRecordType() == SR_NAME_CTDA)
 			{
-				 pCurrentSubsection = pSection->Subsections.AddNew();
-				 pCurrentSubsection->Prkc.Copy(pSubrecord);
-				 pCurrentCondInfo = NULL;
-			}
-			else if (pSubrecord->GetRecordType() == SR_NAME_CTDA && pCurrentSubsection != NULL)
-			{
-				pCurrentCondInfo = pCurrentSubsection->Conditions.AddNew();
+				pCurrentCondInfo = pSection->Conditions.AddNew();
 				pCurrentCondInfo->Condition.Copy(pSubrecord);
-				pCurrentCondInfo->Condition.SetPrkc(pCurrentSubsection->Prkc.GetValue());
 			}
 			else if (pSubrecord->GetRecordType() == SR_NAME_CIS1 && pCurrentCondInfo != NULL)
 			{
@@ -1217,7 +1460,6 @@ int CSrPerkView::OnDropCustomSectionData (srrldroprecords_t& DropItems)
 			}
 			else if (pSubrecord->GetRecordType() == SR_NAME_EPFT)
 			{
-				 pCurrentSubsection = NULL;
 				 pCurrentCondInfo   = NULL;
 
 				 CSrSubrecord* pTmp = pSubrecord->CreateCopy();
@@ -1226,7 +1468,6 @@ int CSrPerkView::OnDropCustomSectionData (srrldroprecords_t& DropItems)
 			}
 			else if (pSubrecord->GetRecordType() == SR_NAME_EPF2)
 			{
-				 pCurrentSubsection = NULL;
 				 pCurrentCondInfo   = NULL;
 
 				 CSrSubrecord* pTmp = pSubrecord->CreateCopy();
@@ -1235,7 +1476,6 @@ int CSrPerkView::OnDropCustomSectionData (srrldroprecords_t& DropItems)
 			}
 			else if (pSubrecord->GetRecordType() == SR_NAME_EPF3)
 			{
-				 pCurrentSubsection = NULL;
 				 pCurrentCondInfo   = NULL;
 
 				 CSrSubrecord* pTmp = pSubrecord->CreateCopy();
@@ -1244,7 +1484,6 @@ int CSrPerkView::OnDropCustomSectionData (srrldroprecords_t& DropItems)
 			}
 			else if (pSubrecord->GetRecordType() == SR_NAME_EPFD)
 			{
-				 pCurrentSubsection = NULL;
 				 pCurrentCondInfo   = NULL;
 
 				 CSrSubrecord* pTmp = pSubrecord->CreateCopy();
@@ -1253,7 +1492,6 @@ int CSrPerkView::OnDropCustomSectionData (srrldroprecords_t& DropItems)
 			}
 			else if (pSubrecord->GetRecordType() == SR_NAME_PRKF)
 			{
-				 pCurrentSubsection = NULL;
 				 pCurrentCondInfo   = NULL;
 
 				 pSection->Prkf.Copy(pSubrecord);
@@ -1308,7 +1546,7 @@ void CSrPerkView::OnDropSectionList (NMHDR* pNotifyStruct, LRESULT* pResult)
 
  void CSrPerkView::OnPerksectionDuplicate()
  {
-	 std::vector<srperk_section_t*> NewSections;
+	 std::vector<srperksectioninfo_t*> NewSections;
 	 POSITION Pos;
 	 int      ListIndex;
 	
@@ -1322,9 +1560,8 @@ void CSrPerkView::OnDropSectionList (NMHDR* pNotifyStruct, LRESULT* pResult)
 		srrlcustomdata_t* pCustomData = m_SectionList.GetCustomData(ListIndex);
 		if (pCustomData == NULL) continue;
 
-		srperk_subsection_t*	pCurrentSubsection = NULL;
 		srconditioninfo_t*		pCurrentCondInfo = NULL;
-		srperk_section_t*   	pSection;
+		srperksectioninfo_t*   	pSection;
 		CSrSubrecord*			pSubrecord;
 
 		pSection = m_Sections.AddNew();
@@ -1343,17 +1580,10 @@ void CSrPerkView::OnDropSectionList (NMHDR* pNotifyStruct, LRESULT* pResult)
 			{
 				pSection->Data.Copy(pSubrecord);
 			}
-			else if (pSubrecord->GetRecordType() == SR_NAME_PRKC)
+			else if (pSubrecord->GetRecordType() == SR_NAME_CTDA)
 			{
-				 pCurrentSubsection = pSection->Subsections.AddNew();
-				 pCurrentSubsection->Prkc.Copy(pSubrecord);
-				 pCurrentCondInfo = NULL;
-			}
-			else if (pSubrecord->GetRecordType() == SR_NAME_CTDA && pCurrentSubsection != NULL)
-			{
-				pCurrentCondInfo = pCurrentSubsection->Conditions.AddNew();
+				pCurrentCondInfo = pSection->Conditions.AddNew();
 				pCurrentCondInfo->Condition.Copy(pSubrecord);
-				pCurrentCondInfo->Condition.SetPrkc(pCurrentSubsection->Prkc.GetValue());
 			}
 			else if (pSubrecord->GetRecordType() == SR_NAME_CIS1 && pCurrentCondInfo != NULL)
 			{
@@ -1365,7 +1595,6 @@ void CSrPerkView::OnDropSectionList (NMHDR* pNotifyStruct, LRESULT* pResult)
 			}
 			else if (pSubrecord->GetRecordType() == SR_NAME_EPFT)
 			{
-				 pCurrentSubsection = NULL;
 				 pCurrentCondInfo   = NULL;
 
 				 CSrSubrecord* pTmp = pSubrecord->CreateCopy();
@@ -1374,7 +1603,6 @@ void CSrPerkView::OnDropSectionList (NMHDR* pNotifyStruct, LRESULT* pResult)
 			}
 			else if (pSubrecord->GetRecordType() == SR_NAME_EPF2)
 			{
-				 pCurrentSubsection = NULL;
 				 pCurrentCondInfo   = NULL;
 
 				 CSrSubrecord* pTmp = pSubrecord->CreateCopy();
@@ -1383,7 +1611,6 @@ void CSrPerkView::OnDropSectionList (NMHDR* pNotifyStruct, LRESULT* pResult)
 			}
 			else if (pSubrecord->GetRecordType() == SR_NAME_EPF3)
 			{
-				 pCurrentSubsection = NULL;
 				 pCurrentCondInfo   = NULL;
 
 				 CSrSubrecord* pTmp = pSubrecord->CreateCopy();
@@ -1392,7 +1619,6 @@ void CSrPerkView::OnDropSectionList (NMHDR* pNotifyStruct, LRESULT* pResult)
 			}
 			else if (pSubrecord->GetRecordType() == SR_NAME_EPFD)
 			{
-				 pCurrentSubsection = NULL;
 				 pCurrentCondInfo   = NULL;
 
 				 CSrSubrecord* pTmp = pSubrecord->CreateCopy();
@@ -1401,7 +1627,6 @@ void CSrPerkView::OnDropSectionList (NMHDR* pNotifyStruct, LRESULT* pResult)
 			}
 			else if (pSubrecord->GetRecordType() == SR_NAME_PRKF)
 			{
-				 pCurrentSubsection = NULL;
 				 pCurrentCondInfo   = NULL;
 
 				 pSection->Prkf.Copy(pSubrecord);
