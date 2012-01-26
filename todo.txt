@@ -7,6 +7,7 @@ v0.050a
 	- Record count in TES4 is not being updated correctly?
 	- Shortcut key for toggling "active only"
 	- Drag records between files to copy
+	- Reference selection
 
 v0.046a
 	- Conditions: Batch edit? drag-and-drop?

@@ -89,6 +89,7 @@ void CSrFunctionDlg::FillFunctionList (void)
 {
 	CString Buffer;
 	int Index;
+	int SelIndex = -1;
 
 	m_FunctionList.SetRedraw(FALSE);
 	m_FunctionList.DeleteAllItems();
@@ -96,7 +97,7 @@ void CSrFunctionDlg::FillFunctionList (void)
 	for (dword i = 0; i < g_SrFunctionCount; ++i)
 	{
 		srfunction_t* pFunc = &g_SrFunctions[i];
-		if (!CheckFlagBits(pFunc->Flags, m_FunctionMask)) continue;
+		if ((pFunc->Flags & m_FunctionMask) != m_FunctionMask) continue;
 		if (CheckFlagBits(pFunc->Flags, SR_FUNCTION_FLAG_IGNORE)) continue;		
 
 		if (!m_FilterString.IsEmpty())
@@ -105,6 +106,7 @@ void CSrFunctionDlg::FillFunctionList (void)
 		}
 
 		Index = m_FunctionList.InsertItem(i, pFunc->Name);
+		if (m_OrigFunction.CompareNoCase(pFunc->Name) == 0) SelIndex = Index;
 
 		if (Index >= 0) 
 		{
@@ -113,22 +115,41 @@ void CSrFunctionDlg::FillFunctionList (void)
 			else if (CheckFlagBits(pFunc->Flags, SR_FUNCTION_FLAG_CONSOLE)) Buffer = "Console";
 			else if (CheckFlagBits(pFunc->Flags, SR_FUNCTION_FLAG_SCRIPT)) Buffer = "Script";
 
-			m_FunctionList.SetItemText(Index, 1, Buffer);
+			m_FunctionList.SetItemText(Index, SR_FUNCDLG_SUBITEM_TYPE, Buffer);
 			m_FunctionList.SetItemData(Index, (DWORD) pFunc);
+
+			if (pFunc->NumParams >= 1)
+			{
+				m_FunctionList.SetItemText(Index, SR_FUNCDLG_SUBITEM_PARAM1, GetSrFunctionParamTypeString(pFunc->Params[0].Type));
+			}
+
+			if (pFunc->NumParams >= 2)
+			{
+				m_FunctionList.SetItemText(Index, SR_FUNCDLG_SUBITEM_PARAM2, GetSrFunctionParamTypeString(pFunc->Params[1].Type));
+			}
+
+			if (pFunc->NumParams >= 3)
+			{
+				m_FunctionList.SetItemText(Index, SR_FUNCDLG_SUBITEM_PARAM3, GetSrFunctionParamTypeString(pFunc->Params[2].Type));
+			}
+			
 		}
 	}
 
 	m_FunctionList.SortItems(l_fnSortFunctionList, SR_FUNCDLG_SORTNAME);
 	m_FunctionList.SetRedraw(TRUE);
-
+	m_FunctionList.SetItemState(SelIndex, LVIS_SELECTED, LVIS_SELECTED);
+	m_FunctionList.EnsureVisible(SelIndex, FALSE);
 }
 
 
 void CSrFunctionDlg::SetupFunctionList (void)
 {
-	m_FunctionList.InsertColumn(0, "Function", 0, 180, 0);
-	m_FunctionList.InsertColumn(1, "Type",     0, 120, LVCFMT_CENTER);
-	m_FunctionList.InsertColumn(2, "Flags",    0,  50, LVCFMT_CENTER);
+	m_FunctionList.InsertColumn(SR_FUNCDLG_SUBITEM_NAME,	"Function",		LVCFMT_CENTER, 180, SR_FUNCDLG_SUBITEM_NAME);
+	m_FunctionList.InsertColumn(SR_FUNCDLG_SUBITEM_PARAM1,	"Param1",		LVCFMT_CENTER, 100,	SR_FUNCDLG_SUBITEM_PARAM1);
+	m_FunctionList.InsertColumn(SR_FUNCDLG_SUBITEM_PARAM2,	"Param2",		LVCFMT_CENTER, 100,	SR_FUNCDLG_SUBITEM_PARAM2);
+	m_FunctionList.InsertColumn(SR_FUNCDLG_SUBITEM_PARAM3,	"Param3",		LVCFMT_CENTER, 100,	SR_FUNCDLG_SUBITEM_PARAM3);
+	m_FunctionList.InsertColumn(SR_FUNCDLG_SUBITEM_TYPE,	"Type",			LVCFMT_CENTER, 60,	SR_FUNCDLG_SUBITEM_TYPE);
 }
 
 
@@ -152,9 +173,7 @@ BOOL CSrFunctionDlg::OnInitDialog()
 	int Index = m_FunctionList.FindItem(&FindInfo);
 	if (Index >= 0) m_FunctionList.SetItemState(Index, LVIS_SELECTED, LVIF_STATE);
 
-	//m_FunctionList.SetFocus();
 	m_Filter.SetFocus();
-
 	return FALSE;
 }
 
@@ -170,8 +189,18 @@ void CSrFunctionDlg::OnOK()
 		Buffer.Trim(" \n\t\r");
 
 		srfunction_t* pFunc = GetSrFunction(Buffer);
-		if (pFunc == NULL) return;
-		m_CurrentFunction = Buffer;
+
+		if (pFunc == NULL) 
+		{
+			if (m_FunctionList.GetItemCount() > 1) return;
+			if (m_FunctionList.GetItemCount() < 1) return;
+
+			m_CurrentFunction = m_FunctionList.GetItemText(0, SR_FUNCDLG_SUBITEM_NAME);
+		}
+		else
+		{
+			m_CurrentFunction = Buffer;
+		}
 	}
 	else if (pWnd == &m_CurrentValue)
 	{
@@ -179,7 +208,14 @@ void CSrFunctionDlg::OnOK()
 		m_CurrentFunction.Trim(" \n\t\r");
 
 		srfunction_t* pFunc = GetSrFunction(m_CurrentFunction);
-		if (pFunc == NULL) return;
+
+		if (pFunc == NULL) 
+		{
+			if (m_FunctionList.GetItemCount() > 1) return;
+			if (m_FunctionList.GetItemCount() < 1) return;
+
+			m_CurrentFunction = m_FunctionList.GetItemText(0, SR_FUNCDLG_SUBITEM_NAME);
+		}
 	}
 
 	CDialogEx::OnOK();
@@ -254,6 +290,14 @@ bool SrSelectFunctionScript (CString& Function)
 }
 
 
+bool SrSelectFunctionCondition (CString& Function)
+{
+	CSrFunctionDlg FuncDlg;
+
+	return FuncDlg.DoModal(Function, SR_FUNCTION_FLAG_SCRIPT | SR_FUNCTION_FLAG_CONDITION);
+}
+
+
 /*===========================================================================
  *
  * Class CSrFunctionDlg Event - void OnHelp (void);
@@ -272,5 +316,4 @@ BOOL CSrFunctionDlg::OnHelpInfo(HELPINFO* pHelpInfo)
 {
 	GetSrEditApp().OpenWebHelp("Tes5Mod:SkyEdit/User_Interface/Functions", "Functions");
 	return true;
-	//return CDialogEx::OnHelpInfo(pHelpInfo);
 }

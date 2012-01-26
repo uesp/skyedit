@@ -1357,6 +1357,15 @@ dword GetComboBoxSelItemData (CComboBox& ComboBox, const dword Default) {
  *=========================================================================*/
 
 
+int DeleteComboBoxItem(CComboBox& ComboBox, const dword ItemData)
+{
+	int Index = FindComboBoxItemData(ComboBox, ItemData);
+	if (Index < 0) return -1;
+	ComboBox.DeleteString(Index);
+	return Index;
+}
+
+
 /*===========================================================================
  *
  * Function - long GetListBoxSelItemData (ListBox, Default);

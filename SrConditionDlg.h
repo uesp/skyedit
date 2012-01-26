@@ -34,21 +34,35 @@ protected:
 	CSrConditionArray	m_Conditions;
 	CSrRecord*			m_pRecord;
 	bool				m_IsInitialized;
-	bool				m_PermitPrkc;
 
 	srconditioninfo_t*	m_pCurrentCondition;
+	srfunction_t*		m_pCurrentFunction;
 
 	CStatic		m_Param1Label;
 	CStatic		m_Param2Label;
+	CStatic		m_Param3Label;
+	CEdit		m_Param1;
 	CEdit		m_Param2;
+	CEdit		m_Param3;
+	CButton		m_Param1Button;
+	CButton		m_Param2Button;	
+	CButton		m_Param3Button;	
 	CEdit		m_Value;
 	CStatic		m_ValueLabel;
 	CComboBox	m_Operator;
 	CButton		m_FlagOr;
-	CButton		m_FlagRunOnTarget;
 	CButton		m_FlagUseGlobal;
-
+	CEdit		m_Reference;
+	CStatic		m_ReferenceLabel;
+	CEdit		m_Function;
+	CStatic		m_FunctionLabel;
+	CButton		m_FunctionButton;
+	CButton		m_ReferenceButton;
 	int			m_FunctionIDCheck;
+
+	const static COLORREF s_UnchangedColor = RGB(255,255,255);
+	const static COLORREF s_OkColor        = RGB(204,255,204);
+	const static COLORREF s_ErrorColor     = RGB(255,204,204);
 
 
 	/*---------- Begin Protected Class Methods -----------------------*/
@@ -58,20 +72,37 @@ protected:
 	int AddConditionList (srconditioninfo_t* pCondition);
 	void UpdateConditionList (const int ListIndex, const bool Update);
 
-	void GetCurrentCondition (void);
+	void GetConditionControlData (void);
 	void SetCurrentCondition (srconditioninfo_t* pCondition);
+	void SetConditionControlData (void);
 
 	bool CheckCurrentCondition (void);
 	void CopyConditions(void);
 
+	void UpdateReferenceStatus (void);
+	void UpdateFunctionStatus  (void);
+	void UpdateValueStatus     (void);
+	void UpdateParam1Status    (void);
+
+	void EnableConditionControls (void);
+
+	void FillRunOnList (void);
+
 	void SelectCondition (const int Index);
 	srconditioninfo_t* FindConditionInfo(CSrCtdaSubrecord* pCondition);
+
+	int IsValidParam1     (void);
+	int IsValidValue      (void);
+	int IsValidReference  (void);
+	int IsValidRecordType (CString& Value, const srrectype_t Type);
 
 
 	/*---------- Begin Public Class Methods --------------------------*/
 public:
 	CSrConditionDlg(CWnd* pParent = NULL); 
 	virtual ~CSrConditionDlg();
+
+	bool DoModal (CSrRecord* pRecord, CSrConditionArray* pConditions);
 	
 	enum { IDD = IDD_CONDITION_DLG };
 
@@ -82,24 +113,15 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 
-	void EnablePrkcControls (void);
 
 public:
 	afx_msg void OnLvnItemchangedConditionList(NMHDR *pNMHDR, LRESULT *pResult);
-	
 	virtual BOOL OnInitDialog();
-
-	bool DoModal (CSrRecord* pRecord, CSrConditionArray* pConditions, const bool PermitPrkc = false);
 	afx_msg void OnBnClickedSelectreferenceButton();
-	CEdit m_Reference;
-	CStatic m_ReferenceLabel;
-	afx_msg void OnBnClickedSelectfunctionButton();
-	CEdit m_Function;
-	CStatic m_FunctionLabel;
-	CEdit m_Param1;
+	afx_msg void OnBnClickedSelectfunctionButton();	
 	afx_msg void OnBnClickedSelectparam1Button();
 	afx_msg void OnBnClickedSelectparam2Button();
-
+	afx_msg void OnBnClickedSelectparam3Button();
 	virtual void OnOK();
 	afx_msg void OnCondInsertBefore();
 	afx_msg void OnCondInsertAfter();
@@ -114,22 +136,27 @@ public:
 	afx_msg void OnBnClickedAddButton();
 	afx_msg void OnBnClickedDeleteButton();
 	afx_msg void OnHelp (void);
-
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
-	CButton m_FunctionButton;
-	CButton m_ReferenceButton;
-	CButton m_Param1Button;
-	CButton m_Param2Button;
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg void OnEnChangeFunctionText();
 	afx_msg void OnLvnItemchangingConditionList(NMHDR *pNMHDR, LRESULT *pResult);
-	CStatic m_PrkcLabel;
-	CComboBox m_PrkcList;
+	CButton m_FlagPackData;
+	CButton m_FlagQuestAlias;
+	CButton m_FlagSwapSubject;
+	CComboBox m_RunOnList;
+	afx_msg void OnCbnSelchangeRunonList();
+	CButton m_ValueButton;
+	afx_msg void OnBnClickedSelectvalueButton();
+	afx_msg void OnBnClickedUseglobalCheck();
+	afx_msg void OnEnChangeValueText();
+	afx_msg void OnEnChangeReferenceText();
+	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
+	afx_msg void OnEnChangeParam1Text();
+	afx_msg void OnDblClkParam1(NMHDR *pNMHDR, LRESULT *pResult);
 };
 /*===========================================================================
  *		End of Class CSrConditionDlg Definition
  *=========================================================================*/
-
 
 
 #endif

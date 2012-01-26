@@ -298,6 +298,7 @@ public:
   int FindComboBoxString   (CComboBox& ComboBox, const TCHAR* pString, const bool SelectItem = false);
   int SrAddComboBoxItem    (CComboBox& ComboBox, const TCHAR* pString, const dword ItemData);
   int SrAddListBoxItem     (CListBox&  ListBox,  const TCHAR* pString, const dword ItemData);
+  int DeleteComboBoxItem   (CComboBox& ComboBox, const dword ItemData);
 
   dword GetComboBoxSelItemData (CComboBox& ComboBox, const dword Default = 0);
   dword GetListBoxSelItemData  (CListBox&  ListBox,  const dword Default = 0);

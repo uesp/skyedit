@@ -740,7 +740,7 @@ void CSrPerkView::UpdateSectionConditionLabels (void)
 		}
 		else
 		{
-			const char* pString = GetPerkConditionTypeString(EffectInfo.ConditionTypes[i]);
+			const char* pString = GetSrPerkConditionTypeString(EffectInfo.ConditionTypes[i]);
 
 			if (pString == NULL || *pString == '\0')
 			{
@@ -1260,7 +1260,7 @@ void CSrPerkView::OnEditSectionConditions(const dword Index)
 	}
 
 	CSrConditionDlg ConditionDlg;
-	int Result = ConditionDlg.DoModal(GetInputRecord(), &Conditions, false);
+	int Result = ConditionDlg.DoModal(GetInputRecord(), &Conditions);
 	if (Result != IDOK) return;
 	m_ConditionsChanged = true;
 
