@@ -1841,6 +1841,7 @@
     <ClCompile Include="dialogs\SrEcznView.cpp" />
     <ClCompile Include="dialogs\SrEditFlagsDlg.cpp" />
     <ClCompile Include="dialogs\SrFlstView.cpp" />
+    <ClCompile Include="dialogs\SrFunctionParamDlg.cpp" />
     <ClCompile Include="dialogs\SrOtftView.cpp" />
     <ClCompile Include="dialogs\SrRacePageFace.cpp" />
     <ClCompile Include="dialogs\SrRacePageHead1.cpp" />
@@ -2204,6 +2205,7 @@
     <ClInclude Include="dialogs\SrEcznView.h" />
     <ClInclude Include="dialogs\SrEditFlagsDlg.h" />
     <ClInclude Include="dialogs\SrFlstView.h" />
+    <ClInclude Include="dialogs\SrFunctionParamDlg.h" />
     <ClInclude Include="dialogs\SrOtftView.h" />
     <ClInclude Include="dialogs\SrRacePageFace.h" />
     <ClInclude Include="dialogs\SrRacePageHead1.h" />

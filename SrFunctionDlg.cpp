@@ -106,7 +106,6 @@ void CSrFunctionDlg::FillFunctionList (void)
 		}
 
 		Index = m_FunctionList.InsertItem(i, pFunc->Name);
-		if (m_OrigFunction.CompareNoCase(pFunc->Name) == 0) SelIndex = Index;
 
 		if (Index >= 0) 
 		{
@@ -138,6 +137,14 @@ void CSrFunctionDlg::FillFunctionList (void)
 
 	m_FunctionList.SortItems(l_fnSortFunctionList, SR_FUNCDLG_SORTNAME);
 	m_FunctionList.SetRedraw(TRUE);
+
+	LVFINDINFO FindInfo;
+	FindInfo.flags = LVFI_STRING;
+	FindInfo.psz = m_OrigFunction;
+	
+	SelIndex = m_FunctionList.FindItem(&FindInfo);
+	if (SelIndex < 0) SelIndex = 0;
+
 	m_FunctionList.SetItemState(SelIndex, LVIS_SELECTED, LVIS_SELECTED);
 	m_FunctionList.EnsureVisible(SelIndex, FALSE);
 }

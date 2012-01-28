@@ -120,6 +120,7 @@
 #define IDD_RACE_HEADPAGE1              199
 #define IDD_RACE_TINTPAGE               200
 #define IDD_AVIF_VIEW                   201
+#define IDD_FUNCTIONPARAM_DLG           202
 #define IDR_PERKSECTION_MENU            224
 #define IDR_ERRORBAR_MENU               225
 #define IDC_RECORDTREE                  1000
@@ -325,7 +326,6 @@
 #define IDC_SELECTPICKUPSOUND_BUTTON    1178
 #define IDC_SELECTPARAM3_BUTTON         1178
 #define IDC_SELECTSOUND_BUTTON          1179
-#define IDC_SELECTPARAM3_BUTTON2        1179
 #define IDC_SELECTVALUE_BUTTON          1179
 #define IDC_SELECT_STATICMODEL          1180
 #define IDC_SELECT_BLOODFX              1181
@@ -879,6 +879,8 @@
 #define ID_DELETE_SECTCNAM              1758
 #define ID_EDIT_SECTCNAM                1759
 #define IDC_CONDITION_LABEL             1760
+#define IDC_PARAM_LIST                  1761
+#define IDC_FILTER_LABEL                1762
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -1093,6 +1095,8 @@
 #define ID_PERKSECTION_DUPLICATE        32884
 #define ID_PERKSECTION_EDIT             32885
 #define ID_ERRORBAR_COPY                32886
+#define ID_CONDITION_PASTECONDITION     32887
+#define ID_CONDITION_DUPLICATE          32888
 
 // Next default values for new objects
 // 
@@ -1100,8 +1104,8 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        226
-#define _APS_NEXT_COMMAND_VALUE         32887
-#define _APS_NEXT_CONTROL_VALUE         1761
+#define _APS_NEXT_COMMAND_VALUE         32889
+#define _APS_NEXT_CONTROL_VALUE         1763
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

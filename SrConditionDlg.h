@@ -67,11 +67,14 @@ protected:
 
 	/*---------- Begin Protected Class Methods -----------------------*/
 protected:
+	BOOL PreTranslateMessage( MSG* pMsg );
+
 	void SetControlData (void);
 	void SetConditionList (void);
 	int AddConditionList (srconditioninfo_t* pCondition);
 	void UpdateConditionList (const int ListIndex, const bool Update);
 
+	void GetConditionParamControlData (CEdit& ParamEdit, const dword ParamIndex, int& ParamValue);
 	void GetConditionControlData (void);
 	void SetCurrentCondition (srconditioninfo_t* pCondition);
 	void SetConditionControlData (void);
@@ -82,7 +85,10 @@ protected:
 	void UpdateReferenceStatus (void);
 	void UpdateFunctionStatus  (void);
 	void UpdateValueStatus     (void);
+	void UpdateParamsStatus    (void);
 	void UpdateParam1Status    (void);
+	void UpdateParam2Status    (void);
+	void UpdateParam3Status    (void);
 
 	void EnableConditionControls (void);
 
@@ -91,10 +97,15 @@ protected:
 	void SelectCondition (const int Index);
 	srconditioninfo_t* FindConditionInfo(CSrCtdaSubrecord* pCondition);
 
-	int IsValidParam1     (void);
+	int IsValidParam (CEdit& ParamEdit, const dword ParamIndex);
+	int IsValidParam1 (void) { return IsValidParam(m_Param1, 0); }
+	int IsValidParam2 (void) { return IsValidParam(m_Param2, 1); }
+	int IsValidParam3 (void) { return IsValidParam(m_Param3, 2); }
+
 	int IsValidValue      (void);
 	int IsValidReference  (void);
 	int IsValidRecordType (CString& Value, const srrectype_t Type);
+	bool IsFunctionParamSelectable (const int ParamType);
 
 
 	/*---------- Begin Public Class Methods --------------------------*/
@@ -152,7 +163,13 @@ public:
 	afx_msg void OnEnChangeReferenceText();
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnEnChangeParam1Text();
+	afx_msg void OnEnChangeParam2Text();
+	afx_msg void OnEnChangeParam3Text();
 	afx_msg void OnDblClkParam1(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnConditionPastecondition();
+	afx_msg void OnUpdateConditionPastecondition(CCmdUI *pCmdUI);
+	afx_msg void OnConditionDuplicate();
+	afx_msg void OnUpdateConditionDuplicate(CCmdUI *pCmdUI);
 };
 /*===========================================================================
  *		End of Class CSrConditionDlg Definition
@@ -161,5 +178,5 @@ public:
 
 #endif
 /*===========================================================================
- *		End of File SrConditiondlg.H
+ *		End of File SrConditionDlg.H
  *=========================================================================*/

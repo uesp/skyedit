@@ -941,6 +941,9 @@
     <ClCompile Include="..\tes5lib\modfile\subrecords\srsubrecord.cpp">
       <Filter>Source Files\ESP</Filter>
     </ClCompile>
+    <ClCompile Include="dialogs\SrFunctionParamDlg.cpp">
+      <Filter>Source Files\Forms\CommonDlg</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">
@@ -1300,9 +1303,6 @@
       <Filter>Header Files\ESP.</Filter>
     </ClInclude>
     <ClInclude Include="SrConditionDlg.h">
-      <Filter>Header Files\Forms.\Dialogs.</Filter>
-    </ClInclude>
-    <ClInclude Include="SrFunctionDlg.h">
       <Filter>Header Files\Forms.\Dialogs.</Filter>
     </ClInclude>
     <ClInclude Include="..\tes5lib\modfile\records\srbasereccont.h">
@@ -1985,6 +1985,12 @@
     </ClInclude>
     <ClInclude Include="dialogs\SrAvifView.h">
       <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="SrFunctionDlg.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="dialogs\SrFunctionParamDlg.h">
+      <Filter>Header Files\Forms.\CommonDlg.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -15,6 +15,7 @@
 #include "SrConditionDlg.h"
 #include "afxdialogex.h"
 #include "SrFunctionDlg.h"
+#include "dialogs/SrFunctionParamDlg.h"
 
 
 /*===========================================================================
@@ -68,6 +69,12 @@ BEGIN_MESSAGE_MAP(CSrConditionDlg, CDialogEx)
 	ON_EN_CHANGE(IDC_REFERENCE_TEXT, &CSrConditionDlg::OnEnChangeReferenceText)
 	ON_WM_LBUTTONDBLCLK()
 	ON_EN_CHANGE(IDC_PARAM1_TEXT, &CSrConditionDlg::OnEnChangeParam1Text)
+	ON_EN_CHANGE(IDC_PARAM2_TEXT, &CSrConditionDlg::OnEnChangeParam2Text)
+	ON_EN_CHANGE(IDC_PARAM3_TEXT, &CSrConditionDlg::OnEnChangeParam3Text)
+	ON_COMMAND(ID_CONDITION_PASTECONDITION, &CSrConditionDlg::OnConditionPastecondition)
+	ON_UPDATE_COMMAND_UI(ID_CONDITION_PASTECONDITION, &CSrConditionDlg::OnUpdateConditionPastecondition)
+	ON_COMMAND(ID_CONDITION_DUPLICATE, &CSrConditionDlg::OnConditionDuplicate)
+	ON_UPDATE_COMMAND_UI(ID_CONDITION_DUPLICATE, &CSrConditionDlg::OnUpdateConditionDuplicate)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -81,15 +88,15 @@ END_MESSAGE_MAP()
  *=========================================================================*/
 static srreclistcolinit_t s_ConditionListInit[] = 
 {
-	{ SR_FIELD_RUNON,		 100,		LVCFMT_CENTER },
-	{ SR_FIELD_REFERENCE,	 100,		LVCFMT_CENTER },
+	{ SR_FIELD_RUNON,		 65,		LVCFMT_CENTER },
+	{ SR_FIELD_REFERENCE,	 70,		LVCFMT_CENTER },
 	{ SR_FIELD_FUNCTION,	 150,		LVCFMT_CENTER },
-	{ SR_FIELD_PARAM1,		 120,		LVCFMT_CENTER },
-	{ SR_FIELD_PARAM2,		 120,		LVCFMT_CENTER },
-	{ SR_FIELD_PARAM3,		 120,		LVCFMT_CENTER },
-	{ SR_FIELD_OPERATOR,	 50,		LVCFMT_CENTER },
-	{ SR_FIELD_VALUE,		 75,		LVCFMT_CENTER },
-	{ SR_FIELD_CONDFLAGSEX,	 100,		LVCFMT_CENTER },
+	{ SR_FIELD_PARAM1,		 90,		LVCFMT_CENTER },
+	{ SR_FIELD_PARAM2,		 90,		LVCFMT_CENTER },
+	{ SR_FIELD_PARAM3,		 90,		LVCFMT_CENTER },
+	{ SR_FIELD_OPERATOR,	 30,		LVCFMT_CENTER },
+	{ SR_FIELD_VALUE,		 90,		LVCFMT_CENTER },
+	{ SR_FIELD_CONDFLAGSEX,	 70,		LVCFMT_CENTER },
 	{ SR_FIELD_NONE, 0, 0 }
  };
 
@@ -304,48 +311,98 @@ int CSrConditionDlg::AddConditionList (srconditioninfo_t* pCondition)
  *=========================================================================*/
 void CSrConditionDlg::UpdateConditionList (const int ListIndex, const bool Update) 
 {
-	srrlcustomdata_t* pCustomData;
+	srrlcustomdata_t*	pCustomData;
 	srfunction_t*		pFunction;
-	CString			Buffer;
+	CString				Buffer;
+	CSString			ParamString;
+	CSrSubrecord*		pSubrecord;
+	CSrCtdaSubrecord*   pCondition;
+	CSrStringSubrecord* pString1 = NULL;
+	CSrStringSubrecord* pString2 = NULL;
+	const char*			pEditorID;
+	bool				Result;
 	
 	pCustomData = m_ConditionList.GetCustomData(ListIndex);
 	if (pCustomData == NULL) return;
 	
 	if (Update) m_ConditionList.UpdateRecord(ListIndex);
 	
-	CSrCtdaSubrecord* pCondition = SrCastClassNull(CSrCtdaSubrecord, pCustomData->Subrecords[0]);
+	pCondition = SrCastClassNull(CSrCtdaSubrecord, pCustomData->Subrecords[0]);
 	if (pCondition == NULL) return;
-	
+
 	pFunction = GetSrFunction(pCondition->GetCtdtData().Function + SR_CTDA_FUNCOFFSET);
 	if (pFunction == NULL) return;
+		
+	pSubrecord = pCustomData->Subrecords[1];
+	if (pSubrecord != NULL && pSubrecord->GetRecordType() == SR_NAME_CIS1) pString1 = SrCastClass(CSrStringSubrecord, pSubrecord);
+	if (pSubrecord != NULL && pSubrecord->GetRecordType() == SR_NAME_CIS2) pString2 = SrCastClass(CSrStringSubrecord, pSubrecord);
+
+	pSubrecord = pCustomData->Subrecords[2];
+	if (pSubrecord != NULL && pSubrecord->GetRecordType() == SR_NAME_CIS1) pString1 = SrCastClass(CSrStringSubrecord, pSubrecord);
+	if (pSubrecord != NULL && pSubrecord->GetRecordType() == SR_NAME_CIS2) pString2 = SrCastClass(CSrStringSubrecord, pSubrecord);
 	
-	if (pCustomData->Subrecords[1] != NULL && pCustomData->Subrecords[1]->GetRecordType() == SR_NAME_CIS1)
+	ParamString.Empty();
+
+	if (pFunction->NumParams >= 1) 
 	{
-		CSrStringSubrecord* pString = SrCastClass(CSrStringSubrecord, pCustomData->Subrecords[1]);
-		if (pString) m_ConditionList.SetCustomField(ListIndex, SR_FIELD_PARAM1, pString->GetString().c_str());
+		if (IsSrFunctionParamString(pFunction->Params[0].Type) && pString1 != NULL)
+			ParamString = pString1->GetString();
+		else
+		{
+			Result = SrFunctionParamToString(ParamString, pFunction->Params[0].Type, pCondition->GetCtdtData().Parameter1, m_pRecord->GetParent());
+			if (!Result) ParamString.Format("0x%08X", pCondition->GetCtdtData().Parameter1);
+		}
 	}
-	else if (pFunction->NumParams >= 1 && IsSrFunctionParamFormID(pFunction->Params[0].Type)) 
+
+	m_ConditionList.SetCustomField(ListIndex, SR_FIELD_PARAM1, ParamString);
+	ParamString.Empty();
+
+	if (pFunction->NumParams >= 2)
 	{
-		const SSCHAR* pEditorID = m_pRecord->GetParent()->GetEditorID(pCondition->GetCtdtData().Parameter1);
-		if (pEditorID != NULL) m_ConditionList.SetCustomField(ListIndex, SR_FIELD_PARAM1, pEditorID);
+		if (IsSrFunctionParamString(pFunction->Params[1].Type) && pString2 != NULL)
+			ParamString = pString2->GetString();
+		else
+		{
+			Result = SrFunctionParamToString(ParamString, pFunction->Params[1].Type, pCondition->GetCtdtData().Parameter2, m_pRecord->GetParent());
+			if (!Result) ParamString.Format("0x%08X", pCondition->GetCtdtData().Parameter2);
+		}
 	}
-	
-	if (pCustomData->Subrecords[2] != NULL && pCustomData->Subrecords[2]->GetRecordType() == SR_NAME_CIS2)
+
+	m_ConditionList.SetCustomField(ListIndex, SR_FIELD_PARAM2, ParamString);
+	ParamString.Empty();
+
+	if (pFunction->NumParams >= 3) 
 	{
-		CSrStringSubrecord* pString = SrCastClassNull(CSrStringSubrecord, pCustomData->Subrecords[2]);
-		if (pString) m_ConditionList.SetCustomField(ListIndex, SR_FIELD_PARAM2, pString->GetString().c_str());
+		if (IsSrFunctionParamString(pFunction->Params[2].Type))
+			ParamString = "Error: String Param3";
+		else
+		{
+			SrFunctionParamToString(ParamString, pFunction->Params[2].Type, pCondition->GetCtdtData().Parameter3, m_pRecord->GetParent());
+			if (!Result) ParamString.Format("0x%08X", pCondition->GetCtdtData().Parameter3);
+		}
 	}
-	else if (pCustomData->Subrecords[1] != NULL && pCustomData->Subrecords[1]->GetRecordType() == SR_NAME_CIS2)
+
+	m_ConditionList.SetCustomField(ListIndex, SR_FIELD_PARAM3, ParamString);
+
+	if (pCondition->IsUseGlobal())
 	{
-		CSrStringSubrecord* pString = SrCastClass(CSrStringSubrecord, pCustomData->Subrecords[1]);
-		if (pString) m_ConditionList.SetCustomField(ListIndex, SR_FIELD_PARAM2, pString->GetString().c_str());
-	}  
-	else if (pFunction->NumParams >= 2 && IsSrFunctionParamFormID(pFunction->Params[1].Type)) 
-	{
-		const SSCHAR* pEditorID = m_pRecord->GetParent()->GetEditorID(pCondition->GetCtdtData().Parameter2);
-		if (pEditorID != NULL) m_ConditionList.SetCustomField(ListIndex, SR_FIELD_PARAM2, pEditorID);
+		pEditorID = m_pRecord->GetParent()->GetEditorID(pCondition->GetCtdtData().GlobalID);
+
+		if (pEditorID != NULL)
+			m_ConditionList.SetCustomField(ListIndex, SR_FIELD_VALUE, pEditorID);
+		else if (pCondition->GetCtdtData().GlobalID == 0)
+			m_ConditionList.SetCustomField(ListIndex, SR_FIELD_VALUE, "");
+		else
+		{
+			Buffer.Format("0x%08X", pCondition->GetCtdtData().GlobalID);
+			m_ConditionList.SetCustomField(ListIndex, SR_FIELD_VALUE, Buffer);
+		}
 	}
-	
+	else
+	{
+		Buffer.Format("%g", pCondition->GetCtdtData().Value);
+		m_ConditionList.SetCustomField(ListIndex, SR_FIELD_VALUE, Buffer);
+	}	
 }
 /*===========================================================================
  *		End of Class Method CSrConditionDlg::UpdateConditionList()
@@ -382,14 +439,39 @@ bool CSrConditionDlg::DoModal (CSrRecord* pRecord, CSrConditionArray* pCondition
  *=========================================================================*/
 
 
+void CSrConditionDlg::GetConditionParamControlData (CEdit& ParamEdit, const dword ParamIndex, int& ParamValue)
+{
+	CString Buffer;
+	bool	Result;
+
+	if (m_pCurrentFunction == NULL) return;
+	if (m_pCurrentFunction->NumParams < ParamIndex + 1) return;
+
+	ParamEdit.GetWindowTextA(Buffer);
+
+	if (IsSrFunctionParamString(m_pCurrentFunction->Params[ParamIndex].Type))
+	{
+		m_pCurrentCondition->SetParam(ParamIndex, Buffer);
+		return;
+	}
+
+	m_pCurrentCondition->DeleteParam(ParamIndex);
+	
+	Result = SrFunctionParamFromString(ParamValue, Buffer, m_pCurrentFunction->Params[ParamIndex].Type, m_pRecord->GetParent());
+	if (Result) return;
+
+	ParamValue = strtoul(Buffer, NULL, 0);
+}
+
+
 void CSrConditionDlg::GetConditionControlData (void)
 {
 	CString    Buffer;
-	srformid_t FormID;
+	int        Index;
 
 	if (m_pCurrentCondition == NULL) return;
 
-	int Index = m_Operator.GetCurSel();
+	Index = m_Operator.GetCurSel();
 	if (Index >= 0) m_pCurrentCondition->Condition.GetCtdtData().CompareType = m_Operator.GetItemData(Index);
 
 	Index = m_RunOnList.GetCurSel();
@@ -398,78 +480,25 @@ void CSrConditionDlg::GetConditionControlData (void)
 	m_Value.GetWindowText(Buffer);
 
 	if (m_FlagUseGlobal.GetCheck())
-	{
 		m_pCurrentCondition->Condition.GetCtdtData().GlobalID = m_pRecord->GetParent()->FindGeneralFormID(Buffer);
-	}
 	else
-	{
 		m_pCurrentCondition->Condition.GetCtdtData().Value = (float) strtod(Buffer, NULL);
-	}
 
 	m_Reference.GetWindowText(Buffer);
 	m_pCurrentCondition->Condition.GetCtdtData().ReferenceID = m_pRecord->GetParent()->FindGeneralFormID(Buffer);
 
 	m_Function.GetWindowText(Buffer);
 	Buffer.Trim(" \t\n\r");
-
-	srfunction_t* pFunction = ::GetSrFunction(Buffer);
-
-	if (pFunction == NULL)
-	{
-		AddSrGeneralError("Unknown function '%s'!", Buffer);
-	}
+	m_pCurrentFunction = GetSrFunction(Buffer);
+	
+	if (m_pCurrentFunction == NULL)
+		AddSrGeneralError("Unknown condition function '%s'!", Buffer);
 	else
-	{
-		m_pCurrentCondition->Condition.GetCtdtData().Function = pFunction->OpCode - SR_CTDA_FUNCOFFSET;
-	}
+		m_pCurrentCondition->Condition.GetCtdtData().Function = m_pCurrentFunction->OpCode - SR_CTDA_FUNCOFFSET;
 
-	m_Param1.GetWindowText(Buffer);
-	Buffer.Trim(" \t\n\r");
-	bool Param1Value = m_pCurrentCondition->SetIfValidParam1(Buffer);
-
-	if (Buffer.Left(2).CompareNoCase("0x") == 0 || Buffer.SpanExcluding("0123456789").IsEmpty())
-	{
-		FormID = strtoul(Buffer, NULL, 0);
-		m_pCurrentCondition->Condition.GetCtdtData().Parameter1 = FormID;
-	}
-	else if (Buffer.IsEmpty())
-	{
-		m_pCurrentCondition->Condition.GetCtdtData().Parameter1 = 0;
-	}
-	else if (!Param1Value)
-	{
-		CSrIdRecord* pRecord = m_pRecord->GetParent()->FindEditorID(Buffer);
-
-		if (pRecord == NULL) 
-		{
-			AddSrGeneralError("Unknown editorid '%s' found!", Buffer);
-		}
-		else
-			m_pCurrentCondition->Condition.GetCtdtData().Parameter1 = pRecord->GetFormID();
-	}
-
-	m_Param2.GetWindowText(Buffer);
-	Buffer.Trim(" \t\n\r");
-	bool Param2Value = m_pCurrentCondition->SetIfValidParam2(Buffer);
-
-	if (Buffer.Left(2).CompareNoCase("0x") == 0 || Buffer.SpanExcluding("0123456789").IsEmpty())
-	{
-		FormID = strtoul(Buffer, NULL, 0);
-		m_pCurrentCondition->Condition.GetCtdtData().Parameter2 = FormID;
-	}
-	else if (Buffer.IsEmpty())
-	{
-		m_pCurrentCondition->Condition.GetCtdtData().Parameter2 = 0;
-	}
-	else if (!Param2Value)
-	{
-		CSrIdRecord* pRecord = m_pRecord->GetParent()->FindEditorID(Buffer);
-
-		if (pRecord == NULL) 
-			AddSrGeneralError("Unknown editorid '%s' found!", Buffer);
-		else
-			m_pCurrentCondition->Condition.GetCtdtData().Parameter2 = pRecord->GetFormID();
-	}
+	GetConditionParamControlData(m_Param1, 0, m_pCurrentCondition->Condition.GetCtdtData().Parameter1);
+	GetConditionParamControlData(m_Param2, 1, m_pCurrentCondition->Condition.GetCtdtData().Parameter2);
+	GetConditionParamControlData(m_Param3, 2, m_pCurrentCondition->Condition.GetCtdtData().Parameter3);
 
 	dword Flags = m_pCurrentCondition->Condition.GetCtdtData().Flags;
 	::FlipFlagBits(Flags, SR_CTDA_FLAG_OR, m_FlagOr.GetCheck() != 0);
@@ -480,6 +509,7 @@ void CSrConditionDlg::GetConditionControlData (void)
 
 	 m_pCurrentCondition->Condition.GetCtdtData().Flags = Flags;
 
+		/* Find and update the appropriate item in the list */
 	 for (int i = 0; i < m_ConditionList.GetItemCount(); ++i)
 	 {
 		 srrlcustomdata_t* pCustomData = (srrlcustomdata_t *) m_ConditionList.GetItemData(i);
@@ -552,28 +582,20 @@ void CSrConditionDlg::SetCurrentCondition (srconditioninfo_t* pCondition)
 
 void CSrConditionDlg::SetConditionControlData (void)
 {
-	const SSCHAR* pEditorID;
-	CString Buffer;
+	const SSCHAR*	pEditorID;
+	CString			Buffer;
+	CSString		ParamString;
+	bool			Result;
 	
 	if (m_pCurrentCondition == NULL)
 	{
 		m_Operator.SetCurSel(-1);
-		m_Reference.SetWindowText("");
-		m_Function.SetWindowText("");
-		m_Value.SetWindowText("");
-		m_Param1.SetWindowText("");
-		m_Param2.SetWindowText("");
-		m_Param3.SetWindowText("");
-		m_Param1Label.SetWindowText("");
-		m_Param2Label.SetWindowText("");
-		m_Param3Label.SetWindowText("");
-
-		m_pCurrentCondition = NULL;
 		m_pCurrentFunction = NULL;
 
 		UpdateFunctionStatus();
 		UpdateReferenceStatus();
 		UpdateValueStatus();
+		UpdateParamsStatus();
 		return;
 	}
 
@@ -585,7 +607,10 @@ void CSrConditionDlg::SetConditionControlData (void)
 
 	FindComboBoxItemData(m_RunOnList, m_pCurrentCondition->Condition.GetCtdtData().RunOnType, true);
 	FindComboBoxItemData(m_Operator, m_pCurrentCondition->Condition.GetCtdtData().CompareType, true);
+
 	m_pCurrentFunction = GetSrFunction(m_pCurrentCondition->Condition.GetCtdtData().Function + SR_CTDA_FUNCOFFSET);
+	if (m_pCurrentFunction == NULL) return;
+	m_Function.SetWindowText(m_pCurrentFunction->Name);
 
 	if (m_FlagUseGlobal.GetCheck())
 	{
@@ -606,17 +631,7 @@ void CSrConditionDlg::SetConditionControlData (void)
 		Buffer.Format("%g", m_pCurrentCondition->Condition.GetCtdtData().Value);
 		m_Value.SetWindowText(Buffer);
 	}	
-
-	if (m_pCurrentFunction != NULL)
-	{
-		m_Function.SetWindowText(m_pCurrentFunction->Name);
-	}
-	else
-	{
-		Buffer.Format("0x%08X", m_pCurrentCondition->Condition.GetCtdtData().Function);
-		m_Function.SetWindowText(Buffer);		
-	}
-
+	
 	pEditorID = m_pRecord->GetParent()->GetEditorID(m_pCurrentCondition->Condition.GetCtdtData().ReferenceID);
 
 	if (pEditorID != NULL)
@@ -633,57 +648,53 @@ void CSrConditionDlg::SetConditionControlData (void)
 		m_Reference.SetWindowText(Buffer);
 	}
 
-	if (m_pCurrentCondition->pParam1)
-	{
-		m_Param1.SetWindowText(m_pCurrentCondition->pParam1->GetString().c_str());
-	}
-	else
-	{
-		pEditorID = NULL;
+	ParamString.Empty();
 
-		if (m_pCurrentFunction != NULL && m_pCurrentFunction->NumParams > 0 && IsSrFunctionParamFormID(m_pCurrentFunction->Params[0].Type))
-		{
-			pEditorID = m_pRecord->GetParent()->GetEditorID(m_pCurrentCondition->Condition.GetCtdtData().Parameter1);
-		}
-
-		if (pEditorID == NULL)
-		{
-			Buffer.Format("0x%08X", m_pCurrentCondition->Condition.GetCtdtData().Parameter1);
-			m_Param1.SetWindowText(Buffer);
-		}
+	if (m_pCurrentFunction->NumParams >= 1) 
+	{
+		if (IsSrFunctionParamString(m_pCurrentFunction->Params[0].Type) && m_pCurrentCondition->pParam1 != NULL)
+			ParamString = m_pCurrentCondition->pParam1->GetString();
 		else
 		{
-			m_Param1.SetWindowText(pEditorID);
+			Result = SrFunctionParamToString(ParamString, m_pCurrentFunction->Params[0].Type, m_pCurrentCondition->Condition.GetCtdtData().Parameter1, m_pRecord->GetParent());
+			if (!Result) ParamString.Format("0x%08X", m_pCurrentCondition->Condition.GetCtdtData().Parameter1);
 		}
 	}
 
-	if (m_pCurrentCondition->pParam2)
-	{
-		m_Param2.SetWindowText(m_pCurrentCondition->pParam2->GetString().c_str());
-	}
-	else
-	{
-		pEditorID = NULL;
-		
-		if (m_pCurrentFunction != NULL && m_pCurrentFunction->NumParams > 1 && IsSrFunctionParamFormID(m_pCurrentFunction->Params[1].Type))
-		{
-			pEditorID = m_pRecord->GetParent()->GetEditorID(m_pCurrentCondition->Condition.GetCtdtData().Parameter2);
-		}
+	m_Param1.SetWindowTextA(ParamString);
+	ParamString.Empty();
 
-		if (pEditorID == NULL)
-		{
-			Buffer.Format("0x%08X", m_pCurrentCondition->Condition.GetCtdtData().Parameter2);
-			m_Param2.SetWindowText(Buffer);
-		}
+	if (m_pCurrentFunction->NumParams >= 2)
+	{
+		if (IsSrFunctionParamString(m_pCurrentFunction->Params[1].Type) && m_pCurrentCondition->pParam2 != NULL)
+			ParamString = m_pCurrentCondition->pParam2->GetString();
 		else
 		{
-			m_Param2.SetWindowText(pEditorID);
+			Result = SrFunctionParamToString(ParamString, m_pCurrentFunction->Params[1].Type, m_pCurrentCondition->Condition.GetCtdtData().Parameter2, m_pRecord->GetParent());
+			if (!Result) ParamString.Format("0x%08X", m_pCurrentCondition->Condition.GetCtdtData().Parameter2);
 		}
 	}
 
+	m_Param2.SetWindowTextA(ParamString);
+	ParamString.Empty();
+
+	if (m_pCurrentFunction->NumParams >= 3) 
+	{
+		if (IsSrFunctionParamString(m_pCurrentFunction->Params[0].Type))
+			ParamString = "Error: String Param3";
+		else
+		{
+			Result = SrFunctionParamToString(ParamString, m_pCurrentFunction->Params[2].Type, m_pCurrentCondition->Condition.GetCtdtData().Parameter2, m_pRecord->GetParent());
+			if (!Result) ParamString.Format("0x%08X", m_pCurrentCondition->Condition.GetCtdtData().Parameter3);
+		}
+	}
+
+	m_Param3.SetWindowTextA(ParamString);
+	
 	UpdateReferenceStatus();
 	UpdateFunctionStatus();
 	UpdateValueStatus();
+	UpdateParamsStatus();
 }
 
 
@@ -730,9 +741,16 @@ void CSrConditionDlg::OnBnClickedSelectfunctionButton()
 
 	m_Function.SetWindowText(Buffer);
 	m_pCurrentFunction = GetSrFunction(Buffer);
+
 	UpdateFunctionStatus();
 
-	SetCurrentCondition(m_pCurrentCondition);
+	m_Param1.RedrawWindow();
+	m_Param2.RedrawWindow();
+	m_Param3.RedrawWindow();
+	m_Value.RedrawWindow();
+	m_Reference.RedrawWindow();
+
+	//GetConditionControlData();
 }
 
 
@@ -755,36 +773,86 @@ void CSrConditionDlg::UpdateReferenceStatus (void)
 
 void CSrConditionDlg::UpdateFunctionStatus (void)
 {
-
-	if (m_pCurrentFunction == NULL)
-	{
-		m_Param2.EnableWindow(false);
-		m_Param3.EnableWindow(false);
-		m_Param2Button.EnableWindow(false);
-		m_Param3Button.EnableWindow(false);
-		m_Param2Label.SetWindowTextA("");
-		m_Param3Label.SetWindowTextA("");
-		UpdateValueStatus();
-		UpdateParam1Status();
-		return;
-	}
-		
-	if (m_pCurrentFunction->NumParams < 2)
-	{
-		m_Param2.EnableWindow(false);
-		m_Param2Button.EnableWindow(false);
-		m_Param2Label.SetWindowTextA("None");
-	}
-
-	if (m_pCurrentFunction->NumParams < 3)
-	{
-		m_Param3.EnableWindow(false);
-		m_Param3Button.EnableWindow(false);
-		m_Param3Label.SetWindowTextA("None");
-	}
-
 	UpdateValueStatus();
+	UpdateParamsStatus();
+}
+
+
+bool CSrConditionDlg::IsFunctionParamSelectable (const int ParamType)
+{
+
+	switch (ParamType)
+	{
+		case SR_FUNCPARAM_REFERENCE		:
+		case SR_FUNCPARAM_ACTORVALUE	:
+		case SR_FUNCPARAM_ACTOR			:
+		case SR_FUNCPARAM_SPELLITEM		:
+		case SR_FUNCPARAM_AXIS			:
+		case SR_FUNCPARAM_CELL			:
+		case SR_FUNCPARAM_ANIMGROUP		:
+		case SR_FUNCPARAM_MAGICITEM		:
+		case SR_FUNCPARAM_SOUND			:
+		case SR_FUNCPARAM_TOPIC			:
+		case SR_FUNCPARAM_QUEST			:
+		case SR_FUNCPARAM_RACE			:
+		case SR_FUNCPARAM_CLASS			:
+		case SR_FUNCPARAM_FACTION		:
+		case SR_FUNCPARAM_GENDER		:
+		case SR_FUNCPARAM_GLOBAL		:
+		case SR_FUNCPARAM_FURNITURE		:
+		case SR_FUNCPARAM_WEAPON		:
+		case SR_FUNCPARAM_STAGE			:
+		case SR_FUNCPARAM_ACTORBASE		:
+		case SR_FUNCPARAM_CONTAINER		:
+		case SR_FUNCPARAM_WORLDSPACE	:
+		case SR_FUNCPARAM_CRIME			:
+		case SR_FUNCPARAM_PACKAGE		:
+		case SR_FUNCPARAM_COMBATSTYLE	:
+		case SR_FUNCPARAM_MAGICEFFECT	:
+		case SR_FUNCPARAM_FORMTYPE		:
+		case SR_FUNCPARAM_WEATHER		:
+		case SR_FUNCPARAM_OWNER			:
+		case SR_FUNCPARAM_EFFECTSHADER	:
+		case SR_FUNCPARAM_FORMLIST		:
+		case SR_FUNCPARAM_PERK			:
+		case SR_FUNCPARAM_IMAGESPACE	:
+		case SR_FUNCPARAM_VOICETYPE		:
+		case SR_FUNCPARAM_ENCOUNTERZONE	:
+		case SR_FUNCPARAM_IDLE			:
+		case SR_FUNCPARAM_MESSAGE		:
+		case SR_FUNCPARAM_EQUIPABLEITEM	:
+		case SR_FUNCPARAM_EQUIPTYPE		:
+		case SR_FUNCPARAM_MUSIC			:
+		case SR_FUNCPARAM_CRITICALSTAGE	:
+		case SR_FUNCPARAM_KEYWORD		:
+		case SR_FUNCPARAM_LOCREFTYPE	:
+		case SR_FUNCPARAM_LOCATION		:
+		case SR_FUNCPARAM_QUESTALIAS	:
+		case SR_FUNCPARAM_SHOUT			:
+		case SR_FUNCPARAM_WORDOFPOWER	:
+		case SR_FUNCPARAM_SCENE			:
+		case SR_FUNCPARAM_CASTSOURCE	:
+		case SR_FUNCPARAM_ASSOCTYPE		:
+		case SR_FUNCPARAM_WARDSTATE		:
+		case SR_FUNCPARAM_FURNANIM		:
+		case SR_FUNCPARAM_FURNENTRY		:
+		case SR_FUNCPARAM_SOUNDCATE		:
+		case SR_FUNCPARAM_SKILLACTION	:
+		case SR_FUNCPARAM_KNOWFORM		:
+		case SR_FUNCPARAM_REGION		:
+		case SR_FUNCPARAM_ACTION		:
+			return true;
+	};
+
+	return false;
+}
+
+
+void CSrConditionDlg::UpdateParamsStatus (void)
+{
 	UpdateParam1Status();
+	UpdateParam2Status();
+	UpdateParam3Status();
 }
 
 
@@ -799,7 +867,43 @@ void CSrConditionDlg::UpdateParam1Status (void)
 		return;
 	}
 
+	m_Param1.EnableWindow(true);
 	m_Param1Label.SetWindowTextA(GetSrFunctionParamTypeString(m_pCurrentFunction->Params[0].Type));
+	m_Param1Button.EnableWindow(IsFunctionParamSelectable(m_pCurrentFunction->Params[0].Type));
+}
+
+
+void CSrConditionDlg::UpdateParam2Status (void)
+{
+
+	if (m_pCurrentCondition == NULL || m_pCurrentFunction == NULL || m_pCurrentFunction->NumParams < 2)
+	{
+		m_Param2.EnableWindow(false);
+		m_Param2Button.EnableWindow(false);
+		m_Param2Label.SetWindowTextA("");
+		return;
+	}
+
+	m_Param2.EnableWindow(true);
+	m_Param2Label.SetWindowTextA(GetSrFunctionParamTypeString(m_pCurrentFunction->Params[1].Type));
+	m_Param2Button.EnableWindow(IsFunctionParamSelectable(m_pCurrentFunction->Params[1].Type));
+}
+
+
+void CSrConditionDlg::UpdateParam3Status (void)
+{
+
+	if (m_pCurrentCondition == NULL || m_pCurrentFunction == NULL || m_pCurrentFunction->NumParams < 3)
+	{
+		m_Param3.EnableWindow(false);
+		m_Param3Button.EnableWindow(false);
+		m_Param3Label.SetWindowTextA("");
+		return;
+	}
+
+	m_Param3.EnableWindow(true);
+	m_Param3Label.SetWindowTextA(GetSrFunctionParamTypeString(m_pCurrentFunction->Params[2].Type));
+	m_Param3Button.EnableWindow(IsFunctionParamSelectable(m_pCurrentFunction->Params[2].Type));
 }
 
 
@@ -832,16 +936,52 @@ void CSrConditionDlg::UpdateValueStatus (void)
 
 void CSrConditionDlg::OnBnClickedSelectparam1Button()
 {
+	CSrFunctionParamDlg Dlg;
+	CString				Buffer;
+
+	if (m_pCurrentCondition == NULL) return;
+	if (m_pCurrentFunction  == NULL) return;
+	if (m_pCurrentFunction->NumParams < 1) return;
+
+	m_Param1.GetWindowTextA(Buffer);
+
+	if (!Dlg.DoModal(Buffer, m_pCurrentFunction->Params[0].Type, *m_pRecord->GetParent())) return;
+
+	m_Param1.SetWindowTextA(Buffer);
 }
 
 
 void CSrConditionDlg::OnBnClickedSelectparam2Button()
 {
+	CSrFunctionParamDlg Dlg;
+	CString				Buffer;
+
+	if (m_pCurrentCondition == NULL) return;
+	if (m_pCurrentFunction  == NULL) return;
+	if (m_pCurrentFunction->NumParams < 2) return;
+
+	m_Param2.GetWindowTextA(Buffer);
+
+	if (!Dlg.DoModal(Buffer, m_pCurrentFunction->Params[1].Type, *m_pRecord->GetParent())) return;
+
+	m_Param2.SetWindowTextA(Buffer);
 }
 
 
 void CSrConditionDlg::OnBnClickedSelectparam3Button()
 {
+	CSrFunctionParamDlg Dlg;
+	CString				Buffer;
+
+	if (m_pCurrentCondition == NULL) return;
+	if (m_pCurrentFunction  == NULL) return;
+	if (m_pCurrentFunction->NumParams < 3) return;
+
+	m_Param3.GetWindowTextA(Buffer);
+
+	if (!Dlg.DoModal(Buffer, m_pCurrentFunction->Params[2].Type, *m_pRecord->GetParent())) return;
+
+	m_Param3.SetWindowTextA(Buffer);
 }
 
 
@@ -1004,7 +1144,7 @@ void CSrConditionDlg::OnCondDelete()
 }
 
 
-void CSrConditionDlg::OnCondCopyCondition()
+void CSrConditionDlg::OnConditionDuplicate()
 {
 	srconditioninfo_t* pCondition = GetSelectedCondition();
 	if (pCondition == NULL) return;
@@ -1021,6 +1161,66 @@ void CSrConditionDlg::OnCondCopyCondition()
 
 	SetConditionList();
 	SelectCondition(ListIndex+1);
+}
+
+
+void CSrConditionDlg::OnUpdateConditionDuplicate(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(m_ConditionList.GetSelectedCount() > 0);
+}
+
+
+void CSrConditionDlg::OnCondCopyCondition()
+{
+	POSITION Pos = m_ConditionList.GetFirstSelectedItemPosition();
+
+	SrGlobClipClearConditions();
+	GetConditionControlData();
+
+	while (Pos)
+	{
+		int ListIndex = m_ConditionList.GetNextSelectedItem(Pos);
+		srconditioninfo_t* pCondition = m_Conditions[ListIndex];
+		SrGlobClipAddCondition(pCondition);
+	}
+
+}
+
+
+void CSrConditionDlg::OnConditionPastecondition()
+{
+	GetConditionControlData();
+
+	int ListIndex = m_ConditionList.GetSelectedItem();
+	if (ListIndex < 0) ListIndex = 0;
+	
+	for (dword i = 0; i < SrGlobClipGetConditions().GetSize(); ++i)
+	{
+		srconditioninfo_t* pNewCond = new srconditioninfo_t;
+		pNewCond->Copy(*SrGlobClipGetConditions()[i]);
+
+		m_Conditions.InsertAfter(ListIndex, pNewCond);
+	}
+
+	SetConditionList();
+	SelectCondition(ListIndex+1);
+}
+
+
+void CSrConditionDlg::OnUpdateConditionPastecondition(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(SrGlobClipGetConditions().GetSize() > 0);
+
+	CString Buffer;
+
+	if (SrGlobClipGetConditions().GetSize() == 0)
+		Buffer = "Paste Condition(s)";
+	else if (SrGlobClipGetConditions().GetSize() == 1)
+		Buffer = "Paste 1 Condition";
+	else
+		Buffer.Format("Paste %d Conditions", SrGlobClipGetConditions().GetSize());
+		
+	pCmdUI->SetText(Buffer);
 }
 
 
@@ -1141,16 +1341,16 @@ int CSrConditionDlg::IsValidReference (void)
 }
 
 
-int CSrConditionDlg::IsValidParam1 (void)
+int CSrConditionDlg::IsValidParam (CEdit& ParamEdit, const dword ParamIndex)
 {
 	if (m_pCurrentCondition == NULL) return SR_CHECKRESULT_UNKNOWN;
 	if (m_pCurrentFunction  == NULL) return SR_CHECKRESULT_UNKNOWN;
-	if (m_pCurrentFunction->NumParams < 1) return SR_CHECKRESULT_UNKNOWN;
+	if (m_pCurrentFunction->NumParams < ParamIndex + 1) return SR_CHECKRESULT_UNKNOWN;
 
 	CString Buffer;
-	m_Param1.GetWindowTextA(Buffer);
+	ParamEdit.GetWindowTextA(Buffer);
 
-	if (SrCheckFunctionParam(Buffer, m_pCurrentFunction->Params[0].Type, m_pRecord->GetParent())) return SR_CHECKRESULT_OK;
+	if (SrCheckFunctionParam(Buffer, m_pCurrentFunction->Params[ParamIndex].Type, m_pRecord->GetParent())) return SR_CHECKRESULT_OK;
 	return SR_CHECKRESULT_ERROR;
 }
 
@@ -1217,6 +1417,42 @@ HBRUSH CSrConditionDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	else if (nCtlColor == CTLCOLOR_EDIT && pWnd == &m_Param1) 
 	{
 		switch (IsValidParam1())
+		{
+		case SR_CHECKRESULT_NOCHANGE:
+			hBrush = CreateSolidBrush(s_UnchangedColor);
+			pDC->SetBkColor(s_UnchangedColor);
+			break;
+		case SR_CHECKRESULT_OK:
+			hBrush = CreateSolidBrush(s_OkColor);
+			pDC->SetBkColor(s_OkColor);
+			break;
+		case SR_CHECKRESULT_ERROR:
+			hBrush = CreateSolidBrush(s_ErrorColor);
+			pDC->SetBkColor(s_ErrorColor);
+			break;
+		}		
+	}
+	else if (nCtlColor == CTLCOLOR_EDIT && pWnd == &m_Param2) 
+	{
+		switch (IsValidParam2())
+		{
+		case SR_CHECKRESULT_NOCHANGE:
+			hBrush = CreateSolidBrush(s_UnchangedColor);
+			pDC->SetBkColor(s_UnchangedColor);
+			break;
+		case SR_CHECKRESULT_OK:
+			hBrush = CreateSolidBrush(s_OkColor);
+			pDC->SetBkColor(s_OkColor);
+			break;
+		case SR_CHECKRESULT_ERROR:
+			hBrush = CreateSolidBrush(s_ErrorColor);
+			pDC->SetBkColor(s_ErrorColor);
+			break;
+		}		
+	}
+	else if (nCtlColor == CTLCOLOR_EDIT && pWnd == &m_Param3) 
+	{
+		switch (IsValidParam3())
 		{
 		case SR_CHECKRESULT_NOCHANGE:
 			hBrush = CreateSolidBrush(s_UnchangedColor);
@@ -1348,4 +1584,25 @@ void CSrConditionDlg::OnEnChangeParam1Text()
 {
 		/* Force redraw to update valid/invalid color */
 	m_Param1.RedrawWindow();
+}
+
+
+void CSrConditionDlg::OnEnChangeParam2Text()
+{
+		/* Force redraw to update valid/invalid color */
+	m_Param2.RedrawWindow();
+}
+
+
+void CSrConditionDlg::OnEnChangeParam3Text()
+{
+		/* Force redraw to update valid/invalid color */
+	m_Param3.RedrawWindow();
+}
+
+
+BOOL CSrConditionDlg::PreTranslateMessage (MSG* pMsg)
+{
+	UpdateDialogControls(this, TRUE);
+	return CDialogEx::PreTranslateMessage( pMsg );
 }

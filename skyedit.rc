@@ -2404,6 +2404,23 @@ BEGIN
     PUSHBUTTON      "Edit",ID_EDIT_SECTCNAM,238,230,31,12
 END
 
+IDD_FUNCTIONPARAM_DLG DIALOGEX 0, 0, 270, 231
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Skyrim Function Parameter Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    RTEXT           "Previous Value",-1,7,9,49,8
+    EDITTEXT        IDC_PREVIOUS_TEXT,61,7,126,12,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "Current Value",-1,7,24,49,8
+    EDITTEXT        IDC_CURRENT_TEXT,61,22,126,12,ES_AUTOHSCROLL
+    RTEXT           "Filter",IDC_FILTER_LABEL,7,40,49,8
+    EDITTEXT        IDC_FILTER_TEXT,61,38,91,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Reset",ID_CLEAR_FILTER,152,38,36,12
+    CONTROL         "",IDC_PARAM_LIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,54,256,170
+    DEFPUSHBUTTON   "OK",IDOK,213,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,213,26,50,14
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2417,7 +2434,9 @@ BEGIN
         MENUITEM "Insert Before",               ID_COND_INSERTBEFORE
         MENUITEM "Insert After",                ID_COND_INSERTAFTER
         MENUITEM SEPARATOR
-        MENUITEM "Copy Conditon",               ID_COND_COPYCONDITION
+        MENUITEM "Duplicate",                   ID_CONDITION_DUPLICATE
+        MENUITEM "Copy Condition(s)",           ID_COND_COPYCONDITION
+        MENUITEM "Paste Condition(s)",          ID_CONDITION_PASTECONDITION
         MENUITEM SEPARATOR
         MENUITEM "Move Up",                     ID_COND_MOVEUP
         MENUITEM "Move Down",                   ID_COND_MOVEDOWN
@@ -3079,6 +3098,15 @@ BEGIN
         VERTGUIDE, 366
         TOPMARGIN, 7
         BOTTOMMARGIN, 260
+    END
+
+    IDD_FUNCTIONPARAM_DLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 263
+        VERTGUIDE, 187
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 224
     END
 END
 #endif    // APSTUDIO_INVOKED

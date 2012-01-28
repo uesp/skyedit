@@ -148,27 +148,28 @@ public:
  *
  *=========================================================================*/
 
-  CSrEditApp&    GetSrEditApp        (void);
-  CSrConfigFile& GetSrEditConfigFile (void);
+	CSrEditApp&    GetSrEditApp        (void);
+	CSrConfigFile& GetSrEditConfigFile (void);
 
-  bool SrEditShowError     (const dword Flags, const TCHAR* pTitle, const TCHAR* pString, ...);
-  bool SrEditShowError     (const TCHAR* pTitle, const TCHAR* pString, ...);
-  bool SrEditShowError     (const TCHAR* pString, ...);
-  bool SrEditShowLastError (const TCHAR* pString, ...);
+	bool SrEditShowError     (const dword Flags, const TCHAR* pTitle, const TCHAR* pString, ...);
+	bool SrEditShowError     (const TCHAR* pTitle, const TCHAR* pString, ...);
+	bool SrEditShowError     (const TCHAR* pString, ...);
+	bool SrEditShowLastError (const TCHAR* pString, ...);
 
-  bool OpenWebPage (const char* pAddress);
+	bool OpenWebPage (const char* pAddress);
 
-  void SrLockUndoUpdates (const bool Lock);
+	void SrLockUndoUpdates (const bool Lock);
 
-  void WINAPI SetInternalWindowText(HWND hwnd, LPCTSTR lpText);
+	void WINAPI SetInternalWindowText(HWND hwnd, LPCTSTR lpText);
+
+	void SrGlobClipAddCondition(srconditioninfo_t* pCondition, const bool Clear = false);
+	void SrGlobClipClearConditions();
+	CSrConditionArray& SrGlobClipGetConditions (void);
 
 /*===========================================================================
  *		End of External Definitions
  *=========================================================================*/
 
-
-//{{AFX_INSERT_LOCATION}}
-//}}AFX_INSERT_LOCATION
 
 
 #endif

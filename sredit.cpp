@@ -18,8 +18,6 @@
 #include "srloaddlg.h"
 #include "stdarg.h"
 #include "aboutdlg.h"
-//#include "modfile/compiler/obscriptfunctions.h"
-//#include "obscptview.h"
 #include "shlwapi.h"
 
 
@@ -31,13 +29,16 @@
 
 	/* Debug definitions */
 #ifdef _DEBUG
-  #define new DEBUG_NEW
-  #undef THIS_FILE
-  static char THIS_FILE[] = __FILE__;
+	#define new DEBUG_NEW
+	#undef THIS_FILE
+	static char THIS_FILE[] = __FILE__;
 #endif
 
-	/* Main application object */
-  CSrEditApp theApp;
+		/* Main application object */
+	CSrEditApp theApp;
+
+		/* Global clipboard objects */
+	CSrConditionArray g_GlobClipConditions;
 
 /*===========================================================================
  *		End of Local Definitions
@@ -50,14 +51,9 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrEditApp, CWinApp)
-  //{{AFX_MSG_MAP(CSrEditApp)
-  ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
-  //}}AFX_MSG_MAP
-
-	/* Standard file based document commands */
-  ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
-  ON_COMMAND(ID_FILE_OPEN, OnFileOpen)
-
+	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
+	ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
+	ON_COMMAND(ID_FILE_OPEN, OnFileOpen)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrEditApp Message Map
@@ -69,16 +65,14 @@ END_MESSAGE_MAP()
  * Class CSrEditApp Constructor
  *
  *=========================================================================*/
-CSrEditApp::CSrEditApp() {
-  //CSString Test1("test\n-'-\"-%-");
-  //Test1.Escape();
-  //Test1.Unescape();
-  m_pCurrentLoadInfo     = NULL;
-  m_pCurrentProgressDlg  = NULL;
-  m_pCurrentLoadCallback = NULL;
-  m_NewFileIndex         = 1;
-  m_InitResourceHandler  = false;
-  m_pMainFrame           = NULL;
+CSrEditApp::CSrEditApp() 
+{
+	m_pCurrentLoadInfo     = NULL;
+	m_pCurrentProgressDlg  = NULL;
+	m_pCurrentLoadCallback = NULL;
+	m_NewFileIndex         = 1;
+	m_InitResourceHandler  = false;
+	m_pMainFrame           = NULL;
 }
 /*===========================================================================
  *		End of Class CSrEditApp Constructor
@@ -104,7 +98,6 @@ CSrEditApp::~CSrEditApp()
  *
  *=========================================================================*/
 BOOL CSrEditApp::InitInstance() {
-//TODO: call AfxInitRichEdit2() to initialize richedit2 library.
   TCHAR    Buffer[_MAX_PATH + 8];
   CSString PathBuffer;
   bool     Result;
@@ -1062,3 +1055,23 @@ void SrLockUndoUpdates (const bool Lock) {
 /*===========================================================================
  *		End of Function SrLockUndoUpdates()
  *=========================================================================*/
+
+
+void SrGlobClipAddCondition (srconditioninfo_t* pCondition, const bool Clear)
+{
+	if (Clear) g_GlobClipConditions.Destroy();
+	if (pCondition == NULL) return;
+	g_GlobClipConditions.AddNew()->Copy(*pCondition);
+}
+
+
+void SrGlobClipClearConditions (void)
+{
+	g_GlobClipConditions.Destroy();
+}
+
+
+CSrConditionArray& SrGlobClipGetConditions (void)
+{
+	return g_GlobClipConditions;
+}
