@@ -944,6 +944,9 @@
     <ClCompile Include="dialogs\SrFunctionParamDlg.cpp">
       <Filter>Source Files\Forms\CommonDlg</Filter>
     </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\subrecords\SrVmadSubrecord.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">
@@ -1991,6 +1994,9 @@
     </ClInclude>
     <ClInclude Include="dialogs\SrFunctionParamDlg.h">
       <Filter>Header Files\Forms.\CommonDlg.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\SrVmadSubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
