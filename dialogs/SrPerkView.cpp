@@ -779,6 +779,7 @@ void CSrPerkView::SetSectionData (void)
 
 	if (m_pCurrentSection == NULL) 
 	{
+		EnableSectionControls();
 		m_IsUpdating = false;
 		return;	
 	}
