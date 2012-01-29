@@ -821,7 +821,7 @@ UINT CSrScriptView::OnGetDlgCode()
 
 void CSrScriptView::OnDestroy()
 {
-	//CFormView::OnDestroy();
+	CFormView::OnDestroy();
 }
 
 
