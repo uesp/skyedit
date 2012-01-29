@@ -1,8 +1,8 @@
 /*===========================================================================
  *
- * File:	ChildFrmScript.H
- * Author:	Dave Humphrey (dave@uesp.net)
- * Created On:	Thursday, 27 July, 2006
+ * File:		ChildFrmScript.H
+ * Author:		Dave Humphrey (dave@uesp.net)
+ * Created On:	28 January 2012
  *
  * Definition of the CChildFrameScript class.
  *
@@ -27,9 +27,9 @@
  *
  *=========================================================================*/
 
-	/* Forward class definitions */
-  class CSrScptView;
-  class CSrScriptErrorView;
+		/* Forward class definitions */
+	class CSrScriptView;
+	class CSrScriptErrorView;
 
 /*===========================================================================
  *		End of Type Definitions
@@ -41,18 +41,20 @@
  * Class CChildFrameScript Definition
  *
  *=========================================================================*/
-class CChildFrameScript : public CMDIChildWnd {
-  DECLARE_DYNCREATE(CChildFrameScript)
+class CChildFrameScript : public CMDIChildWnd 
+{
+	DECLARE_DYNCREATE(CChildFrameScript)
 
   /*---------- Begin Protected Class Members --------------------*/
 protected:
-  bool			m_IsFakeMaximized;
-  CRect			m_RestoreRect;
+	bool				m_IsFakeMaximized;
+	bool				m_IsInitialized;
+	CRect				m_RestoreRect;
 
-  CSplitterWnd		m_Splitter;
+	CSplitterWndEx		m_Splitter;
 
-  CSrScptView*		m_pScriptView;
-  CSrScriptErrorView*	m_pErrorView;
+	CSrScriptView*		m_pScriptView;
+	CSrScriptErrorView*	m_pErrorView;
 
 
   /*---------- Begin Protected Class Methods --------------------*/
@@ -62,51 +64,41 @@ protected:
   /*---------- Begin Public Class Methods -----------------------*/
 public:
 
-	/* Class constructor/destructor */
-  CChildFrameScript();
-  virtual ~CChildFrameScript();
+		/* Class constructor/destructor */
+	CChildFrameScript();
+	virtual ~CChildFrameScript();
 
-	/* Get class members */
-  CSrScptView*        GetScriptView (void) { return (m_pScriptView); }
-  CSrScriptErrorView* GetErrorView  (void) { return (m_pErrorView); }
+		/* Get class members */
+	CSrScriptView*        GetScriptView (void) { return (m_pScriptView); }
+	CSrScriptErrorView*	GetErrorView  (void) { return (m_pErrorView); }
 
-  void FakeMaximize (void);
-
-  virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
+	void FakeMaximize (void);
+	
+	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
 
 	/* Diagnostics routines */
 #ifdef _DEBUG
-  virtual void AssertValid () const;
-  virtual void Dump (CDumpContext& dc) const;
+	virtual void AssertValid () const;
+	virtual void Dump (CDumpContext& dc) const;
 #endif
 
-
-	/* ClassWizard generated virtual function overrides */
-  //{{AFX_VIRTUAL(CChildFrameScript)
 public:
-  virtual BOOL PreCreateWindow (CREATESTRUCT& cs);
-  virtual BOOL PreTranslateMessage(MSG* pMsg);
-  //}}AFX_VIRTUAL
-
+	virtual BOOL PreCreateWindow (CREATESTRUCT& cs);
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+  
 
   /*---------- Generated message map functions ------------------*/
 protected:
-  //{{AFX_MSG(CChildFrameScript)
-  afx_msg void OnSize (UINT nType, int cx, int cy);
-  afx_msg void OnWindowPosChanging (WINDOWPOS* pPos);
-  afx_msg void OnSysCommand (UINT nID, LPARAM Param);
-  //}}AFX_MSG
+	afx_msg void OnSize (UINT nType, int cx, int cy);
+	afx_msg void OnWindowPosChanging (WINDOWPOS* pPos);
+	afx_msg void OnSysCommand (UINT nID, LPARAM Param);
 
-  DECLARE_MESSAGE_MAP()
+	DECLARE_MESSAGE_MAP()
 
 };
 /*===========================================================================
  *		End of Class CChildFrameScript Definition
  *=========================================================================*/
-
-
-//{{AFX_INSERT_LOCATION}}
-//}}AFX_INSERT_LOCATION
 
 
 #endif

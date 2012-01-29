@@ -32,7 +32,6 @@
 BEGIN_MESSAGE_MAP(CSrPromptDlg, CDialog)
 	ON_BN_CLICKED(ID_BUTTON1, OnButton1)
 	ON_BN_CLICKED(ID_BUTTON2, OnButton2)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrPromptDlg Message Map
@@ -185,6 +184,12 @@ bool ShowSrYesNoDlg (const TCHAR* pTitle, const TCHAR* pLabel)
 /*===========================================================================
  *		End of Function ShowSrYesNoDlg()
  *=========================================================================*/
+
+
+int ShowSrYesNoCancelDlg (const TCHAR* pTitle, const TCHAR* pLabel) 
+{
+  return ShowSrPromptDlg(pTitle, pLabel, "Yes", "No", "Cancel");
+}
 
 
 /*===========================================================================

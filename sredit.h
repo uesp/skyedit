@@ -17,20 +17,21 @@
  *
  *=========================================================================*/
 #ifndef __AFXWIN_H__
-  #error include 'stdafx.h' before including this file for PCH
+	#error include 'stdafx.h' before including this file for PCH
 #endif
 
-  #include "resource.h"
-  #include "modfile/srespfile.h"
-  #include "srprogressdlg.h"
-  #include "windows/srrecordfilter.h"
-  #include "srerrordlg.h"
-  #include "modfile/srmultirecordhandler.h"
-  #include "common/srconfigfile.h"
-  #include "bsafile/srresourcehandler.h"
-  #include "mainfrm.h"
-  #include "srresourceview.h"
-  //#include "modfile/compiler/customcompiler.h"
+	#include "resource.h"
+	#include "modfile/srespfile.h"
+	#include "srprogressdlg.h"
+	#include "windows/srrecordfilter.h"
+	#include "srerrordlg.h"
+	#include "modfile/srmultirecordhandler.h"
+	#include "common/srconfigfile.h"
+	#include "bsafile/srresourcehandler.h"
+	#include "mainfrm.h"
+	#include "srresourceview.h"
+	#include "dialogs/SrScriptView.h"
+	//#include "modfile/compiler/customcompiler.h"
 /*===========================================================================
  *		End of Required Include Files
  *=========================================================================*/
@@ -61,7 +62,7 @@
  * Begin Class CSrEditApp Definition
  *
  *=========================================================================*/
-class CSrEditApp : public CWinApp {
+class CSrEditApp : public CWinAppEx {
 
   /*---------- Begin Protected Class Members -----------------------*/
 protected:
@@ -81,15 +82,24 @@ protected:
   CSrBsaFileArray		m_BsaFiles;
   bool					m_InitResourceHandler;
 
+public:
+	bool	m_EditScriptExternalByDefault;
+
 
   /*--------- Begin Public Class Methods ---------------------------*/
 public:
 
-	/* Class Constructor */
-  CSrEditApp();
-  virtual ~CSrEditApp();
+		/* Class Constructor */
+	CSrEditApp();
+	virtual ~CSrEditApp();
 
-	/* Get class members */
+	bool EditScript           (const char* pFilename, const bool UseInternal);
+	bool EditScript           (const char* pFilename);
+	bool EditScriptExternal   (const char* pFilename);
+
+	bool EditResourceExternal (const char* pFilename);
+
+		/* Get class members */
   srfileloadinfo_t*  GetCurrentLoadInfo     (void) { return (m_pCurrentLoadInfo); }
   CSrProgressDlg*    GetCurrentProgressDlg  (void) { return (m_pCurrentProgressDlg); }
   CSrCallback*       GetCurrentLoadCallback (void) { return (m_pCurrentLoadCallback); }
@@ -113,30 +123,24 @@ public:
   CSrResourceView* CreateResourceView  (void);
   CSrResourceView* OpenResourceView    (void);
 
+  CFrameWnd*       FindScriptsView    (void);
+  CSrScriptView*   CreateScriptsView  (void);
+  CSrScriptView*   OpenScriptsView    (void);
+  void OpenScriptsResourceView (void);
 
   void ResetListState (void);
 
-
   bool AddBsaFile      (const char* pFilename);
-  //bool AddResourcePath (const char* pFilename);
 
-	/* ClassWizard generated virtual function overrides */
-  //{{AFX_VIRTUAL(CSrEditApp)
 public:
   virtual BOOL InitInstance();
   virtual CDocument* OpenDocumentFile(LPCTSTR lpszFileName);
   virtual int ExitInstance();
-  //}}AFX_VIRTUAL
-
-public:
-  //{{AFX_MSG(CSrEditApp)
   afx_msg void OnAppAbout();
   afx_msg void OnFileOpen();
-  //}}AFX_MSG
-
 
   DECLARE_MESSAGE_MAP()
- };
+};
 /*===========================================================================
  *		End of Class CSrEditApp Definition
  *=========================================================================*/
@@ -166,13 +170,14 @@ public:
 	void SrGlobClipClearConditions();
 	CSrConditionArray& SrGlobClipGetConditions (void);
 
+	void OnInitMenuPopupHelper (CWnd* pThis, CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
+
 /*===========================================================================
  *		End of External Definitions
  *=========================================================================*/
 
 
-
 #endif
 /*===========================================================================
- *		End of File Root.H
+ *		End of File SrEdit.h
  *=========================================================================*/

@@ -111,6 +111,12 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{fef491d8-3968-4bf5-bc33-26975c8434fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ESP.\Scripts">
+      <UniqueIdentifier>{f869bf5e-4ada-46c7-b9d1-3a3cc5099c9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ESP\Scripts">
+      <UniqueIdentifier>{c83dfbf9-6a33-421a-a330-b430f880c59f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ColorStatic.cpp">
@@ -349,9 +355,6 @@
     </ClCompile>
     <ClCompile Include="..\tes5lib\modfile\subrecords\srlstringsubrecord.cpp">
       <Filter>Source Files\ESP\Subrecords</Filter>
-    </ClCompile>
-    <ClCompile Include="..\tes5lib\strings\SrStringFile.cpp">
-      <Filter>Source Files\ESP\Strings</Filter>
     </ClCompile>
     <ClCompile Include="..\tes5lib\modfile\records\srmgefrecord.cpp">
       <Filter>Source Files\ESP\Records</Filter>
@@ -946,6 +949,24 @@
     </ClCompile>
     <ClCompile Include="..\tes5lib\modfile\subrecords\SrVmadSubrecord.cpp">
       <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
+    <ClCompile Include="dialogs\SrScriptView.cpp">
+      <Filter>Source Files\Forms\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\strings\SrStringFile.cpp">
+      <Filter>Source Files\ESP\Subrecords</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\scripts\SrScriptFile.cpp">
+      <Filter>Source Files\ESP\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="ChildFrmScript.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="dialogs\SrScriptErrorView.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="dialogs\SrScriptTextCtrl.cpp">
+      <Filter>Source Files\Forms</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1998,6 +2019,21 @@
     <ClInclude Include="..\tes5lib\modfile\subrecords\SrVmadSubrecord.h">
       <Filter>Header Files\ESP.\Subrecords.</Filter>
     </ClInclude>
+    <ClInclude Include="dialogs\SrScriptView.h">
+      <Filter>Header Files\Forms.\Dialogs.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\scripts\SrScriptFile.h">
+      <Filter>Header Files\ESP.\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="ChildFrmScript.h">
+      <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="dialogs\SrScriptErrorView.h">
+      <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="dialogs\SrScriptTextCtrl.h">
+      <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="skyedit.rc">
@@ -2053,5 +2089,7 @@
     <None Include="todo.txt">
       <Filter>Data</Filter>
     </None>
+    <None Include="res\resourceview.ico" />
+    <None Include="res\icon1.ico" />
   </ItemGroup>
 </Project>

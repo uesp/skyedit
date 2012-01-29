@@ -81,28 +81,29 @@
  * Begin Class CSrResourceView Definition
  *
  *=========================================================================*/
-class CSrResourceView : public CFormView {
-  DECLARE_DYNCREATE(CSrResourceView);
+class CSrResourceView : public CFormView 
+{
+	DECLARE_DYNCREATE(CSrResourceView);
 
   /*---------- Begin Protected Class Members ------------------------------*/
 protected:
   CSrResourceHandler*	m_pResourceHandler;	/* References to resource objects */
-  CSrBsaFileArray*	m_pBsaFiles;
+  CSrBsaFileArray*		m_pBsaFiles;
 
   CSrResourceInstance*	m_pCurrentInstance;
-  CImageList		m_ImageList;
+  CImageList			m_ImageList;
 
   CSrResourceFile*	m_pDragResource;
   CImageList*		m_pDragImage;
-  bool			m_IsDragging;
-  HCURSOR		m_hGoodDropCursor;
-  HCURSOR		m_hBadDropCursor;
-  bool			m_LastDropValid;
-  CWnd*			m_pLastDropWnd;
+  bool				m_IsDragging;
+  HCURSOR			m_hGoodDropCursor;
+  HCURSOR			m_hBadDropCursor;
+  bool				m_LastDropValid;
+  CWnd*				m_pLastDropWnd;
 
-  bool			m_EnablePreview;
+  bool				m_EnablePreview;
 
-  CBitmap		m_Bitmaps[10];
+  CBitmap			m_Bitmaps[10];
 
 
   /*---------- Begin Protected Class Methods ------------------------------*/
@@ -129,6 +130,9 @@ protected:
   void CleanupDrag    (void);
   int  SendDropNotify (CPoint Point, const int MessageID);
 
+  void EditSelectedItem (const bool UseInternal);
+  bool EditItem (CSrResourceBase* pBase, const bool UseInternal);
+
 
   /*---------- Begin Public Class Methods ---------------------------------*/
 public:
@@ -154,30 +158,21 @@ public:
   CStatic	m_HBar;
   CTreeCtrl	m_ResourceTree;
   CSrImageCtrl  m_PreviewImage;
-  //}}AFX_DATA
 
-	/* ClassWizard generated virtual function overrides */
-  //{{AFX_VIRTUAL(CSrResourceView)
 public:
   virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
   virtual void DoDataExchange(CDataExchange* pDX);
   virtual void OnInitialUpdate();
-  //}}AFX_VIRTUAL
 
-// Implementation
 public:
-
-
 #ifdef _DEBUG
   virtual void AssertValid() const;
   virtual void Dump(CDumpContext& dc) const;
 #endif
 
 
-	/* Generated message map functions */
 protected:
-  //{{AFX_MSG(CSrResourceView)
   afx_msg void OnDblclkResourceTree(NMHDR* pNMHDR, LRESULT* pResult);
   afx_msg void OnSelchangedResourceTree(NMHDR* pNMHDR, LRESULT* pResult);
   afx_msg void OnSize(UINT nType, int cx, int cy);
@@ -187,10 +182,20 @@ protected:
   afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
   afx_msg void OnMouseMove(UINT nFlags, CPoint point);
   afx_msg void OnHelp (void);
-  //}}AFX_MSG
 
   DECLARE_MESSAGE_MAP();
 
+public:
+	afx_msg void OnResourcemenuEdit();
+	afx_msg void OnUpdateResourcemenuEdit(CCmdUI *pCmdUI);
+	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
+	afx_msg void OnInitMenu(CMenu* pMenu);
+	afx_msg void OnResourcemenuEditexternal();
+	afx_msg void OnUpdateResourcemenuEditexternal(CCmdUI *pCmdUI);
+	afx_msg void OnNMRDblclkResourceTree(NMHDR *pNMHDR, LRESULT *pResult);
 };
 /*===========================================================================
  *		End of Class CSrResourceView Definition
@@ -205,10 +210,6 @@ protected:
 /*===========================================================================
  *		End of Function Prototypes
  *=========================================================================*/
-
-
-//{{AFX_INSERT_LOCATION}}
-//}}AFX_INSERT_LOCATION
 
 
 #endif

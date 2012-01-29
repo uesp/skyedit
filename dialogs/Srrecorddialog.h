@@ -276,6 +276,7 @@ protected:
 	afx_msg void OnDropPickupSound (NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnDropDropSound (NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnDropKeywords (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 
 	DECLARE_MESSAGE_MAP();
 

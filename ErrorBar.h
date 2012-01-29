@@ -35,6 +35,8 @@ protected:
   CHARFORMAT	m_BoldFormat;
   CHARFORMAT	m_DefaultFormat;
 
+  HACCEL		m_hAccelerator;
+
 
   /*---------- Public Class Members --------------------------*/
 public:
@@ -55,8 +57,11 @@ protected:
 	afx_msg void OnUpdateErrorbarCopy(CCmdUI *pCmdUI);
 	afx_msg void OnErrorbarCopy();
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint Point);
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg void OnErrorCopy();
+	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 
-  DECLARE_MESSAGE_MAP();
+	DECLARE_MESSAGE_MAP();
 
 };
 /*===========================================================================

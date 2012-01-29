@@ -16,16 +16,16 @@
  * Begin Required Includes
  *
  *=========================================================================*/
-  #include "windows/srrecordlistctrl.h"
-  #include "windows/srrecordvirtuallistctrl.h"
-  #include "windows/srrecordtreectrl.h"
-  #include "modfile/srexport.h"
-  #include "dialogs/sreditdlghandler.h"
-  #include "srresourceview.h"
-  #include "il/il.h"
-  #include "il/ilu.h"
-  #include "il/ilut.h"
-#include "afxwin.h"
+	#include "windows/srrecordlistctrl.h"
+	#include "windows/srrecordvirtuallistctrl.h"
+	#include "windows/srrecordtreectrl.h"
+	#include "modfile/srexport.h"
+	#include "dialogs/sreditdlghandler.h"
+	#include "srresourceview.h"
+	#include "il/il.h"
+	#include "il/ilu.h"
+	#include "il/ilut.h"
+	#include "afxwin.h"
  /*===========================================================================
  *		End of Required Includes
  *=========================================================================*/
@@ -37,16 +37,16 @@
  *
  *=========================================================================*/
 
-	/* File filters for the open/save dialog */
-  #define SREDIT_CSV_FILTER _T("CSV Files (*.csv)|*.csv|All Files (*.*)|*.*||")
+		/* File filters for the open/save dialog */
+	#define SREDIT_CSV_FILTER _T("CSV Files (*.csv)|*.csv|All Files (*.*)|*.*||")
 
-	/* Default file extensions */
-  #define SREDIT_CSV_EXT _T("csv")
+		/* Default file extensions */
+	#define SREDIT_CSV_EXT _T("csv")
 
-	/* Number of operations required for a progress dlg to be shown */
-  #define SREDIT_MINIMUM_PROGRESS_COUNT 100
+		/* Number of operations required for a progress dlg to be shown */
+	#define SREDIT_MINIMUM_PROGRESS_COUNT 100
 
-  #define SREDIT_FILTERUPDATE_TIMERID 0x1234
+	#define SREDIT_FILTERUPDATE_TIMERID 0x1234
 
 /*===========================================================================
  *		End of Definitions
@@ -62,84 +62,84 @@ class CSrEditView : public CFormView, public ISrListener {
 
   /*---------- Begin Protected Class Members ----------------------*/
 protected:
-  CSrEditDlgHandler	m_DlgHandler;		/* Handles all child windows */
+	CSrEditDlgHandler	m_DlgHandler;		/* Handles all child windows */
 
-  bool				m_IsInitialized;	/* Has the view been initialized yet? */
+	bool				m_IsInitialized;	/* Has the view been initialized yet? */
 
-  CSrRecordFilter*	m_pCurrentFilter;	/* Currently displayed record filter */
-  CSString			m_LastFilterID; 
-  bool				m_UpdateFilterCounts;
-  DWORD				m_hFilterUpdateThreadID;
-  HANDLE			m_hFilterUpdateThread;
-  HANDLE			m_ThreadCloseEvent;
+	CSrRecordFilter*	m_pCurrentFilter;	/* Currently displayed record filter */
+	CSString			m_LastFilterID; 
+	bool				m_UpdateFilterCounts;
+	DWORD				m_hFilterUpdateThreadID;
+	HANDLE				m_hFilterUpdateThread;
+	HANDLE				m_ThreadCloseEvent;
 
 
   /*---------- Begin Protected Class Methods ----------------------*/
 protected: 
 
-	/* Create from serialization only */
-  CSrEditView();
-  DECLARE_DYNCREATE(CSrEditView)
+		/* Create from serialization only */
+	CSrEditView();
+	DECLARE_DYNCREATE(CSrEditView)
 
 
 public:
-  enum { IDD = IDD_SREDIT_FORM };
-  CStatic					m_VertEdge;
-  CSrRecordVirtualListCtrl	m_RecordList;
-  CSrRecordTreeCtrl			m_RecordTree;
+	enum { IDD = IDD_SREDIT_FORM };
+	CStatic					m_VertEdge;
+	CSrRecordVirtualListCtrl	m_RecordList;
+	CSrRecordTreeCtrl			m_RecordTree;
 
 
   /*---------- Begin Public Class Methods --------------------------*/
 public:
 
-	/* Class destructor */
-  virtual ~CSrEditView();
+		/* Class destructor */
+	virtual ~CSrEditView();
 
-  void ThreadUpdateFilterProc (void);
+	void ThreadUpdateFilterProc (void);
 
-	/* Get the parent document */
-  CSrEditDoc*        GetDocument();
-  CSrEditDlgHandler& GetDlgHandler (void) { return m_DlgHandler; }
+		/* Get the parent document */
+	CSrEditDoc*        GetDocument();
+	CSrEditDlgHandler& GetDlgHandler (void) { return m_DlgHandler; }
 
-	/* Helper export methods */
-  bool OnCsvExport (srexportinfo_t& ExportInfo, const TCHAR* pDialogTitle);
+		/* Helper export methods */
+	bool OnCsvExport (srexportinfo_t& ExportInfo, const TCHAR* pDialogTitle);
 
-	/* Update events */
-  void OnEditRecord (CSrRecord* pRecord);
+		/* Update events */
+	void OnEditRecord (CSrRecord* pRecord);
 
-	/* Listener events */
-  virtual int OnListenAddRecord       (CSrListenEvent* pEvent);
-  virtual int OnListenCleanRecord     (CSrListenEvent* pEvent);
-  virtual int OnListenUpdateRecord    (CSrListenEvent* pEvent);
-  virtual int OnListenPreUpdateRecord (CSrListenEvent* pEvent);
-  virtual int GetListenEvents         (void) { return (SR_EVENTMASK_ALL); }
+		/* Listener events */
+	virtual int OnListenAddRecord       (CSrListenEvent* pEvent);
+	virtual int OnListenCleanRecord     (CSrListenEvent* pEvent);
+	virtual int OnListenUpdateRecord    (CSrListenEvent* pEvent);
+	virtual int OnListenPreUpdateRecord (CSrListenEvent* pEvent);
+	virtual int GetListenEvents         (void) { return (SR_EVENTMASK_ALL); }
 
-  bool OnToggleDeleteRecord (CSrRecord* pRecord);
-  bool OnToggleIgnoreRecord (CSrRecord* pRecord);
-  bool OnToggleQuestRecord  (CSrRecord* pRecord);
+	bool OnToggleDeleteRecord (CSrRecord* pRecord);
+	bool OnToggleIgnoreRecord (CSrRecord* pRecord);
+	bool OnToggleQuestRecord  (CSrRecord* pRecord);
 
-	/* Updates the main view content display */
-  void UpdateContents (void);
+		/* Updates the main view content display */
+	void UpdateContents (void);
 
 
-	/* Diagnostics */
+		/* Diagnostics */
 #ifdef _DEBUG
-  virtual void AssertValid() const;
-  virtual void Dump(CDumpContext& dc) const;
+	virtual void AssertValid() const;
+	virtual void Dump(CDumpContext& dc) const;
 #endif
 
 public:
-  virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
+	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
-  virtual void DoDataExchange(CDataExchange* pDX);
-  virtual void OnInitialUpdate();
-  virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
-  virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
+	virtual void DoDataExchange(CDataExchange* pDX);
+	virtual void OnInitialUpdate();
+	virtual void OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint);
+	virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
 
-  afx_msg void OnSize(UINT nType, int cx, int cy);
-  afx_msg void OnSelchangedRecordtree(NMHDR* pNMHDR, LRESULT* pResult);
-  afx_msg void OnFileImportCsv();
-  afx_msg void OnFileExportcsvSelecteditems();
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnSelchangedRecordtree(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnFileImportCsv();
+	afx_msg void OnFileExportcsvSelecteditems();
 	afx_msg void OnRecordtreeReload();
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnRecordtreeExporttocsv();
@@ -191,6 +191,8 @@ protected:
 	 afx_msg void OnEditSetmodauthor();
 	 afx_msg void OnEditSetmoddescription();
 	 afx_msg void OnMenuViewsummary();
+	 afx_msg void OnUpdateMenuEditrecord(CCmdUI *pCmdUI);
+	 afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 };
 /*===========================================================================
  *		End of Class CSrEditView Definition
@@ -203,8 +205,7 @@ protected:
  *
  *=========================================================================*/
 #ifndef _DEBUG
-  inline CSrEditDoc* CSrEditView::GetDocument() {
-    return (CSrEditDoc*)m_pDocument; }
+	inline CSrEditDoc* CSrEditView::GetDocument() { return (CSrEditDoc*)m_pDocument; }
 #endif
 /*===========================================================================
  *		End of Inline Class Methods
@@ -213,5 +214,5 @@ protected:
 
 #endif
 /*===========================================================================
- *		End of File View.H
+ *		End of File SrEditView.H
  *=========================================================================*/

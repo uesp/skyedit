@@ -28,6 +28,8 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\skyedit.ico"
 IDR_SRVIEWTYPE          ICON                    "res\\idr_main.ico"
+IDR_RESOURCE_VIEW       ICON                    "res\\resourceview.ico"
+IDR_SCRIPT_VIEW         ICON                    "res\\icon1.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -56,6 +58,7 @@ BEGIN
     BUTTON      ID_HELP_CSWIKI
     SEPARATOR
     BUTTON      ID_VIEW_RESOURCEVIEWER
+    BUTTON      ID_VIEW_RESOURCESCRIPTS
 END
 
 
@@ -2345,6 +2348,127 @@ BEGIN
     EDITTEXT        IDC_DATATIRS,271,214,48,12,ES_AUTOHSCROLL
 END
 
+IDD_SREDIT_FORM DIALOGEX 0, 0, 424, 251
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CONTROL         "Tree1",IDC_RECORDTREE,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | WS_HSCROLL | WS_TABSTOP,0,29,125,222,WS_EX_STATICEDGE
+    CONTROL         "List1",IDC_RECORDLIST,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | LVS_OWNERDATA | WS_TABSTOP,127,0,297,251
+    CONTROL         "",IDC_VEDGE,"Static",SS_BLACKRECT | SS_SUNKEN,125,0,2,251
+    RTEXT           "Filter",IDC_STATIC,4,3,19,7
+    CONTROL         "Active Only",IDC_ACTIVECHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,27,17,77,8
+    EDITTEXT        IDC_FILTERTEXT,27,2,96,12,ES_AUTOHSCROLL
+END
+
+IDD_LOAD_DLG DIALOGEX 0, 0, 389, 202
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Load Plugin"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,332,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,332,24,50,14
+    CONTROL         "List1",IDC_FILE_LIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_TABSTOP,7,43,375,152,WS_EX_CLIENTEDGE
+    LTEXT           "",IDC_STATIC,7,7,240,13
+    PUSHBUTTON      "Set Active",IDC_SETACTIVE,7,26,68,14
+END
+
+IDD_PROGRESS_DLG DIALOGEX 0, 0, 313, 106
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Load Progress"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CTEXT           "Loading filename.esp....",IDC_FILE_LABEL,7,21,300,20,SS_CENTERIMAGE
+    CTEXT           "90%",IDC_FILE_PERCENT,141,62,25,9
+    CONTROL         "Progress1",IDC_FILE_PROGRESS,"msctls_progress32",PBS_SMOOTH | WS_BORDER,15,45,284,13
+    PUSHBUTTON      "Cancel",IDCANCEL,256,7,50,14,NOT WS_VISIBLE
+END
+
+IDD_SRERROR_DLG DIALOG 0, 0, 288, 124
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Error"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,231,7,50,14
+    EDITTEXT        IDC_MESSAGE,7,7,218,27,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    LTEXT           "Error Details",IDC_STATIC,7,38,45,8
+    EDITTEXT        IDC_DETAILS,7,48,274,68,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY
+END
+
+IDD_FINDBINARY_DLG DIALOG 0, 0, 241, 102
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,184,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,184,24,50,14
+    LTEXT           "Enter the binary data to find in the below text box in hexadecimal format:\r\n                          eg: 12AB03C3",IDC_STATIC,7,7,165,30
+    EDITTEXT        IDC_BINARYDATA_TEXT,25,44,148,12,ES_AUTOHSCROLL
+    LTEXT           "The current version outputs results to the MWEdit.log text file.",IDC_STATIC,7,86,227,9
+END
+
+IDD_SELECTRECORD_DLG DIALOGEX 0, 0, 314, 234
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    RTEXT           "Previous Value",IDC_STATIC,7,9,49,8
+    EDITTEXT        IDC_PREVIOUS_TEXT,61,7,130,12,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_PREVIOUS_FORMID,191,7,53,12,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "Type Filter",IDC_TYPEFILTER_STATIC,7,27,49,8
+    COMBOBOX        IDC_TYPEFILTER_LIST,61,24,94,207,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    RTEXT           "Current Value",IDC_STATIC,7,44,49,8
+    EDITTEXT        IDC_CURRENT_TEXT,61,42,130,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_CURRENT_FORMID,191,42,53,12,ES_AUTOHSCROLL | ES_READONLY
+    CONTROL         "List1",IDC_RECORDLIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_OWNERDATA | WS_TABSTOP,7,61,300,166,WS_EX_CLIENTEDGE
+    DEFPUSHBUTTON   "OK",IDOK,257,7,50,14
+    PUSHBUTTON      "Delete",ID_CLEAR_BUTTON,257,24,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,257,42,50,14
+END
+
+IDD_PROMPT_DLG DIALOG 0, 0, 228, 79
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "Button1",ID_BUTTON1,21,48,50,14
+    PUSHBUTTON      "Button2",ID_BUTTON2,89,48,50,14
+    PUSHBUTTON      "Button3",ID_BUTTON3,157,48,50,14
+    LTEXT           "Label",IDC_LABEL,7,7,214,33
+END
+
+IDD_UNDOBAR DIALOG 0, 0, 91, 46
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "MS Sans Serif"
+BEGIN
+END
+
+IDD_INPUT_DLG DIALOG 0, 0, 241, 103
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,184,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,184,24,50,14
+    EDITTEXT        IDC_INPUTTEXT,23,55,193,12,ES_AUTOHSCROLL
+    LTEXT           "Static",IDC_LABEL,7,7,173,32
+END
+
+IDD_RESOURCE_VIEW DIALOGEX 0, 0, 420, 200
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    CONTROL         "Tree1",IDC_RESOURCE_TREE,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_HSCROLL | WS_TABSTOP,0,0,142,200,WS_EX_STATICEDGE
+    LTEXT           "",IDC_HBAR,196,52,185,8,SS_SUNKEN | NOT WS_GROUP
+    RTEXT           "Filename",IDC_STATIC,200,6,27,8
+    EDITTEXT        IDC_FILENAME,231,4,175,12,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "Size",IDC_STATIC,210,22,17,8
+    EDITTEXT        IDC_FILESIZE,231,20,100,12,ES_AUTOHSCROLL | ES_READONLY
+    RTEXT           "Date",IDC_STATIC,208,38,19,8
+    EDITTEXT        IDC_FILETIME,231,36,100,12,ES_AUTOHSCROLL | ES_READONLY
+    CONTROL         "Custom1",IDC_PREVIEW_IMAGE,"PreviewImageClass",WS_TABSTOP,226,139,123,30
+    CONTROL         "",IDC_PREVIEW_RICHEDIT,"RichEdit20A",ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | WS_BORDER | WS_VSCROLL | WS_TABSTOP,227,61,137,70
+END
+
 IDD_AVIF_VIEW DIALOGEX 0, 0, 428, 267
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
 FONT 8, "MS Shell Dlg", 400, 0, 0x0
@@ -2421,6 +2545,26 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,213,26,50,14
 END
 
+IDD_SCRIPT_VIEW DIALOGEX 0, 0, 429, 228
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_SCRIPT_TEXT,"RichEdit20A",ES_MULTILINE | ES_NOHIDESEL | ES_WANTRETURN | WS_BORDER | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,99,15,330,213
+    LISTBOX         IDC_SCRIPT_LIST,1,15,97,213,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Open...",IDC_LOADSCRIPT,38,0,37,14
+    PUSHBUTTON      "New...",IDC_NEWSCRIPT,0,0,37,14
+    PUSHBUTTON      "Compile",IDC_COMPILESCRIPT,171,0,37,14
+    PUSHBUTTON      "Save",IDC_SAVESCRIPT,76,0,37,14
+    PUSHBUTTON      "Save As...",IDC_SAVEASSCRIPT,114,0,37,14
+END
+
+IDD_SCRIPTERROR_VIEW DIALOGEX 0, 0, 185, 93
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    CONTROL         "",IDC_ERRORTEXT,"RichEdit20A",ES_MULTILINE | ES_READONLY | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,0,148,76
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2471,6 +2615,283 @@ BEGIN
     POPUP "ErrorBar"
     BEGIN
         MENUITEM "&Copy",                       ID_ERRORBAR_COPY
+    END
+END
+
+IDR_MAINFRAME MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM "Error Bar",                   ID_VIEW_ERROR_BAR
+        MENUITEM "Undo Bar",                    ID_VIEW_UNDOBAR
+        MENUITEM SEPARATOR
+        MENUITEM "Resource Viewer",             ID_VIEW_RESOURCEVIEWER
+        MENUITEM "Scripts",                     ID_VIEW_RESOURCESCRIPTS
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About SkyEdit...",           ID_APP_ABOUT
+        MENUITEM SEPARATOR
+        MENUITEM "UESP Wiki",                   ID_HELP_UESPWIKI
+        MENUITEM "Official CS Wiki",            ID_HELP_CSWIKI
+    END
+END
+
+IDR_SREDITTYPE MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Close",                      ID_FILE_CLOSE
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        POPUP "&Import"
+        BEGIN
+            MENUITEM "From CSV...",                 ID_FILE_IMPORT_CSV
+        END
+        POPUP "Export CSV"
+        BEGIN
+            MENUITEM "Selected Items...",           ID_FILE_EXPORTCSV_SELECTEDITEMS
+            MENUITEM "Item Type...",                ID_FILE_EXPORTCSV_ITEMTYPE
+            MENUITEM "Exterior Locations...",       ID_FILE_EXPORT_CSVEXTERIORLOCATIONS
+            MENUITEM "Exterior Map Markers...",     ID_FILE_EXPORT_CSVEXTMAPMARKERS
+            MENUITEM "Exterior Plants...",          ID_FILE_EXPORT_CSVEXPORTEXTERIORPLANTS
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT, GRAYED
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY, GRAYED
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "&Find...",                    ID_EDIT_FIND
+        MENUITEM SEPARATOR
+        MENUITEM "Use Local Strings",           ID_EDIT_USELOCALSTRINGS
+        MENUITEM "Set Mod Author...",           ID_EDIT_SETMODAUTHOR
+        MENUITEM "Set Mod Description...",      ID_EDIT_SETMODDESCRIPTION
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM "Error Bar",                   ID_VIEW_ERROR_BAR
+        MENUITEM "Undo Bar",                    ID_VIEW_UNDOBAR
+        MENUITEM SEPARATOR
+        MENUITEM "File Structure...",           ID_VIEW_FILESTRUCTURE
+        MENUITEM "Reset List State",            ID_VIEW_RESETLISTS
+        MENUITEM SEPARATOR
+        MENUITEM "Resource Viewer",             ID_VIEW_RESOURCEVIEWER
+        MENUITEM "Scripts",                     ID_VIEW_RESOURCESCRIPTS
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&New Window",                 ID_WINDOW_NEW
+        MENUITEM "&Cascade",                    ID_WINDOW_CASCADE
+        MENUITEM "&Tile",                       ID_WINDOW_TILE_HORZ
+        MENUITEM "&Arrange Icons",              ID_WINDOW_ARRANGE
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About SkyEdit...",           ID_APP_ABOUT
+        MENUITEM SEPARATOR
+        MENUITEM "UESP Wiki",                   ID_HELP_UESPWIKI
+        MENUITEM "Official CS Wiki",            ID_HELP_CSWIKI
+        MENUITEM SEPARATOR
+        MENUITEM "Test Field Lookup",           ID_HELP_TESTFIELDLOOKUP
+        MENUITEM "Test Find FormID",            ID_HELP_TESTFINDFORMID
+        MENUITEM "Test Memory Speed",           ID_TEST_MEMORYSPEED
+        MENUITEM "Test Tokenize Scripts",       ID_TEST_TOKENSCRIPTS
+        MENUITEM "Test Output Effects",         ID_HELP_TESTOUTPUTEFFECTS
+        MENUITEM "Test Record Size",            ID_HELP_TESTRECORDSIZE
+        MENUITEM "Test Clean Recompile All Scripts", ID_TEST_CLEANRECOMPILEALL, INACTIVE
+        MENUITEM "Test Recompile Active Scripts", ID_TEST_RECOMPILEALL
+        MENUITEM "Test Compare Scripts",        ID_HELP_TESTCOMPARESCRIPTS
+        MENUITEM "Test Output Perks",           ID_HELP_TESTOUTPUTPERKS
+    END
+END
+
+IDR_RECORDTREE_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "&Reload",                     ID_RECORDTREE_RELOAD, GRAYED
+        MENUITEM "Export to CSV...",            ID_RECORDTREE_EXPORTTOCSV
+    END
+END
+
+IDR_RECORDLIST_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "New...",                      ID_EDIT_NEWRECORD
+        MENUITEM "Edit...",                     ID_MENU_EDITRECORD
+        MENUITEM "Rename...",                   ID_RECORD_RENAME
+        MENUITEM "Create Copy...",              ID_RECORD_CREATECOPY
+        MENUITEM SEPARATOR
+        MENUITEM "Batch Edit...",               ID_RECORD_BATCHEDIT
+        MENUITEM "Export to CSV...",            ID_FILE_EXPORTCSV_SELECTEDITEMS
+        MENUITEM "View Raw Data...",            ID_MENU_VIEWRAWDATA
+        MENUITEM SEPARATOR
+        MENUITEM "Clean",                       ID_RECORD_CLEAN
+        MENUITEM "Move To Active",              ID_RECORD_MOVEACTIVE
+        MENUITEM SEPARATOR
+        POPUP "Flags"
+        BEGIN
+            MENUITEM "Toggle Quest Item",           ID_RECORD_TOGGLEQUEST
+            MENUITEM "Toggle Ignore",               ID_RECORD_TOGGLEIGNORE
+            MENUITEM "Toggle Delete",               ID_RECORD_TOGGLEDELETE
+        END
+    END
+END
+
+IDR_LVLITEMLIST_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "New",                         ID_LVLLIST_ADD
+        MENUITEM "Edit",                        ID_LVLLIST_EDIT
+        MENUITEM "Delete",                      ID_LVLLIST_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "Edit Base Record",            ID_LVLLIST_EDITRECORD
+    END
+END
+
+IDR_EFFECTLIST_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "New",                         ID_EFFECTLIST_ADD
+        MENUITEM "Edit",                        ID_EFFECTLIST_EDIT
+        MENUITEM "Delete",                      ID_EFFECTLIST_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "Edit Script",                 ID_EFFECTLIST_EDITSCRIPT
+    END
+END
+
+IDR_BOOK_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM SEPARATOR
+        MENUITEM "Select &All\tCtrl+A",         ID_EDIT_SELECTALL
+    END
+END
+
+IDR_SCRIPT_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM SEPARATOR
+        MENUITEM "Select &All\tCtrl+A",         ID_EDIT_SELECTALL
+    END
+END
+
+IDR_CONTAINERLIST_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "New",                         ID_LVLLIST_ADD
+        MENUITEM "Edit",                        ID_LVLLIST_EDIT
+        MENUITEM "Delete",                      ID_LVLLIST_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "Edit Base Record",            ID_LVLLIST_EDITRECORD
+    END
+END
+
+IDR_MGEFSOUNDLIST_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "Add",                         ID_SNDDLIST_ADD
+        MENUITEM "Edit",                        ID_SNDDLIST_EDIT
+        MENUITEM "Delete",                      ID_SNDDLIST_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "Edit Base Record",            ID_SNDDLIST_EDITRECORD
+    END
+END
+
+IDR_FLSTLIST_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "New",                         ID_FLSTLIST_ADD
+        MENUITEM "Edit",                        ID_FLSTLIST_EDIT
+        MENUITEM "Delete",                      ID_FLSTLIST_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "Edit Record...",              ID_FLSTTLIST_EDITBASE
+    END
+END
+
+IDR_OUTFITLIST_MENU MENU
+BEGIN
+    POPUP "Menu"
+    BEGIN
+        MENUITEM "New",                         ID_OUTFITLIST_ADD
+        MENUITEM "Edit",                        ID_OUTFITLIST_EDIT
+        MENUITEM "Delete",                      ID_OUTFITLIST_DELETE
+        MENUITEM SEPARATOR
+        MENUITEM "Edit Record...",              ID_OUTFITLIST_EDITBASE
+    END
+END
+
+IDR_RESOURCETREE_MENU MENU
+BEGIN
+    POPUP "ResourceMenu"
+    BEGIN
+        MENUITEM "Edit...",                     ID_RESOURCEMENU_EDIT
+        MENUITEM "Edit External...",            ID_RESOURCEMENU_EDITEXTERNAL
+    END
+END
+
+IDR_SCRIPTLIST_MENU MENU
+BEGIN
+    POPUP "ScriptListMenu"
+    BEGIN
+        MENUITEM "New...",                      ID_SCRIPT_NEW
+        MENUITEM "Open...",                     ID_SCRIPT_LOAD
+        MENUITEM "Save",                        ID_SCRIPT_SAVE
+        MENUITEM "Save As...",                  ID_SCRIPT_SAVEAS
+        MENUITEM SEPARATOR
+        MENUITEM "Remove",                      ID_SCRIPT_REMOVE
+        MENUITEM SEPARATOR
+        MENUITEM "Compile",                     ID_SCRIPT_COMPILE
+    END
+END
+
+IDR_SCRIPTTEXT_MENU MENU
+BEGIN
+    POPUP "ScriptTextMenu"
+    BEGIN
+        MENUITEM "Undo",                        ID_SCRIPTTEXTMENU_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cut",                         ID_SCRIPTTEXTMENU_CUT
+        MENUITEM "Copy",                        ID_SCRIPTTEXTMENU_COPY
+        MENUITEM "Paste",                       ID_SCRIPTTEXTMENU_PASTE
     END
 END
 
@@ -3084,6 +3505,40 @@ BEGIN
         BOTTOMMARGIN, 226
     END
 
+    IDD_SREDIT_FORM, DIALOG
+    BEGIN
+    END
+
+    IDD_LOAD_DLG, DIALOG
+    BEGIN
+    END
+
+    IDD_PROGRESS_DLG, DIALOG
+    BEGIN
+        RIGHTMARGIN, 241
+    END
+
+    IDD_FINDBINARY_DLG, DIALOG
+    BEGIN
+    END
+
+    IDD_SELECTRECORD_DLG, DIALOG
+    BEGIN
+        VERTGUIDE, 56
+    END
+
+    IDD_PROMPT_DLG, DIALOG
+    BEGIN
+    END
+
+    IDD_INPUT_DLG, DIALOG
+    BEGIN
+    END
+
+    IDD_RESOURCE_VIEW, DIALOG
+    BEGIN
+    END
+
     IDD_AVIF_VIEW, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -3108,6 +3563,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 224
     END
+
+    IDD_SCRIPT_VIEW, DIALOG
+    BEGIN
+    END
+
+    IDD_SCRIPTERROR_VIEW, DIALOG
+    BEGIN
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -3126,6 +3589,21 @@ BEGIN
     "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
     "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
     "A",            ID_EDIT_SELECTALL,      VIRTKEY, CONTROL, NOINVERT
+END
+
+IDR_SCRIPTTEXT_ACCEL ACCELERATORS
+BEGIN
+    VK_F7,          ID_SCRIPT_COMPILE,      VIRTKEY, NOINVERT
+    "C",            ID_SCRIPTTEXTACC_COPY,  VIRTKEY, CONTROL, NOINVERT
+    "X",            ID_SCRIPTTEXTACC_CUT,   VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_SCRIPTTEXTACC_PASTE, VIRTKEY, CONTROL, NOINVERT
+    "Z",            ID_SCRIPTTEXTACC_UNDO,  VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_SCRIPT_SAVE,         VIRTKEY, CONTROL, NOINVERT
+END
+
+IDR_ERRORBAR_ACCEL ACCELERATORS
+BEGIN
+    "C",            ID_ERROR_COPY,          VIRTKEY, CONTROL, NOINVERT
 END
 
 
@@ -3492,6 +3970,11 @@ BEGIN
     IDS_TT_TYPE             "Basic type of record data."
 END
 
+STRINGTABLE
+BEGIN
+    ID_VIEW_RESOURCESCRIPTS "Display the script editor."
+END
+
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -3539,52 +4022,6 @@ BEGIN
     CONTROL         "",IDC_CREDITS,"RichEdit20A",ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL | WS_TABSTOP,7,43,267,105,WS_EX_STATICEDGE
 END
 
-IDD_SREDIT_FORM DIALOGEX 0, 0, 424, 251
-STYLE DS_SETFONT | WS_CHILD
-FONT 8, "MS Sans Serif", 0, 0, 0x0
-BEGIN
-    CONTROL         "Tree1",IDC_RECORDTREE,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | WS_HSCROLL | WS_TABSTOP,0,29,125,222,WS_EX_STATICEDGE
-    CONTROL         "List1",IDC_RECORDLIST,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | LVS_OWNERDATA | WS_TABSTOP,127,0,297,251
-    CONTROL         "",IDC_VEDGE,"Static",SS_BLACKRECT | SS_SUNKEN,125,0,2,251
-    RTEXT           "Filter",IDC_STATIC,4,3,19,7
-    CONTROL         "Active Only",IDC_ACTIVECHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,27,17,77,8
-    EDITTEXT        IDC_FILTERTEXT,27,2,96,12,ES_AUTOHSCROLL
-END
-
-IDD_LOAD_DLG DIALOGEX 0, 0, 389, 202
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Load Plugin"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
-BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,332,7,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,332,24,50,14
-    CONTROL         "List1",IDC_FILE_LIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_TABSTOP,7,43,375,152,WS_EX_CLIENTEDGE
-    LTEXT           "",IDC_STATIC,7,7,240,13
-    PUSHBUTTON      "Set Active",IDC_SETACTIVE,7,26,68,14
-END
-
-IDD_PROGRESS_DLG DIALOGEX 0, 0, 313, 106
-STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Load Progress"
-FONT 8, "MS Sans Serif", 0, 0, 0x0
-BEGIN
-    CTEXT           "Loading filename.esp....",IDC_FILE_LABEL,7,21,300,20,SS_CENTERIMAGE
-    CTEXT           "90%",IDC_FILE_PERCENT,141,62,25,9
-    CONTROL         "Progress1",IDC_FILE_PROGRESS,"msctls_progress32",PBS_SMOOTH | WS_BORDER,15,45,284,13
-    PUSHBUTTON      "Cancel",IDCANCEL,256,7,50,14,NOT WS_VISIBLE
-END
-
-IDD_SRERROR_DLG DIALOG 0, 0, 288, 124
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Error"
-FONT 8, "MS Sans Serif"
-BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,231,7,50,14
-    EDITTEXT        IDC_MESSAGE,7,7,218,27,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
-    LTEXT           "Error Details",IDC_STATIC,7,38,45,8
-    EDITTEXT        IDC_DETAILS,7,48,274,68,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY
-END
-
 IDD_FILETREE_DLG DIALOGEX 0, 0, 321, 274
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "SkyEdit: File Structure"
@@ -3594,69 +4031,10 @@ BEGIN
     CONTROL         "Tree1",IDC_TREECTRL,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_TABSTOP,7,7,251,260,WS_EX_CLIENTEDGE
 END
 
-IDD_FINDBINARY_DLG DIALOG 0, 0, 241, 102
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Dialog"
-FONT 8, "MS Sans Serif"
-BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,184,7,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,184,24,50,14
-    LTEXT           "Enter the binary data to find in the below text box in hexadecimal format:\r\n                          eg: 12AB03C3",IDC_STATIC,7,7,165,30
-    EDITTEXT        IDC_BINARYDATA_TEXT,25,44,148,12,ES_AUTOHSCROLL
-    LTEXT           "The current version outputs results to the MWEdit.log text file.",IDC_STATIC,7,86,227,9
-END
-
 IDD_ERRORBAR DIALOG 0, 0, 266, 53
 STYLE DS_SETFONT | WS_CHILD
 FONT 8, "MS Sans Serif"
 BEGIN
-END
-
-IDD_SELECTRECORD_DLG DIALOGEX 0, 0, 314, 234
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Dialog"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
-BEGIN
-    RTEXT           "Previous Value",IDC_STATIC,7,9,49,8
-    EDITTEXT        IDC_PREVIOUS_TEXT,61,7,130,12,ES_AUTOHSCROLL | ES_READONLY
-    EDITTEXT        IDC_PREVIOUS_FORMID,191,7,53,12,ES_AUTOHSCROLL | ES_READONLY
-    RTEXT           "Type Filter",IDC_TYPEFILTER_STATIC,7,27,49,8
-    COMBOBOX        IDC_TYPEFILTER_LIST,61,24,94,207,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    RTEXT           "Current Value",IDC_STATIC,7,44,49,8
-    EDITTEXT        IDC_CURRENT_TEXT,61,42,130,12,ES_AUTOHSCROLL
-    EDITTEXT        IDC_CURRENT_FORMID,191,42,53,12,ES_AUTOHSCROLL | ES_READONLY
-    CONTROL         "List1",IDC_RECORDLIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_OWNERDATA | WS_TABSTOP,7,61,300,166,WS_EX_CLIENTEDGE
-    DEFPUSHBUTTON   "OK",IDOK,257,7,50,14
-    PUSHBUTTON      "Delete",ID_CLEAR_BUTTON,257,24,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,257,42,50,14
-END
-
-IDD_PROMPT_DLG DIALOG 0, 0, 228, 79
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Dialog"
-FONT 8, "MS Sans Serif"
-BEGIN
-    DEFPUSHBUTTON   "Button1",ID_BUTTON1,21,48,50,14
-    PUSHBUTTON      "Button2",ID_BUTTON2,89,48,50,14
-    PUSHBUTTON      "Button3",ID_BUTTON3,157,48,50,14
-    LTEXT           "Label",IDC_LABEL,7,7,214,33
-END
-
-IDD_UNDOBAR DIALOG 0, 0, 91, 46
-STYLE DS_SETFONT | WS_CHILD
-FONT 8, "MS Sans Serif"
-BEGIN
-END
-
-IDD_INPUT_DLG DIALOG 0, 0, 241, 103
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Dialog"
-FONT 8, "MS Sans Serif"
-BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,184,7,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,184,24,50,14
-    EDITTEXT        IDC_INPUTTEXT,23,55,193,12,ES_AUTOHSCROLL
-    LTEXT           "Static",IDC_LABEL,7,7,173,32
 END
 
 IDD_BATCHEDIT_DLG DIALOGEX 0, 0, 325, 216
@@ -3688,267 +4066,6 @@ BEGIN
     CONTROL         "FormID",IDC_FORMID_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,210,30,68,10
 END
 
-IDD_RESOURCE_VIEW DIALOGEX 0, 0, 420, 200
-STYLE DS_SETFONT | WS_CHILD
-FONT 8, "MS Sans Serif", 0, 0, 0x1
-BEGIN
-    CONTROL         "Tree1",IDC_RESOURCE_TREE,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_HSCROLL | WS_TABSTOP,0,0,142,200,WS_EX_STATICEDGE
-    LTEXT           "",IDC_HBAR,196,52,185,8,SS_SUNKEN | NOT WS_GROUP
-    RTEXT           "Filename",IDC_STATIC,200,6,27,8
-    EDITTEXT        IDC_FILENAME,231,4,175,12,ES_AUTOHSCROLL | ES_READONLY
-    RTEXT           "Size",IDC_STATIC,210,22,17,8
-    EDITTEXT        IDC_FILESIZE,231,20,100,12,ES_AUTOHSCROLL | ES_READONLY
-    RTEXT           "Date",IDC_STATIC,208,38,19,8
-    EDITTEXT        IDC_FILETIME,231,36,100,12,ES_AUTOHSCROLL | ES_READONLY
-    CONTROL         "Custom1",IDC_PREVIEW_IMAGE,"PreviewImageClass",WS_TABSTOP,226,139,123,30
-    CONTROL         "",IDC_PREVIEW_RICHEDIT,"RichEdit20A",ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | WS_BORDER | WS_VSCROLL | WS_TABSTOP,227,61,137,70
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Menu
-//
-
-IDR_MAINFRAME MENU
-BEGIN
-    POPUP "&File"
-    BEGIN
-        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
-        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
-        MENUITEM SEPARATOR
-        MENUITEM "E&xit",                       ID_APP_EXIT
-    END
-    POPUP "&View"
-    BEGIN
-        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
-        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
-        MENUITEM "Error Bar",                   ID_VIEW_ERROR_BAR
-        MENUITEM "Undo Bar",                    ID_VIEW_UNDOBAR
-        MENUITEM SEPARATOR
-        MENUITEM "Resource Viewer",             ID_VIEW_RESOURCEVIEWER
-    END
-    POPUP "&Help"
-    BEGIN
-        MENUITEM "&About SkyEdit...",           ID_APP_ABOUT
-        MENUITEM SEPARATOR
-        MENUITEM "UESP Wiki",                   ID_HELP_UESPWIKI
-        MENUITEM "Official CS Wiki",            ID_HELP_CSWIKI
-    END
-END
-
-IDR_SREDITTYPE MENU
-BEGIN
-    POPUP "&File"
-    BEGIN
-        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
-        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
-        MENUITEM "&Close",                      ID_FILE_CLOSE
-        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
-        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
-        MENUITEM SEPARATOR
-        POPUP "&Import"
-        BEGIN
-            MENUITEM "From CSV...",                 ID_FILE_IMPORT_CSV
-        END
-        POPUP "Export CSV"
-        BEGIN
-            MENUITEM "Selected Items...",           ID_FILE_EXPORTCSV_SELECTEDITEMS
-            MENUITEM "Item Type...",                ID_FILE_EXPORTCSV_ITEMTYPE
-            MENUITEM "Exterior Locations...",       ID_FILE_EXPORT_CSVEXTERIORLOCATIONS
-            MENUITEM "Exterior Map Markers...",     ID_FILE_EXPORT_CSVEXTMAPMARKERS
-            MENUITEM "Exterior Plants...",          ID_FILE_EXPORT_CSVEXPORTEXTERIORPLANTS
-        END
-        MENUITEM SEPARATOR
-        MENUITEM "E&xit",                       ID_APP_EXIT
-    END
-    POPUP "&Edit"
-    BEGIN
-        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO, GRAYED
-        MENUITEM SEPARATOR
-        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT, GRAYED
-        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY, GRAYED
-        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE, GRAYED
-        MENUITEM SEPARATOR
-        MENUITEM "&Find...",                    ID_EDIT_FIND
-        MENUITEM SEPARATOR
-        MENUITEM "Use Local Strings",           ID_EDIT_USELOCALSTRINGS
-        MENUITEM "Set Mod Author...",           ID_EDIT_SETMODAUTHOR
-        MENUITEM "Set Mod Description...",      ID_EDIT_SETMODDESCRIPTION
-    END
-    POPUP "&View"
-    BEGIN
-        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
-        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
-        MENUITEM "Error Bar",                   ID_VIEW_ERROR_BAR
-        MENUITEM "Undo Bar",                    ID_VIEW_UNDOBAR
-        MENUITEM SEPARATOR
-        MENUITEM "File Structure...",           ID_VIEW_FILESTRUCTURE
-        MENUITEM "Reset List State",            ID_VIEW_RESETLISTS
-        MENUITEM SEPARATOR
-        MENUITEM "Resource Viewer",             ID_VIEW_RESOURCEVIEWER
-    END
-    POPUP "&Window"
-    BEGIN
-        MENUITEM "&New Window",                 ID_WINDOW_NEW
-        MENUITEM "&Cascade",                    ID_WINDOW_CASCADE
-        MENUITEM "&Tile",                       ID_WINDOW_TILE_HORZ
-        MENUITEM "&Arrange Icons",              ID_WINDOW_ARRANGE
-    END
-    POPUP "&Help"
-    BEGIN
-        MENUITEM "&About SkyEdit...",           ID_APP_ABOUT
-        MENUITEM SEPARATOR
-        MENUITEM "UESP Wiki",                   ID_HELP_UESPWIKI
-        MENUITEM "Official CS Wiki",            ID_HELP_CSWIKI
-        MENUITEM SEPARATOR
-        MENUITEM "Test Field Lookup",           ID_HELP_TESTFIELDLOOKUP
-        MENUITEM "Test Find FormID",            ID_HELP_TESTFINDFORMID
-        MENUITEM "Test Memory Speed",           ID_TEST_MEMORYSPEED
-        MENUITEM "Test Tokenize Scripts",       ID_TEST_TOKENSCRIPTS
-        MENUITEM "Test Output Effects",         ID_HELP_TESTOUTPUTEFFECTS
-        MENUITEM "Test Record Size",            ID_HELP_TESTRECORDSIZE
-        MENUITEM "Test Clean Recompile All Scripts", ID_TEST_CLEANRECOMPILEALL, INACTIVE
-        MENUITEM "Test Recompile Active Scripts", ID_TEST_RECOMPILEALL
-        MENUITEM "Test Compare Scripts",        ID_HELP_TESTCOMPARESCRIPTS
-        MENUITEM "Test Output Perks",           ID_HELP_TESTOUTPUTPERKS
-    END
-END
-
-IDR_RECORDTREE_MENU MENU
-BEGIN
-    POPUP "Menu"
-    BEGIN
-        MENUITEM "&Reload",                     ID_RECORDTREE_RELOAD, GRAYED
-        MENUITEM "Export to CSV...",            ID_RECORDTREE_EXPORTTOCSV
-    END
-END
-
-IDR_RECORDLIST_MENU MENU
-BEGIN
-    POPUP "Menu"
-    BEGIN
-        MENUITEM "New...",                      ID_EDIT_NEWRECORD
-        MENUITEM "Edit...",                     ID_MENU_EDITRECORD
-        MENUITEM "Rename...",                   ID_RECORD_RENAME
-        MENUITEM "Create Copy...",              ID_RECORD_CREATECOPY
-        MENUITEM SEPARATOR
-        MENUITEM "Batch Edit...",               ID_RECORD_BATCHEDIT
-        MENUITEM "Export to CSV...",            ID_FILE_EXPORTCSV_SELECTEDITEMS
-        MENUITEM "View Raw Data...",            ID_MENU_VIEWRAWDATA
-        MENUITEM SEPARATOR
-        MENUITEM "Clean",                       ID_RECORD_CLEAN
-        MENUITEM "Move To Active",              ID_RECORD_MOVEACTIVE
-        MENUITEM SEPARATOR
-        POPUP "Flags"
-        BEGIN
-            MENUITEM "Toggle Quest Item",           ID_RECORD_TOGGLEQUEST
-            MENUITEM "Toggle Ignore",               ID_RECORD_TOGGLEIGNORE
-            MENUITEM "Toggle Delete",               ID_RECORD_TOGGLEDELETE
-        END
-    END
-END
-
-IDR_LVLITEMLIST_MENU MENU
-BEGIN
-    POPUP "Menu"
-    BEGIN
-        MENUITEM "New",                         ID_LVLLIST_ADD
-        MENUITEM "Edit",                        ID_LVLLIST_EDIT
-        MENUITEM "Delete",                      ID_LVLLIST_DELETE
-        MENUITEM SEPARATOR
-        MENUITEM "Edit Base Record",            ID_LVLLIST_EDITRECORD
-    END
-END
-
-IDR_EFFECTLIST_MENU MENU
-BEGIN
-    POPUP "Menu"
-    BEGIN
-        MENUITEM "New",                         ID_EFFECTLIST_ADD
-        MENUITEM "Edit",                        ID_EFFECTLIST_EDIT
-        MENUITEM "Delete",                      ID_EFFECTLIST_DELETE
-        MENUITEM SEPARATOR
-        MENUITEM "Edit Script",                 ID_EFFECTLIST_EDITSCRIPT
-    END
-END
-
-IDR_BOOK_MENU MENU
-BEGIN
-    POPUP "Menu"
-    BEGIN
-        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
-        MENUITEM SEPARATOR
-        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
-        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
-        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
-        MENUITEM SEPARATOR
-        MENUITEM "Select &All\tCtrl+A",         ID_EDIT_SELECTALL
-    END
-END
-
-IDR_SCRIPT_MENU MENU
-BEGIN
-    POPUP "Menu"
-    BEGIN
-        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
-        MENUITEM SEPARATOR
-        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
-        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
-        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
-        MENUITEM SEPARATOR
-        MENUITEM "Select &All\tCtrl+A",         ID_EDIT_SELECTALL
-    END
-END
-
-IDR_CONTAINERLIST_MENU MENU
-BEGIN
-    POPUP "Menu"
-    BEGIN
-        MENUITEM "New",                         ID_LVLLIST_ADD
-        MENUITEM "Edit",                        ID_LVLLIST_EDIT
-        MENUITEM "Delete",                      ID_LVLLIST_DELETE
-        MENUITEM SEPARATOR
-        MENUITEM "Edit Base Record",            ID_LVLLIST_EDITRECORD
-    END
-END
-
-IDR_MGEFSOUNDLIST_MENU MENU
-BEGIN
-    POPUP "Menu"
-    BEGIN
-        MENUITEM "Add",                         ID_SNDDLIST_ADD
-        MENUITEM "Edit",                        ID_SNDDLIST_EDIT
-        MENUITEM "Delete",                      ID_SNDDLIST_DELETE
-        MENUITEM SEPARATOR
-        MENUITEM "Edit Base Record",            ID_SNDDLIST_EDITRECORD
-    END
-END
-
-IDR_FLSTLIST_MENU MENU
-BEGIN
-    POPUP "Menu"
-    BEGIN
-        MENUITEM "New",                         ID_FLSTLIST_ADD
-        MENUITEM "Edit",                        ID_FLSTLIST_EDIT
-        MENUITEM "Delete",                      ID_FLSTLIST_DELETE
-        MENUITEM SEPARATOR
-        MENUITEM "Edit Record...",              ID_FLSTTLIST_EDITBASE
-    END
-END
-
-IDR_OUTFITLIST_MENU MENU
-BEGIN
-    POPUP "Menu"
-    BEGIN
-        MENUITEM "New",                         ID_OUTFITLIST_ADD
-        MENUITEM "Edit",                        ID_OUTFITLIST_EDIT
-        MENUITEM "Delete",                      ID_OUTFITLIST_DELETE
-        MENUITEM SEPARATOR
-        MENUITEM "Edit Record...",              ID_OUTFITLIST_EDITBASE
-    END
-END
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -3966,45 +4083,11 @@ BEGIN
         BOTTOMMARGIN, 148
     END
 
-    IDD_SREDIT_FORM, DIALOG
-    BEGIN
-    END
-
-    IDD_LOAD_DLG, DIALOG
-    BEGIN
-    END
-
-    IDD_PROGRESS_DLG, DIALOG
-    BEGIN
-        RIGHTMARGIN, 241
-    END
-
-    IDD_FINDBINARY_DLG, DIALOG
-    BEGIN
-    END
-
     IDD_ERRORBAR, DIALOG
     BEGIN
     END
 
-    IDD_SELECTRECORD_DLG, DIALOG
-    BEGIN
-        VERTGUIDE, 56
-    END
-
-    IDD_PROMPT_DLG, DIALOG
-    BEGIN
-    END
-
-    IDD_INPUT_DLG, DIALOG
-    BEGIN
-    END
-
     IDD_FIND_DLG, DIALOG
-    BEGIN
-    END
-
-    IDD_RESOURCE_VIEW, DIALOG
     BEGIN
     END
 END

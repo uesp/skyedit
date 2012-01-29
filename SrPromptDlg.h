@@ -96,10 +96,11 @@ protected:
  *
  *=========================================================================*/
 
-  int  ShowSrPromptDlg   (const TCHAR* pTitle, const TCHAR* pLabel, const TCHAR* pButton1, const TCHAR* pButton2 = "", const TCHAR* pButton3 = "");
-  void ShowSrOkDlg       (const TCHAR* pTitle, const TCHAR* pLabel);
-  bool ShowSrYesNoDlg    (const TCHAR* pTitle, const TCHAR* pLabel);
-  bool ShowSrOkCancelDlg (const TCHAR* pTitle, const TCHAR* pLabel);
+  int  ShowSrPromptDlg      (const TCHAR* pTitle, const TCHAR* pLabel, const TCHAR* pButton1, const TCHAR* pButton2 = "", const TCHAR* pButton3 = "");
+  int  ShowSrYesNoCancelDlg (const TCHAR* pTitle, const TCHAR* pLabel);
+  void ShowSrOkDlg          (const TCHAR* pTitle, const TCHAR* pLabel);
+  bool ShowSrYesNoDlg       (const TCHAR* pTitle, const TCHAR* pLabel);
+  bool ShowSrOkCancelDlg    (const TCHAR* pTitle, const TCHAR* pLabel);
 
 /*===========================================================================
  *		End of Function Prototypes

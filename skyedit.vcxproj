@@ -1818,6 +1818,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\tes5lib\scripts\SrScriptFile.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../tes5lib;./;devil/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">../tes5lib;./;devil/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../tes5lib;./;devil/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="..\tes5lib\strings\SrStringFile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -1841,6 +1849,7 @@
     <ClCompile Include="..\tes5lib\windows\srrecordtreectrl.cpp" />
     <ClCompile Include="..\tes5lib\windows\srrecordvirtuallistctrl.cpp" />
     <ClCompile Include="..\tes5lib\windows\tabctrlsheet.cpp" />
+    <ClCompile Include="ChildFrmScript.cpp" />
     <ClCompile Include="dialogs\SrAvifView.cpp" />
     <ClCompile Include="dialogs\SrClfmView.cpp" />
     <ClCompile Include="dialogs\SrEcznView.cpp" />
@@ -1857,6 +1866,13 @@
     <ClCompile Include="dialogs\SrRacePageTint.cpp" />
     <ClCompile Include="dialogs\SrRacePageUnknown.cpp" />
     <ClCompile Include="dialogs\SrRaceView.cpp" />
+    <ClCompile Include="dialogs\SrScriptErrorView.cpp" />
+    <ClCompile Include="dialogs\SrScriptTextCtrl.cpp" />
+    <ClCompile Include="dialogs\SrScriptView.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../tes5lib;./;devil/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">../tes5lib;./;devil/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../tes5lib;./;devil/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="dialogs\SrSopmEditDlg.cpp" />
     <ClCompile Include="dialogs\SrActiView.cpp" />
     <ClCompile Include="dialogs\SrAlchView.cpp" />
@@ -2197,6 +2213,7 @@
     <ClInclude Include="..\tes5lib\modfile\subrecords\srweapdatasubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srweapdnamsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srwordsubrecord.h" />
+    <ClInclude Include="..\tes5lib\scripts\SrScriptFile.h" />
     <ClInclude Include="..\tes5lib\strings\SrStringFile.h" />
     <ClInclude Include="..\tes5lib\windows\scbarcf.h" />
     <ClInclude Include="..\tes5lib\windows\scbarg.h" />
@@ -2206,6 +2223,7 @@
     <ClInclude Include="..\tes5lib\windows\srrecordtreectrl.h" />
     <ClInclude Include="..\tes5lib\windows\srrecordvirtuallistctrl.h" />
     <ClInclude Include="..\tes5lib\windows\tabctrlsheet.h" />
+    <ClInclude Include="ChildFrmScript.h" />
     <ClInclude Include="dialogs\SrAvifView.h" />
     <ClInclude Include="dialogs\SrClfmView.h" />
     <ClInclude Include="dialogs\SrEcznView.h" />
@@ -2222,6 +2240,9 @@
     <ClInclude Include="dialogs\SrRacePageTint.h" />
     <ClInclude Include="dialogs\SrRacePageUnknown.h" />
     <ClInclude Include="dialogs\SrRaceView.h" />
+    <ClInclude Include="dialogs\SrScriptErrorView.h" />
+    <ClInclude Include="dialogs\SrScriptTextCtrl.h" />
+    <ClInclude Include="dialogs\SrScriptView.h" />
     <ClInclude Include="dialogs\SrSopmEditDlg.h" />
     <ClInclude Include="dialogs\SrActiView.h" />
     <ClInclude Include="dialogs\SrAlchView.h" />
@@ -2306,7 +2327,9 @@
     <None Include="res\file.bmp" />
     <None Include="res\find_dlg.ico" />
     <None Include="res\folder.bmp" />
+    <None Include="res\icon1.ico" />
     <None Include="res\idr_main.ico" />
+    <None Include="res\resourceview.ico" />
     <None Include="res\skyedit.ico" />
     <None Include="res\skyedit.rc2" />
     <None Include="res\Toolbar.bmp" />

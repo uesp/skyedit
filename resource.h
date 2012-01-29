@@ -123,6 +123,15 @@
 #define IDD_FUNCTIONPARAM_DLG           202
 #define IDR_PERKSECTION_MENU            224
 #define IDR_ERRORBAR_MENU               225
+#define IDR_RESOURCETREE_MENU           226
+#define IDD_SCRIPT_VIEW                 227
+#define IDD_SCRIPTERROR_VIEW            229
+#define IDR_SCRIPTLIST_MENU             230
+#define IDR_SCRIPTTEXT_MENU             232
+#define IDR_SCRIPTTEXT_ACCEL            233
+#define IDR_ERRORBAR_ACCEL              234
+#define IDR_RESOURCE_VIEW               235
+#define IDR_SCRIPT_VIEW                 236
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -677,6 +686,8 @@
 #define IDC_SECTION_EDITORIDLABEL       1514
 #define IDC_PRKC_LABEL                  1515
 #define IDC_RICHEDIT21                  1516
+#define IDC_SCRIPT_TEXT                 1516
+#define IDC_ERRORTEXT                   1516
 #define IDC_ACTIVECHECK                 1517
 #define IDC_FILTERTEXT                  1518
 #define IDC_IMAGESPACE                  1519
@@ -881,6 +892,12 @@
 #define IDC_CONDITION_LABEL             1760
 #define IDC_PARAM_LIST                  1761
 #define IDC_FILTER_LABEL                1762
+#define IDC_SCRIPT_LIST                 1764
+#define IDC_LOADSCRIPT                  1766
+#define IDC_NEWSCRIPT                   1767
+#define IDC_COMPILESCRIPT               1768
+#define IDC_SAVESCRIPT                  1769
+#define IDC_SAVEASSCRIPT                1770
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -1097,15 +1114,46 @@
 #define ID_ERRORBAR_COPY                32886
 #define ID_CONDITION_PASTECONDITION     32887
 #define ID_CONDITION_DUPLICATE          32888
+#define ID_RESOURCEMENU_EDIT            32889
+#define ID_RESOURCEMENU_EDITEXTERNAL    32890
+#define ID_VIEW_RESOURCESCRIPTS         32892
+#define ID_SCRIPTLISTMENU_NEWSCRIPT     32893
+#define ID_SCRIPTLISTMENU_LOADSCRIPT    32894
+#define ID_SCRIPTLISTMENU_DELETE        32895
+#define ID_SCRIPTLISTMENU_COMPILE       32896
+#define ID_SCRIPT_NEWSCRIPT             32897
+#define ID_SCRIPT_LOADSCRIPT            32898
+#define ID_SCRIPT_DELETE                32899
+#define ID_SCRIPT_COMPILE               32900
+#define ID_SCRIPT_LOAD                  32901
+#define ID_SCRIP_NEW                    32902
+#define ID_SCRIPT_NEW                   32903
+#define ID_SCRIPT_REMOTE                32904
+#define ID_SCRIPT_REMOVE                32905
+#define ID_SCRIPTLISTMENU_SAVE          32906
+#define ID_SCRIPTLISTMENU_SAVEAS        32907
+#define ID_SCRIP_SAVEAS                 32908
+#define ID_SCRIP_SAVE                   32909
+#define ID_SCRIPT_SAVE                  32910
+#define ID_SCRIPT_SAVEAS                32911
+#define ID_SCRIPTTEXTMENU_UNDO          32912
+#define ID_SCRIPTTEXTMENU_CUT           32913
+#define ID_SCRIPTTEXTMENU_COPY          32914
+#define ID_SCRIPTTEXTMENU_PASTE         32915
+#define ID_SCRIPTTEXTACC_COPY           32923
+#define ID_SCRIPTTEXTACC_CUT            32924
+#define ID_SCRIPTTEXTACC_PASTE          32925
+#define ID_SCRIPTTEXTACC_UNDO           32927
+#define ID_ERROR_COPY                   32928
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        226
-#define _APS_NEXT_COMMAND_VALUE         32889
-#define _APS_NEXT_CONTROL_VALUE         1763
+#define _APS_NEXT_RESOURCE_VALUE        237
+#define _APS_NEXT_COMMAND_VALUE         32934
+#define _APS_NEXT_CONTROL_VALUE         1772
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

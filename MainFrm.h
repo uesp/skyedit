@@ -93,6 +93,7 @@ protected:
   afx_msg void OnHelpUespwiki();
   afx_msg void OnHelpCswiki();
 	afx_msg void OnViewResetlists();
+	afx_msg void OnViewScripts();
 
   DECLARE_MESSAGE_MAP();
 

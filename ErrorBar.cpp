@@ -12,6 +12,7 @@
 #include "stdafx.h"
 #include "resource.h"
 #include "errorbar.h"
+#include "sredit.h"
 
 
 /*===========================================================================
@@ -35,10 +36,12 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrErrorBar, CSizingControlBarG)
+	ON_WM_INITMENUPOPUP()
 	ON_WM_CREATE()
 	ON_WM_CONTEXTMENU()
 	ON_COMMAND(ID_ERRORBAR_COPY, OnErrorbarCopy)
 	ON_UPDATE_COMMAND_UI(ID_ERRORBAR_COPY, OnUpdateErrorbarCopy)
+	ON_COMMAND(ID_ERROR_COPY, OnErrorbarCopy)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrErrorBar Message Map
@@ -56,6 +59,7 @@ CSrErrorBar::CSrErrorBar() {
   m_BoldFormat.dwMask    = CFM_BOLD;
   m_BoldFormat.dwEffects = CFE_BOLD;
 
+  m_hAccelerator = LoadAccelerators(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDR_ERRORBAR_ACCEL));
 }
 /*===========================================================================
  *		End of Class CSrErrorBar Constructor
@@ -203,3 +207,26 @@ void CSrErrorBar::OnContextMenu(CWnd* pWnd, CPoint Point)
  {
 	 pCmdUI->Enable(!m_wndChild.GetSelText().IsEmpty());
  }
+
+
+ BOOL CSrErrorBar::PreTranslateMessage(MSG* pMsg)
+{
+
+	if (m_hAccelerator != NULL) 
+	{
+		if (pMsg->message >= WM_KEYFIRST && pMsg->message <= WM_KEYLAST && m_hAccelerator != NULL) 
+		{
+			BOOL Result = TranslateAccelerator(m_hWnd, m_hAccelerator, pMsg);
+			if (Result != 0) return Result;
+		}
+	}
+
+	return CSizingControlBarG::PreTranslateMessage(pMsg);
+}
+
+
+void CSrErrorBar::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
+{
+	CSizingControlBarG::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
+	OnInitMenuPopupHelper(this, pPopupMenu, nIndex, bSysMenu);
+}

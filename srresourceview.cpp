@@ -21,12 +21,12 @@
  *
  *=========================================================================*/
 #ifdef _DEBUG
-  #define new DEBUG_NEW
-  #undef THIS_FILE
-  static char THIS_FILE[] = __FILE__;
+	#define new DEBUG_NEW
+	#undef THIS_FILE
+	static char THIS_FILE[] = __FILE__;
 #endif
 
-  IMPLEMENT_DYNCREATE(CSrResourceView, CFormView)
+	IMPLEMENT_DYNCREATE(CSrResourceView, CFormView)
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -38,7 +38,6 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrResourceView, CFormView)
-	//{{AFX_MSG_MAP(CSrResourceView)
 	ON_NOTIFY(NM_DBLCLK, IDC_RESOURCE_TREE, OnDblclkResourceTree)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_RESOURCE_TREE, OnSelchangedResourceTree)
 	ON_WM_SIZE()
@@ -48,7 +47,15 @@ BEGIN_MESSAGE_MAP(CSrResourceView, CFormView)
 	ON_WM_LBUTTONUP()
 	ON_COMMAND(ID_HELP, OnHelp)
 	ON_WM_MOUSEMOVE()
-	//}}AFX_MSG_MAP
+	ON_COMMAND(ID_RESOURCEMENU_EDIT, &CSrResourceView::OnResourcemenuEdit)
+	ON_UPDATE_COMMAND_UI(ID_RESOURCEMENU_EDIT, &CSrResourceView::OnUpdateResourcemenuEdit)
+	ON_WM_RBUTTONUP()
+	ON_WM_RBUTTONDOWN()
+	ON_WM_INITMENUPOPUP()
+	ON_WM_INITMENU()
+	ON_COMMAND(ID_RESOURCEMENU_EDITEXTERNAL, &CSrResourceView::OnResourcemenuEditexternal)
+	ON_UPDATE_COMMAND_UI(ID_RESOURCEMENU_EDITEXTERNAL, &CSrResourceView::OnUpdateResourcemenuEditexternal)
+	ON_NOTIFY(NM_RDBLCLK, IDC_RESOURCE_TREE, &CSrResourceView::OnNMRDblclkResourceTree)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -60,21 +67,19 @@ END_MESSAGE_MAP()
  * Class CSrResourceView Constructor
  *
  *=========================================================================*/
-CSrResourceView::CSrResourceView() : CFormView(CSrResourceView::IDD) {
-	//{{AFX_DATA_INIT(CSrResourceView)
-	//}}AFX_DATA_INIT
-
-  m_pCurrentInstance = NULL;
-  m_pDragResource    = NULL;
-  m_pDragImage       = NULL;
-  m_IsDragging       = false;
-  m_hGoodDropCursor  = NULL;
-  m_EnablePreview    = true;
-
-  m_pBsaFiles        = NULL;
-  m_pResourceHandler = NULL;
-  
-  m_hBadDropCursor = LoadCursor(NULL, MAKEINTRESOURCE(IDC_NO));
+CSrResourceView::CSrResourceView() : CFormView(CSrResourceView::IDD) 
+{
+	m_pCurrentInstance = NULL;
+	m_pDragResource    = NULL;
+	m_pDragImage       = NULL;
+	m_IsDragging       = false;
+	m_hGoodDropCursor  = NULL;
+	m_EnablePreview    = true;
+	
+	m_pBsaFiles        = NULL;
+	m_pResourceHandler = NULL;
+	
+	m_hBadDropCursor = LoadCursor(NULL, MAKEINTRESOURCE(IDC_NO));
 }
 /*===========================================================================
  *		End of Class CSrResourceView Constructor
@@ -86,12 +91,14 @@ CSrResourceView::CSrResourceView() : CFormView(CSrResourceView::IDD) {
  * Class CSrResourceView Destructor
  *
  *=========================================================================*/
-CSrResourceView::~CSrResourceView() {
+CSrResourceView::~CSrResourceView() 
+{
 
-  if (m_pDragImage != NULL) {
-    delete m_pDragImage;
-    m_pDragImage = NULL;
-  }
+	if (m_pDragImage != NULL) 
+	{
+		delete m_pDragImage;
+		m_pDragImage = NULL;
+	}
 
 }
 /*===========================================================================
@@ -104,10 +111,10 @@ CSrResourceView::~CSrResourceView() {
  * Class CSrResourceView Method - void DoDataExchange (pDX);
  *
  *=========================================================================*/
-void CSrResourceView::DoDataExchange(CDataExchange* pDX) {
+void CSrResourceView::DoDataExchange(CDataExchange* pDX) 
+{
 	CFormView::DoDataExchange(pDX);
 
-	//{{AFX_DATA_MAP(CSrResourceView)
 	DDX_Control(pDX, IDC_PREVIEW_RICHEDIT, m_PreviewText);
 	DDX_Control(pDX, IDC_FILETIME, m_Filetime);
 	DDX_Control(pDX, IDC_FILESIZE, m_Filesize);
@@ -115,7 +122,6 @@ void CSrResourceView::DoDataExchange(CDataExchange* pDX) {
 	DDX_Control(pDX, IDC_HBAR, m_HBar);
 	DDX_Control(pDX, IDC_RESOURCE_TREE, m_ResourceTree);
 	DDX_Control(pDX, IDC_PREVIEW_IMAGE, m_PreviewImage);
-	//}}AFX_DATA_MAP
 }
 /*===========================================================================
  *		End of Class Method CSrResourceView::DoDataExchange()
@@ -325,17 +331,8 @@ void CSrResourceView::OnInitialUpdate() {
  *
  *=========================================================================*/
 #ifdef _DEBUG
-
-void CSrResourceView::AssertValid() const {
-  CFormView::AssertValid();
-}
-
-
-void CSrResourceView::Dump(CDumpContext& dc) const {
-  CFormView::Dump(dc);
-}
-
-
+	void CSrResourceView::AssertValid() const { CFormView::AssertValid(); }
+	void CSrResourceView::Dump(CDumpContext& dc) const { CFormView::Dump(dc); }
 #endif
 /*===========================================================================
  *		End of Class Diagnostics
@@ -347,12 +344,21 @@ void CSrResourceView::Dump(CDumpContext& dc) const {
  * Class CSrResourceView Event - void OnDblclkResourceTree (pNMHDR, pResult);
  *
  *=========================================================================*/
-void CSrResourceView::OnDblclkResourceTree (NMHDR* pNMHDR, LRESULT* pResult) {
-  *pResult = 0;
+void CSrResourceView::OnDblclkResourceTree (NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	*pResult = 0;
+	int Control = GetKeyState(VK_CONTROL);
+	EditSelectedItem((Control & 0x8000) != 0x8000);
 }
 /*===========================================================================
  *		End of Class Event CSrResourceView::OnDblclkResourceTree()
  *=========================================================================*/
+
+
+void CSrResourceView::OnNMRDblclkResourceTree(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	*pResult = 0;
+}
 
 
 /*===========================================================================
@@ -360,7 +366,8 @@ void CSrResourceView::OnDblclkResourceTree (NMHDR* pNMHDR, LRESULT* pResult) {
  * Class CSrResourceView Event - void OnSelchangedResourceTree (pNMHDR, pResult);
  *
  *=========================================================================*/
-void CSrResourceView::OnSelchangedResourceTree (NMHDR* pNMHDR, LRESULT* pResult) {
+void CSrResourceView::OnSelchangedResourceTree (NMHDR* pNMHDR, LRESULT* pResult) 
+{
   NM_TREEVIEW*     pNMTreeView = (NM_TREEVIEW *) pNMHDR;
   CSrResourceBase* pBase;
   CSrResourceFile* pFile = NULL;
@@ -394,7 +401,8 @@ void CSrResourceView::OnSelchangedResourceTree (NMHDR* pNMHDR, LRESULT* pResult)
  * Class CSrResourceView Event - void OnSize (nType, cx, cy);
  *
  *=========================================================================*/
-void CSrResourceView::OnSize(UINT nType, int cx, int cy) {
+void CSrResourceView::OnSize(UINT nType, int cx, int cy) 
+{
   CFormView::OnSize(nType, cx, cy);
 
 	/* Update the available client size */
@@ -430,7 +438,8 @@ void CSrResourceView::OnSize(UINT nType, int cx, int cy) {
  * Class CSrResourceView Method - void ClearDisplayedInstance (void);
  *
  *=========================================================================*/
-void CSrResourceView::ClearDisplayedInstance (void) {
+void CSrResourceView::ClearDisplayedInstance (void) 
+{
   m_Filename.SetWindowText("");
   m_Filesize.SetWindowText("");
   m_Filetime.SetWindowText("");
@@ -447,7 +456,8 @@ void CSrResourceView::ClearDisplayedInstance (void) {
  * Class CSrResourceView Method - void UpdateDisplayedInstance (void);
  *
  *=========================================================================*/
-void CSrResourceView::UpdateDisplayedInstance (void) {
+void CSrResourceView::UpdateDisplayedInstance (void) 
+{
   CString  Buffer;
   FILETIME FileTime;
 
@@ -489,9 +499,10 @@ void CSrResourceView::UpdateDisplayedInstance (void) {
  * Class CSrResourceView Method - void ClearPreview (void);
  *
  *=========================================================================*/
-void CSrResourceView::ClearPreview (void) {
-  m_PreviewText.ShowWindow(SW_HIDE);
-  m_PreviewImage.ShowWindow(SW_HIDE);
+void CSrResourceView::ClearPreview (void) 
+{
+	m_PreviewText.ShowWindow(SW_HIDE);
+	m_PreviewImage.ShowWindow(SW_HIDE);
 }
 /*===========================================================================
  *		End of Class Method CSrResourceView::ClearPreview()
@@ -503,7 +514,8 @@ void CSrResourceView::ClearPreview (void) {
  * Class CSrResourceView Method - void PreviewText (pInstance, PreviewInfo);
  *
  *=========================================================================*/
-void CSrResourceView::PreviewText (CSrResourceInstance* pInstance, srrespreviewinfo_t& PreviewInfo) {
+void CSrResourceView::PreviewText (CSrResourceInstance* pInstance, srrespreviewinfo_t& PreviewInfo) 
+{
   CSrFile  File;
   CString  Buffer;
   long     Filesize;
@@ -555,7 +567,8 @@ void CSrResourceView::PreviewText (CSrResourceInstance* pInstance, srrespreviewi
  * Class CSrResourceView Method - void PreviewImage (pInstance, PreviewInfo);
  *
  *=========================================================================*/
-void CSrResourceView::PreviewImage (CSrResourceInstance* pInstance, srrespreviewinfo_t& PreviewInfo) {
+void CSrResourceView::PreviewImage (CSrResourceInstance* pInstance, srrespreviewinfo_t& PreviewInfo) 
+{
   FILE* pFile;
 
   if (PreviewInfo.PlainFile) {
@@ -582,7 +595,8 @@ void CSrResourceView::PreviewImage (CSrResourceInstance* pInstance, srrespreview
  * Class CSrResourceView Method - void PreviewUnknown (pInstance, PreviewInfo);
  *
  *=========================================================================*/
-void CSrResourceView::PreviewUnknown (CSrResourceInstance* pInstance, srrespreviewinfo_t& PreviewInfo) {
+void CSrResourceView::PreviewUnknown (CSrResourceInstance* pInstance, srrespreviewinfo_t& PreviewInfo) 
+{
 
   m_PreviewText.SetWindowText("Unknown file type!");
 
@@ -598,7 +612,8 @@ void CSrResourceView::PreviewUnknown (CSrResourceInstance* pInstance, srresprevi
  * Class CSrResourceView Method - void PreviewInstance (pInstance);
  *
  *=========================================================================*/
-void CSrResourceView::PreviewInstance (CSrResourceInstance* pInstance) {
+void CSrResourceView::PreviewInstance (CSrResourceInstance* pInstance) 
+{
   srrespreviewinfo_t PreviewInfo;
   CSString           TmpFilename;
   bool	             Result;
@@ -659,8 +674,32 @@ void CSrResourceView::PreviewInstance (CSrResourceInstance* pInstance) {
  * Class CSrResourceView Event - void OnContextMenu (pWnd, Point);
  *
  *=========================================================================*/
-void CSrResourceView::OnContextMenu (CWnd* pWnd, CPoint Point) {
+void CSrResourceView::OnContextMenu (CWnd* pWnd, CPoint Point) 
+{
+	CMenu  Menu;
+	CMenu* pSubMenu;
+	int    Result;
 	
+	if (pWnd->GetDlgCtrlID() == IDC_RESOURCE_TREE) 
+	{
+		CPoint ClientPt(Point);
+		m_ResourceTree.ScreenToClient(&ClientPt);
+		HTREEITEM hItem = m_ResourceTree.HitTest(ClientPt, 0);
+		if (hItem) m_ResourceTree.SelectItem(hItem);
+
+		Result = Menu.LoadMenu(IDR_RESOURCETREE_MENU);
+		if (!Result) return;
+		
+		pSubMenu = Menu.GetSubMenu(0);
+		if (pSubMenu == NULL) return;
+		
+		pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this, NULL);
+	}
+	else 
+	{
+		CFormView::OnContextMenu(pWnd, Point);
+	}
+		
 }
 /*===========================================================================
  *		End of Class Event CSrResourceView::OnContextMenu()
@@ -713,11 +752,13 @@ void CSrResourceView::OnBegindragResourceTree (NMHDR* pNMHDR, LRESULT* pResult) 
  * Class CSrResourceView Method - void CleanupDrag (void);
  *
  *=========================================================================*/
-void CSrResourceView::CleanupDrag (void) {
+void CSrResourceView::CleanupDrag (void) 
+{
 
   if (!m_IsDragging) return;
 
-  if (m_pDragImage != NULL) {
+  if (m_pDragImage != NULL) 
+  {
     delete m_pDragImage;
     m_pDragImage = NULL;
   }
@@ -736,11 +777,11 @@ void CSrResourceView::CleanupDrag (void) {
  * Class CSrResourceView Event - void OnCaptureChanged (pWnd);
  *
  *=========================================================================*/
-void CSrResourceView::OnCaptureChanged(CWnd *pWnd) {
-  CFormView::OnCaptureChanged(pWnd);
+void CSrResourceView::OnCaptureChanged(CWnd *pWnd) 
+{
+	CFormView::OnCaptureChanged(pWnd);
 
-  CleanupDrag();
-
+	CleanupDrag();
 }
 /*===========================================================================
  *		End of Class Event CSrResourceView::OnCaptureChanged()
@@ -752,26 +793,29 @@ void CSrResourceView::OnCaptureChanged(CWnd *pWnd) {
  * Class CSrResourceView Event - void OnLButtonUp (nFlags, Point);
  *
  *=========================================================================*/
-void CSrResourceView::OnLButtonUp (UINT nFlags, CPoint Point) {
+void CSrResourceView::OnLButtonUp (UINT nFlags, CPoint Point) 
+{
 
-  if (!m_IsDragging) {
-    CFormView::OnLButtonUp(nFlags, Point);
-    return;
-  }  
+	if (!m_IsDragging) 
+	{
+		CFormView::OnLButtonUp(nFlags, Point);
+		return;
+	}  
 
-  CPoint MousePt(Point);
-  ClientToScreen(&MousePt);
+	CPoint MousePt(Point);
+	ClientToScreen(&MousePt);
 
-  m_pDragImage->DragLeave(GetDesktopWindow());
-  m_pDragImage->EndDrag();
+	m_pDragImage->DragLeave(GetDesktopWindow());
+	m_pDragImage->EndDrag();
 
-	/* Drop the resource if required */
-  if (m_LastDropValid) {
-    SendDropNotify(MousePt, ID_SRRESOURCE_DROP);
-  }
+		/* Drop the resource if required */
+	if (m_LastDropValid) 
+	{
+		SendDropNotify(MousePt, ID_SRRESOURCE_DROP);
+	}
 
-  ReleaseCapture();
-  CleanupDrag();
+	ReleaseCapture();
+	CleanupDrag();
 }
 /*===========================================================================
  *		End of Class Event CSrResourceView::OnLButtonUp()
@@ -783,7 +827,8 @@ void CSrResourceView::OnLButtonUp (UINT nFlags, CPoint Point) {
  * Class CSrResourceView Event - void OnMouseMove (nFlags, Point);
  *
  *=========================================================================*/
-void CSrResourceView::OnMouseMove (UINT nFlags, CPoint Point) {
+void CSrResourceView::OnMouseMove (UINT nFlags, CPoint Point) 
+{
   int    Result;
 
   if (!m_IsDragging) {
@@ -824,11 +869,12 @@ void CSrResourceView::OnMouseMove (UINT nFlags, CPoint Point) {
  * Class CSrResourceView Method - int SendDropNotify (Point, MessageID);
  *
  *=========================================================================*/
-int CSrResourceView::SendDropNotify (CPoint Point, const int MessageID) {
-  srresourcedropinfo_t NotifyData;
-  CWnd*	               pDropWnd;
-  CWnd*		       pParentWnd = NULL;
-  int		       Result = 0;
+int CSrResourceView::SendDropNotify (CPoint Point, const int MessageID) 
+{
+  srresourcedropinfo_t	NotifyData;
+  CWnd*					pDropWnd;
+  CWnd*					pParentWnd = NULL;
+  int					Result = 0;
 
   	/* Get the CWnd pointer of the window that is under the given location */
   pDropWnd = WindowFromPoint(Point);
@@ -919,4 +965,116 @@ void CSrResourceView::OnHelp (void) {
 /*===========================================================================
  *		End of Class Event CSrResourceView::OnHelp()
  *=========================================================================*/
+
+
+void CSrResourceView::EditSelectedItem (const bool UseInternal)
+{
+	HTREEITEM        hItem = m_ResourceTree.GetSelectedItem();
+	CSrResourceBase* pBase;
+
+	if (hItem == NULL) return;
+
+	pBase = (CSrResourceBase *) m_ResourceTree.GetItemData(hItem);
+	if (pBase == NULL) return;
+
+	EditItem(pBase, UseInternal);
+}
+
+
+bool CSrResourceView::EditItem (CSrResourceBase* pBase, const bool UseInternal)
+{
+	if (pBase == NULL) return false;
+
+	if (pBase->IsScript())
+	{
+		GetSrEditApp().EditScript(pBase->GetFullName(), UseInternal);
+		return true;
+	}
+	else if (!UseInternal)
+	{
+		GetSrEditApp().EditResourceExternal(pBase->GetFullName());
+		return true;
+	}
+
+	return false;
+}
+
+
+void CSrResourceView::OnResourcemenuEdit()
+{
+	EditSelectedItem(true);
+}
+
+
+void CSrResourceView::OnUpdateResourcemenuEdit(CCmdUI *pCmdUI)
+{
+	CSrResourceBase* pBase = NULL;
+	HTREEITEM        hTree = m_ResourceTree.GetSelectedItem();
+
+	if (hTree) pBase = (CSrResourceBase *) m_ResourceTree.GetItemData(hTree);
+	
+	if (pBase == NULL)
+		pCmdUI->Enable(false);
+	else
+	{
+		pCmdUI->Enable(pBase->IsExtension("psc"));
+	}
+	
+}
+
+
+void CSrResourceView::OnRButtonUp(UINT nFlags, CPoint Point)
+{
+	CFormView::OnRButtonUp(nFlags, Point);
+}
+
+
+void CSrResourceView::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	CFormView::OnRButtonDown(nFlags, point);
+}
+
+
+BOOL CSrResourceView::PreTranslateMessage(MSG* pMsg)
+{
+	UpdateDialogControls(this, TRUE);
+	return CFormView::PreTranslateMessage(pMsg);
+}
+
+
+void CSrResourceView::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
+{
+	CFormView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
+	OnInitMenuPopupHelper(this, pPopupMenu, nIndex, bSysMenu);
+}
+
+
+void CSrResourceView::OnInitMenu(CMenu* pMenu)
+{
+	CFormView::OnInitMenu(pMenu);
+}
+
+
+void CSrResourceView::OnResourcemenuEditexternal()
+{
+	EditSelectedItem(false);
+}
+
+
+void CSrResourceView::OnUpdateResourcemenuEditexternal(CCmdUI *pCmdUI)
+{
+	CSrResourceBase* pBase = NULL;
+	HTREEITEM        hTree = m_ResourceTree.GetSelectedItem();
+
+	if (hTree) pBase = (CSrResourceBase *) m_ResourceTree.GetItemData(hTree);
+	
+	if (pBase == NULL)
+		pCmdUI->Enable(false);
+	else
+	{
+		pCmdUI->Enable(!pBase->IsFolder());
+	}
+
+}
+
 

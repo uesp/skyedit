@@ -32,12 +32,12 @@
 
  	/* Debug definitions */
 #ifdef _DEBUG
-  #define new DEBUG_NEW
-  #undef THIS_FILE
-  static char THIS_FILE[] = __FILE__;
+	#define new DEBUG_NEW
+	#undef THIS_FILE
+	static char THIS_FILE[] = __FILE__;
 #endif
 
-  IMPLEMENT_DYNCREATE(CSrEditView, CFormView);
+	IMPLEMENT_DYNCREATE(CSrEditView, CFormView);
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -49,63 +49,67 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrEditView, CFormView)
-  ON_WM_SIZE()
-  ON_NOTIFY(TVN_SELCHANGED, IDC_RECORDTREE, OnSelchangedRecordtree)
-  ON_COMMAND(ID_FILE_IMPORT_CSV, OnFileImportCsv)
-  ON_COMMAND(ID_FILE_EXPORTCSV_SELECTEDITEMS, OnFileExportcsvSelecteditems)
-  ON_COMMAND(ID_RECORDTREE_RELOAD, OnRecordtreeReload)
-  ON_WM_CONTEXTMENU()
-  ON_COMMAND(ID_FILE_EXPORTCSV_ITEMTYPE, OnRecordtreeExporttocsv)
-  ON_COMMAND(ID_VIEW_FILESTRUCTURE, OnViewFilestructure)
-  ON_COMMAND(ID_FILE_EXPORT_CSVEXTERIORLOCATIONS, OnFileExportCsvexteriorlocations)
-  ON_COMMAND(ID_FILE_EXPORT_CSVEXTMAPMARKERS, OnFileExportCsvExtMapMarkers)
-  ON_COMMAND(ID_HELP_TESTFIELDLOOKUP, OnHelpTestfieldlookup)
-  ON_COMMAND(ID_FILE_EXPORT_CSVEXPORTEXTERIORPLANTS, OnFileExportCsvexportexteriorplants)
-  ON_COMMAND(ID_EDIT_FINDBINARYDATA, OnEditFindbinarydata)
-  ON_COMMAND(ID_HELP_TESTFINDFORMID, OnHelpTestfindformid)
-  ON_COMMAND(ID_TEST_MEMORYSPEED, OnTestMemoryspeed)
-  ON_COMMAND(ID_TEST_TOKENSCRIPTS, OnTestTokenscripts)
-  ON_COMMAND(ID_RECORD_CLEAN, OnRecordClean)
-  ON_UPDATE_COMMAND_UI(ID_RECORD_CLEAN, OnUpdateHasSelectedRecords)
-  ON_COMMAND(ID_RECORD_MOVEACTIVE, OnRecordMoveactive)
-  ON_MESSAGE(ID_SRRECORDLIST_ACTIVATE, OnEditRecordMsg)  
-  ON_WM_DESTROY()
-  ON_COMMAND(ID_MENU_EDITRECORD, OnMenuEditrecord)
-  ON_COMMAND(ID_EDIT_NEWRECORD, OnEditNewrecord)
-  ON_COMMAND(ID_RECORD_TOGGLEQUEST, OnRecordTogglequest)
-  ON_COMMAND(ID_RECORD_TOGGLEIGNORE, OnRecordToggleignore)
-  ON_COMMAND(ID_RECORD_TOGGLEDELETE, OnRecordToggledelete)
-  ON_COMMAND(ID_EDIT_UNDO, OnEditUndo)
-  ON_UPDATE_COMMAND_UI(ID_EDIT_UNDO, OnUpdateEditUndo)
-  ON_COMMAND(ID_RECORD_RENAME, OnRecordRename)
-  ON_COMMAND(ID_RECORD_CREATECOPY, OnRecordCreatecopy)
-  ON_COMMAND(ID_RECORD_BATCHEDIT, OnRecordBatchedit)
-  ON_COMMAND(ID_EDIT_FIND, OnEditFind)
-  ON_COMMAND(ID_HELP_TESTOUTPUTEFFECTS, OnHelpTestoutputeffects)
-  ON_COMMAND(ID_HELP_TESTRECORDSIZE, OnHelpTestrecordsize)
-  ON_COMMAND(ID_TEST_CLEANRECOMPILEALL, OnTestCleanrecompileall)
-  ON_COMMAND(ID_TEST_RECOMPILEALL, OnTestRecompileall)
-  ON_COMMAND(ID_HELP_TESTCOMPARESCRIPTS, OnHelpTestcomparescripts)
-  ON_COMMAND(ID_RECORDTREE_EXPORTTOCSV, OnRecordtreeExporttocsv)
-  ON_UPDATE_COMMAND_UI(ID_RECORD_MOVEACTIVE, OnUpdateHasSelectedRecords)
-  ON_UPDATE_COMMAND_UI(ID_RECORD_TOGGLEQUEST, OnUpdateHasSelectedRecords)
-  ON_UPDATE_COMMAND_UI(ID_RECORD_TOGGLEIGNORE, OnUpdateHasSelectedRecords)
-  ON_UPDATE_COMMAND_UI(ID_RECORD_TOGGLEDELETE, OnUpdateHasSelectedRecords)
-  ON_UPDATE_COMMAND_UI(ID_RECORD_CREATECOPY, OnUpdateHasSelectedRecords)
-  ON_UPDATE_COMMAND_UI(ID_RECORD_RENAME, OnUpdateHasSelectedRecords)
-  ON_UPDATE_COMMAND_UI(ID_RECORD_BATCHEDIT, OnUpdateHasSelectedRecords)
-  ON_COMMAND(ID_EDIT_SELECTALL, OnEditSelectall)
-  ON_COMMAND(ID_MENU_VIEWRAWDATA, &CSrEditView::OnMenuViewrawdata)
-  ON_COMMAND(ID_HELP_TESTOUTPUTPERKS, &CSrEditView::OnHelpTestoutputperks)
-  ON_BN_CLICKED(IDC_ACTIVECHECK, &CSrEditView::OnBnClickedActivecheck)
-  ON_EN_CHANGE(IDC_FILTERTEXT, &CSrEditView::OnEnChangeFiltertext)
-  ON_WM_TIMER()
-  ON_WM_CLOSE()
-  ON_COMMAND(ID_EDIT_USELOCALSTRINGS, &CSrEditView::OnEditUselocalstrings)
-  ON_UPDATE_COMMAND_UI(ID_EDIT_USELOCALSTRINGS, &CSrEditView::OnUpdateEditUselocalstrings)
-  ON_COMMAND(ID_EDIT_SETMODAUTHOR, &CSrEditView::OnEditSetmodauthor)
-  ON_COMMAND(ID_EDIT_SETMODDESCRIPTION, &CSrEditView::OnEditSetmoddescription)
-  ON_COMMAND(ID_MENU_VIEWSUMMARY, &CSrEditView::OnMenuViewsummary)
+	ON_WM_SIZE()
+	ON_NOTIFY(TVN_SELCHANGED, IDC_RECORDTREE, OnSelchangedRecordtree)
+	ON_COMMAND(ID_FILE_IMPORT_CSV, OnFileImportCsv)
+	ON_COMMAND(ID_FILE_EXPORTCSV_SELECTEDITEMS, OnFileExportcsvSelecteditems)
+	ON_COMMAND(ID_RECORDTREE_RELOAD, OnRecordtreeReload)
+	ON_WM_CONTEXTMENU()
+	ON_COMMAND(ID_FILE_EXPORTCSV_ITEMTYPE, OnRecordtreeExporttocsv)
+	ON_COMMAND(ID_VIEW_FILESTRUCTURE, OnViewFilestructure)
+	ON_COMMAND(ID_FILE_EXPORT_CSVEXTERIORLOCATIONS, OnFileExportCsvexteriorlocations)
+	ON_COMMAND(ID_FILE_EXPORT_CSVEXTMAPMARKERS, OnFileExportCsvExtMapMarkers)
+	ON_COMMAND(ID_HELP_TESTFIELDLOOKUP, OnHelpTestfieldlookup)
+	ON_COMMAND(ID_FILE_EXPORT_CSVEXPORTEXTERIORPLANTS, OnFileExportCsvexportexteriorplants)
+	ON_COMMAND(ID_EDIT_FINDBINARYDATA, OnEditFindbinarydata)
+	ON_COMMAND(ID_HELP_TESTFINDFORMID, OnHelpTestfindformid)
+	ON_COMMAND(ID_TEST_MEMORYSPEED, OnTestMemoryspeed)
+	ON_COMMAND(ID_TEST_TOKENSCRIPTS, OnTestTokenscripts)
+	ON_COMMAND(ID_RECORD_CLEAN, OnRecordClean)
+	ON_UPDATE_COMMAND_UI(ID_RECORD_CLEAN, OnUpdateHasSelectedRecords)
+	ON_COMMAND(ID_RECORD_MOVEACTIVE, OnRecordMoveactive)
+	ON_MESSAGE(ID_SRRECORDLIST_ACTIVATE, OnEditRecordMsg)  
+	ON_WM_DESTROY()
+	ON_COMMAND(ID_MENU_EDITRECORD, OnMenuEditrecord)
+	ON_COMMAND(ID_EDIT_NEWRECORD, OnEditNewrecord)
+	ON_COMMAND(ID_RECORD_TOGGLEQUEST, OnRecordTogglequest)
+	ON_COMMAND(ID_RECORD_TOGGLEIGNORE, OnRecordToggleignore)
+	ON_COMMAND(ID_RECORD_TOGGLEDELETE, OnRecordToggledelete)
+	ON_COMMAND(ID_EDIT_UNDO, OnEditUndo)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_UNDO, OnUpdateEditUndo)
+	ON_COMMAND(ID_RECORD_RENAME, OnRecordRename)
+	ON_COMMAND(ID_RECORD_CREATECOPY, OnRecordCreatecopy)
+	ON_COMMAND(ID_RECORD_BATCHEDIT, OnRecordBatchedit)
+	ON_COMMAND(ID_EDIT_FIND, OnEditFind)
+	ON_COMMAND(ID_HELP_TESTOUTPUTEFFECTS, OnHelpTestoutputeffects)
+	ON_COMMAND(ID_HELP_TESTRECORDSIZE, OnHelpTestrecordsize)
+	ON_COMMAND(ID_TEST_CLEANRECOMPILEALL, OnTestCleanrecompileall)
+	ON_COMMAND(ID_TEST_RECOMPILEALL, OnTestRecompileall)
+	ON_COMMAND(ID_HELP_TESTCOMPARESCRIPTS, OnHelpTestcomparescripts)
+	ON_COMMAND(ID_RECORDTREE_EXPORTTOCSV, OnRecordtreeExporttocsv)
+	ON_UPDATE_COMMAND_UI(ID_RECORD_MOVEACTIVE, OnUpdateHasSelectedRecords)
+	ON_UPDATE_COMMAND_UI(ID_RECORD_TOGGLEQUEST, OnUpdateHasSelectedRecords)
+	ON_UPDATE_COMMAND_UI(ID_RECORD_TOGGLEIGNORE, OnUpdateHasSelectedRecords)
+	ON_UPDATE_COMMAND_UI(ID_RECORD_TOGGLEDELETE, OnUpdateHasSelectedRecords)
+	ON_UPDATE_COMMAND_UI(ID_RECORD_CREATECOPY, OnUpdateHasSelectedRecords)
+	ON_UPDATE_COMMAND_UI(ID_RECORD_RENAME, OnUpdateHasSelectedRecords)
+	ON_UPDATE_COMMAND_UI(ID_RECORD_BATCHEDIT, OnUpdateHasSelectedRecords)
+	ON_UPDATE_COMMAND_UI(ID_MENU_VIEWRAWDATA, OnUpdateHasSelectedRecords)
+	ON_UPDATE_COMMAND_UI(ID_FILE_EXPORTCSV_SELECTEDITEMS, OnUpdateHasSelectedRecords)
+	ON_COMMAND(ID_EDIT_SELECTALL, OnEditSelectall)
+	ON_COMMAND(ID_MENU_VIEWRAWDATA, &CSrEditView::OnMenuViewrawdata)
+	ON_COMMAND(ID_HELP_TESTOUTPUTPERKS, &CSrEditView::OnHelpTestoutputperks)
+	ON_BN_CLICKED(IDC_ACTIVECHECK, &CSrEditView::OnBnClickedActivecheck)
+	ON_EN_CHANGE(IDC_FILTERTEXT, &CSrEditView::OnEnChangeFiltertext)
+	ON_WM_TIMER()
+	ON_WM_CLOSE()
+	ON_COMMAND(ID_EDIT_USELOCALSTRINGS, &CSrEditView::OnEditUselocalstrings)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_USELOCALSTRINGS, &CSrEditView::OnUpdateEditUselocalstrings)
+	ON_COMMAND(ID_EDIT_SETMODAUTHOR, &CSrEditView::OnEditSetmodauthor)
+	ON_COMMAND(ID_EDIT_SETMODDESCRIPTION, &CSrEditView::OnEditSetmoddescription)
+	ON_COMMAND(ID_MENU_VIEWSUMMARY, &CSrEditView::OnMenuViewsummary)
+	ON_UPDATE_COMMAND_UI(ID_MENU_EDITRECORD, &CSrEditView::OnUpdateMenuEditrecord)
+	ON_WM_INITMENUPOPUP()
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Class CSrEditView Message Map
@@ -118,18 +122,9 @@ END_MESSAGE_MAP()
  *
  *=========================================================================*/
 #ifdef _DEBUG
-void CSrEditView::AssertValid() const {
-  CFormView::AssertValid();
- }
-
-void CSrEditView::Dump(CDumpContext& dc) const  {
-  CFormView::Dump(dc);
- }
-
-CSrEditDoc* CSrEditView::GetDocument() {
-  ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CSrEditDoc)));
-  return (CSrEditDoc*)m_pDocument;
- }
+	void CSrEditView::AssertValid() const { CFormView::AssertValid(); }
+	void CSrEditView::Dump(CDumpContext& dc) const  { CFormView::Dump(dc); }
+	CSrEditDoc* CSrEditView::GetDocument() {  ASSERT(m_pDocument->IsKindOf(RUNTIME_CLASS(CSrEditDoc))); return (CSrEditDoc*)m_pDocument; }
 #endif
 /*===========================================================================
  *		End of Class Diagnostics
@@ -2668,3 +2663,15 @@ void CSrEditView::OnEditSetmoddescription()
 	GetDocument()->SetModifiedFlag();
 }
 
+
+void CSrEditView::OnUpdateMenuEditrecord(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(m_RecordList.GetSelectedRecord() != NULL);
+}
+
+
+void CSrEditView::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
+{
+	CFormView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
+	OnInitMenuPopupHelper(this, pPopupMenu, nIndex, bSysMenu);
+}

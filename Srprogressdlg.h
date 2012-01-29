@@ -76,28 +76,19 @@ public:
   void Update (const float Percent);
 
 	/* Dialog Data */
-  //{{AFX_DATA(CSrProgressDlg)
   enum { IDD = IDD_PROGRESS_DLG };
   CStatic	m_PercentLabel;
   CProgressCtrl	m_ProgressCtrl;
   CStatic	m_LabelText;
   CButton	m_CancelButton;
-  //}}AFX_DATA
 
-	/* ClassWizard generated virtual function overrides */
-  //{{AFX_VIRTUAL(CSrProgressDlg)
 protected:
   virtual void DoDataExchange(CDataExchange* pDX);
   virtual void OnCancel ();
-  //}}AFX_VIRTUAL
 
 protected:
-
-	/* Generated message map functions */
-  //{{AFX_MSG(CSrProgressDlg)
   virtual BOOL OnInitDialog();
   afx_msg void OnDestroy (void);
-  //}}AFX_MSG
 
   DECLARE_MESSAGE_MAP();
 
@@ -127,11 +118,7 @@ protected:
  *=========================================================================*/
 
 
-//{{AFX_INSERT_LOCATION}}
-//}}AFX_INSERT_LOCATION
-
-
 #endif
 /*===========================================================================
- *		End of File Obprogressdlg.H
+ *		End of File SrProgressdlg.H
  *=========================================================================*/

@@ -90,6 +90,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_MESSAGE(WM_MDIMAXIMIZE, OnMdiMaximize)
 	ON_COMMAND(ID_HELP, OnHelp)
 	ON_COMMAND(ID_VIEW_RESOURCEVIEWER, OnViewResourceviewer)
+	ON_COMMAND(ID_VIEW_RESOURCESCRIPTS, OnViewScripts)	
 	ON_COMMAND(ID_HELP_UESPWIKI, OnHelpUespwiki)
 	ON_COMMAND(ID_HELP_CSWIKI, OnHelpCswiki)
 	ON_COMMAND(ID_VIEW_RESETLISTS, OnViewResetlists)
@@ -435,6 +436,12 @@ void CMainFrame::OnViewResourceviewer()
 /*===========================================================================
  *		End of Class Event CMainFrame::OnViewResourceviewer()
  *=========================================================================*/
+
+
+void CMainFrame::OnViewScripts() 
+{
+	GetSrEditApp().OpenScriptsView();
+}
 
 
 /*===========================================================================

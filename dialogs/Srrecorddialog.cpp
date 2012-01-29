@@ -39,6 +39,7 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrRecordDialog, CFormView)
+	ON_WM_INITMENUPOPUP()
 	ON_WM_DESTROY()
 	ON_COMMAND(ID_APPLY_BUTTON, OnApply)
 	ON_COMMAND(ID_CANCEL_BUTTON, OnCancel)
@@ -2425,3 +2426,9 @@ void CSrRecordDialog::OnBnClickedBounds()
 	m_pBoundsField->SetWindowText(Buffer);
 }
 
+
+void CSrRecordDialog::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
+{
+	CFormView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
+	OnInitMenuPopupHelper(this, pPopupMenu, nIndex, bSysMenu);
+}

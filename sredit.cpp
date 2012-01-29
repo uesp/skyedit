@@ -19,6 +19,9 @@
 #include "stdarg.h"
 #include "aboutdlg.h"
 #include "shlwapi.h"
+#include "dialogs/SrScriptView.h"
+#include "ChildFrmScript.h"
+#include "ChildFrmFix.h"
 
 
 /*===========================================================================
@@ -50,9 +53,9 @@
  * Begin CSrEditApp Message Map
  *
  *=========================================================================*/
-BEGIN_MESSAGE_MAP(CSrEditApp, CWinApp)
+BEGIN_MESSAGE_MAP(CSrEditApp, CWinAppEx)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
-	ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
+	ON_COMMAND(ID_FILE_NEW, CWinAppEx::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, OnFileOpen)
 END_MESSAGE_MAP()
 /*===========================================================================
@@ -73,6 +76,8 @@ CSrEditApp::CSrEditApp()
 	m_NewFileIndex         = 1;
 	m_InitResourceHandler  = false;
 	m_pMainFrame           = NULL;
+	
+	m_EditScriptExternalByDefault = false;
 }
 /*===========================================================================
  *		End of Class CSrEditApp Constructor
@@ -106,6 +111,7 @@ BOOL CSrEditApp::InitInstance() {
 
   AfxEnableControlContainer();
   AfxInitRichEdit2();
+  InitContextMenuManager();
 
 #ifdef _AFXDLL
   Enable3dControls();
@@ -205,16 +211,17 @@ BOOL CSrEditApp::InitInstance() {
  * Class CSrEditApp Method - int ExitInstance ();
  *
  *=========================================================================*/
-int CSrEditApp::ExitInstance() {
+int CSrEditApp::ExitInstance() 
+{
 	extern long g_StringAllocations;
-	SystemLog.Printf("TotalStringAllocations = %d", g_StringAllocations);
+	SystemLog.Printf("Total String Allocations = %ld", g_StringAllocations);
 
-  CSrMultiRecordHandler::m_SkyrimMaster.Destroy();
+	CSrMultiRecordHandler::m_SkyrimMaster.Destroy();
 
-  m_ResourceHandler.Destroy();
-  m_BsaFiles.Destroy();
+	m_ResourceHandler.Destroy();
+	m_BsaFiles.Destroy();
 
-  return CWinApp::ExitInstance();
+	return CWinAppEx::ExitInstance();
 }
 /*===========================================================================
  *		End of Class Method CSrEditApp::ExitInstance()
@@ -228,9 +235,10 @@ int CSrEditApp::ExitInstance() {
  * Application command to run the about dialog.
  *
  *=========================================================================*/
-void CSrEditApp::OnAppAbout() {
-  CAboutDlg aboutDlg;
-  aboutDlg.DoModal();
+void CSrEditApp::OnAppAbout() 
+{
+	CAboutDlg aboutDlg;
+	aboutDlg.DoModal();
 }
 /*===========================================================================
  *		End of Class Event CSrEditApp::OnAppAbout()
@@ -298,7 +306,7 @@ void CSrEditApp::OnFileOpen (void)
  *=========================================================================*/
 CDocument* CSrEditApp::OpenDocumentFile (LPCTSTR lpszFileName) 
 {
-  return CWinApp::OpenDocumentFile(lpszFileName, FALSE);
+  return CWinAppEx::OpenDocumentFile(lpszFileName, FALSE);
 }
 /*===========================================================================
  *		End of Class Method CSrEditApp::OpenDocumentFile()
@@ -360,7 +368,7 @@ bool CSrEditApp::SaveOptions (const TCHAR* pFilename)
 void CSrEditApp::UpdateOptions (const bool Set) 
 {
 
-	/* Record list options */
+		/* Record list options */
   m_ConfigFile.UpdateBoolean(Set, "RecordListEnableColors",		CSrRecordListCtrl::GetOptions().EnableColors);
   m_ConfigFile.UpdateBoolean(Set, "RecordListSaveState",		CSrRecordListCtrl::GetOptions().SaveState);
 
@@ -433,11 +441,14 @@ void CSrEditApp::UpdateOptions (const bool Set)
   }
 
 		/* Script options */
-  //m_ConfigFile.UpdateString (Set, "ScriptFontName", CSrScptView::m_Options.FontName);
-  //m_ConfigFile.UpdateInteger(Set, "ScriptFontSize", CSrScptView::m_Options.FontSize);
+  m_ConfigFile.UpdateBoolean(Set, "EditScriptExternalByDefault",  m_EditScriptExternalByDefault);
+  
+  m_ConfigFile.UpdateString (Set, "ScriptCompilerCmdOptions", CSrScriptView::s_ScriptOptions.CompilerCmdOptions);
+  m_ConfigFile.UpdateString (Set, "ScriptFontName", CSrScriptView::s_ScriptOptions.FontName);
+  m_ConfigFile.UpdateInteger(Set, "ScriptFontSize", CSrScriptView::s_ScriptOptions.FontSize);
+  m_ConfigFile.UpdateInteger(Set, "ScriptTabSize",  CSrScriptView::s_ScriptOptions.TabSize);
   //m_ConfigFile.UpdateDword  (Set, "ScriptForeColor[]", CSrScptView::m_Options.DefaultForeColor);
-  //m_ConfigFile.UpdateDword  (Set, "ScriptBackColor[]", CSrScptView::m_Options.DefaultBackColor);
-  //m_ConfigFile.UpdateInteger(Set, "ScriptTabSize", CSrScptView::m_Options.TabSize);
+  //m_ConfigFile.UpdateDword  (Set, "ScriptBackColor[]", CSrScptView::m_Options.DefaultBackColor);  
   //UpdateScriptErrorOptions(Set);
 
 	/* Force a redraw */
@@ -685,6 +696,7 @@ CSrResourceView* CSrEditApp::CreateResourceView (void) {
 
 	/* Create new form view from resource */
   pFrame->LoadFrame(IDD_RESOURCE_VIEW, WS_OVERLAPPEDWINDOW, m_pMainWnd, &Context);
+  pFrame->SetIcon(LoadIcon(MAKEINTRESOURCE(IDR_RESOURCE_VIEW)), false);
 
   	/* Attempt to initialize the new view */
   pWnd = pFrame->GetDescendantWindow(AFX_IDW_PANE_FIRST, TRUE);
@@ -794,31 +806,31 @@ bool CSrEditApp::InitResourceHandler (void) {
     
   Filename = Buffer + "Skyrim - Misc.bsa";
   AddBsaFile(Filename);
-  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(40);
+  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(35);
 
   Filename = Buffer + "Skyrim - Meshes.bsa";
   AddBsaFile(Filename);
-  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(50);
+  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(40);
 
   Filename = Buffer + "Skyrim - Sounds.bsa";
   AddBsaFile(Filename);
-  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(60);
+  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(45);
 
   Filename = Buffer + "Skyrim - Shaders.bsa";
   AddBsaFile(Filename);
-  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(70);
+  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(50);
 
   Filename = Buffer + "Skyrim - Textures.bsa";
   AddBsaFile(Filename);
-  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(80);
+  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(60);
 
   Filename = Buffer + "Skyrim - Voices.bsa";
   AddBsaFile(Filename);
-  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(90);
+  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(70);
 
   Filename = Buffer + "Skyrim - VoicesExtra.bsa";
   AddBsaFile(Filename);
-  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(95);
+  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(80);
   
   m_InitResourceHandler = true;
   return (true);
@@ -1074,4 +1086,234 @@ void SrGlobClipClearConditions (void)
 CSrConditionArray& SrGlobClipGetConditions (void)
 {
 	return g_GlobClipConditions;
+}
+
+
+// Taken from http://support.microsoft.com/default.aspx?scid=kb;en-us;242577
+// to ensure menus in formviews/dialogs are updated properly
+void OnInitMenuPopupHelper (CWnd* pThis, CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
+{
+	ASSERT(pPopupMenu != NULL);
+    // Check the enabled state of various menu items.
+
+    CCmdUI state;
+    state.m_pMenu = pPopupMenu;
+    ASSERT(state.m_pOther == NULL);
+    ASSERT(state.m_pParentMenu == NULL);
+
+    // Determine if menu is popup in top-level menu and set m_pOther to
+    // it if so (m_pParentMenu == NULL indicates that it is secondary popup).
+    HMENU hParentMenu;
+    if (AfxGetThreadState()->m_hTrackingMenu == pPopupMenu->m_hMenu)
+        state.m_pParentMenu = pPopupMenu;    // Parent == child for tracking popup.
+    else if ((hParentMenu = ::GetMenu(pThis->m_hWnd)) != NULL)
+    {
+        CWnd* pParent = pThis;
+           // Child windows don't have menus--need to go to the top!
+        if (pParent != NULL &&
+           (hParentMenu = ::GetMenu(pParent->m_hWnd)) != NULL)
+        {
+           int nIndexMax = ::GetMenuItemCount(hParentMenu);
+           for (int nIndex = 0; nIndex < nIndexMax; nIndex++)
+           {
+            if (::GetSubMenu(hParentMenu, nIndex) == pPopupMenu->m_hMenu)
+            {
+                // When popup is found, m_pParentMenu is containing menu.
+                state.m_pParentMenu = CMenu::FromHandle(hParentMenu);
+                break;
+            }
+           }
+        }
+    }
+
+    state.m_nIndexMax = pPopupMenu->GetMenuItemCount();
+    for (state.m_nIndex = 0; state.m_nIndex < state.m_nIndexMax;
+      state.m_nIndex++)
+    {
+        state.m_nID = pPopupMenu->GetMenuItemID(state.m_nIndex);
+        if (state.m_nID == 0)
+           continue; // Menu separator or invalid cmd - ignore it.
+
+        ASSERT(state.m_pOther == NULL);
+        ASSERT(state.m_pMenu != NULL);
+        if (state.m_nID == (UINT)-1)
+        {
+           // Possibly a popup menu, route to first item of that popup.
+           state.m_pSubMenu = pPopupMenu->GetSubMenu(state.m_nIndex);
+           if (state.m_pSubMenu == NULL ||
+            (state.m_nID = state.m_pSubMenu->GetMenuItemID(0)) == 0 ||
+            state.m_nID == (UINT)-1)
+           {
+            continue;       // First item of popup can't be routed to.
+           }
+           state.DoUpdate(pThis, TRUE);   // Popups are never auto disabled.
+        }
+        else
+        {
+           // Normal menu item.
+           // Auto enable/disable if frame window has m_bAutoMenuEnable
+           // set and command is _not_ a system command.
+           state.m_pSubMenu = NULL;
+           state.DoUpdate(pThis, FALSE);
+        }
+
+        // Adjust for menu deletions and additions.
+        UINT nCount = pPopupMenu->GetMenuItemCount();
+        if (nCount < state.m_nIndexMax)
+        {
+           state.m_nIndex -= (state.m_nIndexMax - nCount);
+           while (state.m_nIndex < nCount &&
+            pPopupMenu->GetMenuItemID(state.m_nIndex) == state.m_nID)
+           {
+            state.m_nIndex++;
+           }
+        }
+        state.m_nIndexMax = nCount;
+    }
+}
+
+
+CFrameWnd* CSrEditApp::FindScriptsView (void)
+{
+	CWnd* pWnd;
+	CWnd* pWnd1;
+	HWND  hWnd;
+
+	hWnd = GetWindow(m_pMainFrame->m_hWndMDIClient, GW_CHILD);
+
+	while (hWnd != NULL) 
+	{
+		pWnd = CWnd::FromHandle(hWnd);
+
+		if (pWnd != NULL) 
+		{
+			pWnd1 = pWnd->GetDescendantWindow(AFX_IDW_PANE_FIRST, TRUE);
+
+			if (pWnd1 != NULL && pWnd1->IsKindOf(RUNTIME_CLASS(CSrScriptView))) 
+			{
+				if (pWnd->IsKindOf(RUNTIME_CLASS(CFrameWnd))) return (CFrameWnd *) pWnd;
+			}
+		}
+   
+		hWnd = GetWindow(hWnd, GW_HWNDNEXT);
+	}
+
+	return NULL;
+}
+
+
+CSrScriptView* CSrEditApp::CreateScriptsView (void)
+{
+	CSrScriptView*	pView;
+	CCreateContext	Context;
+	CFrameWnd*		pFrame;
+	CWnd*			pWnd;
+	  
+		/* Initialize the context structure */
+	Context.m_pCurrentDoc     = NULL;
+	Context.m_pCurrentFrame   = NULL;
+	Context.m_pNewDocTemplate = NULL;
+	Context.m_pLastView       = NULL;
+	Context.m_pNewViewClass   = RUNTIME_CLASS(CSrScriptView);
+
+		/* Create the dialog parent frame */  
+	pFrame = (CFrameWnd *) RUNTIME_CLASS(CChildFrameScript)->CreateObject();
+	ASSERT_KINDOF(CFrameWnd, pFrame);
+
+		/* Create new form view from resource */
+	pFrame->LoadFrame(IDD_SCRIPT_VIEW, WS_OVERLAPPEDWINDOW, m_pMainWnd, &Context);
+	pFrame->SetIcon(LoadIcon(MAKEINTRESOURCE(IDR_SCRIPT_VIEW)), false);
+
+  		/* Attempt to initialize the new view */
+	pWnd = pFrame->GetDescendantWindow(AFX_IDW_PANE_FIRST, TRUE);
+
+	if (pWnd != NULL && pWnd->IsKindOf(RUNTIME_CLASS(CSrScriptView))) 
+	{
+		pView = (CSrScriptView *) pWnd;
+	}
+  
+	pFrame->InitialUpdateFrame(NULL, TRUE);
+	pFrame->ActivateFrame(SW_SHOWNORMAL);
+	pFrame->SetWindowText(_T("Scripts"));
+
+	return (pView);
+}
+
+
+CSrScriptView* CSrEditApp::OpenScriptsView (void) 
+{
+	CSrScriptView* pView = NULL;
+	CFrameWnd*     pFrame;
+	CWnd*          pWnd;
+
+		/* Find an already open view */
+	pFrame = FindScriptsView();
+
+	if (pFrame != NULL) 
+	{
+		pFrame->ActivateFrame(SW_RESTORE);
+		pWnd = pFrame->GetDescendantWindow(AFX_IDW_PANE_FIRST, TRUE);
+		if (pWnd != NULL && pWnd->IsKindOf(RUNTIME_CLASS(CSrScriptView))) pView = (CSrScriptView *) pWnd;
+	}
+	else 
+	{
+		pView = CreateScriptsView();
+	}
+
+	return (pView);
+}
+
+
+void CSrEditApp::OpenScriptsResourceView (void) 
+{
+	OpenResourceView(SR_RESOURCE_SCRIPTBASEPATH);
+}
+
+
+bool CSrEditApp::EditScript (const char* pFilename, const bool UseInternal)
+{
+	bool UseInt = UseInternal;
+	if (m_EditScriptExternalByDefault) UseInt = !UseInt;
+
+	if (UseInt) return EditScript(pFilename);
+	return EditScriptExternal(pFilename);
+}
+
+
+bool CSrEditApp::EditScript (const char* pFilename)
+{
+	CSrScriptView* pScriptView = OpenScriptsView();
+	if (pScriptView == NULL) return false;
+
+	pScriptView->AddScript(pFilename);
+	return true;
+}
+
+
+bool CSrEditApp::EditScriptExternal (const char* pFilename)
+{
+	CString  Buffer;
+	CSString Path;
+
+	GetSrInstallPath(Path);
+	Path += "\\data\\";
+	Buffer.Format("%s%s", Path, pFilename);
+
+	ShellExecute(NULL, "Open", Buffer, NULL, NULL, SW_SHOW);
+
+	return true;
+}
+
+
+bool CSrEditApp::EditResourceExternal (const char* pFilename)
+{
+	CString  Buffer;
+	CSString Path;
+
+	GetSrInstallPath(Path);
+	Buffer.Format("%s%s", Path, pFilename);
+
+	ShellExecute(NULL, "Open", Buffer, NULL, NULL, SW_SHOW);
+
+	return true;
 }
