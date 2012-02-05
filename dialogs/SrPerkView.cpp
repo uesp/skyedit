@@ -59,6 +59,13 @@ BEGIN_MESSAGE_MAP(CSrPerkView, CSrRecordDialog)
 	ON_UPDATE_COMMAND_UI(ID_PERKSECTION_DELETE, &CSrPerkView::OnUpdatePerksectionEdit)
 	ON_UPDATE_COMMAND_UI(ID_PERKSECTION_DUPLICATE, &CSrPerkView::OnUpdatePerksectionEdit)
 	ON_WM_CONTEXTMENU()
+
+	ON_COMMAND(ID_CONDITIONRECORD_COPY, OnConditionrecordCopy)
+	ON_COMMAND(ID_CONDITIONRECORD_PASTE, OnConditionrecordPaste)
+	ON_COMMAND(ID_CONDITIONRECORD_DELETEALL, OnConditionrecordDeleteAll)
+	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_COPY, OnUpdateConditionrecordCopy)
+	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_PASTE, OnUpdateConditionrecordPaste)
+	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_DELETEALL, OnUpdateConditionrecordDeleteAll)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrPerkView Message Map
@@ -127,6 +134,7 @@ CSrPerkView::CSrPerkView() : CSrRecordDialog(CSrPerkView::IDD)
 	m_IsInitialized = false;
 	m_IsUpdating = false;
 	m_pCurrentSection = NULL;
+	m_ContextConditionIndex = -1;
 }
 /*===========================================================================
  *		End of Class CSrPerkView Constructor
@@ -1669,9 +1677,130 @@ void CSrPerkView::OnDropSectionList (NMHDR* pNotifyStruct, LRESULT* pResult)
 		
 		pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this, NULL);
 	}
+	else if (pWnd->GetDlgCtrlID() == IDC_SECTION_CONDITIONS1 ||
+		     pWnd->GetDlgCtrlID() == IDC_SECTION_CONDITIONS2 ||
+			 pWnd->GetDlgCtrlID() == IDC_SECTION_CONDITIONS3) 
+	{
+		if (pWnd->GetDlgCtrlID() == IDC_SECTION_CONDITIONS1)
+			m_ContextConditionIndex = 0;
+		else if (pWnd->GetDlgCtrlID() == IDC_SECTION_CONDITIONS2)
+			m_ContextConditionIndex = 1;
+		else if (pWnd->GetDlgCtrlID() == IDC_SECTION_CONDITIONS3)
+			m_ContextConditionIndex = 2;
+		else
+			m_ContextConditionIndex = -1;
+
+		Result = Menu.LoadMenu(IDR_CONDITIONRECORD_MENU);
+		if (!Result) return;
+		
+		pSubMenu = Menu.GetSubMenu(0);
+		if (pSubMenu == NULL) return;
+		
+		pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this, NULL);
+	}
 	else 
 	{
 		CSrRecordDialog::OnContextMenu(pWnd, Point);
 	}
 	  
  }
+
+ 
+void CSrPerkView::OnConditionrecordCopy()
+{
+	if (m_pCurrentSection == NULL || m_ContextConditionIndex < 0 || m_ContextConditionIndex >= SRPERK_EFFECT_MAXCONDTYPES) return;
+	if (m_pCurrentSection->CountSubsections(m_ContextConditionIndex) == 0) return;
+
+	SrGlobClipClearConditions();
+
+	for (dword i = 0; i < m_pCurrentSection->Conditions.GetSize(); ++i)
+	{
+		if (m_pCurrentSection->Conditions[i]->Condition.GetPrkc() != m_ContextConditionIndex) continue;
+		SrGlobClipAddCondition(m_pCurrentSection->Conditions[i]);
+	}
+
+}
+
+
+void CSrPerkView::OnConditionrecordPaste()
+{
+	if (m_pCurrentSection == NULL || m_ContextConditionIndex < 0 || m_ContextConditionIndex >= SRPERK_EFFECT_MAXCONDTYPES) return;
+	if (SrGlobClipGetConditions().GetSize() == 0) return;
+
+	for (dword i = 0; i < SrGlobClipGetConditions().GetSize(); ++i)
+	{
+		srconditioninfo_t* pNewCond = m_pCurrentSection->Conditions.AddNew();
+		pNewCond->Copy(*SrGlobClipGetConditions()[i]);
+		pNewCond->Condition.SetPrkc(m_ContextConditionIndex);
+	}
+
+	CString Buffer;
+	Buffer.Format("%d", m_pCurrentSection->CountSubsections(m_ContextConditionIndex));
+	m_SectionConditions[m_ContextConditionIndex].SetWindowText(Buffer);
+
+	GetSectionData();
+	SetSectionData();
+}
+
+
+void CSrPerkView::OnConditionrecordDeleteAll()
+{
+	if (m_pCurrentSection == NULL || m_ContextConditionIndex < 0 || m_ContextConditionIndex >= SRPERK_EFFECT_MAXCONDTYPES) return;
+	
+		/* Delete all conditions with the given index */
+	for (int i = m_pCurrentSection->Conditions.GetSize() - 1; i >= 0 ; --i)
+	{
+		if (m_pCurrentSection->Conditions[i]->Condition.GetPrkc() == m_ContextConditionIndex)
+		{
+			m_pCurrentSection->Conditions.Delete(i);
+		}
+	}		
+		
+	m_SectionConditions[m_ContextConditionIndex].SetWindowText("0");
+	GetSectionData();
+	SetSectionData();
+}
+
+
+void CSrPerkView::OnUpdateConditionrecordCopy(CCmdUI *pCmdUI)
+{
+	if (m_pCurrentSection == NULL || m_ContextConditionIndex < 0 || m_ContextConditionIndex >= SRPERK_EFFECT_MAXCONDTYPES)
+	{
+		pCmdUI->Enable(false);
+		return;
+}
+
+	CString Buffer;
+	dword   Count = m_pCurrentSection->CountSubsections(m_ContextConditionIndex);
+	Buffer.Format("Copy %d Condition(s)", Count);
+	pCmdUI->SetText(Buffer);
+	pCmdUI->Enable(Count > 0);
+}
+
+
+void CSrPerkView::OnUpdateConditionrecordPaste(CCmdUI *pCmdUI)
+{
+	if (m_pCurrentSection == NULL || m_ContextConditionIndex < 0 || m_ContextConditionIndex >= SRPERK_EFFECT_MAXCONDTYPES)
+	{
+		pCmdUI->Enable(false);
+		return;
+	}
+
+	CString Buffer;
+	dword Count = SrGlobClipGetConditions().GetSize();
+	Buffer.Format("Paste %d Condition(s)", Count);
+	pCmdUI->SetText(Buffer);
+	pCmdUI->Enable(Count > 0);
+}
+
+
+void CSrPerkView::OnUpdateConditionrecordDeleteAll(CCmdUI *pCmdUI)
+{
+	if (m_pCurrentSection == NULL || m_ContextConditionIndex < 0 || m_ContextConditionIndex >= SRPERK_EFFECT_MAXCONDTYPES)
+	{
+		pCmdUI->Enable(false);
+		return;
+	}
+
+	pCmdUI->Enable(m_pCurrentSection->CountSubsections(m_ContextConditionIndex) > 0);
+}

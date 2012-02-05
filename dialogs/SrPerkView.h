@@ -160,6 +160,16 @@ public:
 	CStatic m_SectionValueLabel2;
 	CEdit m_SectionValue2;
 	CListBox m_Scripts;
+
+
+	int m_ContextConditionIndex;
+	afx_msg void OnConditionrecordCopy();
+	afx_msg void OnConditionrecordPaste();
+	afx_msg void OnConditionrecordDeleteAll();
+	afx_msg void OnUpdateConditionrecordCopy(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateConditionrecordPaste(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateConditionrecordDeleteAll(CCmdUI *pCmdUI);	
+
 };
 /*===========================================================================
  *		End of Class CSrPerkView Definition
