@@ -134,6 +134,13 @@ BEGIN_MESSAGE_MAP(CSrRecordDialog, CFormView)
 	ON_COMMAND(ID_SCRIPTRECORD_PASTESCRIPTS, &CSrRecordDialog::OnScriptrecordPastescripts)
 	ON_UPDATE_COMMAND_UI(ID_SCRIPTRECORD_COPYSCRIPTS, &CSrRecordDialog::OnUpdateScriptrecordCopyscripts)
 	ON_UPDATE_COMMAND_UI(ID_SCRIPTRECORD_PASTESCRIPTS, &CSrRecordDialog::OnUpdateScriptrecordPastescripts)
+
+	ON_COMMAND(ID_CONDITIONRECORD_COPY, &CSrRecordDialog::OnConditionrecordCopy)
+	ON_COMMAND(ID_CONDITIONRECORD_PASTE, &CSrRecordDialog::OnConditionrecordPaste)
+	ON_COMMAND(ID_CONDITIONRECORD_DELETEALL, &CSrRecordDialog::OnConditionrecordDeleteAll)
+	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_COPY, &CSrRecordDialog::OnUpdateConditionrecordCopy)
+	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_PASTE, &CSrRecordDialog::OnUpdateConditionrecordPaste)
+	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_DELETEALL, &CSrRecordDialog::OnUpdateConditionrecordDeleteAll)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -2584,6 +2591,16 @@ void CSrRecordDialog::OnContextMenu(CWnd* pWnd, CPoint Point)
 		
 		pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this, NULL);
 	}
+	else if (pWnd == m_pConditionField) 
+	{
+		Result = Menu.LoadMenu(IDR_CONDITIONRECORD_MENU);
+		if (!Result) return;
+		
+		pSubMenu = Menu.GetSubMenu(0);
+		if (pSubMenu == NULL) return;
+		
+		pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this, NULL);
+	}
 	else 
 	{
 		CFormView::OnContextMenu(pWnd, Point);
@@ -2708,4 +2725,87 @@ void CSrRecordDialog::OnUpdateScriptrecordPastescripts(CCmdUI *pCmdUI)
 	CString Buffer;
 	Buffer.Format("Paste %d Script(s)", SrGlobClipGetScripts().GetSize());
 	pCmdUI->SetText(Buffer);
+}
+
+
+void CSrRecordDialog::OnConditionrecordCopy()
+{
+	if (m_pConditionField == NULL || m_IgnoreConditions) return;
+	if (m_ConditionsCopy.GetSize() == 0) return;
+
+	SrGlobClipClearConditions();
+
+	for (dword i = 0; i < m_ConditionsCopy.GetSize(); ++i)
+	{
+		SrGlobClipAddCondition(m_ConditionsCopy[i]);
+	}
+
+}
+
+
+void CSrRecordDialog::OnConditionrecordPaste()
+{
+	if (m_pConditionField == NULL || m_IgnoreConditions) return;
+	if (SrGlobClipGetConditions().GetSize() == 0) return;
+	m_ConditionsChanged = true;
+
+	for (dword i = 0; i < SrGlobClipGetConditions().GetSize(); ++i)
+	{
+		m_ConditionsCopy.AddNew()->Copy(*SrGlobClipGetConditions()[i]);
+	}
+
+	CString Buffer;
+	Buffer.Format("%d", m_ConditionsCopy.GetSize());
+	m_pConditionField->SetWindowTextA(Buffer);
+}
+
+
+void CSrRecordDialog::OnConditionrecordDeleteAll()
+{
+	if (m_pConditionField == NULL || m_IgnoreConditions) return;
+	if (m_ConditionsCopy.GetSize() > 0) m_ConditionsChanged = true;
+	m_ConditionsCopy.Destroy();	
+	pCmdUI->SetText("0");
+}
+
+
+void CSrRecordDialog::OnUpdateConditionrecordCopy(CCmdUI *pCmdUI)
+{
+	if (m_pConditionField == NULL || m_IgnoreConditions)
+	{
+		pCmdUI->Enable(false);
+		return;
+	}
+
+	CString Buffer;
+	Buffer.Format("Copy %d Condition(s)", m_ConditionsCopy.GetSize());
+	pCmdUI->SetText(Buffer);
+	pCmdUI->Enable(m_ConditionsCopy.GetSize() > 0);
+}
+
+
+void CSrRecordDialog::OnUpdateConditionrecordPaste(CCmdUI *pCmdUI)
+{
+	if (m_pConditionField == NULL || m_IgnoreConditions)
+	{
+		pCmdUI->Enable(false);
+		return;
+	}
+
+	CString Buffer;
+	Buffer.Format("Paste %d Condition(s)", SrGlobClipGetConditions().GetSize());
+	pCmdUI->SetText(Buffer);
+	pCmdUI->Enable(SrGlobClipGetConditions().GetSize() > 0);
+}
+
+
+void CSrRecordDialog::OnUpdateConditionrecordDeleteAll(CCmdUI *pCmdUI)
+{
+	if (m_pConditionField == NULL || m_IgnoreConditions)
+	{
+		pCmdUI->Enable(false);
+		return;
+	}
+
+	pCmdUI->Enable(m_ConditionsCopy.GetSize() > 0);
 }

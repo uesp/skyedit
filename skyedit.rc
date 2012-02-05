@@ -3012,6 +3012,17 @@ BEGIN
     END
 END
 
+IDR_CONDITIONRECORD_MENU MENU
+BEGIN
+    POPUP "ConditionRecord"
+    BEGIN
+        MENUITEM "Copy Conditions",             ID_CONDITIONRECORD_COPY
+        MENUITEM "Paste Conditions",            ID_CONDITIONRECORD_PASTE
+        MENUITEM SEPARATOR
+        MENUITEM "Delete All",                  ID_CONDITIONRECORD_DELETEALL
+    END
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
