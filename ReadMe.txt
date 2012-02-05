@@ -55,6 +55,7 @@ basic set of features is included.
 	- Sound Categories		- Outfits
 	- Colors				- Form Lists
 	- Encounter Zones		- Races
+	- Scripts				- Actor Values
 
 
   What it Can Do
@@ -152,6 +153,11 @@ can be found at:
   Version History
 =======================================
 0.06alpha - ? January 2021
+	- Scripts and script properties are now editable with a simple built-in editor or 
+	  an external program (click on the Script icon in the toolbar or from the View menu).
+    - Compiling using the command line official Papyrus compiler is supported. 
+	- Script information can be copy/pasted between objects (right-click on selected
+	  scripts in the record dialog).
 	- New editable records: Actor Values (AVIF)
 	- Fixed bug when creating a copy of a record
 	- Redid Perks: Should be 100% supported, needs testing
