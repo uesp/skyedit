@@ -111,6 +111,7 @@ public:
 	afx_msg void OnBnClickedSelectOpensound();
 	afx_msg void OnBnClickedEditClosesound();
 	afx_msg void OnBnClickedSelectClosesound();
+	CListBox m_Scripts;
 };
 /*===========================================================================
  *		End of Class CSrContView Definition

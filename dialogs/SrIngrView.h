@@ -137,6 +137,7 @@ public:
 	afx_msg void OnBnClickedAddButton();
 	afx_msg void OnBnClickedDeleteButton();	
 	CEdit m_Unknown;
+	CListBox m_Scripts;
 };
 /*===========================================================================
  *		End of Class CSrIngrView Definition

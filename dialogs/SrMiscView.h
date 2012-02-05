@@ -71,6 +71,7 @@ protected:
   
 public:
 
+	CListBox m_Scripts;
 };
 /*===========================================================================
  *		End of Class CSrMiscView Definition

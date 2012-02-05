@@ -67,6 +67,7 @@ END_SRRECUIFIELDS()
  *=========================================================================*/
 CSrMiscView::CSrMiscView() : CSrRecordDialog(CSrMiscView::IDD) 
 {
+	m_pScriptList = &m_Scripts;
 	m_InitialSetData = false;
 }
 /*===========================================================================
@@ -106,6 +107,7 @@ void CSrMiscView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_KEYWORDS, m_Keywords);
 	DDX_Control(pDX, IDC_PICKUPSOUND, m_PickupSound);
 	DDX_Control(pDX, IDC_DROPSOUND, m_DropSound);
+	DDX_Control(pDX, IDC_SCRIPT_LIST, m_Scripts);
  }
 /*===========================================================================
  *		End of Class Method CSrMiscView::DoDataExchange()

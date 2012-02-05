@@ -122,6 +122,7 @@ END_SRRECUIFIELDS()
  *=========================================================================*/
 CSrPerkView::CSrPerkView() : CSrRecordDialog(CSrPerkView::IDD) 
 {
+	m_pScriptList = &m_Scripts;
 	m_InitialSetData = false;
 	m_IsInitialized = false;
 	m_IsUpdating = false;
@@ -180,7 +181,8 @@ void CSrPerkView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SECTIONFUNCTIONTYPE, m_SectionFunctionType);
 	DDX_Control(pDX, IDC_SECTION_VALUELABEL2, m_SectionValueLabel2);
 	DDX_Control(pDX, IDC_SECTIONVALUE2, m_SectionValue2);
-}
+	DDX_Control(pDX, IDC_SCRIPT_LIST, m_Scripts);
+ }
 /*===========================================================================
  *		End of Class Method CSrPerkView::DoDataExchange()
  *=========================================================================*/

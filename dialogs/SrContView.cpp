@@ -149,6 +149,7 @@ static srrecfield_t s_ContainerListFields[] = {
  *=========================================================================*/
 CSrContView::CSrContView() : CSrRecordDialog(CSrContView::IDD) 
 {
+	m_pScriptList = &m_Scripts;
 	m_InitialSetData = false;
 }
 /*===========================================================================
@@ -187,7 +188,8 @@ void CSrContView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_MODEL, m_Model);
 	DDX_Control(pDX, IDC_OPENSOUND, m_OpenSound);
 	DDX_Control(pDX, IDC_CLOSESOUND, m_CloseSound);
-}
+	DDX_Control(pDX, IDC_SCRIPT_LIST, m_Scripts);
+ }
 /*===========================================================================
  *		End of Class Method CSrContView::DoDataExchange()
  *=========================================================================*/

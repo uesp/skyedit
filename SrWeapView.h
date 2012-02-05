@@ -142,6 +142,7 @@ public:
 	CEdit m_UnknownFlags1;
 	CEdit m_Description;
 	CComboBox m_Type;
+	CListBox m_Scripts;
 };
 /*===========================================================================
  *		End of Class CSrWeapView Definition

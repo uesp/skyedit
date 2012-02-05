@@ -100,6 +100,7 @@ public:
 	afx_msg void OnDropKeyword (NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnDropDestroyModel (NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnSelectDestroyModel (void);
+	CListBox m_Scripts;
 };
 /*===========================================================================
  *		End of Class CSrActiView Definition

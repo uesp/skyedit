@@ -20,14 +20,7 @@
  * Begin Local Definitions
  *
  *=========================================================================*/
-//#ifdef _DEBUG
-//  #define new DEBUG_NEW
-//  #undef THIS_FILE
-//  static char THIS_FILE[] = __FILE__;
-//#endif
-
-  IMPLEMENT_DYNCREATE(CSrBookView, CSrRecordDialog);
-
+IMPLEMENT_DYNCREATE(CSrBookView, CSrRecordDialog);
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -39,8 +32,6 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrBookView, CSrRecordDialog)
-	//{{AFX_MSG_MAP(CSrBookView)
-	//}}AFX_MSG_MAP	
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_STATICMODEL, OnDropStaticModel)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_STATICMODEL, OnDropStaticModel)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_SPELL, OnDropSpell)
@@ -93,6 +84,7 @@ END_SRRECUIFIELDS()
  *=========================================================================*/
 CSrBookView::CSrBookView() : CSrRecordDialog(CSrBookView::IDD) 
 {
+	m_pScriptList = &m_Scripts;
 	m_InitialSetData = false;
 }
 /*===========================================================================
@@ -141,6 +133,7 @@ void CSrBookView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SPELL, m_Spell);
 	DDX_Control(pDX, IDC_EDIT_SPELL, m_EditSpellButton);
 	DDX_Control(pDX, IDC_SELECTSPELL_BUTTON, m_SelectSpellButton);
+	DDX_Control(pDX, IDC_SCRIPT_LIST, m_Scripts);
 }
 /*===========================================================================
  *		End of Class Method CSrBookView::DoDataExchange()

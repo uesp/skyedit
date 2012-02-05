@@ -99,6 +99,7 @@ END_SRRECUIFIELDS()
  *=========================================================================*/
 CSrActiView::CSrActiView() : CSrRecordDialog(CSrActiView::IDD) 
 {
+	m_pScriptList = &m_Scripts;
 }
 /*===========================================================================
  *		End of Class CSrActiView Constructor
@@ -141,7 +142,8 @@ void CSrActiView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_USESOUND, m_UseSound);
 	DDX_Control(pDX, IDC_WATER, m_Water);
 	DDX_Control(pDX, IDC_DESTROYMODEL, m_DestroyModel);
-}
+	DDX_Control(pDX, IDC_SCRIPT_LIST, m_Scripts);
+ }
 /*===========================================================================
  *		End of Class Method CSrActiView::DoDataExchange()
  *=========================================================================*/

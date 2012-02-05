@@ -21,14 +21,7 @@
  * Begin Local Definitions
  *
  *=========================================================================*/
-//#ifdef _DEBUG
-//  #define new DEBUG_NEW
-//  #undef THIS_FILE
-//  static char THIS_FILE[] = __FILE__;
-//#endif
-
-  IMPLEMENT_DYNCREATE(CSrIngrView, CSrRecordDialog);
-
+IMPLEMENT_DYNCREATE(CSrIngrView, CSrRecordDialog);
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -114,6 +107,7 @@ END_SRRECUIFIELDS()
  *=========================================================================*/
 CSrIngrView::CSrIngrView() : CSrRecordDialog(CSrIngrView::IDD) 
 {
+	m_pScriptList = &m_Scripts;
 	m_InitialSetData = false;
 	m_IsInitialized = false;
 	m_pCurrentEffect = NULL;
@@ -163,7 +157,8 @@ void CSrIngrView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_KEYWORDS, m_Keywords);
 	DDX_Control(pDX, IDC_MODEL, m_Model);
 	DDX_Control(pDX, IDC_UNKNOWN, m_Unknown);
-}
+	DDX_Control(pDX, IDC_SCRIPT_LIST, m_Scripts);
+ }
 /*===========================================================================
  *		End of Class Method CSrIngrView::DoDataExchange()
  *=========================================================================*/

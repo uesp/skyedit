@@ -20,14 +20,7 @@
  * Begin Local Definitions
  *
  *=========================================================================*/
-//#ifdef _DEBUG
-//  #define new DEBUG_NEW
-//  #undef THIS_FILE
-//  static char THIS_FILE[] = __FILE__;
-//#endif
-
-  IMPLEMENT_DYNCREATE(CSrWeapView, CSrRecordDialog);
-
+	IMPLEMENT_DYNCREATE(CSrWeapView, CSrRecordDialog);
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -39,8 +32,6 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrWeapView, CSrRecordDialog)
-	//{{AFX_MSG_MAP(CSrWeapView)
-	//}}AFX_MSG_MAP	
 	ON_BN_CLICKED(IDC_EDIT_EQUIPSLOT, &CSrWeapView::OnBnClickedEditEquipslot)
 	ON_BN_CLICKED(IDC_SELECTEQUIPSLOT_BUTTON, &CSrWeapView::OnBnClickedSelectequipslotButton)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EQUIPSLOT, OnDropEquipSlot)
@@ -141,10 +132,8 @@ END_SRRECUIFIELDS()
  *=========================================================================*/
 CSrWeapView::CSrWeapView() : CSrRecordDialog(CSrWeapView::IDD) 
 {
-  //{{AFX_DATA_INIT(CSrWeapView)
-  //}}AFX_DATA_INIT
-
-  m_InitialSetData = false;
+  	m_pScriptList = &m_Scripts;
+	m_InitialSetData = false;
 }
 /*===========================================================================
  *		End of Class CSrWeapView Constructor
@@ -212,7 +201,8 @@ void CSrWeapView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_UNKNOWNFLAGS1, m_UnknownFlags1);
 	DDX_Control(pDX, IDC_DESCRIPTION, m_Description);
 	DDX_Control(pDX, IDC_TYPE_LIST, m_Type);
-}
+	DDX_Control(pDX, IDC_SCRIPT_LIST, m_Scripts);
+ }
 /*===========================================================================
  *		End of Class Method CSrWeapView::DoDataExchange()
  *=========================================================================*/

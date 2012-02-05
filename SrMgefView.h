@@ -218,6 +218,7 @@ public:
 	afx_msg void OnSnddlistEditrecord();
 	afx_msg void OnSnddlistEdit();
 	afx_msg void OnContextMenu (CWnd* pWnd, CPoint Point);
+	CListBox m_Scripts;
 };
 /*===========================================================================
  *		End of Class CSrMgefView Definition

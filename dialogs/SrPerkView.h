@@ -159,6 +159,7 @@ public:
 	afx_msg void OnCbnSelchangeSectionEffectType();
 	CStatic m_SectionValueLabel2;
 	CEdit m_SectionValue2;
+	CListBox m_Scripts;
 };
 /*===========================================================================
  *		End of Class CSrPerkView Definition

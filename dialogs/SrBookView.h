@@ -92,6 +92,7 @@ public:
 	afx_msg void OnBnClickedSelectspellButton();
 	afx_msg void OnDropSpell (NMHDR* pNotifyStruct, LRESULT* pResult);
 	
+	CListBox m_Scripts;
 };
 /*===========================================================================
  *		End of Class CSrBookView Definition

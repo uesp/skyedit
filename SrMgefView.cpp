@@ -21,14 +21,7 @@
  * Begin Local Definitions
  *
  *=========================================================================*/
-//#ifdef _DEBUG
-//  #define new DEBUG_NEW
-//  #undef THIS_FILE
-//  static char THIS_FILE[] = __FILE__;
-//#endif
-
-  IMPLEMENT_DYNCREATE(CSrMgefView, CSrRecordDialog);
-
+	IMPLEMENT_DYNCREATE(CSrMgefView, CSrRecordDialog);
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -230,6 +223,7 @@ END_SRRECUIFIELDS()
  *=========================================================================*/
 CSrMgefView::CSrMgefView() : CSrRecordDialog(CSrMgefView::IDD) 
 {
+	m_pScriptList = &m_Scripts;
 	m_EnchantType = 0;
 	m_InitialSetData = false;
 }
@@ -323,7 +317,8 @@ void CSrMgefView::DoDataExchange (CDataExchange* pDX) {
 	DDX_Control(pDX, IDC_UNKNOWNCHECK8,		m_UnknownCheck8);
 	DDX_Control(pDX, IDC_UNKNOWNCHECK9,		m_UnknownCheck9);
 	DDX_Control(pDX, IDC_SOUND_LIST,		m_Sounds);
-}
+	DDX_Control(pDX, IDC_SCRIPT_LIST, m_Scripts);
+ }
 /*===========================================================================
  *		End of Class Method CSrMgefView::DoDataExchange()
  *=========================================================================*/
