@@ -2569,6 +2569,13 @@ void CSrRecordDialog::OnContextMenu(CWnd* pWnd, CPoint Point)
 	
 	if (pWnd == m_pScriptList) 
 	{
+				/* Force select item on right-click */
+		BOOL Outside;
+		CPoint ClientPt(Point);
+		m_pScriptList->ScreenToClient(&ClientPt);
+		UINT ListIndex = m_pScriptList->ItemFromPoint(ClientPt, Outside);
+		if (!Outside) m_pScriptList->SetSel(ListIndex, TRUE);
+		
 		Result = Menu.LoadMenu(IDR_SCRIPTRECORD_MENU);
 		if (!Result) return;
 		
