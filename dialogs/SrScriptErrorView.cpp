@@ -136,8 +136,8 @@ void CSrScriptErrorView::AddMessage (const char* pString, ...)
 
 CSrScriptError* CSrScriptErrorView::FindErrorFromLine (const int Line) 
 {
-	CSrScriptError* pError;
-	dword           Index;
+	//CSrScriptError* pError;
+	//dword           Index;
 
 	if (m_pScriptView == NULL) return (NULL);
 

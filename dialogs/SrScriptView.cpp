@@ -4,6 +4,7 @@
 #include "dialogs\SrScriptView.h"
 #include "common\srutils.h"
 #include "SrProgressDlg.h"
+#include "SrScriptPropertyDlg.h"
 
 
 srscriptoptions_t CSrScriptView::s_ScriptOptions = { "-f=TESV_Papyrus_Flags.flg", "Consolas", 90, 5 };
@@ -44,6 +45,8 @@ BEGIN_MESSAGE_MAP(CSrScriptView, CFormView)
 	ON_COMMAND(ID_SCRIPTTEXTACC_PASTE, &CSrScriptView::OnScripttextaccPaste)
 	ON_WM_GETDLGCODE()
 	ON_WM_DESTROY()
+	ON_COMMAND(ID_SCRIPTLISTMENU_TESTTOKENS, &CSrScriptView::OnScriptlistmenuTesttokens)
+	ON_COMMAND(ID_SCRIPTLISTMENU_TESTPROPERTIES, &CSrScriptView::OnScriptlistmenuTestproperties)
 END_MESSAGE_MAP()
 
 
@@ -91,7 +94,7 @@ bool CSrScriptView::AddScript (const char* pFilename)
 	if (pFilename == NULL) return false;
 
 	GetSrInstallPath(Filename);
-	Filename += "\\data\\";
+	Filename += "data\\scripts\\source\\";
 	Filename += pFilename;
 
 	pInfo = FindScript(Filename);
@@ -131,6 +134,19 @@ CSrScriptFile* CSrScriptView::FindScript (const char* pFilename)
 	for (dword i = 0; i < m_Scripts.GetSize(); ++i)
 	{
 		if (m_Scripts[i]->IsFilename(pFilename)) return m_Scripts[i];
+	}
+
+	return NULL;
+}
+
+
+CSrScriptFile* CSrScriptView::FindScriptName (const char* pScriptName)
+{
+	if (pScriptName == NULL) return NULL;
+
+	for (dword i = 0; i < m_Scripts.GetSize(); ++i)
+	{
+		if (m_Scripts[i]->IsScriptName(pScriptName)) return m_Scripts[i];
 	}
 
 	return NULL;
@@ -851,3 +867,56 @@ bool CSrScriptView::CheckCanClose (void)
 
 	return true;
 }
+
+
+void CSrScriptView::OnScriptlistmenuTesttokens()
+{
+	if (m_pCurrentScript == NULL) return;
+	m_pCurrentScript->Tokenize();
+	m_pCurrentScript->DumpTokens();
+}
+
+
+void CSrScriptView::OnScriptlistmenuTestproperties()
+{
+	if (m_pCurrentScript == NULL) return;
+	CSrScriptPropertyDlg Dlg;
+
+	GetControlData();
+
+	srvmadscript_t Script;
+	Script.Name = m_pCurrentScript->GetScriptName();
+
+	Dlg.DoModal(Script, NULL);
+}
+
+
+bool CSrScriptView::UpdateScript (const char* pScriptName)
+{
+	CSrScriptFile* pScriptFile = FindScriptName(pScriptName);
+	if (pScriptFile == NULL) return false;
+
+	if (m_pCurrentScript == pScriptFile) 
+	{
+		GetControlData();
+		return true;
+	}
+
+	return false;
+}
+
+
+bool CSrScriptView::UpdateScriptView (const char* pScriptName)
+{
+	CSrScriptFile* pScriptFile = FindScriptName(pScriptName);
+	if (pScriptFile == NULL) return false;
+
+	if (m_pCurrentScript == pScriptFile) 
+	{
+		SetControlData();
+		return true;
+	}
+
+	return false;
+}
+

@@ -132,6 +132,9 @@
 #define IDR_ERRORBAR_ACCEL              234
 #define IDR_RESOURCE_VIEW               235
 #define IDR_SCRIPT_VIEW                 236
+#define IDR_SCRIPTRECORD_MENU           237
+#define IDD_SCRIPTPROPERTY_DLG          238
+#define IDD_NEWSCRIPTPROPERTY_DLG       240
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -304,13 +307,17 @@
 #define IDC_ACTORSKILL7                 1154
 #define IDC_ADDKEYWORD_BUTTON           1155
 #define IDC_FUNCTION_LABEL              1156
+#define IDC_ADDSCRIPT                   1156
 #define IDC_CARRIED                     1157
 #define IDC_EDITKEYWORD_BUTTON          1158
 #define IDC_PARAM1_TEXT                 1159
+#define IDC_EDITPROPERTIESSCRIPT        1159
 #define IDC_SPOTSHADOW                  1160
 #define IDC_DELKEYWORD_BUTTON           1161
 #define IDC_SELECTPARAM1_BUTTON         1162
+#define IDC_DELSCRIPT                   1162
 #define IDC_UNKNOWNFLAG1                1163
+#define IDC_EDITSCRIPT                  1163
 #define IDC_CONDITION_BUTTON            1164
 #define IDC_PARAM1_LABEL                1165
 #define IDC_SELECTEQUIPSLOT_BUTTON      1166
@@ -349,6 +356,7 @@
 #define IDC_VALUE_TEXT                  1189
 #define IDC_DEL_EQUIPSLOT               1189
 #define IDC_SELECTUSESOUND_BUTTON       1190
+#define IDC_PROPERTY_NAME               1190
 #define IDC_SELECTSTATICMODEL_BUTTON2   1191
 #define IDC_SELECTSPELL_BUTTON          1192
 #define IDC_SELECT_SHEATHSOUND          1193
@@ -898,6 +906,27 @@
 #define IDC_COMPILESCRIPT               1768
 #define IDC_SAVESCRIPT                  1769
 #define IDC_SAVEASSCRIPT                1770
+#define IDC_PROPERTYLIST                1774
+#define IDC_PROPERTYDATALIST            1775
+#define IDC_PROPERTY_VALUE              1780
+#define IDC_SELECT_PROPERTYVALUE        1781
+#define IDC_VALUE_USEDEFAULT            1782
+#define IDC_PROPERTY_VALUE2             1783
+#define IDC_SELECT_PROPERTYVALUE2       1784
+#define IDC_VALUE1_LABEL                1785
+#define IDC_VALUE2_LABEL                1786
+#define IDC_PROPERTY_ADD                1787
+#define IDC_PROPERTY_DELETE             1788
+#define IDC_PROPERTY_DUPLICATE          1789
+#define IDC_PROPERTYTYPES               1789
+#define IDC_PROPERTY_MOVEUP             1790
+#define IDC_PROPERTYNAME                1790
+#define IDC_PROPERTY_MOVEDOWN           1791
+#define IDC_PROPERTYVALUE               1791
+#define IDC_NEW_PROPERTY                1792
+#define IDC_HIDDENCHECK                 1792
+#define IDC_PROPERTYDOC                 1793
+#define IDC_ARRAYCHECK                  1794
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -1145,15 +1174,25 @@
 #define ID_SCRIPTTEXTACC_PASTE          32925
 #define ID_SCRIPTTEXTACC_UNDO           32927
 #define ID_ERROR_COPY                   32928
+#define ID_SCRIPTRECORD_ADD             32934
+#define ID_SCRIPTRECORD_EDITPROPERTIES  32935
+#define ID_SCRIPTRECORD_EDITSCRIPT      32936
+#define ID_SCRIPTRECORD_REMOVE          32937
+#define ID_SCRIPTRECORD_DELETE          32938
+#define ID_SCRIPTRECORD_ADDNEW          32939
+#define ID_SCRIPTLISTMENU_TESTTOKENS    32940
+#define ID_SCRIPTLISTMENU_TESTPROPERTIES 32941
+#define ID_SCRIPTRECORD_COPYSCRIPTS     32942
+#define ID_SCRIPTRECORD_PASTESCRIPTS    32943
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        237
-#define _APS_NEXT_COMMAND_VALUE         32934
-#define _APS_NEXT_CONTROL_VALUE         1772
+#define _APS_NEXT_RESOURCE_VALUE        241
+#define _APS_NEXT_COMMAND_VALUE         32944
+#define _APS_NEXT_CONTROL_VALUE         1793
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -968,6 +968,15 @@
     <ClCompile Include="dialogs\SrScriptTextCtrl.cpp">
       <Filter>Source Files\Forms</Filter>
     </ClCompile>
+    <ClCompile Include="dialogs\SrScriptPropertyDlg.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\scripts\SrScriptFile_Token.cpp">
+      <Filter>Source Files\ESP\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="dialogs\SrNewScriptPropertyDlg.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">
@@ -1069,9 +1078,6 @@
       <Filter>Header Files\Common.</Filter>
     </ClInclude>
     <ClInclude Include="..\tes5lib\common\srsimplemap.h">
-      <Filter>Header Files\Common.</Filter>
-    </ClInclude>
-    <ClInclude Include="..\tes5lib\common\srstringvaluemap.h">
       <Filter>Header Files\Common.</Filter>
     </ClInclude>
     <ClInclude Include="..\tes5lib\common\srtime.h">
@@ -2032,6 +2038,18 @@
       <Filter>Header Files\Forms.</Filter>
     </ClInclude>
     <ClInclude Include="dialogs\SrScriptTextCtrl.h">
+      <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\bsafile\srresourcescript.h">
+      <Filter>Header Files\ESP.\Bsa.</Filter>
+    </ClInclude>
+    <ClInclude Include="dialogs\SrScriptPropertyDlg.h">
+      <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\scripts\SrScriptTokens.h">
+      <Filter>Header Files\ESP.\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="dialogs\SrNewScriptPropertyDlg.h">
       <Filter>Header Files\Forms.</Filter>
     </ClInclude>
   </ItemGroup>

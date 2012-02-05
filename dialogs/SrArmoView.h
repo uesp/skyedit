@@ -59,17 +59,22 @@ public:
 	CEdit		m_Model;
 	CEdit		m_Damage;
 	CEdit		m_EnchantPoints;
-	CListBox  m_Keywords;
+	CListBox	m_Keywords;
 	CEdit		m_EquipSlot;
-	CButton m_Playable;
-	CComboBox m_ArmorType;
-	CEdit m_Description;
-	CEdit m_PickupSound;
-	CEdit m_DropSound;
-	CEdit m_Template;
-	CEdit m_Race;
-	CEdit m_Material;
-	CEdit m_ImpactData;
+	CButton		m_Playable;
+	CComboBox	m_ArmorType;
+	CEdit		m_Description;
+	CEdit		m_PickupSound;
+	CEdit		m_DropSound;
+	CEdit		m_Template;
+	CEdit		m_Race;
+	CEdit		m_Material;
+	CEdit		m_ImpactData;
+	CEdit		m_Rating;
+	CButton		m_BodyParts;
+	CEdit		m_ArmModel;
+	CListBox	m_ArmaModels;
+	CListBox	m_ScriptList;
 
 public:
 
@@ -93,7 +98,6 @@ public:
 	afx_msg void OnBnClickedEditEquipslot();
 	afx_msg void OnBnClickedSelectequipslotButton();
 	afx_msg void OnDropEquipSlot (NMHDR* pNotifyStruct, LRESULT* pResult);
-
 	afx_msg void OnBnClickedEditMaterial();
 	afx_msg void OnBnClickedSelectMaterial();
 	afx_msg void OnDropMaterial (NMHDR* pNotifyStruct, LRESULT* pResult);
@@ -107,18 +111,13 @@ public:
 	afx_msg void OnBnClickedSelectImpactData();
 	afx_msg void OnDropImpactData (NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnDropArmaModel (NMHDR* pNotifyStruct, LRESULT* pResult);
-	
-	CEdit m_Rating;
-	CButton m_BodyParts;
 	afx_msg void OnBnClickedBodyparts();
-	CEdit m_ArmModel;
-	
-	CListBox m_ArmaModels;
 	afx_msg void OnBnClickedAddArmamodel();
 	afx_msg void OnBnClickedEditArmamodel();
 	afx_msg void OnBnClickedDelArmamodel();
 	afx_msg void OnLbnDblclkArmamodels();
 	afx_msg void OnLbnDblclkKeywords();
+	
 };
 /*===========================================================================
  *		End of Class CSrArmoView Definition

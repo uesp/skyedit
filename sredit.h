@@ -31,7 +31,6 @@
 	#include "mainfrm.h"
 	#include "srresourceview.h"
 	#include "dialogs/SrScriptView.h"
-	//#include "modfile/compiler/customcompiler.h"
 /*===========================================================================
  *		End of Required Include Files
  *=========================================================================*/
@@ -66,17 +65,17 @@ class CSrEditApp : public CWinAppEx {
 
   /*---------- Begin Protected Class Members -----------------------*/
 protected:
-  CMainFrame*		m_pMainFrame;
+  CMainFrame*			m_pMainFrame;
 
-  srfileloadinfo_t*	m_pCurrentLoadInfo;		/* Used when loading a file */
-  CSrProgressDlg*	m_pCurrentProgressDlg;
-  CSrCallback*		m_pCurrentLoadCallback;
+  srfileloadinfo_t*		m_pCurrentLoadInfo;		/* Used when loading a file */
+  CSrProgressDlg*		m_pCurrentProgressDlg;
+  CSrCallback*			m_pCurrentLoadCallback;
 
-  CSrConfigFile		m_ConfigFile;
+  CSrConfigFile			m_ConfigFile;
 
-  CSString			m_AppPath;
+  CSString				m_AppPath;
 
-  dword				m_NewFileIndex;
+  dword					m_NewFileIndex;
 
   CSrResourceHandler	m_ResourceHandler;
   CSrBsaFileArray		m_BsaFiles;
@@ -93,44 +92,51 @@ public:
 	CSrEditApp();
 	virtual ~CSrEditApp();
 
+	bool CreateNewScript (CString& ScriptName);
+
 	bool EditScript           (const char* pFilename, const bool UseInternal);
 	bool EditScript           (const char* pFilename);
 	bool EditScriptExternal   (const char* pFilename);
+	bool EditScriptName       (const char* pScriptName, const bool UseInternal);
 
 	bool EditResourceExternal (const char* pFilename);
 
 		/* Get class members */
-  srfileloadinfo_t*  GetCurrentLoadInfo     (void) { return (m_pCurrentLoadInfo); }
-  CSrProgressDlg*    GetCurrentProgressDlg  (void) { return (m_pCurrentProgressDlg); }
-  CSrCallback*       GetCurrentLoadCallback (void) { return (m_pCurrentLoadCallback); }
-  CSrConfigFile&     GetConfigFile          (void) { return (m_ConfigFile); }
-  const char*        GetAppPath             (void) { return (m_AppPath); }
+	srfileloadinfo_t*  GetCurrentLoadInfo     (void) { return (m_pCurrentLoadInfo); }
+	CSrProgressDlg*    GetCurrentProgressDlg  (void) { return (m_pCurrentProgressDlg); }
+	CSrCallback*       GetCurrentLoadCallback (void) { return (m_pCurrentLoadCallback); }
+	CSrConfigFile&     GetConfigFile          (void) { return (m_ConfigFile); }
+	const char*        GetAppPath             (void) { return (m_AppPath); }
+	
+		/* Load/save/update options */
+	bool LoadOptions              (const TCHAR* pFilename);
+	bool SaveOptions              (const TCHAR* pFilename);
+	void UpdateOptions            (const bool Set);
+	//void UpdateScriptColorOptions (CCustomCompiler& Compiler, const bool Set);
+	//void UpdateScriptErrorOptions (const bool Set);
+	void ResolveOptionPaths       (void);
+	
+	bool OpenWebHelp (const char* pPage);
+	bool OpenWebHelp (const char* pUESPPage, const char* pCSPage);
+	
+	void             OpenResourceView    (const char* pResource);
+	CFrameWnd*       FindResourceView    (void);
+	bool             InitResourceHandler (void);
+	CSrResourceView* CreateResourceView  (void);
+	CSrResourceView* OpenResourceView    (void);
+	
+	CFrameWnd*       FindScriptsFrame    (void);
+	CSrScriptView*   CreateScriptsView   (void);
+	CSrScriptView*   OpenScriptsView     (void);
+	CSrScriptView*   FindScriptsView     (void);
+	void OpenScriptsResourceView (void);
+	CSrScriptFile*	FindScriptName (const char* pScriptName);
+	bool UpdateScript     (const char* pScriptName);
+	bool UpdateScriptView (const char* pScriptName);
 
-	/* Load/save/update options */
-  bool LoadOptions              (const TCHAR* pFilename);
-  bool SaveOptions              (const TCHAR* pFilename);
-  void UpdateOptions            (const bool Set);
-  //void UpdateScriptColorOptions (CCustomCompiler& Compiler, const bool Set);
-  //void UpdateScriptErrorOptions (const bool Set);
-  void ResolveOptionPaths       (void);
-
-  bool OpenWebHelp (const char* pPage);
-  bool OpenWebHelp (const char* pUESPPage, const char* pCSPage);
-
-  void             OpenResourceView    (const char* pResource);
-  CFrameWnd*       FindResourceView    (void);
-  bool             InitResourceHandler (void);
-  CSrResourceView* CreateResourceView  (void);
-  CSrResourceView* OpenResourceView    (void);
-
-  CFrameWnd*       FindScriptsView    (void);
-  CSrScriptView*   CreateScriptsView  (void);
-  CSrScriptView*   OpenScriptsView    (void);
-  void OpenScriptsResourceView (void);
-
-  void ResetListState (void);
-
-  bool AddBsaFile      (const char* pFilename);
+	void ResetListState (void);
+	
+	bool AddBsaFile      (const char* pFilename);
 
 public:
   virtual BOOL InitInstance();
@@ -169,6 +175,10 @@ public:
 	void SrGlobClipAddCondition(srconditioninfo_t* pCondition, const bool Clear = false);
 	void SrGlobClipClearConditions();
 	CSrConditionArray& SrGlobClipGetConditions (void);
+
+	void SrGlobClipAddScript(srvmadscript_t* pScript, const bool Clear = false);
+	void SrGlobClipClearScripts();
+	CSrVmadScriptArray& SrGlobClipGetScripts (void);
 
 	void OnInitMenuPopupHelper (CWnd* pThis, CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 

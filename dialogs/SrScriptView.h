@@ -53,8 +53,6 @@ protected:
 
 	void SetCurrentScript (CSrScriptFile* pScript);
 
-	CSrScriptFile* FindScript (const char* pFilename);
-
 	void FillScriptList (void);
 	int AddScriptList (CSrScriptFile* pScript);
 	void UpdateScriptList (const int ListIndex, CSrScriptFile* pScript);
@@ -85,8 +83,13 @@ public:
 
 	bool CheckCanClose (void);
 
+	CSrScriptFile* FindScript     (const char* pFilename);
+	CSrScriptFile* FindScriptName (const char* pScriptName);
 
 	void SetErrorView (CSrScriptErrorView* pView) { m_pErrorView = pView; }
+
+	bool UpdateScript (const char* pScriptName);
+	bool UpdateScriptView (const char* pScriptName);
 	
 
 #ifdef _DEBUG
@@ -133,6 +136,8 @@ public:
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 	afx_msg UINT OnGetDlgCode();
 	afx_msg void OnDestroy();
+	afx_msg void OnScriptlistmenuTesttokens();
+	afx_msg void OnScriptlistmenuTestproperties();
 };
 
 

@@ -42,6 +42,7 @@
   #define SRRESOURCE_PATH_TEXTURES	"textures\\"
   #define SRRESOURCE_PATH_MESHES	"meshes\\"
   #define SRRESOURCE_PATH_SOUNDS	"sound\\"
+  #define SRRESOURCE_PATH_SCRIPTS	"scripts\\"
 
 /*===========================================================================
  *		End of Definitions

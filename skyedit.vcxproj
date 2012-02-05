@@ -1826,6 +1826,11 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">../tes5lib;./;devil/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../tes5lib;./;devil/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="..\tes5lib\scripts\SrScriptFile_Token.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\tes5lib\strings\SrStringFile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -1856,6 +1861,7 @@
     <ClCompile Include="dialogs\SrEditFlagsDlg.cpp" />
     <ClCompile Include="dialogs\SrFlstView.cpp" />
     <ClCompile Include="dialogs\SrFunctionParamDlg.cpp" />
+    <ClCompile Include="dialogs\SrNewScriptPropertyDlg.cpp" />
     <ClCompile Include="dialogs\SrOtftView.cpp" />
     <ClCompile Include="dialogs\SrRacePageFace.cpp" />
     <ClCompile Include="dialogs\SrRacePageHead1.cpp" />
@@ -1867,6 +1873,7 @@
     <ClCompile Include="dialogs\SrRacePageUnknown.cpp" />
     <ClCompile Include="dialogs\SrRaceView.cpp" />
     <ClCompile Include="dialogs\SrScriptErrorView.cpp" />
+    <ClCompile Include="dialogs\SrScriptPropertyDlg.cpp" />
     <ClCompile Include="dialogs\SrScriptTextCtrl.cpp" />
     <ClCompile Include="dialogs\SrScriptView.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../tes5lib;./;devil/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -1974,6 +1981,7 @@
     <ClInclude Include="..\tes5lib\bsafile\srresourcefolder.h" />
     <ClInclude Include="..\tes5lib\bsafile\srresourcehandler.h" />
     <ClInclude Include="..\tes5lib\bsafile\srresourceinstance.h" />
+    <ClInclude Include="..\tes5lib\bsafile\srresourcescript.h" />
     <ClInclude Include="..\tes5lib\common\csvfile.h" />
     <ClInclude Include="..\tes5lib\common\dl_map.h" />
     <ClInclude Include="..\tes5lib\common\filebuffer.h" />
@@ -1990,7 +1998,6 @@
     <ClInclude Include="..\tes5lib\common\srplatform.h" />
     <ClInclude Include="..\tes5lib\common\srptrarray.h" />
     <ClInclude Include="..\tes5lib\common\srsimplemap.h" />
-    <ClInclude Include="..\tes5lib\common\srstringvaluemap.h" />
     <ClInclude Include="..\tes5lib\common\srtime.h" />
     <ClInclude Include="..\tes5lib\common\srtypes.h" />
     <ClInclude Include="..\tes5lib\common\srutils.h" />
@@ -2214,6 +2221,7 @@
     <ClInclude Include="..\tes5lib\modfile\subrecords\srweapdnamsubrecord.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\srwordsubrecord.h" />
     <ClInclude Include="..\tes5lib\scripts\SrScriptFile.h" />
+    <ClInclude Include="..\tes5lib\scripts\SrScriptTokens.h" />
     <ClInclude Include="..\tes5lib\strings\SrStringFile.h" />
     <ClInclude Include="..\tes5lib\windows\scbarcf.h" />
     <ClInclude Include="..\tes5lib\windows\scbarg.h" />
@@ -2230,6 +2238,7 @@
     <ClInclude Include="dialogs\SrEditFlagsDlg.h" />
     <ClInclude Include="dialogs\SrFlstView.h" />
     <ClInclude Include="dialogs\SrFunctionParamDlg.h" />
+    <ClInclude Include="dialogs\SrNewScriptPropertyDlg.h" />
     <ClInclude Include="dialogs\SrOtftView.h" />
     <ClInclude Include="dialogs\SrRacePageFace.h" />
     <ClInclude Include="dialogs\SrRacePageHead1.h" />
@@ -2241,6 +2250,7 @@
     <ClInclude Include="dialogs\SrRacePageUnknown.h" />
     <ClInclude Include="dialogs\SrRaceView.h" />
     <ClInclude Include="dialogs\SrScriptErrorView.h" />
+    <ClInclude Include="dialogs\SrScriptPropertyDlg.h" />
     <ClInclude Include="dialogs\SrScriptTextCtrl.h" />
     <ClInclude Include="dialogs\SrScriptView.h" />
     <ClInclude Include="dialogs\SrSopmEditDlg.h" />

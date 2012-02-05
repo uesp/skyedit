@@ -39,7 +39,6 @@ BEGIN_MESSAGE_MAP(CSrArmoView, CSrRecordDialog)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EQUIPSLOT, OnDropEquipSlot)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EQUIPSLOT, OnDropEquipSlot)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EQUIPSLOT, OnDropEquipSlot)
-	
 
 	ON_BN_CLICKED(IDC_EDIT_MATERIAL, &CSrArmoView::OnBnClickedEditMaterial)
 	ON_BN_CLICKED(IDC_SELECTMATERIAL_BUTTON, &CSrArmoView::OnBnClickedSelectMaterial)
@@ -116,6 +115,7 @@ END_SRRECUIFIELDS()
 CSrArmoView::CSrArmoView() : CSrRecordDialog(CSrArmoView::IDD) 
 {
 	m_InitialSetData = false;
+	m_pScriptList = &m_ScriptList;
 }
 /*===========================================================================
  *		End of Class CSrArmoView Constructor
@@ -165,6 +165,7 @@ void CSrArmoView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RATING, m_Rating);
 	DDX_Control(pDX, IDC_BODYPARTS, m_BodyParts);
 	DDX_Control(pDX, IDC_ARMAMODELS, m_ArmaModels);
+	DDX_Control(pDX, IDC_SCRIPT_LIST, m_ScriptList);
  }
 /*===========================================================================
  *		End of Class Method CSrArmoView::DoDataExchange()
@@ -428,3 +429,5 @@ void CSrArmoView::OnLbnDblclkKeywords()
 {
 	OnBnClickedEditkeywordButton();
 }
+
+

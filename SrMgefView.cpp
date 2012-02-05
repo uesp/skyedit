@@ -230,13 +230,8 @@ END_SRRECUIFIELDS()
  *=========================================================================*/
 CSrMgefView::CSrMgefView() : CSrRecordDialog(CSrMgefView::IDD) 
 {
-  //{{AFX_DATA_INIT(CSrMgefView)
-  //}}AFX_DATA_INIT
-
-  m_ScriptType  = 0;
-  m_EnchantType = 0;
-
-  m_InitialSetData = false;
+	m_EnchantType = 0;
+	m_InitialSetData = false;
 }
 /*===========================================================================
  *		End of Class CSrMgefView Constructor

@@ -20,6 +20,7 @@
 #include "mainfrm.h"
 #include "SrConditionDlg.h"
 #include "SrBoundsDlg.h"
+#include "SrScriptPropertyDlg.h"
 
 
 /*===========================================================================
@@ -39,20 +40,16 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrRecordDialog, CFormView)
+	ON_WM_CONTEXTMENU()
 	ON_WM_INITMENUPOPUP()
 	ON_WM_DESTROY()
 	ON_COMMAND(ID_APPLY_BUTTON, OnApply)
 	ON_COMMAND(ID_CANCEL_BUTTON, OnCancel)
 	ON_COMMAND(ID_SAVE_BUTTON, OnSave)
 	ON_EN_KILLFOCUS(IDC_EDITORID, OnKillfocusEditorid)
-	//ON_BN_CLICKED(IDC_BIPEDPARTS_BUTTON, OnBipedpartsButton)
-	//ON_BN_CLICKED(IDC_EDIT_SCRIPT, OnEditScript)
 	ON_BN_CLICKED(IDC_EDIT_ENCHANTMENT, OnEditEnchantment)
-	//ON_BN_CLICKED(IDC_SELECTSCRIPT_BUTTON, OnSelectScript)
 	ON_BN_CLICKED(IDC_SELECTENCHANT_BUTTON, OnSelectEnchantment)
 	ON_MESSAGE(ID_SRRECORDLIST_ACTIVATE, OnEditRecordMsg)
-	//ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_SCRIPT, OnDropScript)
-	//ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_SCRIPT, OnDropScript)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_ENCHANTMENT, OnDropEnchant)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_ENCHANTMENT, OnDropEnchant)
 	ON_COMMAND(ID_EDIT_CUT, OnEditCut)
@@ -117,6 +114,26 @@ BEGIN_MESSAGE_MAP(CSrRecordDialog, CFormView)
 	ON_BN_CLICKED(IDC_EDIT_DROPSOUND, &CSrRecordDialog::OnBnClickedEditDropsound)
 	ON_BN_CLICKED(IDC_EDIT_PICKUPSOUND, &CSrRecordDialog::OnBnClickedEditPickupsound)
 	ON_BN_CLICKED(IDC_BOUNDS, OnBnClickedBounds)
+
+	ON_BN_CLICKED(IDC_ADDSCRIPT, &CSrArmoView::OnBnClickedAddscript)
+	ON_BN_CLICKED(IDC_EDITPROPERTIESSCRIPT, &CSrArmoView::OnBnClickedEditpropertiesscript)
+	ON_BN_CLICKED(IDC_EDITSCRIPT, &CSrArmoView::OnBnClickedEditscript)
+	ON_BN_CLICKED(IDC_DELSCRIPT, &CSrArmoView::OnBnClickedDelscript)
+	ON_LBN_DBLCLK(IDC_SCRIPT_LIST, &CSrRecordDialog::OnLbnDblclkScripts)
+	ON_COMMAND(ID_SCRIPTRECORD_ADD, &CSrRecordDialog::OnScriptrecordAdd)
+	ON_COMMAND(ID_SCRIPTRECORD_ADDNEW, &CSrRecordDialog::OnScriptrecordAddNew)
+	ON_COMMAND(ID_SCRIPTRECORD_EDITPROPERTIES, &CSrRecordDialog::OnScriptrecordEditProperties)
+	ON_COMMAND(ID_SCRIPTRECORD_EDITSCRIPT, &CSrRecordDialog::OnScriptrecordEditScript)
+	ON_COMMAND(ID_SCRIPTRECORD_DELETE, &CSrRecordDialog::OnScriptrecordDelete)
+	ON_UPDATE_COMMAND_UI(ID_SCRIPTRECORD_EDITPROPERTIES, &CSrRecordDialog::OnUpdateScriptrecordExists)
+	ON_UPDATE_COMMAND_UI(ID_SCRIPTRECORD_EDITSCRIPT, &CSrRecordDialog::OnUpdateScriptrecordExists)
+	ON_UPDATE_COMMAND_UI(ID_SCRIPTRECORD_DELETE, &CSrRecordDialog::OnUpdateScriptrecordExists)
+	ON_NOTIFY(ID_SRRESOURCE_CHECKDROP, IDC_SCRIPT_LIST, OnDropScript)
+	ON_NOTIFY(ID_SRRESOURCE_DROP, IDC_SCRIPT_LIST, OnDropScript)
+	ON_COMMAND(ID_SCRIPTRECORD_COPYSCRIPTS, &CSrRecordDialog::OnScriptrecordCopyscripts)
+	ON_COMMAND(ID_SCRIPTRECORD_PASTESCRIPTS, &CSrRecordDialog::OnScriptrecordPastescripts)
+	ON_UPDATE_COMMAND_UI(ID_SCRIPTRECORD_COPYSCRIPTS, &CSrRecordDialog::OnUpdateScriptrecordCopyscripts)
+	ON_UPDATE_COMMAND_UI(ID_SCRIPTRECORD_PASTESCRIPTS, &CSrRecordDialog::OnUpdateScriptrecordPastescripts)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -193,7 +210,6 @@ CSrRecordDialog::CSrRecordDialog (const int ID) : CFormView(ID)
   m_pDlgHandler      = NULL;
   m_pEditorIDField   = NULL;
   m_pBipedPartsField = NULL;
-  m_pScriptField     = NULL;
   m_pEnchantField    = NULL;
   m_pSoundField      = NULL;
   m_pModelField      = NULL;
@@ -204,6 +220,7 @@ CSrRecordDialog::CSrRecordDialog (const int ID) : CFormView(ID)
   m_pDropSoundField    = NULL;
   m_pBoundsField       = NULL;
   m_IgnoreConditions   = false;
+  m_pScriptList        = NULL;
 
   m_pMaleWorldModelField   = NULL;
   m_pMaleBipedModelField   = NULL;
@@ -223,7 +240,6 @@ CSrRecordDialog::CSrRecordDialog (const int ID) : CFormView(ID)
 
   m_InitialSetData = true;
 
-  m_ScriptType  = 0;
   m_EnchantType = 0;
 
   m_TitlePrefix = _T("Unknown");
@@ -294,9 +310,11 @@ void CSrRecordDialog::GetControlData (void) {
     if (pIdRecord != NULL) pIdRecord->SetEditorID(m_EditInfo.NewEditorID);
   }
 
-  UpdateEditorID();
-  GetUIFieldData();
-  SaveConditions();
+	UpdateEditorID();
+	GetScriptControlData();
+	SaveScriptData();
+	GetUIFieldData();
+	SaveConditions();	
 }
 /*===========================================================================
  *		End of Class Method CSrRecordDialog::GetControlData()
@@ -477,10 +495,11 @@ void CSrRecordDialog::InitToolTips (void) {
  * Class CSrRecordDialog Event - void OnDestroy ();
  *
  *=========================================================================*/
-void CSrRecordDialog::OnDestroy() {
-  CFormView::OnDestroy();
-  if (m_pDlgHandler != NULL) m_pDlgHandler->RemoveFrame(GetParentFrame());
- }
+void CSrRecordDialog::OnDestroy() 
+{
+	CFormView::OnDestroy();
+	if (m_pDlgHandler != NULL) m_pDlgHandler->RemoveFrame(GetParentFrame());
+}
 /*===========================================================================
  *		End of Class Event CSrRecordDialog::OnDestroy()
  *=========================================================================*/
@@ -491,29 +510,28 @@ void CSrRecordDialog::OnDestroy() {
  * Class CSrRecordDialog Event - void OnInitialUpdate (void);
  *
  *=========================================================================*/
-void CSrRecordDialog::OnInitialUpdate (void) {
-
-  CFormView::OnInitialUpdate();
-  ResizeParentToFit(FALSE);
-
-  m_ToolTip.Create(this, 0);
-  InitToolTips();
-  m_ToolTip.Activate(TRUE);
-  m_ToolTip.SetDelayTime(TTDT_AUTOPOP, 30000);
-
-  assert(m_pDlgHandler != NULL);
-
-	/* Load the accelerator table if present */
-  if (m_AcceleratorID != 0) {
-    m_hAccelerator = LoadAccelerators(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(m_AcceleratorID));
-  }
-
-  m_EditInfo.IsHandled  = false;
-  m_EditInfo.NeedsIndex = false;
-
-  CopyConditions();
-   
-  if (m_InitialSetData) SetControlData();
+void CSrRecordDialog::OnInitialUpdate (void) 
+{
+	CFormView::OnInitialUpdate();
+	ResizeParentToFit(FALSE);
+	
+	m_ToolTip.Create(this, 0);
+	InitToolTips();
+	m_ToolTip.Activate(TRUE);
+	m_ToolTip.SetDelayTime(TTDT_AUTOPOP, 30000);
+	
+	assert(m_pDlgHandler != NULL);
+	
+		/* Load the accelerator table if present */
+	if (m_AcceleratorID != 0) m_hAccelerator = LoadAccelerators(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(m_AcceleratorID));
+	
+	m_EditInfo.IsHandled  = false;
+	m_EditInfo.NeedsIndex = false;
+	
+	CopyConditions();
+	CopyScriptData();
+	 
+	if (m_InitialSetData) SetControlData();
 }
 /*===========================================================================
  *		End of Class Event CSrRecordDialog::OnInitialUpdate()
@@ -749,6 +767,7 @@ void CSrRecordDialog::SetControlData (void) {
     return;
   }
 
+  SetScriptControlData();
   SetUIFieldData();
 }
 /*===========================================================================
@@ -882,7 +901,6 @@ void CSrRecordDialog::SetUIFieldData (void) {
 	  case SR_FIELD_KEYWORDS:	 m_pKeywordsField   = pWnd; break;
       case SR_FIELD_EDITORID:    m_pEditorIDField   = pWnd; break;
       case SR_FIELD_BIPED:       m_pBipedPartsField = pWnd; break;
-      case SR_FIELD_SCRIPT:      m_pScriptField     = pWnd; break;
       case SR_FIELD_ENCHANTMENT: m_pEnchantField    = pWnd; break;
       case SR_FIELD_MODEL:       m_pModelField      = pWnd; m_pMaleBipedModelField = pWnd; break;
       case SR_FIELD_ICON:        m_pIconField       = pWnd; m_pMaleIconField = pWnd; break;
@@ -1020,32 +1038,6 @@ void CSrRecordDialog::OnBipedpartsButton() {
 
 /*===========================================================================
  *
- * Class CSrRecordDialog Event - void OnEditScript ();
- *
- *=========================================================================*/
-void CSrRecordDialog::OnEditScript() {
-  CString    Buffer;
-  CSrRecord* pRecord;
-
-  if (m_pScriptField == NULL || m_pRecordHandler == NULL || m_pDlgHandler == NULL) return;
-  m_pScriptField->GetWindowText(Buffer);
-
-  if (Buffer.IsEmpty()) {
-    //m_pDlgHandler->EditNewRecord(SR_NAME_SCPT);
-  }
-  else {
-    pRecord = m_pRecordHandler->FindEditorID(Buffer);
-    if (pRecord != NULL) m_pDlgHandler->EditRecord(pRecord);
-  }
-
-}
-/*===========================================================================
- *		End of Class Event CSrRecordDialog::OnEditScript()
- *=========================================================================*/
-
-
-/*===========================================================================
- *
  * Class CSrRecordDialog Event - void OnEditEnchantment ();
  *
  *=========================================================================*/
@@ -1176,41 +1168,6 @@ LRESULT CSrRecordDialog::OnEditRecordMsg (WPARAM wParam, LPARAM lParam) {
 }
 /*===========================================================================
  *		End of Class Event CSrRecordDialog::OnEditRecordMsg()
- *=========================================================================*/
-
-
-/*===========================================================================
- *
- * Class CSrRecordDialog Event - void OnDropScript (pNotifyStruct, pResult);
- *
- *=========================================================================*/
-void CSrRecordDialog::OnDropScript (NMHDR* pNotifyStruct, LRESULT* pResult) {
-/*
-  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
-  CSrRecord*	     pRecord;
-  CSrScptRecord*     pScript;
-
-  *pResult = SRRL_DROPCHECK_ERROR;
-  if (m_pScriptField == NULL) return;
-  if (pDropItems->pRecords == NULL) return;
-  if (pDropItems->pRecords->GetSize() != 1) return;
-
-  pRecord = pDropItems->pRecords->GetAt(0);
-
-  if (pRecord->GetRecordType() != SR_NAME_SCPT) return;
-  pScript = SrCastClass(CSrScptRecord, pRecord);
-  if (pScript == NULL) return;
-  if (pScript->GetType() != m_ScriptType) return;
-
-  if (pDropItems->Notify.code == ID_SRRECORDLIST_DROP) {
-    m_pScriptField->SetWindowText(pScript->GetEditorID());
-  }
-
-  *pResult = SRRL_DROPCHECK_OK;
-  */
-}
-/*===========================================================================
- *		End of Class Event CSrRecordDialog::OnDropScript()
  *=========================================================================*/
 
 
@@ -2431,4 +2388,317 @@ void CSrRecordDialog::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysM
 {
 	CFormView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
 	OnInitMenuPopupHelper(this, pPopupMenu, nIndex, bSysMenu);
+}
+
+
+void CSrRecordDialog::GetScriptControlData (void)
+{
+	if (m_pScriptList == NULL) return;
+}
+
+
+void CSrRecordDialog::SetScriptControlData (void)
+{
+	CSrVmadScriptArray& Scripts = m_ScriptDataCopy.GetScriptData().Scripts;
+	CString Buffer;
+	int     ListIndex;
+
+	if (m_pScriptList == NULL) return;
+	m_pScriptList->ResetContent();
+	
+	for (dword i = 0; i < Scripts.GetSize(); ++i)
+	{
+		ListIndex = m_pScriptList->AddString(Scripts[i]->Name.c_str());
+		if (ListIndex >= 0) m_pScriptList->SetItemDataPtr(ListIndex, Scripts[i]);
+	}
+
+}
+
+
+void CSrRecordDialog::SaveScriptData (void)
+{
+	if (m_pScriptList == NULL) return;
+	dword ScriptCount = m_pScriptList->GetCount();
+
+	if (GetOutputRecord() == NULL) return;
+
+	if (ScriptCount == 0)
+	{
+		GetOutputRecord()->DeleteSubrecords(SR_NAME_VMAD);
+		return;
+	}
+
+	CSrSubrecord* pSubrecord = GetOutputRecord()->FindSubrecord(SR_NAME_VMAD);
+	if (pSubrecord == NULL) pSubrecord = GetOutputRecord()->AddInitNewSubrecord(SR_NAME_VMAD);
+	CSrVmadSubrecord* pScriptData = SrCastClassNull(CSrVmadSubrecord, pSubrecord);
+	if (pScriptData == NULL) return;
+
+	pScriptData->Copy(&m_ScriptDataCopy);
+}
+
+
+void CSrRecordDialog::CopyScriptData (void)
+{
+	m_ScriptDataCopy.Initialize(SR_NAME_VMAD, 6);
+	m_ScriptDataCopy.InitializeNew();
+
+	if (GetInputRecord() == NULL) return;
+
+	CSrSubrecord* pSubrecord = GetInputRecord()->FindSubrecord(SR_NAME_VMAD);
+	CSrVmadSubrecord* pScriptData = SrCastClassNull(CSrVmadSubrecord, pSubrecord);
+	if (pScriptData == NULL) return;
+
+	m_ScriptDataCopy.Copy(pScriptData);
+}
+
+
+void CSrRecordDialog::OnBnClickedAddscript()
+{
+	if (m_pScriptList == NULL) return;
+
+}
+
+
+void CSrRecordDialog::OnBnClickedEditpropertiesscript()
+{
+	if (m_pScriptList == NULL) return;
+
+	int ListIndex = m_pScriptList->GetCurSel();
+	if (ListIndex < 0) return;
+
+	srvmadscript_t* pScript = (srvmadscript_t *) m_pScriptList->GetItemDataPtr(ListIndex);
+	if (pScript == NULL) return;
+
+	CSrScriptPropertyDlg Dlg;
+
+	bool Result = Dlg.DoModal(*pScript, m_pRecordHandler);
+	if (!Result) return;
+}
+
+
+void CSrRecordDialog::OnBnClickedEditscript()
+{
+	if (m_pScriptList == NULL) return;
+
+	int ListIndex = m_pScriptList->GetCurSel();
+	if (ListIndex < 0) return;
+
+	srvmadscript_t* pScript = (srvmadscript_t *) m_pScriptList->GetItemDataPtr(ListIndex);
+	if (pScript == NULL) return;
+
+	bool Result = GetSrEditApp().EditScriptName(pScript->Name, true);
+	if (!Result) SrEditShowError("Failed to open the script editor for '%s'!", pScript->Name.c_str());
+}
+
+
+void CSrRecordDialog::OnBnClickedDelscript()
+{
+	if (m_pScriptList == NULL) return;
+
+	int ListIndex = m_pScriptList->GetCurSel();
+	if (ListIndex < 0) return;
+
+	srvmadscript_t* pScript = (srvmadscript_t *) m_pScriptList->GetItemDataPtr(ListIndex);
+	if (pScript == NULL) return;
+
+	m_ScriptDataCopy.GetScriptData().Scripts.Delete(pScript);
+	m_pScriptList->DeleteString(ListIndex);
+}
+
+
+void CSrRecordDialog::OnLbnDblclkScripts()
+{
+	if (m_pScriptList == NULL) return;
+
+	if ((GetKeyState(VK_CONTROL) & 0x8000) != 0)
+	{
+		OnBnClickedEditscript();
+		return;
+	}
+
+	OnBnClickedEditpropertiesscript();
+}
+
+
+void CSrRecordDialog::OnScriptrecordAddNew()
+{
+	if (m_pScriptList == NULL) return;
+
+	CString ScriptName;
+	if (!GetSrEditApp().CreateNewScript(ScriptName)) return;
+		
+	AddScript(ScriptName);
+}
+
+
+void CSrRecordDialog::OnScriptrecordAdd()
+{
+	OnBnClickedAddscript();
+}
+
+
+void CSrRecordDialog::OnScriptrecordEditProperties()
+{
+	OnBnClickedEditpropertiesscript();
+}
+
+
+void CSrRecordDialog::OnScriptrecordEditScript()
+{
+	OnBnClickedEditscript();
+}
+
+
+void CSrRecordDialog::OnScriptrecordDelete()
+{
+	OnBnClickedDelscript();
+}
+
+
+void CSrRecordDialog::OnUpdateScriptrecordExists(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(m_pScriptList != NULL && m_pScriptList->GetCurSel() >= 0);
+}
+
+
+void CSrRecordDialog::OnContextMenu(CWnd* pWnd, CPoint Point)
+ {
+ 	CMenu  Menu;
+	CMenu* pSubMenu;
+	int    Result;
+	
+	if (pWnd == m_pScriptList) 
+	{
+		Result = Menu.LoadMenu(IDR_SCRIPTRECORD_MENU);
+		if (!Result) return;
+		
+		pSubMenu = Menu.GetSubMenu(0);
+		if (pSubMenu == NULL) return;
+		
+		pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this, NULL);
+	}
+	else 
+	{
+		CFormView::OnContextMenu(pWnd, Point);
+	}
+	  
+}
+
+
+void CSrRecordDialog::OnDropScript (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srresourcedropinfo_t* pDropInfo = (srresourcedropinfo_t *) pNotifyStruct;
+	*pResult = SRRESOURCE_DROPCHECK_ERROR;
+
+	if (m_pScriptList == NULL) return;
+	if (pDropInfo->pResourceFile == NULL) return;
+	if (!pDropInfo->pResourceFile->IsInPath(SRRESOURCE_PATH_SCRIPTS)) return;
+
+	CSString Filename(pDropInfo->pResourceFile->GetFullName());
+	CSString ScriptName;
+
+	if (strnicmp(Filename, "scripts\\source\\", 14) == 0)
+	{
+		if (!Filename.EndsWithI(".psc")) return;
+		ScriptName = pDropInfo->pResourceFile->GetName();
+		ScriptName.TruncateAtR('.');
+	}
+	else if (strnicmp(Filename, "scripts\\", 7) == 0)
+	{
+		if (!Filename.EndsWithI(".pex")) return;
+		ScriptName = pDropInfo->pResourceFile->GetName();
+		ScriptName.TruncateAtR('.');
+	}
+	else
+	{
+		return;
+	}
+
+	srvmadscript_t* pScriptData = m_ScriptDataCopy.FindScript(ScriptName);
+	if (pScriptData != NULL) return;
+
+		/* If we're just checking or not */
+	if (pDropInfo->Notify.code == ID_SRRESOURCE_DROP) 
+	{
+		AddScript(ScriptName);
+	}
+
+	*pResult = SRRESOURCE_DROPCHECK_OK;
+}
+
+
+bool CSrRecordDialog::AddScript (const char* pScriptName)
+{
+	if (m_pScriptList == NULL) return false;
+
+	srvmadscript_t* pNewScript = m_ScriptDataCopy.GetScriptData().Scripts.AddNew();
+	pNewScript->Name = pScriptName;
+
+	int ListIndex = m_pScriptList->AddString(pScriptName);
+	if (ListIndex >= 0) m_pScriptList->SetItemDataPtr(ListIndex, pNewScript);
+
+	return true;
+}
+
+
+void CSrRecordDialog::OnScriptrecordCopyscripts()
+{
+	int SelIndex[256];
+	int SelCount;
+
+	if (m_pScriptList == NULL) return;
+
+	SelCount = m_pScriptList->GetSelItems(250, SelIndex);
+
+	if (SelCount == LB_ERR)
+	{
+		SelIndex[0] = m_pScriptList->GetCurSel();
+		SelCount = 1;
+	}
+
+	SrGlobClipClearScripts();
+
+	for (int i = 0; i < SelCount; ++i)
+	{
+		srvmadscript_t* pScript = m_ScriptDataCopy.GetScriptData().Scripts[i];
+		if (pScript == NULL) continue;
+		SrGlobClipAddScript(pScript);
+	}
+
+}
+
+
+void CSrRecordDialog::OnScriptrecordPastescripts()
+{
+	if (m_pScriptList == NULL) return;
+
+	for (dword i = 0; i < SrGlobClipGetScripts().GetSize(); ++i)
+	{
+		srvmadscript_t* pScript = SrGlobClipGetScripts()[i];
+		if (m_ScriptDataCopy.FindScript(pScript->Name) != NULL) continue;
+
+		m_ScriptDataCopy.GetScriptData().Scripts.AddNew()->Copy(*pScript);
+	}
+
+	SetScriptControlData();
+}
+
+
+void CSrRecordDialog::OnUpdateScriptrecordCopyscripts(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(m_pScriptList && m_pScriptList->GetSelCount() > 0);
+
+	CString Buffer;
+	Buffer.Format("Copy %d Script(s)", m_pScriptList->GetSelCount());
+	pCmdUI->SetText(Buffer);
+}
+
+
+void CSrRecordDialog::OnUpdateScriptrecordPastescripts(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(m_pScriptList && SrGlobClipGetScripts().GetSize() > 0);
+
+	CString Buffer;
+	Buffer.Format("Paste %d Script(s)", SrGlobClipGetScripts().GetSize());
+	pCmdUI->SetText(Buffer);
 }

@@ -93,46 +93,54 @@ protected:
 
   CSrEditDlgHandler*	m_pDlgHandler;
 
-  CString		m_TitlePrefix;		/* Used to output the record type to the window title */
+  CString				m_TitlePrefix;		/* Used to output the record type to the window title */
 
-  CWnd*			m_pEditorIDField;
-  CWnd*			m_pBipedPartsField;
-  CWnd*			m_pScriptField;
-  dword			m_ScriptType;
-  CWnd*			m_pEnchantField;
-  dword			m_EnchantType;
-  CWnd*			m_pSoundField;
-  CWnd*			m_pConditionField;
+  CWnd*					m_pEditorIDField;
+  CWnd*					m_pBipedPartsField;
+  CWnd*					m_pEnchantField;
+  dword					m_EnchantType;
+  CWnd*					m_pSoundField;
+  CWnd*					m_pConditionField;
 
-  CWnd*			m_pModelField;
-  CWnd*			m_pIconField;
-  CWnd*			m_pSoundFileField;  
-  CWnd*			m_pDropSoundField;  
-  CWnd*			m_pPickupSoundField;  
-  CWnd*			m_pMaleWorldModelField;
-  CWnd*			m_pMaleBipedModelField;
-  CWnd*			m_pFemaleWorldModelField;
-  CWnd*			m_pFemaleBipedModelField;
-  CWnd*			m_pMaleIconField;
-  CWnd*			m_pFemaleIconField;
-  CWnd*			m_pBoundsField;
-  CWnd*			m_pKeywordsField;
-  srboundsdata_t m_BoundsCopy;
+  CWnd*					m_pModelField;
+  CWnd*					m_pIconField;
+  CWnd*					m_pSoundFileField;  
+  CWnd*					m_pDropSoundField;  
+  CWnd*					m_pPickupSoundField;  
+  CWnd*					m_pMaleWorldModelField;
+  CWnd*					m_pMaleBipedModelField;
+  CWnd*					m_pFemaleWorldModelField;
+  CWnd*					m_pFemaleBipedModelField;
+  CWnd*					m_pMaleIconField;
+  CWnd*					m_pFemaleIconField;
+  CWnd*					m_pBoundsField;
+  CWnd*					m_pKeywordsField;
+  CListBox*				m_pScriptList;
+  srboundsdata_t		m_BoundsCopy;
 
-  CTabCtrlSheet*	m_pTabControl;
+  CTabCtrlSheet*		m_pTabControl;
 
-  bool			m_InitialSetData;
-  bool			m_NoActivateRecord;
+  bool					m_InitialSetData;
+  bool					m_NoActivateRecord;
 
-  CToolTipCtrl		m_ToolTip;
+  CToolTipCtrl			m_ToolTip;
 
-  CSrConditionArray	m_ConditionsCopy;
-  bool				m_ConditionsChanged;
-  bool				m_IgnoreConditions;
+  CSrConditionArray		m_ConditionsCopy;
+  bool					m_ConditionsChanged;
+  bool					m_IgnoreConditions;
+
+  CSrVmadSubrecord		m_ScriptDataCopy;
 
 
   /*---------- Begin Protected Class Methods --------------------*/
 protected:
+
+	virtual void CopyScriptData (void);
+	virtual void SaveScriptData (void);
+	virtual bool AddScript (const char* pScriptName);
+
+	void GetScriptControlData (void);
+	void SetScriptControlData (void);
 
 	virtual void CopyConditions (void);
 	virtual void SaveConditions (void);
@@ -226,12 +234,10 @@ protected:
   afx_msg void OnDestroy();
   afx_msg void OnKillfocusEditorid();
   afx_msg void OnBipedpartsButton();
-  afx_msg void OnEditScript();
   afx_msg void OnEditEnchantment();
   afx_msg void OnSelectScript();
   afx_msg void OnSelectEnchantment();
   afx_msg LRESULT OnEditRecordMsg (WPARAM wParam, LPARAM lParam);
-  afx_msg void OnDropScript (NMHDR* pNotifyStruct, LRESULT* pResult);
   afx_msg void OnDropEnchant (NMHDR* pNotifyStruct, LRESULT* pResult);
   afx_msg void OnEditCut (void);
   afx_msg void OnEditUndo (void);
@@ -278,11 +284,30 @@ protected:
 	afx_msg void OnDropKeywords (NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 
+	afx_msg void OnBnClickedAddscript();
+	afx_msg void OnBnClickedEditpropertiesscript();
+	afx_msg void OnBnClickedEditscript();
+	afx_msg void OnBnClickedDelscript();
+	afx_msg void OnScriptrecordAdd();
+	afx_msg void OnScriptrecordAddNew();
+	afx_msg void OnScriptrecordEditProperties();
+	afx_msg void OnScriptrecordEditScript();
+	afx_msg void OnScriptrecordDelete();
+	afx_msg void OnUpdateScriptrecordExists(CCmdUI *pCmdUI);
+	afx_msg void OnLbnDblclkScripts();
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint Point);
+	afx_msg void OnDropScript (NMHDR* pNotifyStruct, LRESULT* pResult);
+
 	DECLARE_MESSAGE_MAP();
 
- public:
-	 afx_msg void OnEditFind();
-	 afx_msg void OnBnClickedBounds();
+	afx_msg void OnEditFind();
+	afx_msg void OnBnClickedBounds();	 
+	 
+public:
+	afx_msg void OnScriptrecordCopyscripts();
+	afx_msg void OnScriptrecordPastescripts();
+	afx_msg void OnUpdateScriptrecordCopyscripts(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateScriptrecordPastescripts(CCmdUI *pCmdUI);
 };
 /*===========================================================================
  *		End of Class CSrRecordDialog Definition

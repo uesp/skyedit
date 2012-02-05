@@ -41,7 +41,8 @@
 	CSrEditApp theApp;
 
 		/* Global clipboard objects */
-	CSrConditionArray g_GlobClipConditions;
+	CSrConditionArray	g_GlobClipConditions;
+	CSrVmadScriptArray	g_GlobClipScripts;
 
 /*===========================================================================
  *		End of Local Definitions
@@ -1089,6 +1090,26 @@ CSrConditionArray& SrGlobClipGetConditions (void)
 }
 
 
+void SrGlobClipAddScript (srvmadscript_t* pScript, const bool Clear)
+{
+	if (Clear) g_GlobClipScripts.Destroy();
+	if (pScript == NULL) return;
+	g_GlobClipScripts.AddNew()->Copy(*pScript);
+}
+
+
+void SrGlobClipClearScripts()
+{
+	g_GlobClipScripts.Destroy();
+}
+
+
+CSrVmadScriptArray& SrGlobClipGetScripts (void)
+{
+	return g_GlobClipScripts;
+}
+
+
 // Taken from http://support.microsoft.com/default.aspx?scid=kb;en-us;242577
 // to ensure menus in formviews/dialogs are updated properly
 void OnInitMenuPopupHelper (CWnd* pThis, CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
@@ -1173,7 +1194,18 @@ void OnInitMenuPopupHelper (CWnd* pThis, CMenu* pPopupMenu, UINT nIndex, BOOL bS
 }
 
 
-CFrameWnd* CSrEditApp::FindScriptsView (void)
+CSrScriptView* CSrEditApp::FindScriptsView (void)
+{
+	CFrameWnd* pFrame = FindScriptsFrame();
+	if (pFrame == NULL) return NULL;
+
+	CWnd* pWnd = pFrame->GetDescendantWindow(AFX_IDW_PANE_FIRST, TRUE);
+	if (pWnd != NULL && pWnd->IsKindOf(RUNTIME_CLASS(CSrScriptView))) return (CSrScriptView *) pWnd;
+	return NULL;
+}
+
+
+CFrameWnd* CSrEditApp::FindScriptsFrame (void)
 {
 	CWnd* pWnd;
 	CWnd* pWnd1;
@@ -1247,7 +1279,7 @@ CSrScriptView* CSrEditApp::OpenScriptsView (void)
 	CWnd*          pWnd;
 
 		/* Find an already open view */
-	pFrame = FindScriptsView();
+	pFrame = FindScriptsFrame();
 
 	if (pFrame != NULL) 
 	{
@@ -1260,13 +1292,32 @@ CSrScriptView* CSrEditApp::OpenScriptsView (void)
 		pView = CreateScriptsView();
 	}
 
-	return (pView);
+	return pView;
 }
 
 
 void CSrEditApp::OpenScriptsResourceView (void) 
 {
 	OpenResourceView(SR_RESOURCE_SCRIPTBASEPATH);
+}
+
+
+bool CSrEditApp::EditScriptName (const char* pScriptName, const bool UseInternal)
+{
+	bool UseInt = UseInternal;
+	if (m_EditScriptExternalByDefault) UseInt = !UseInt;
+
+	CSString InstallPath;
+	CString  Filename;
+
+	//GetSrInstallPath(InstallPath);
+	//Filename = InstallPath;
+	//Filename += "data\\scripts\\source\\";
+	Filename = pScriptName;
+	Filename += ".psc";
+
+	if (UseInt) return EditScript(Filename);
+	return EditScriptExternal(Filename);
 }
 
 
@@ -1316,4 +1367,94 @@ bool CSrEditApp::EditResourceExternal (const char* pFilename)
 	ShellExecute(NULL, "Open", Buffer, NULL, NULL, SW_SHOW);
 
 	return true;
+}
+
+
+bool CSrEditApp::CreateNewScript (CString& ScriptName)
+{
+	CSString InstallPath;
+	CString  Filename;
+	bool     Result;
+
+	Result = SrInputDialog(ScriptName, "Add New Script", "Enter name of new script:");
+	if (!Result) return false;
+
+	GetSrInstallPath(InstallPath);
+	
+	Filename = InstallPath;
+	Filename += "data\\scripts\\";
+	Filename += ScriptName;
+	Filename += ".pex";
+
+	if (FileExists(Filename)) 
+	{
+		AddSrGeneralError("Script file '%s.pex' already exists!", ScriptName);
+		return SrEditShowError("Failed to create new script!");
+	}
+
+	Filename = InstallPath;
+	Filename += "data\\scripts\\source\\";
+	Filename += ScriptName;
+	Filename += ".psc";
+
+	if (FileExists(Filename)) 
+	{
+		AddSrGeneralError("Script file '%s.psc' already exists!", ScriptName);
+		return SrEditShowError("Failed to create new script!");
+	}
+
+	CSrFile File;
+
+	Result = File.Open(Filename, "wb");
+	if (!Result) return SrEditShowError("Failed to create new script file '%s'!", ScriptName);
+
+	Result = File.Printf("Scriptname %s extends ObjectReference\r\n", ScriptName);
+	if (!Result) return SrEditShowError("Failed to create new script file '%s'!", ScriptName);
+
+	File.Close();
+
+	return EditScriptName(ScriptName, true);
+}
+
+
+CSrScriptFile* CSrEditApp::FindScriptName (const char* pScriptName)
+{
+	CSrScriptView* pScriptView = FindScriptsView();
+	CSrScriptFile* pScriptFile = NULL;
+
+	if (pScriptView != NULL)
+	{
+		pScriptFile = pScriptView->FindScriptName(pScriptName);
+	}
+
+	if (pScriptFile == NULL)
+	{
+		CSString Filename;
+		GetSrInstallPath(Filename);
+		Filename += "data\\scripts\\source\\";
+		Filename += pScriptName;
+		Filename += ".psc";
+
+		pScriptFile = m_ResourceHandler.FindScriptFile(Filename);
+	}
+
+	return pScriptFile;
+}
+
+
+bool CSrEditApp::UpdateScript (const char* pScriptName)
+{
+	CSrScriptView* pScriptView = FindScriptsView();
+	if (pScriptView == NULL) return false;
+
+	return pScriptView->UpdateScript(pScriptName);
+}
+
+
+bool CSrEditApp::UpdateScriptView (const char* pScriptName)
+{
+	CSrScriptView* pScriptView = FindScriptsView();
+	if (pScriptView == NULL) return false;
+
+	return pScriptView->UpdateScriptView(pScriptName);
 }
