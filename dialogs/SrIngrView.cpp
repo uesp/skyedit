@@ -43,6 +43,13 @@ BEGIN_MESSAGE_MAP(CSrIngrView, CSrRecordDialog)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EFFECT_LIST, OnDropEffectList)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EFFECTNAME, OnDropEffect)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EFFECTNAME, OnDropEffect)
+	ON_COMMAND(ID_CONDITIONRECORD_COPY, OnConditionrecordCopy)
+	ON_COMMAND(ID_CONDITIONRECORD_PASTE, OnConditionrecordPaste)
+	ON_COMMAND(ID_CONDITIONRECORD_DELETEALL, OnConditionrecordDeleteAll)
+	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_COPY, OnUpdateConditionrecordCopy)
+	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_PASTE, OnUpdateConditionrecordPaste)
+	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_DELETEALL, OnUpdateConditionrecordDeleteAll)
+	ON_WM_CONTEXTMENU()
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrIngrView Message Map
@@ -781,3 +788,109 @@ void CSrIngrView::OnDropEffect (NMHDR* pNotifyStruct, LRESULT* pResult) {
  *		End of Class Event CSrIngrView::OnDropEffect()
  *=========================================================================*/
 
+
+void CSrIngrView::OnConditionrecordCopy()
+{
+	if (m_pCurrentEffect == NULL) return;
+	if (m_pCurrentEffect->Conditions.GetSize() == 0) return;
+
+	SrGlobClipClearConditions();
+
+	for (dword i = 0; i < m_pCurrentEffect->Conditions.GetSize(); ++i)
+	{
+		SrGlobClipAddCondition(m_pCurrentEffect->Conditions[i]);
+	}
+
+}
+
+
+void CSrIngrView::OnConditionrecordPaste()
+{
+	if (m_pCurrentEffect == NULL) return;
+	if (SrGlobClipGetConditions().GetSize() == 0) return;
+	m_ConditionsChanged = true;
+
+	for (dword i = 0; i < SrGlobClipGetConditions().GetSize(); ++i)
+	{
+		m_pCurrentEffect->Conditions.AddNew()->Copy(*SrGlobClipGetConditions()[i]);
+	}
+
+	CString Buffer;
+	Buffer.Format("%d", m_pCurrentEffect->Conditions.GetSize());
+	m_EffectConditions.SetWindowTextA(Buffer);
+
+	GetCurrentEffect();
+}
+
+
+void CSrIngrView::OnConditionrecordDeleteAll()
+{
+	if (m_pCurrentEffect == NULL) return;
+	if (m_pCurrentEffect->Conditions.GetSize() > 0) m_ConditionsChanged = true;
+	m_pCurrentEffect->Conditions.Destroy();	
+	m_EffectConditions.SetWindowText("0");
+
+	GetCurrentEffect();
+}
+
+
+void CSrIngrView::OnUpdateConditionrecordCopy(CCmdUI *pCmdUI)
+{
+	if (m_pCurrentEffect == NULL)
+	{
+		pCmdUI->Enable(false);
+		return;
+	}
+
+	CString Buffer;
+	Buffer.Format("Copy %d Condition(s)", m_pCurrentEffect->Conditions.GetSize());
+	pCmdUI->SetText(Buffer);
+	pCmdUI->Enable(m_pCurrentEffect->Conditions.GetSize() > 0);
+}
+
+
+void CSrIngrView::OnUpdateConditionrecordPaste(CCmdUI *pCmdUI)
+{
+	if (m_pCurrentEffect == NULL)
+	{
+		pCmdUI->Enable(false);
+		return;
+	}
+
+	CString Buffer;
+	Buffer.Format("Paste %d Condition(s)", SrGlobClipGetConditions().GetSize());
+	pCmdUI->SetText(Buffer);
+	pCmdUI->Enable(SrGlobClipGetConditions().GetSize() > 0);
+}
+
+
+void CSrIngrView::OnUpdateConditionrecordDeleteAll(CCmdUI *pCmdUI)
+{
+	if (m_pCurrentEffect == NULL)
+	{
+		pCmdUI->Enable(false);
+		return;
+	}
+
+	pCmdUI->Enable(m_pCurrentEffect->Conditions.GetSize() > 0);
+}
+
+
+void CSrIngrView::OnContextMenu(CWnd* pWnd, CPoint Point)
+{
+	if (pWnd == &m_EffectConditions)
+	{
+		CMenu Menu;
+		int Result = Menu.LoadMenu(IDR_CONDITIONRECORD_MENU);
+		if (!Result) return;
+		
+		CMenu* pSubMenu = Menu.GetSubMenu(0);
+		if (pSubMenu == NULL) return;
+		
+		pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this, NULL);
+	}
+	else
+	{
+		CSrRecordDialog::OnContextMenu(pWnd, Point);
+	}
+}

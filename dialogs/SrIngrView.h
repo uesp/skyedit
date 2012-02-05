@@ -138,6 +138,14 @@ public:
 	afx_msg void OnBnClickedDeleteButton();	
 	CEdit m_Unknown;
 	CListBox m_Scripts;
+
+	afx_msg void OnConditionrecordCopy();
+	afx_msg void OnConditionrecordPaste();
+	afx_msg void OnConditionrecordDeleteAll();
+	afx_msg void OnUpdateConditionrecordCopy(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateConditionrecordPaste(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateConditionrecordDeleteAll(CCmdUI *pCmdUI);
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint Point);
 };
 /*===========================================================================
  *		End of Class CSrIngrView Definition

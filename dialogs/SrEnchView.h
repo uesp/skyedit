@@ -54,8 +54,8 @@ typedef CSrPtrArray<srench_effectdata_t> CSrEnchEffectArray;
  *=========================================================================*/
 class CSrEnchView : public CSrRecordDialog 
 {
-  DECLARE_DYNCREATE(CSrEnchView);
-  DECLARE_SRRECUIFIELDS();
+	DECLARE_DYNCREATE(CSrEnchView);
+	DECLARE_SRRECUIFIELDS();
 
   /*---------- Begin Protected Class Members ---------------------*/
 protected:
@@ -68,14 +68,14 @@ protected:
   /*---------- Begin Protected Class Methods ---------------------*/
 protected:
 
-	/* Protected constructor used by dynamic creation */
-  CSrEnchView();
+		/* Protected constructor used by dynamic creation */
+	CSrEnchView();
 
-  void CreateEffectArray (void);
+	void CreateEffectArray (void);
 
-  void SetEffectList    (void);
-  int  AddEffectList    (srench_effectdata_t* pEffectData);
-  void UpdateEffectList (const int ListIndex, const bool Update);
+	void SetEffectList    (void);
+	int  AddEffectList    (srench_effectdata_t* pEffectData);
+	void UpdateEffectList (const int ListIndex, const bool Update);
 
 	void GetCurrentEffect (void);
 	void SetCurrentEffect (srench_effectdata_t* pEffectData);
@@ -90,14 +90,11 @@ protected:
 
   /*---------- Begin Public Class Methods ------------------------*/
 public:
-
-  //{{AFX_DATA(CSrEnchView)
-  enum { IDD = IDD_ENCH_VIEW };
-  CEdit		m_EditorID;
-  CEdit		m_FormID;
-  CEdit		m_ItemName;
-  //}}AFX_DATA
-
+	enum { IDD = IDD_ENCH_VIEW };
+	CEdit		m_EditorID;
+	CEdit		m_FormID;
+	CEdit		m_ItemName;
+  
 public:
 
 	virtual void  GetControlData   (void);
@@ -105,30 +102,19 @@ public:
 
 	virtual int  OnPreSaveRecord   (void);
 
-	/* ClassWizard generated virtual function overrides */
-  //{{AFX_VIRTUAL(CSrEnchView)
 protected:
-  virtual void OnInitialUpdate();
-  virtual void DoDataExchange(CDataExchange* pDX);
-  //}}AFX_VIRTUAL
-
-protected:
-  virtual ~CSrEnchView();
+	virtual void OnInitialUpdate();
+	virtual void DoDataExchange(CDataExchange* pDX);
+	virtual ~CSrEnchView();
 
 #ifdef _DEBUG
-  virtual void AssertValid() const;
-  virtual void Dump(CDumpContext& dc) const;
+	virtual void AssertValid() const;
+	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	/* Generated message map functions */
-  //{{AFX_MSG(CSrEnchView)
-  //}}AFX_MSG
-
-  DECLARE_MESSAGE_MAP();
+	DECLARE_MESSAGE_MAP();
 
 public:
-	
-		
 	CEdit m_BaseEnchantment;
 	CEdit m_ItemTypes;
 	afx_msg void OnBnClickedEditBaseenchant();
@@ -156,14 +142,18 @@ public:
 	CComboBox m_TypeB;
 	CComboBox m_TypeC;
 	CComboBox m_TypeD;
+
+	afx_msg void OnConditionrecordCopy();
+	afx_msg void OnConditionrecordPaste();
+	afx_msg void OnConditionrecordDeleteAll();
+	afx_msg void OnUpdateConditionrecordCopy(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateConditionrecordPaste(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateConditionrecordDeleteAll(CCmdUI *pCmdUI);
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint Point);
 };
 /*===========================================================================
  *		End of Class CSrEnchView Definition
  *=========================================================================*/
-
-
-//{{AFX_INSERT_LOCATION}}
-//}}AFX_INSERT_LOCATION
 
 
 #endif

@@ -308,6 +308,7 @@ public:
 	afx_msg void OnScriptrecordPastescripts();
 	afx_msg void OnUpdateScriptrecordCopyscripts(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateScriptrecordPastescripts(CCmdUI *pCmdUI);
+
 	afx_msg void OnConditionrecordCopy();
 	afx_msg void OnConditionrecordPaste();
 	afx_msg void OnConditionrecordDeleteAll();

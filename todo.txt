@@ -11,6 +11,7 @@ v0.050a
 	- Function parameter selection list should use a virtual list when displaying 1000s of records
 	- Menus in most dialogs don't update
 	- Armor bounds edit
+	- Redo magic effects
 
 v0.046a
 	- Conditions: Batch edit? drag-and-drop?

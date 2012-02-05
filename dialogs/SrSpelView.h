@@ -106,12 +106,10 @@ public:
 
 	virtual int  OnPreSaveRecord   (void);
 
-	/* ClassWizard generated virtual function overrides */
-  //{{AFX_VIRTUAL(CSrSpelView)
 protected:
   virtual void OnInitialUpdate();
   virtual void DoDataExchange(CDataExchange* pDX);
-  //}}AFX_VIRTUAL
+
 
 protected:
   virtual ~CSrSpelView();
@@ -120,10 +118,6 @@ protected:
   virtual void AssertValid() const;
   virtual void Dump(CDumpContext& dc) const;
 #endif
-
-	/* Generated message map functions */
-  //{{AFX_MSG(CSrSpelView)
-  //}}AFX_MSG
 
   DECLARE_MESSAGE_MAP();
 
@@ -161,14 +155,18 @@ public:
 	CEdit m_Unknown1;
 	CEdit m_Unknown2;
 	CButton m_AutoCalc;
+
+	afx_msg void OnConditionrecordCopy();
+	afx_msg void OnConditionrecordPaste();
+	afx_msg void OnConditionrecordDeleteAll();
+	afx_msg void OnUpdateConditionrecordCopy(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateConditionrecordPaste(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateConditionrecordDeleteAll(CCmdUI *pCmdUI);
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint Point);
 };
 /*===========================================================================
  *		End of Class CSrSpelView Definition
  *=========================================================================*/
-
-
-//{{AFX_INSERT_LOCATION}}
-//}}AFX_INSERT_LOCATION
 
 
 #endif
