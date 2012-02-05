@@ -2765,7 +2765,7 @@ void CSrRecordDialog::OnConditionrecordDeleteAll()
 	if (m_pConditionField == NULL || m_IgnoreConditions) return;
 	if (m_ConditionsCopy.GetSize() > 0) m_ConditionsChanged = true;
 	m_ConditionsCopy.Destroy();	
-	pCmdUI->SetText("0");
+	m_pConditionField->SetWindowText("0");
 }
 
 
