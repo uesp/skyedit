@@ -141,7 +141,15 @@ BEGIN_MESSAGE_MAP(CSrRecordDialog, CFormView)
 	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_COPY, &CSrRecordDialog::OnUpdateConditionrecordCopy)
 	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_PASTE, &CSrRecordDialog::OnUpdateConditionrecordPaste)
 	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_DELETEALL, &CSrRecordDialog::OnUpdateConditionrecordDeleteAll)
-END_MESSAGE_MAP()
+
+	ON_COMMAND(ID_KEYWORD_ADD, &CSrRecordDialog::OnKeywordAdd)
+	ON_COMMAND(ID_KEYWORD_EDIT, &CSrRecordDialog::OnKeywordEdit)
+	ON_COMMAND(ID_KEYWORD_EDITBASE, &CSrRecordDialog::OnKeywordEditBase)
+	ON_COMMAND(ID_KEYWORD_DELETE, &CSrRecordDialog::OnKeywordDelete)
+	ON_UPDATE_COMMAND_UI(ID_KEYWORD_EDIT, &CSrRecordDialog::OnUpdateKeywordEdit)
+	ON_UPDATE_COMMAND_UI(ID_KEYWORD_EDITBASE, &CSrRecordDialog::OnUpdateKeywordEdit)
+	ON_UPDATE_COMMAND_UI(ID_KEYWORD_DELETE, &CSrRecordDialog::OnUpdateKeywordEdit)
+	END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
  *=========================================================================*/
@@ -228,6 +236,7 @@ CSrRecordDialog::CSrRecordDialog (const int ID) : CFormView(ID)
   m_pBoundsField       = NULL;
   m_IgnoreConditions   = false;
   m_pScriptList        = NULL;
+  m_pKeywordsField     = NULL;
 
   m_pMaleWorldModelField   = NULL;
   m_pMaleBipedModelField   = NULL;
@@ -237,8 +246,6 @@ CSrRecordDialog::CSrRecordDialog (const int ID) : CFormView(ID)
   m_pFemaleIconField       = NULL;
 
   m_pTabControl = NULL;
-
-  m_pKeywordsField = NULL;
 
   m_NoActivateRecord = false;
 
@@ -2046,37 +2053,68 @@ void CSrRecordDialog::OnDropPickupSound (NMHDR* pNotifyStruct, LRESULT* pResult)
  *=========================================================================*/
 
 
+void CSrRecordDialog::OnEditBaseKeyword()
+{
+	CWnd*		pWnd;
+	CListBox*	pList;
+	CString		Buffer;
+
+	if (m_pDlgHandler == NULL) return;
+
+	if (m_pKeywordsField == NULL)
+	{
+		pWnd = GetDlgItem(IDC_KEYWORDS);
+		if (pWnd == NULL) return;
+	}
+	else
+	{
+		pWnd = m_pKeywordsField;
+	}
+
+	pList = static_cast<CListBox *>(pWnd);
+	if (pList == NULL) return;
+
+	m_pDlgHandler->EditRecordHelper(*pList, SR_NAME_KWDA);
+}
+
+
 /*===========================================================================
  *
  * Class CSrRecordDialog Event - void OnBnClickedEditkeywordButton (void);
  *
  *=========================================================================*/
- void CSrRecordDialog::OnBnClickedEditkeywordButton()
- {
-	 CWnd*		pWnd;
-	 CListBox*	pList;
-	 CString	Buffer;
-	 int		Index;
-	 bool		Result;
+void CSrRecordDialog::OnBnClickedEditkeywordButton()
+{
+	CWnd*		pWnd;
+	CListBox*	pList;
+	CString		Buffer;
+	int			Index;
+	bool		Result;
 
-	 pWnd = GetDlgItem(IDC_KEYWORDS);
-	 if (pWnd == NULL) return;
+ 	if ((GetKeyState(VK_CONTROL) & 0x8000) != 0)
+	{
+		OnEditBaseKeyword();
+		return;
+	}
 
-	 pList = static_cast<CListBox *>(pWnd);
-	 if (pList == NULL) return;
+	pWnd = GetDlgItem(IDC_KEYWORDS);
+	if (pWnd == NULL) return;
 
-	 Index = pList->GetCurSel();
-	 if (Index < 0) return;
+	pList = static_cast<CListBox *>(pWnd);
+	if (pList == NULL) return;
 
-	 pList->GetText(Index, Buffer);
+	Index = pList->GetCurSel();
+	if (Index < 0) return;
 
-	 Result = m_pDlgHandler->SelectKeyword(Buffer);
-	 if (!Result) return;
+	pList->GetText(Index, Buffer);
+
+	Result = m_pDlgHandler->SelectKeyword(Buffer);
+	if (!Result) return;
 	 
-	 pList->DeleteString(Index);
-	 if (!Buffer.IsEmpty()) Index = pList->AddString(Buffer);
-	 pList->SetCurSel(Index);
- }
+	pList->DeleteString(Index);
+	if (!Buffer.IsEmpty()) Index = pList->AddString(Buffer);
+	pList->SetCurSel(Index);
+}
 /*===========================================================================
  *		End of Class Event CSrRecordDialog::OnBnClickedEditkeywordButton()
  *=========================================================================*/
@@ -2117,7 +2155,6 @@ void CSrRecordDialog::OnDropPickupSound (NMHDR* pNotifyStruct, LRESULT* pResult)
  *=========================================================================*/
 void CSrRecordDialog::OnLbnSelchangeKeywords()
 {
-	//OnBnClickedEditkeywordButton();
 }
 /*===========================================================================
  *		End of Class Event CSrRecordDialog::OnLbnSelchangeKeywords()
@@ -2591,6 +2628,28 @@ void CSrRecordDialog::OnContextMenu(CWnd* pWnd, CPoint Point)
 		
 		pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this, NULL);
 	}
+	else if (pWnd == m_pKeywordsField)
+	{
+			/* Force select item on right-click */
+		BOOL Outside;
+		CPoint ClientPt(Point);
+		
+		CListBox* pList = static_cast<CListBox *>(m_pKeywordsField);
+		if (pList == NULL) return;
+
+		pList->ScreenToClient(&ClientPt);
+		UINT ListIndex = pList->ItemFromPoint(ClientPt, Outside);
+		if (!Outside) pList->SetCurSel(ListIndex);
+
+		CMenu Menu;
+		BOOL Result = Menu.LoadMenu(IDR_KEYWORDRECORD_MENU);
+		if (!Result) return;
+		
+		CMenu* pSubMenu = Menu.GetSubMenu(0);
+		if (pSubMenu == NULL) return;
+		
+		pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this, NULL);
+	}
 	else if (pWnd == m_pConditionField) 
 	{
 		Result = Menu.LoadMenu(IDR_CONDITIONRECORD_MENU);
@@ -2809,3 +2868,41 @@ void CSrRecordDialog::OnUpdateConditionrecordDeleteAll(CCmdUI *pCmdUI)
 
 	pCmdUI->Enable(m_ConditionsCopy.GetSize() > 0);
 }
+
+
+void CSrRecordDialog::OnKeywordAdd()
+{
+	OnBnClickedAddkeywordButton();
+}
+
+
+void CSrRecordDialog::OnKeywordEdit()
+{
+	OnBnClickedEditkeywordButton();
+}
+
+
+void CSrRecordDialog::OnKeywordEditBase()
+{
+	OnEditBaseKeyword();
+}
+
+
+void CSrRecordDialog::OnKeywordDelete()
+{
+	OnBnClickedDelkeywordButton();
+}
+
+
+void CSrRecordDialog::OnUpdateKeywordEdit(CCmdUI *pCmdUI)
+{
+	if (m_pKeywordsField == NULL)
+	{
+		pCmdUI->Enable(false);
+		return;
+	}
+
+	CListBox* pList = static_cast<CListBox *>(m_pKeywordsField);
+	pCmdUI->Enable(pList && pList->GetCurSel() >= 0);
+}
+

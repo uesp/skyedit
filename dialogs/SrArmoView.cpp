@@ -68,7 +68,15 @@ BEGIN_MESSAGE_MAP(CSrArmoView, CSrRecordDialog)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_ARMAMODELS, OnDropArmaModel)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_ARMAMODELS, OnDropArmaModel)
 	ON_LBN_DBLCLK(IDC_ARMAMODELS, &CSrArmoView::OnLbnDblclkArmamodels)
-	ON_LBN_DBLCLK(IDC_KEYWORDS, &CSrArmoView::OnLbnDblclkKeywords)
+
+	ON_COMMAND(ID_ARMAMENU_ADD, &CSrArmoView::OnArmamenuAdd)
+	ON_COMMAND(ID_ARMAMENU_EDIT, &CSrArmoView::OnArmamenuEdit)
+	ON_COMMAND(ID_ARMAMENU_EDITBASE, &CSrArmoView::OnArmamenuEditBase)
+	ON_COMMAND(ID_ARMAMENU_DELETE, &CSrArmoView::OnArmamenuDelete)
+	ON_UPDATE_COMMAND_UI(ID_ARMAMENU_EDIT, &CSrArmoView::OnUpdateArmamenuEdit)
+	ON_UPDATE_COMMAND_UI(ID_ARMAMENU_EDITBASE, &CSrArmoView::OnUpdateArmamenuEdit)
+	ON_UPDATE_COMMAND_UI(ID_ARMAMENU_DELETE, &CSrArmoView::OnUpdateArmamenuEdit)
+	ON_WM_CONTEXTMENU()
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrArmoView Message Map
@@ -421,13 +429,72 @@ void CSrArmoView::OnBnClickedDelArmamodel()
 
 void CSrArmoView::OnLbnDblclkArmamodels()
 {
+	if ((GetKeyState(VK_CONTROL) & 0x8000) == 0)
+	{
+		OnBnClickedEditArmamodel();
+	}
+	else
+	{
+		OnArmamenuEditBase();
+	}
+}
+
+
+void CSrArmoView::OnArmamenuAdd()
+{
+	OnBnClickedAddArmamodel();
+}
+
+
+void CSrArmoView::OnArmamenuEdit()
+{
 	OnBnClickedEditArmamodel();
 }
 
 
-void CSrArmoView::OnLbnDblclkKeywords()
+void CSrArmoView::OnArmamenuEditBase()
 {
-	OnBnClickedEditkeywordButton();
+	CString Buffer;
+
+	if (m_pDlgHandler == NULL) return;
+	m_pDlgHandler->EditRecordHelper(m_ArmaModels, SR_NAME_ARMA);
 }
 
 
+void CSrArmoView::OnArmamenuDelete()
+{
+	OnBnClickedDelArmamodel();
+}
+
+
+void CSrArmoView::OnUpdateArmamenuEdit(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(m_ArmaModels.GetCurSel() >= 0);
+}
+
+
+void CSrArmoView::OnContextMenu(CWnd* pWnd, CPoint Point)
+{
+	if (pWnd == &m_ArmaModels)
+	{
+			/* Force select item on right-click */
+		BOOL Outside;
+		CPoint ClientPt(Point);
+		m_ArmaModels.ScreenToClient(&ClientPt);
+		UINT ListIndex = m_ArmaModels.ItemFromPoint(ClientPt, Outside);
+		if (!Outside) m_ArmaModels.SetCurSel(ListIndex);
+
+		CMenu Menu;
+		BOOL Result = Menu.LoadMenu(IDR_ARMORARMA_MENU);
+		if (!Result) return;
+		
+		CMenu* pSubMenu = Menu.GetSubMenu(0);
+		if (pSubMenu == NULL) return;
+		
+		pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this, NULL);
+	}
+	else
+	{
+		CSrRecordDialog::OnContextMenu(pWnd, Point);
+	}
+}

@@ -271,6 +271,7 @@ protected:
   afx_msg void OnEditSound();
   afx_msg void OnDropSound (NMHDR* pNotifyStruct, LRESULT* pResult);
   afx_msg void OnBnClickedAddkeywordButton();
+  afx_msg void OnEditBaseKeyword();
   afx_msg void OnBnClickedEditkeywordButton();
   afx_msg void OnBnClickedDelkeywordButton();
   afx_msg void OnLbnSelchangeKeywords();
@@ -315,6 +316,11 @@ public:
 	afx_msg void OnUpdateConditionrecordCopy(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateConditionrecordPaste(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateConditionrecordDeleteAll(CCmdUI *pCmdUI);
+	afx_msg void OnKeywordAdd();
+	afx_msg void OnKeywordEdit();
+	afx_msg void OnKeywordEditBase();
+	afx_msg void OnKeywordDelete();
+	afx_msg void OnUpdateKeywordEdit(CCmdUI *pCmdUI);
 };
 /*===========================================================================
  *		End of Class CSrRecordDialog Definition

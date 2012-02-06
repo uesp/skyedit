@@ -118,6 +118,12 @@ public:
 	afx_msg void OnLbnDblclkArmamodels();
 	afx_msg void OnLbnDblclkKeywords();
 	
+	afx_msg void OnArmamenuAdd();
+	afx_msg void OnArmamenuEdit();
+	afx_msg void OnArmamenuEditBase();
+	afx_msg void OnArmamenuDelete();
+	afx_msg void OnUpdateArmamenuEdit(CCmdUI *pCmdUI);
+	afx_msg void OnContextMenu(CWnd* /*pWnd*/, CPoint /*point*/);
 };
 /*===========================================================================
  *		End of Class CSrArmoView Definition

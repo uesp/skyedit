@@ -3023,6 +3023,30 @@ BEGIN
     END
 END
 
+IDR_ARMORARMA_MENU MENU
+BEGIN
+    POPUP "ArmaMenu"
+    BEGIN
+        MENUITEM "Add",                         ID_ARMAMENU_ADD
+        MENUITEM "Edit...",                     ID_ARMAMENU_EDIT
+        MENUITEM "Edit Base...",                ID_ARMAMENU_EDITBASE
+        MENUITEM SEPARATOR
+        MENUITEM "Delete",                      ID_ARMAMENU_DELETE
+    END
+END
+
+IDR_KEYWORDRECORD_MENU MENU
+BEGIN
+    POPUP "Keyword"
+    BEGIN
+        MENUITEM "Add",                         ID_KEYWORD_ADD
+        MENUITEM "Edit...",                     ID_KEYWORD_EDIT
+        MENUITEM "Edit Base...",                ID_KEYWORD_EDITBASE
+        MENUITEM SEPARATOR
+        MENUITEM "Delete",                      ID_KEYWORD_DELETE
+    END
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //

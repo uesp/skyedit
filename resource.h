@@ -46,6 +46,7 @@
 #define IDD_FIND_DLG                    124
 #define IDI_FIND                        125
 #define IDR_MAINFRAME1                  126
+#define IDR_KEYWORDRECORD_MENU          126
 #define IDR_SRVIEWTYPE                  127
 #define IDR_LVLITEMLIST_MENU            128
 #define IDR_LVLI_ACCELERATOR            129
@@ -136,6 +137,8 @@
 #define IDD_SCRIPTPROPERTY_DLG          238
 #define IDD_NEWSCRIPTPROPERTY_DLG       240
 #define IDR_CONDITIONRECORD_MENU        241
+#define IDR_ARMORARMA_MENU              242
+#define IDR_MENU1                       243
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -1190,14 +1193,22 @@
 #define ID_CONDITIONRECORD_COPY         32946
 #define ID_CONDITIONRECORD_PASTE        32947
 #define ID_CONDITIONRECORD_DELETEALL    32948
+#define ID_ARMAMENU_ADD                 32949
+#define ID_ARMAMENU_EDIT                32950
+#define ID_ARMAMENU_DELETE              32951
+#define ID_ARMAMENU_EDITBASE            32952
+#define ID_KEYWORD_ADD                  32953
+#define ID_KEYWORD_EDIT                 32954
+#define ID_KEYWORD_EDITBASE             32955
+#define ID_KEYWORD_DELETE               32956
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        242
-#define _APS_NEXT_COMMAND_VALUE         32949
+#define _APS_NEXT_RESOURCE_VALUE        244
+#define _APS_NEXT_COMMAND_VALUE         32957
 #define _APS_NEXT_CONTROL_VALUE         1793
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
