@@ -16,7 +16,6 @@ v0.046a
 	- List drags grab the "old" item data instead of the current one (double-check if this occurs and where)
 	- Get fieldmap from a record type
 	- Get english name from a record type
-	- Duplicate/copy conditions within the same record
 
 v0.045a
 	- Implement an "editorid" control derived from a CEdit. Replace all current read-only CEdits with

@@ -977,6 +977,9 @@
     <ClCompile Include="dialogs\SrNewScriptPropertyDlg.cpp">
       <Filter>Source Files\Forms</Filter>
     </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\srrectypeinfo.cpp">
+      <Filter>Source Files\ESP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">
@@ -2051,6 +2054,9 @@
     </ClInclude>
     <ClInclude Include="dialogs\SrNewScriptPropertyDlg.h">
       <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\srrectypeinfo.h">
+      <Filter>Header Files\ESP.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
