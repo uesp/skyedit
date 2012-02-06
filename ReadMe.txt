@@ -158,11 +158,12 @@ can be found at:
     - Compiling using the command line official Papyrus compiler is supported. 
 	- Script information can be copy/pasted between objects (right-click on selected
 	  scripts in the record dialog).
-	- New editable records: Actor Values (AVIF)
-	- Fixed bug when creating a copy of a record
-	- Redid Perks: Should be 100% supported, needs testing
+	- New editable records: Actor Values (AVIF).
+	- Fixed bug when creating a copy of a record.
+	- Redid Perks: Should be 100% supported, needs testing.
 	- Redid Conditions: Close to 100% supported, copy/paste conditions (right-click
-	  on condition list or condition buttons)
+	  on condition list or condition buttons).
+	- Added context menus to keyword and ARMA lists.
 
 0.05alpha - 17 January 2021
 	- New editable records: Sound Categories (SNCT), Sound Markers (SOPM), Outfits,

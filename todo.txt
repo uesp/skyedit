@@ -1,6 +1,5 @@
 v0.050a
 	- Context menu in resource viewer: extract all BSA resources to individual files
-	- Edit base record in Armor ARMA list (add context menu)
 	- Active only toolbar item?
 	- Filter test toolbar item?
 	- Clear log manually (right-click)
@@ -9,7 +8,6 @@ v0.050a
 	- Drag records between files to copy
 	- Reference selection
 	- Function parameter selection list should use a virtual list when displaying 1000s of records
-	- Menus in most dialogs don't update
 	- Armor bounds edit
 	- Redo magic effects
 
