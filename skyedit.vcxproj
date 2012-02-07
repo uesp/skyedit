@@ -1682,6 +1682,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\tes5lib\modfile\srrectypeinfo.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\tes5lib\modfile\srsimplerecordhandler.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -2153,6 +2158,7 @@
     <ClInclude Include="..\tes5lib\modfile\srmultirecordhandler.h" />
     <ClInclude Include="..\tes5lib\modfile\srrecordhandler.h" />
     <ClInclude Include="..\tes5lib\modfile\srrectype.h" />
+    <ClInclude Include="..\tes5lib\modfile\srrectypeinfo.h" />
     <ClInclude Include="..\tes5lib\modfile\srsimplerecordhandler.h" />
     <ClInclude Include="..\tes5lib\modfile\srundoitem.h" />
     <ClInclude Include="..\tes5lib\modfile\subrecords\sractidestsubrecord.h" />
