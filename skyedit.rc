@@ -2796,6 +2796,8 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Resource Viewer",             ID_VIEW_RESOURCEVIEWER
         MENUITEM "Scripts",                     ID_VIEW_RESOURCESCRIPTS
+        MENUITEM SEPARATOR
+        MENUITEM "Active Only\tCtrl+R",         ID_VIEW_ACTIVEONLY
     END
     POPUP "&Window"
     BEGIN
@@ -4279,6 +4281,7 @@ BEGIN
     VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
     VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
     "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "F",            ID_EDIT_FIND,           VIRTKEY, CONTROL, NOINVERT
     "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
     VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
     "A",            ID_EDIT_SELECTALL,      VIRTKEY, CONTROL, NOINVERT
@@ -4290,7 +4293,7 @@ BEGIN
     "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
     VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
     VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
-    "F",            ID_EDIT_FIND,           VIRTKEY, CONTROL, NOINVERT
+    "R",            ID_VIEW_ACTIVEONLY,     VIRTKEY, CONTROL, NOINVERT
 END
 
 IDR_DEFAULT_RECORD_ACCEL ACCELERATORS

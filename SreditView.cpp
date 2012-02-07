@@ -110,6 +110,8 @@ BEGIN_MESSAGE_MAP(CSrEditView, CFormView)
 	ON_COMMAND(ID_MENU_VIEWSUMMARY, &CSrEditView::OnMenuViewsummary)
 	ON_UPDATE_COMMAND_UI(ID_MENU_EDITRECORD, &CSrEditView::OnUpdateMenuEditrecord)
 	ON_WM_INITMENUPOPUP()
+	ON_COMMAND(ID_VIEW_ACTIVEONLY, &CSrEditView::OnViewActiveonly)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_ACTIVEONLY, &CSrEditView::OnUpdateViewActiveonly)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Class CSrEditView Message Map
@@ -2674,4 +2676,20 @@ void CSrEditView::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 {
 	CFormView::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
 	OnInitMenuPopupHelper(this, pPopupMenu, nIndex, bSysMenu);
+}
+
+
+void CSrEditView::OnViewActiveonly()
+{
+	bool Check = m_ActiveCheck.GetCheck() != 0;
+	m_ActiveCheck.SetCheck(!Check);
+
+	OnBnClickedActivecheck();	
+}
+
+
+void CSrEditView::OnUpdateViewActiveonly(CCmdUI *pCmdUI)
+{
+	bool Check = m_ActiveCheck.GetCheck() != 0;
+	pCmdUI->SetCheck(Check);
 }

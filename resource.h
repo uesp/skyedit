@@ -138,7 +138,6 @@
 #define IDD_NEWSCRIPTPROPERTY_DLG       240
 #define IDR_CONDITIONRECORD_MENU        241
 #define IDR_ARMORARMA_MENU              242
-#define IDR_MENU1                       243
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -1201,6 +1200,7 @@
 #define ID_KEYWORD_EDIT                 32954
 #define ID_KEYWORD_EDITBASE             32955
 #define ID_KEYWORD_DELETE               32956
+#define ID_VIEW_ACTIVEONLY              32957
 
 // Next default values for new objects
 // 
@@ -1208,7 +1208,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        244
-#define _APS_NEXT_COMMAND_VALUE         32957
+#define _APS_NEXT_COMMAND_VALUE         32960
 #define _APS_NEXT_CONTROL_VALUE         1793
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

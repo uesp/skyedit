@@ -84,7 +84,7 @@ protected:
 
 public:
 	enum { IDD = IDD_SREDIT_FORM };
-	CStatic					m_VertEdge;
+	CStatic						m_VertEdge;
 	CSrRecordVirtualListCtrl	m_RecordList;
 	CSrRecordTreeCtrl			m_RecordTree;
 
@@ -193,6 +193,8 @@ protected:
 	 afx_msg void OnMenuViewsummary();
 	 afx_msg void OnUpdateMenuEditrecord(CCmdUI *pCmdUI);
 	 afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
+	 afx_msg void OnViewActiveonly();
+	 afx_msg void OnUpdateViewActiveonly(CCmdUI *pCmdUI);
 };
 /*===========================================================================
  *		End of Class CSrEditView Definition

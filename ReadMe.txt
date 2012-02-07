@@ -164,6 +164,7 @@ can be found at:
 	- Redid Conditions: Close to 100% supported, copy/paste conditions (right-click
 	  on condition list or condition buttons).
 	- Added context menus to keyword and ARMA lists.
+	- Added "Active Only" to the View menu and shortcut key Ctrl+R
 
 0.05alpha - 17 January 2021
 	- New editable records: Sound Categories (SNCT), Sound Markers (SOPM), Outfits,
