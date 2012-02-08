@@ -21,6 +21,7 @@
 #include "SrConditionDlg.h"
 #include "SrBoundsDlg.h"
 #include "SrScriptPropertyDlg.h"
+#include "SrSelectScriptDlg.h"
 
 
 /*===========================================================================
@@ -2500,6 +2501,18 @@ void CSrRecordDialog::OnBnClickedAddscript()
 {
 	if (m_pScriptList == NULL) return;
 
+	CSrSelectScriptDlg Dlg;
+	CString ScriptName;
+
+	int Result = Dlg.DoModal(ScriptName);
+	if (Result != IDOK) return;
+	if (ScriptName.IsEmpty()) return;
+
+	srvmadscript_t* pScript = m_ScriptDataCopy.GetScriptData().Scripts.AddNew();
+	pScript->Name = ScriptName;
+
+	int ListIndex = m_pScriptList->AddString(ScriptName);
+	if (ListIndex >= 0) m_pScriptList->SetItemData(ListIndex, (DWORD) pScript);
 }
 
 
@@ -2507,6 +2520,7 @@ void CSrRecordDialog::OnBnClickedEditpropertiesscript()
 {
 	if (m_pScriptList == NULL) return;
 
+	if (m_pScriptList->GetCount() <= 0 || m_pScriptList->GetSelCount() <= 0) return;
 	int ListIndex = m_pScriptList->GetCurSel();
 	if (ListIndex < 0) return;
 
@@ -2524,6 +2538,7 @@ void CSrRecordDialog::OnBnClickedEditscript()
 {
 	if (m_pScriptList == NULL) return;
 
+	if (m_pScriptList->GetCount() <= 0 || m_pScriptList->GetSelCount() <= 0) return;
 	int ListIndex = m_pScriptList->GetCurSel();
 	if (ListIndex < 0) return;
 
@@ -2539,6 +2554,7 @@ void CSrRecordDialog::OnBnClickedDelscript()
 {
 	if (m_pScriptList == NULL) return;
 
+	if (m_pScriptList->GetCount() <= 0 || m_pScriptList->GetSelCount() <= 0) return;
 	int ListIndex = m_pScriptList->GetCurSel();
 	if (ListIndex < 0) return;
 

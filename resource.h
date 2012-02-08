@@ -137,7 +137,9 @@
 #define IDD_SCRIPTPROPERTY_DLG          238
 #define IDD_NEWSCRIPTPROPERTY_DLG       240
 #define IDR_CONDITIONRECORD_MENU        241
+#define IDD_NEWSCRIPT_DLG               241
 #define IDR_ARMORARMA_MENU              242
+#define IDD_SELECTSCRIPT_DLG            242
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -165,6 +167,8 @@
 #define IDC_PREVIOUS_TEXT               1024
 #define IDC_CURRENT_TEXT                1025
 #define ID_BUTTON1                      1026
+#define IDC_CURRENT_TEXT2               1026
+#define IDC_SCRIPTFILTER                1026
 #define IDC_FILTER_TEXT                 1027
 #define ID_BUTTON2                      1028
 #define IDC_PREVIOUS_FORMID             1029
@@ -929,6 +933,7 @@
 #define IDC_NEW_PROPERTY                1792
 #define IDC_HIDDENCHECK                 1792
 #define IDC_PROPERTYDOC                 1793
+#define IDC_SCRIPTLIST                  1793
 #define IDC_ARRAYCHECK                  1794
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
@@ -1209,7 +1214,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        244
 #define _APS_NEXT_COMMAND_VALUE         32960
-#define _APS_NEXT_CONTROL_VALUE         1793
+#define _APS_NEXT_CONTROL_VALUE         1794
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

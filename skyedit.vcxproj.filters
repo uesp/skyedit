@@ -980,6 +980,9 @@
     <ClCompile Include="..\tes5lib\modfile\srrectypeinfo.cpp">
       <Filter>Source Files\ESP</Filter>
     </ClCompile>
+    <ClCompile Include="dialogs\SrSelectScriptDlg.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">
@@ -2057,6 +2060,9 @@
     </ClInclude>
     <ClInclude Include="..\tes5lib\modfile\srrectypeinfo.h">
       <Filter>Header Files\ESP.</Filter>
+    </ClInclude>
+    <ClInclude Include="dialogs\SrSelectScriptDlg.h">
+      <Filter>Header Files\Forms.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

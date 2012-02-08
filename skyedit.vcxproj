@@ -1885,6 +1885,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">../tes5lib;./;devil/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../tes5lib;./;devil/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <ClCompile Include="dialogs\SrSelectScriptDlg.cpp" />
     <ClCompile Include="dialogs\SrSopmEditDlg.cpp" />
     <ClCompile Include="dialogs\SrActiView.cpp" />
     <ClCompile Include="dialogs\SrAlchView.cpp" />
@@ -2259,6 +2260,7 @@
     <ClInclude Include="dialogs\SrScriptPropertyDlg.h" />
     <ClInclude Include="dialogs\SrScriptTextCtrl.h" />
     <ClInclude Include="dialogs\SrScriptView.h" />
+    <ClInclude Include="dialogs\SrSelectScriptDlg.h" />
     <ClInclude Include="dialogs\SrSopmEditDlg.h" />
     <ClInclude Include="dialogs\SrActiView.h" />
     <ClInclude Include="dialogs\SrAlchView.h" />
