@@ -3,13 +3,17 @@ v0.050a
 	- Active only toolbar item?
 	- Filter test toolbar item?
 	- Clear log manually (right-click)
-	- Record count in TES4 is not being updated correctly?
+	- Record count in TES4 is not being updated correctly
 	- Shortcut key for toggling "active only"
 	- Drag records between files to copy
 	- Reference selection
 	- Function parameter selection list should use a virtual list when displaying 1000s of records
 	- Armor bounds edit
 	- Redo magic effects
+	- Cleaned records don't all "disappear" when "active only" is checked.
+	- Save as/set as ESM
+	- Backup PSC/PEX script files
+	- Find strings in scripts
 
 v0.046a
 	- Conditions: Batch edit? drag-and-drop?
