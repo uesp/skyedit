@@ -165,6 +165,19 @@ can be found at:
 	  on condition list or condition buttons).
 	- Added context menus to keyword and ARMA lists.
 	- Added "Active Only" to the View menu and shortcut key Ctrl+R
+	- Added several commands to change the form ID of a record or selected records in the
+	  main list accessed via the right-click context menu. When changing a form ID these
+	  features try to propagate the change to all dependant records, however not all records
+	  are fully deciphered or supported in SkyEdit yet so it is not 100%. In general, if you
+	  can edit a record any form ID changes should be propagated into it. None of these 
+	  records will overwrite an existing form ID. The form ID commands are:
+	  		Change FormID: Specifically set the the form ID for one record.
+			Change Mod Index: Change the upper byte of the form ID for all selected records.
+			Assign New FormID: Set the mod index to a fixed value and the lower 3 bytes to 
+				a guaranteed new and unused value.
+	  Note that with the current implementation these commands operate around a speed
+	  of 25 records/second so beware when selecting a large number of records to update.
+		
 
 0.05alpha - 17 January 2021
 	- New editable records: Sound Categories (SNCT), Sound Markers (SOPM), Outfits,
