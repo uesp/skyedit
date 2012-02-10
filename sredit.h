@@ -84,6 +84,8 @@ protected:
 public:
 	bool	m_EditScriptExternalByDefault;
 
+protected:
+	
 
   /*--------- Begin Public Class Methods ---------------------------*/
 public:

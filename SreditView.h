@@ -195,6 +195,9 @@ protected:
 	 afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 	 afx_msg void OnViewActiveonly();
 	 afx_msg void OnUpdateViewActiveonly(CCmdUI *pCmdUI);
+	 afx_msg void OnMenuChangemodindex();
+	 afx_msg void OnMenuChangeformid();
+	 afx_msg void OnMenuAssignnewformid();
 };
 /*===========================================================================
  *		End of Class CSrEditView Definition

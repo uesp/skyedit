@@ -167,7 +167,6 @@
 #define IDC_PREVIOUS_TEXT               1024
 #define IDC_CURRENT_TEXT                1025
 #define ID_BUTTON1                      1026
-#define IDC_CURRENT_TEXT2               1026
 #define IDC_SCRIPTFILTER                1026
 #define IDC_FILTER_TEXT                 1027
 #define ID_BUTTON2                      1028
@@ -1206,6 +1205,9 @@
 #define ID_KEYWORD_EDITBASE             32955
 #define ID_KEYWORD_DELETE               32956
 #define ID_VIEW_ACTIVEONLY              32957
+#define ID_MENU_CHANGEMODINDEX          32960
+#define ID_MENU_CHANGEFORMID            32961
+#define ID_MENU_ASSIGNNEWFORMID         32962
 
 // Next default values for new objects
 // 
@@ -1213,7 +1215,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        244
-#define _APS_NEXT_COMMAND_VALUE         32960
+#define _APS_NEXT_COMMAND_VALUE         32963
 #define _APS_NEXT_CONTROL_VALUE         1794
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
