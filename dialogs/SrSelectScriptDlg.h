@@ -48,6 +48,7 @@ public:
 	CEdit m_Filter;
 	afx_msg void OnEnChangeScriptfilter();
 	afx_msg void OnLvnGetdispinfoScriptlist(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnEnChangeCurrentText();
 };
 
 

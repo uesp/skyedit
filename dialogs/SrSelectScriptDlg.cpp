@@ -35,6 +35,7 @@ BEGIN_MESSAGE_MAP(CSrSelectScriptDlg, CDialogEx)
 	ON_NOTIFY(LVN_ITEMACTIVATE, IDC_SCRIPTLIST, &CSrSelectScriptDlg::OnLvnItemActivateScriptlist)
 	ON_EN_CHANGE(IDC_SCRIPTFILTER, &CSrSelectScriptDlg::OnEnChangeScriptfilter)
 	ON_NOTIFY(LVN_GETDISPINFO, IDC_SCRIPTLIST, &CSrSelectScriptDlg::OnLvnGetdispinfoScriptlist)
+	ON_EN_CHANGE(IDC_CURRENT_TEXT, &CSrSelectScriptDlg::OnEnChangeCurrentText)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrScriptTextCtrl Message Map
@@ -207,4 +208,11 @@ void CSrSelectScriptDlg::OnLvnGetdispinfoScriptlist(NMHDR *pNMHDR, LRESULT *pRes
 		if (i >= 0 && i < m_ScriptFiles.GetCount()) lstrcpyn(pDispInfo->item.pszText, m_ScriptFiles[i], pDispInfo->item.cchTextMax);
 	}
 
+}
+
+
+void CSrSelectScriptDlg::OnEnChangeCurrentText()
+{
+	m_CurrentValue.GetWindowText(m_CurrentScriptName);
+	m_CurrentScriptName.Trim(" ");
 }
