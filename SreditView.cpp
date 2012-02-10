@@ -112,6 +112,12 @@ BEGIN_MESSAGE_MAP(CSrEditView, CFormView)
 	ON_WM_INITMENUPOPUP()
 	ON_COMMAND(ID_VIEW_ACTIVEONLY, &CSrEditView::OnViewActiveonly)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_ACTIVEONLY, &CSrEditView::OnUpdateViewActiveonly)
+	ON_COMMAND(ID_MENU_CHANGEMODINDEX, &CSrEditView::OnMenuChangemodindex)
+	ON_UPDATE_COMMAND_UI(ID_MENU_CHANGEMODINDEX, &CSrEditView::OnUpdateMenuEditrecord)
+	ON_COMMAND(ID_MENU_CHANGEFORMID, &CSrEditView::OnMenuChangeformid)
+	ON_UPDATE_COMMAND_UI(ID_MENU_CHANGEFORMID, &CSrEditView::OnUpdateMenuEditrecord)
+	ON_COMMAND(ID_MENU_ASSIGNNEWFORMID, &CSrEditView::OnMenuAssignnewformid)
+	ON_UPDATE_COMMAND_UI(ID_MENU_ASSIGNNEWFORMID, &CSrEditView::OnUpdateMenuEditrecord)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Class CSrEditView Message Map
@@ -2692,4 +2698,94 @@ void CSrEditView::OnUpdateViewActiveonly(CCmdUI *pCmdUI)
 {
 	bool Check = m_ActiveCheck.GetCheck() != 0;
 	pCmdUI->SetCheck(Check);
+}
+
+
+void CSrEditView::OnMenuChangemodindex()
+{
+	CSrRefRecordArray Records;
+	CString			  Buffer;
+	char*			  pError;
+	bool			  Result;
+	int 			  ModIndex;
+
+	m_RecordList.GetSelectedRecords(Records);
+	if (Records.GetSize() <= 0) return;
+
+	Result = SrInputDialog(Buffer, "Enter New Mod Index", "Enter a new mod index from 0 to 255:\r\n\r\nWARNING: This feature assumes you know what you are doing...");
+	if (!Result) return;
+
+	Buffer.Trim(" ");
+	ModIndex = strtol(Buffer, &pError, 0);	
+
+	if (ModIndex < 0 || ModIndex > 255 || *pError != 0) 
+	{
+		SrEditShowError("Invalid mod index value of '%d'!", ModIndex);
+		return;
+	}
+
+	for (dword i = 0; i < Records.GetSize(); ++i)
+	{
+		GetDocument()->GetRecordHandler().ChangeModIndex(Records[i], ModIndex);
+	}	
+
+}
+
+
+void CSrEditView::OnMenuChangeformid()
+{
+	CString			Buffer;
+	CSrRecord*		pRecord;
+	char*			pError;
+	bool			Result;
+	dword		    NewFormID;
+
+	pRecord = m_RecordList.GetSelectedRecord();
+	if (pRecord == NULL) return;
+
+	Buffer.Format("0x%08X", pRecord->GetFormID());
+
+	Result = SrInputDialog(Buffer, "Enter New FormID", "Enter a new formID:\r\n\r\nWARNING: This feature assumes you know what you are doing...");
+	if (!Result) return;
+
+	Buffer.Trim(" ");
+	NewFormID = strtoul(Buffer, &pError, 0);	
+
+	if (*pError != 0 || NewFormID == 0) 
+	{
+		SrEditShowError("Invalid formID value '%d'!", NewFormID);
+		return;
+	}
+
+	GetDocument()->GetRecordHandler().ChangeRecordFormID(pRecord, NewFormID);
+}
+
+
+void CSrEditView::OnMenuAssignnewformid()
+{
+	CSrRefRecordArray Records;
+	CString			  Buffer;
+	char*			  pError;
+	bool			  Result;
+	int 			  ModIndex;
+
+	m_RecordList.GetSelectedRecords(Records);
+	if (Records.GetSize() <= 0) return;
+
+	Result = SrInputDialog(Buffer, "Enter New Mod Index", "Enter a new mod index from 0 to 255 to use for the new form IDs:\r\n\r\nWARNING: This feature assumes you know what you are doing...");
+	if (!Result) return;
+
+	Buffer.Trim(" ");
+	ModIndex = strtol(Buffer, &pError, 0);	
+
+	if (ModIndex < 0 || ModIndex > 255 || *pError != 0) 
+	{
+		SrEditShowError("Invalid mod index value of '%d'!", ModIndex);
+		return;
+	}
+
+	for (dword i = 0; i < Records.GetSize(); ++i)
+	{
+		GetDocument()->GetRecordHandler().AssignNewFormID(Records[i], ModIndex);
+	}	
 }
