@@ -22,6 +22,7 @@
 #include "dialogs/SrScriptView.h"
 #include "ChildFrmScript.h"
 #include "ChildFrmFix.h"
+#include "common/srbackup.h"
 
 
 /*===========================================================================
@@ -459,13 +460,13 @@ void CSrEditApp::UpdateOptions (const bool Set)
   m_ConfigFile.UpdateDword  (Set, "UndoLimit",  CSrMultiRecordHandler::GetOptions().Undo.UndoLimit);
 
   	/* Backup options */
-  m_ConfigFile.UpdateBoolean(Set, "EnableBackup",       CSrMultiRecordHandler::GetOptions().EnableBackup);
-  m_ConfigFile.UpdateBoolean(Set, "EnableBackupOnSave", CSrMultiRecordHandler::GetOptions().EnableBackupOnSave);
-  m_ConfigFile.UpdateInteger(Set, "MaximumBackupSize",  CSrMultiRecordHandler::GetOptions().MaxBackupSize);
-  m_ConfigFile.UpdateInteger(Set, "MaximumBackupCount", CSrMultiRecordHandler::GetOptions().MaxBackupCount);
-  m_ConfigFile.UpdateString (Set, "BackupPath",         CSrMultiRecordHandler::GetOptions().BackupPath);
-  m_ConfigFile.UpdateBoolean(Set, "EnableAutoBackup",   CSrMultiRecordHandler::GetOptions().EnableAutoBackup);
-  m_ConfigFile.UpdateInteger(Set, "AutoBackupTime",     CSrMultiRecordHandler::GetOptions().AutoBackupTime);
+  m_ConfigFile.UpdateBoolean(Set, "EnableBackup",       g_SrBackupOptions.EnableBackup);
+  m_ConfigFile.UpdateBoolean(Set, "EnableBackupOnSave", g_SrBackupOptions.EnableBackupOnSave);
+  m_ConfigFile.UpdateInteger(Set, "MaximumBackupSize",  g_SrBackupOptions.MaxBackupSizeMB);
+  m_ConfigFile.UpdateInteger(Set, "MaximumBackupCount", g_SrBackupOptions.MaxBackupCount);
+  m_ConfigFile.UpdateString (Set, "BackupPath",         g_SrBackupOptions.BackupPath);
+  m_ConfigFile.UpdateBoolean(Set, "EnableAutoBackup",   g_SrBackupOptions.EnableAutoBackup);
+  m_ConfigFile.UpdateInteger(Set, "AutoBackupTime",     g_SrBackupOptions.AutoBackupTime);
 
 	/* Performance settings */
   m_ConfigFile.UpdateBoolean(Set, "EnableCaching",     CSrMultiRecordHandler::GetOptions().EnableCaching);
@@ -588,33 +589,33 @@ void CSrEditApp::ResolveOptionPaths (void) {
   dword Result;
   bool  HasPath = false;
 
-  if (CSrMultiRecordHandler::GetOptions().BackupPath[0] != '\\' &&
-      CSrMultiRecordHandler::GetOptions().BackupPath[1] != ':') {
+  if (g_SrBackupOptions.BackupPath[0] != '\\' &&
+      g_SrBackupOptions.BackupPath[1] != ':') {
 
-    Result = GetSrInstallPath(CSrMultiRecordHandler::GetOptions().FullBackupPath);
+    Result = GetSrInstallPath(g_SrBackupOptions.FullBackupPath);
 
     if (Result) {
-      CSrMultiRecordHandler::GetOptions().FullBackupPath += "data\\";
-      CSrMultiRecordHandler::GetOptions().FullBackupPath += CSrMultiRecordHandler::GetOptions().BackupPath;
-      TerminatePathString(CSrMultiRecordHandler::GetOptions().FullBackupPath);
+      g_SrBackupOptions.FullBackupPath += "data\\";
+      g_SrBackupOptions.FullBackupPath += g_SrBackupOptions.BackupPath;
+      TerminatePathString(g_SrBackupOptions.FullBackupPath);
       HasPath = true;
     }
   }
 
   if (!HasPath) {
-    Result = GetFullPathName(CSrMultiRecordHandler::GetOptions().BackupPath, _MAX_PATH, Buffer, NULL);
+    Result = GetFullPathName(g_SrBackupOptions.BackupPath, _MAX_PATH, Buffer, NULL);
 
     if (Result)
-      CSrMultiRecordHandler::GetOptions().FullBackupPath = Buffer;
+      g_SrBackupOptions.FullBackupPath = Buffer;
     else
-      CSrMultiRecordHandler::GetOptions().FullBackupPath = CSrMultiRecordHandler::GetOptions().BackupPath;
+      g_SrBackupOptions.FullBackupPath = g_SrBackupOptions.BackupPath;
   }
 
 	/* Create the fulll display filter path */
   CSrRecordTreeCtrl::GetOptions().FullFilterFile  = m_AppPath;
   CSrRecordTreeCtrl::GetOptions().FullFilterFile += CSrRecordTreeCtrl::GetOptions().FilterFile;
 
-  SystemLog.Printf("Full backup path: %s", CSrMultiRecordHandler::GetOptions().FullBackupPath.c_str());
+  SystemLog.Printf("Full backup path: %s", g_SrBackupOptions.BackupPath.c_str());
 }
 /*===========================================================================
  *		End of Class Method CSrEditApp::ResolveOptionPaths()

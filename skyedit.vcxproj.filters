@@ -953,9 +953,6 @@
     <ClCompile Include="dialogs\SrScriptView.cpp">
       <Filter>Source Files\Forms\Dialogs</Filter>
     </ClCompile>
-    <ClCompile Include="..\tes5lib\strings\SrStringFile.cpp">
-      <Filter>Source Files\ESP\Subrecords</Filter>
-    </ClCompile>
     <ClCompile Include="..\tes5lib\scripts\SrScriptFile.cpp">
       <Filter>Source Files\ESP\Scripts</Filter>
     </ClCompile>
@@ -985,6 +982,12 @@
     </ClCompile>
     <ClCompile Include="..\tes5lib\scripts\SrScriptRecord.cpp">
       <Filter>Source Files\ESP\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\common\srbackup.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tes5lib\strings\SrStringFile.cpp">
+      <Filter>Source Files\ESP\Strings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2066,6 +2069,9 @@
     </ClInclude>
     <ClInclude Include="dialogs\SrSelectScriptDlg.h">
       <Filter>Header Files\Forms.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\common\srbackup.h">
+      <Filter>Header Files\Common.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

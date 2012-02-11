@@ -16,6 +16,7 @@
 #include "modfile/srexport.h"
 #include "modfile/srimport.h"
 #include "common/srutils.h"
+#include "common/srbackup.h"
 
 
 /*===========================================================================
@@ -26,12 +27,12 @@
 
 	/* Debug definitions */
 #ifdef _DEBUG
-  #define new DEBUG_NEW
-  #undef THIS_FILE
-  static char THIS_FILE[] = __FILE__;
+	#define new DEBUG_NEW
+	#undef THIS_FILE
+	static char THIS_FILE[] = __FILE__;
 #endif
 
-  IMPLEMENT_DYNCREATE(CSrEditDoc, CDocument)
+	IMPLEMENT_DYNCREATE(CSrEditDoc, CDocument)
 
 /*===========================================================================
  *		End of Location Definitions
@@ -44,8 +45,6 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrEditDoc, CDocument)
-  //{{AFX_MSG_MAP(CSrEditDoc)
-  //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Class CSrEditDoc Message Map
@@ -57,8 +56,9 @@ END_MESSAGE_MAP()
  * Class CSrEditDoc Constructor
  *
  *=========================================================================*/
-CSrEditDoc::CSrEditDoc() {
-  m_HasActiveContent = false;
+CSrEditDoc::CSrEditDoc() 
+{
+	m_HasActiveContent = false;
 }
 /*===========================================================================
  *		End of Class CSrEditDoc Constructor
@@ -173,190 +173,6 @@ BOOL CSrEditDoc::DoFileSave() {
 
 /*===========================================================================
  *
- * Class CSrEditDoc Method - bool DoSaveBackup (pFilename);
- *
- *=========================================================================*/
-bool CSrEditDoc::DoSaveBackup (const TCHAR* pFilename) {
-	bool Result;
-
-		/* Are backups enabled? */
-	if (!CSrMultiRecordHandler::GetOptions().EnableBackup)       return (true);
-	if (!CSrMultiRecordHandler::GetOptions().EnableBackupOnSave) return (true);
-
-		/* Main plugin backup */
-	Result = DoBackup(pFilename);
-	if (!Result) return false;
-
-		/* Do string file backup only if required */
-	if (!GetActiveFile().IsLoadLocalString()) return true;
-
-	Result  = DoBackup(CreateSrStringFilename(pFilename, "ILSTRINGS"));
-	Result &= DoBackup(CreateSrStringFilename(pFilename, "DLSTRINGS"));
-	Result &= DoBackup(CreateSrStringFilename(pFilename, "STRINGS"));
-	return Result;
-}
-/*===========================================================================
- *		End of Class Method CSrEditDoc::DoBackup()
- *=========================================================================*/
-
-
-/*===========================================================================
- *
- * Class CSrEditDoc Method - bool CheckBackups (OldestFile, BackupCount, const int64 BackupSize);
- *
- *=========================================================================*/
-bool CSrEditDoc::CheckBackups (const char* OldestFile, const dword BackupCount, const int64 BackupSize) {
-  BOOL Result;
-  bool Delete = false;
-  
-  if (CSrMultiRecordHandler::GetOptions().MaxBackupCount > 0 && (int)BackupCount > CSrMultiRecordHandler::GetOptions().MaxBackupCount) {
-    Delete = true;
-  }
-  else if (CSrMultiRecordHandler::GetOptions().MaxBackupSize > 0 && BackupSize/1000000 > CSrMultiRecordHandler::GetOptions().MaxBackupSize) {
-    Delete = true;
-  }
-
-  if (Delete) {
-    Result = DeleteFile(OldestFile);
-    if (!Result) return AddSrWindowsError("Failed to delete the old backup file '%s'!", OldestFile);
-    SystemLog.Printf("Deleted old backup file '%s'.", OldestFile);
-  }
-  
-  return (true);
-}
-/*===========================================================================
- *		End of Class Method CSrEditDoc::CheckBackups()
- *=========================================================================*/
-
-
-/*===========================================================================
- *
- * Class CSrEditDoc Method - bool MakeBackupFile (OutputFile, InputFile);
- *
- * TODO: Cleanup, better backup cleanup needed
- *
- *=========================================================================*/
-bool CSrEditDoc::MakeBackupFile (CString& OutputFile, CString& InputFile) {
-  WIN32_FIND_DATA FindData;
-  CString	  OldestFile;
-  FILETIME	  OldestTime;
-  CString	  Filename;
-  HANDLE	  hFind;
-  int		  CharIndex;
-  BOOL		  Result;
-  int		  MaxBackupIndex = 0;
-  int		  BackupIndex;
-  dword		  BackupCount = 0;
-  int64		  BackupSize  = 0;
-  
-  Filename = InputFile;
-  CharIndex = Filename.ReverseFind('\\'); 
-  if (CharIndex >= 0) Filename.Delete(0, CharIndex + 1);
-
-  OutputFile  = CSrMultiRecordHandler::GetOptions().FullBackupPath;
-  OutputFile += Filename;
-  Filename    = OutputFile + ".*";
-
-	/* Find the maximum existing backup index of the current backup file */
-  hFind  = FindFirstFile(Filename, &FindData);
-  Result = TRUE;
-  
-  while (hFind != INVALID_HANDLE_VALUE && Result) {
-    Filename = FindData.cFileName;
-
-    CharIndex = Filename.ReverseFind('.'); 
-    if (CharIndex >= 0) Filename.Delete(0, CharIndex + 1);
-    
-    BackupIndex = atoi(Filename);
-    if (BackupIndex > MaxBackupIndex) MaxBackupIndex = BackupIndex;
-
-    if (OldestFile.IsEmpty() || CompareFileTime(&OldestTime, &FindData.ftLastWriteTime) > 0) {
-      OldestFile = FindData.cFileName;
-      OldestTime = FindData.ftLastWriteTime;
-    }
-
-    ++BackupCount;
-    BackupSize += (int64) FindData.nFileSizeLow;
-    BackupSize += ((int64) FindData.nFileSizeHigh) << 32;
-    Result = FindNextFile(hFind, &FindData);
-  }
-
-	/* See if we need to delete the oldest backup file */
-  if (!OldestFile.IsEmpty()) {
-    Filename  = CSrMultiRecordHandler::GetOptions().FullBackupPath;
-    Filename += OldestFile;
-    CheckBackups(Filename, BackupCount, BackupSize);
-  }
-  
-	/* Create the output filename */
-  ++MaxBackupIndex;
-  Filename.Format(".%03d", MaxBackupIndex);
-  OutputFile += Filename;
-
-  return (true);
-}
-/*===========================================================================
- *		End of Class Method CSrEditDoc::MakeBackupFile()
- *=========================================================================*/
-
-
-/*===========================================================================
- *
- * Class CSrEditDoc Method - bool CreateBackupPath (void);
- *
- *=========================================================================*/
-bool CSrEditDoc::CreateBackupPath (void) {
-  bool Result;
-  
-  Result = MakePathEx(CSrMultiRecordHandler::GetOptions().FullBackupPath);
-
-  if (!Result) {
-    AddSrGeneralError("Failed to create the backup directory '%s'!", CSrMultiRecordHandler::GetOptions().FullBackupPath);
-    return (false);
-  }
-
-  return (true);
-}
-/*===========================================================================
- *		End of Class Method CSrEditDoc::CreateBackupPath()
- *=========================================================================*/
-
-
-/*===========================================================================
- *
- * Class CSrEditDoc Method - bool DoBackup (pFilename);
- *
- *=========================================================================*/
-bool CSrEditDoc::DoBackup (const TCHAR* pFilename) 
-{
-	CString InputFile;
-	CString OutputFile;
-	bool    Result;
-	BOOL    CopyResult;
-
-		/* Ignore if the file doesn't yet exist */
-	InputFile = pFilename;
-	if (!FileExists(InputFile)) return true;
-
-	Result = MakeBackupFile(OutputFile, InputFile);
-	if (!Result) return false;
-
-	Result = CreateBackupPath();
-	if (!Result) return false;
-
-	CopyResult = CopyFile(InputFile, OutputFile, FALSE);
-	if (!CopyResult) return AddSrWindowsError("Failed to backup '%s' to '%s'!", InputFile, OutputFile);
-
-	SystemLog.Printf("Successfully backed up '%s' to '%s'", InputFile, OutputFile);
-	return true;
-}
-/*===========================================================================
- *		End of Class Method CSrEditDoc::DoBackup()
- *=========================================================================*/
-
-
-/*===========================================================================
- *
  * Class CSrEditDoc Event - BOOL OnSaveDocument (lpszPathName);
  *
  *=========================================================================*/
@@ -369,7 +185,7 @@ BOOL CSrEditDoc::OnSaveDocument (LPCTSTR lpszPathName) {
 
   UpdateAllViews(NULL, SREDIT_DOC_HINT_GETDATA, NULL);
 
-  DoSaveBackup(lpszPathName);
+  SrDoSavePluginBackup(lpszPathName, GetActiveFile().IsLoadLocalString());
 
   CharIndex = Filename.ReverseFind('\\'); 
   if (CharIndex >= 0) Filename.Delete(0, CharIndex + 1);

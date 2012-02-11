@@ -442,6 +442,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\tes5lib\common\srbackup.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release64|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\tes5lib\common\srcallback.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -1997,6 +2002,7 @@
     <ClInclude Include="..\tes5lib\common\dl_map.h" />
     <ClInclude Include="..\tes5lib\common\filebuffer.h" />
     <ClInclude Include="..\tes5lib\common\srarray.h" />
+    <ClInclude Include="..\tes5lib\common\srbackup.h" />
     <ClInclude Include="..\tes5lib\common\srblockallocator.h" />
     <ClInclude Include="..\tes5lib\common\srcallback.h" />
     <ClInclude Include="..\tes5lib\common\srconfigentry.h" />

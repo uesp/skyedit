@@ -1,3 +1,6 @@
+v0.060a
+	- Conflict between external/internal script texts?
+
 v0.050a
 	- Context menu in resource viewer: extract all BSA resources to individual files
 	- Active only toolbar item?
@@ -19,6 +22,7 @@ v0.050a
 		- Keep directory structure instead of backing up into a single path
 	- Popup tips?
 	- Script property auto fill and auto fill all commands
+	- Better progress updates when initializing resources (during file path addition)
 
 v0.046a
 	- Conditions: Batch edit? drag-and-drop?
