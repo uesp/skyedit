@@ -177,6 +177,7 @@ can be found at:
 				a guaranteed new and unused value.
 	  Note that with the current implementation these commands operate around a speed
 	  of 25 records/second so beware when selecting a large number of records to update.
+	- Fixed bad file record count in TES4 header when saving.
 		
 
 0.05alpha - 17 January 2021
