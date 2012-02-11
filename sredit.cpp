@@ -801,7 +801,7 @@ bool CSrEditApp::InitResourceHandler (void) {
   AddBsaFile(Filename);
   if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(20);
 
-  Filename = Buffer + "Skyrim - Interfaces.bsa";
+  Filename = Buffer + "Skyrim - Interface.bsa";
   AddBsaFile(Filename);
   if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(30);
     
