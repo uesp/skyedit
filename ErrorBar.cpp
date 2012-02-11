@@ -103,7 +103,9 @@ void CSrErrorBar::AddText (const TCHAR* pString) {
   Length = m_wndChild.GetWindowTextLength();
   m_wndChild.SetSel(Length, Length);
   m_wndChild.ReplaceSel(_T("\r\n"), FALSE);
+  m_wndChild.SetSelectionCharFormat(m_DefaultFormat);
 
+  m_wndChild.SetFont(&m_font);
 }
 /*===========================================================================
  *		End of Class Method CSrErrorBar::AddText()
