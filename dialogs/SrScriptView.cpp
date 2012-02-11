@@ -6,6 +6,7 @@
 #include "SrProgressDlg.h"
 #include "SrScriptPropertyDlg.h"
 #include "SrInputDialog.h"
+#include "sreditdoc.h"
 
 
 srscriptoptions_t CSrScriptView::s_ScriptOptions = { "-f=TESV_Papyrus_Flags.flg", "Consolas", 90, 5 };
@@ -445,11 +446,17 @@ bool CSrScriptView::SaveScript (CSrScriptFile* pScript)
 		if (Dlg.DoModal() != IDOK) return false;
 
 		Filename = Dlg.GetPathName();
+
+		CSrEditDoc::DoBackup(Filename);
+
 		Result = pScript->Save(Filename);
 	}
 	else
 	{
 		Filename = pScript->GetFilename();
+
+		CSrEditDoc::DoBackup(Filename);
+
 		Result = pScript->Save();
 	}
 
@@ -485,6 +492,9 @@ void CSrScriptView::OnScriptSaveAs()
 
 	CFileDialog Dlg(FALSE, ".psc", m_pCurrentScript->GetFilename(), OFN_OVERWRITEPROMPT, SR_SCRIPTFILE_FILTER, this);
 	if (Dlg.DoModal() != IDOK) return;
+
+		/* Backup any existing script at that filename */
+	CSrEditDoc::DoBackup(Dlg.GetPathName());
 
 	bool Result = m_pCurrentScript->Save(Dlg.GetPathName());
 	if (!Result) SrEditShowError("Failed to save script file '%s'!", Dlg.GetPathName());
@@ -623,9 +633,17 @@ bool CSrScriptView::CompileCurrentScript (void)
 bool CSrScriptView::CompileScript (CSrScriptFile* pScript)
 {
 	CString  Cmd;
+	CSString Filename;
 	bool     Result;
 
 	if (pScript == NULL) return false;
+
+		/* Attempt to backup the PEX file if needed */
+	GetSrInstallPath(Filename);
+	Filename += "data\\scripts\\";
+	Filename += pScript->GetScriptName();
+	Filename += ".pex";
+	CSrEditDoc::DoBackup(Filename);
 
 	Cmd = CreateCompilerCommand(pScript);
 	if (Cmd.IsEmpty()) return AddSrGeneralError("Failed to create the command for launching the compiler!");

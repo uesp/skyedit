@@ -100,10 +100,11 @@ public:
 
 	/* Backup methods */
   bool DoSaveBackup     (const char* pFilename);
-  bool DoBackup         (const char* pFilename);
-  bool MakeBackupFile   (CString& OutputFile, CString& InputFile);
-  bool CreateBackupPath (void);
-  bool CheckBackups     (const char* OldestFile, const dword BackupCount, const int64 BackupSize);
+
+  static bool DoBackup         (const char* pFilename);
+  static bool MakeBackupFile   (CString& OutputFile, CString& InputFile);
+  static bool CreateBackupPath (void);
+  static bool CheckBackups     (const char* OldestFile, const dword BackupCount, const int64 BackupSize);
 
 
 	/* Diagnostics */
