@@ -5,6 +5,7 @@
 #include "common\srutils.h"
 #include "SrProgressDlg.h"
 #include "SrScriptPropertyDlg.h"
+#include "SrInputDialog.h"
 
 
 srscriptoptions_t CSrScriptView::s_ScriptOptions = { "-f=TESV_Papyrus_Flags.flg", "Consolas", 90, 5 };
@@ -47,6 +48,14 @@ BEGIN_MESSAGE_MAP(CSrScriptView, CFormView)
 	ON_WM_DESTROY()
 	ON_COMMAND(ID_SCRIPTLISTMENU_TESTTOKENS, &CSrScriptView::OnScriptlistmenuTesttokens)
 	ON_COMMAND(ID_SCRIPTLISTMENU_TESTPROPERTIES, &CSrScriptView::OnScriptlistmenuTestproperties)
+	ON_COMMAND(ID_SCRIPTTEXTMENU_FIND, &CSrScriptView::OnScripttextmenuFind)
+	ON_UPDATE_COMMAND_UI(ID_SCRIPTTEXTMENU_FIND, &CSrScriptView::OnUpdateScriptTextFind)
+	ON_COMMAND(ID_SCRIPTTEXTMENU_FINDNEXT, &CSrScriptView::OnScripttextmenuFindNext)
+	ON_UPDATE_COMMAND_UI(ID_SCRIPTTEXTMENU_FINDNEXT, &CSrScriptView::OnUpdateScriptTextFindNext)
+	ON_COMMAND(ID_SCRIPTTEXTMENU_SELECTALL, &CSrScriptView::OnScripttextmenuSelectAll)
+	ON_UPDATE_COMMAND_UI(ID_SCRIPTTEXTMENU_SELECTALL, &CSrScriptView::OnUpdateScriptTextSelectAll)
+	ON_BN_CLICKED(IDC_FIND, &CSrScriptView::OnBnClickedFind)
+	ON_BN_CLICKED(IDC_FINDNEXT, &CSrScriptView::OnBnClickedFindnext)
 END_MESSAGE_MAP()
 
 
@@ -55,6 +64,8 @@ CSrScriptView::CSrScriptView()
 {
 	m_pCurrentScript = NULL;
 	m_pErrorView     = NULL;
+
+	m_LastFindIndex = -1;
 
 	m_hCompileStdInWrite = NULL;
 	m_hCompileStdOutWrite = NULL;
@@ -142,6 +153,7 @@ void CSrScriptView::SetCurrentScript (CSrScriptFile* pScript)
 	GetControlData();
 
 	m_pCurrentScript = pScript;
+	m_LastFindIndex = -1;
 
 	SetControlData();
 }
@@ -462,12 +474,15 @@ bool CSrScriptView::SaveCurrentScript (void)
 
 void CSrScriptView::OnScriptSave()
 {
+	if (m_pCurrentScript == NULL) return;
 	SaveCurrentScript();
 }
 
 
 void CSrScriptView::OnScriptSaveAs()
 {
+	if (m_pCurrentScript == NULL) return;
+
 	CFileDialog Dlg(FALSE, ".psc", m_pCurrentScript->GetFilename(), OFN_OVERWRITEPROMPT, SR_SCRIPTFILE_FILTER, this);
 	if (Dlg.DoModal() != IDOK) return;
 
@@ -680,6 +695,7 @@ bool CSrScriptView::CompileScript (const char* pFilename)
 
 void CSrScriptView::OnScriptCompile()
 {
+	if (m_pCurrentScript == NULL) return;
 	if (!CompileCurrentScript()) SrEditShowError("Internal error compiling script!");
 }
 
@@ -940,3 +956,91 @@ bool CSrScriptView::UpdateScriptView (const char* pScriptName)
 	return false;
 }
 
+
+void CSrScriptView::OnScripttextmenuFind()
+{
+	if (m_pCurrentScript == NULL) return;
+
+	if (!SrInputDialog(m_FindText, "Find Text", "Enter text to find in the script below:")) return;
+	m_LastFindIndex = -m_FindText.GetLength();
+
+	GetControlData();
+
+	FINDTEXTEX FindData;
+
+	FindData.chrg.cpMin = m_LastFindIndex + m_FindText.GetLength();
+	FindData.chrg.cpMax = m_ScriptText.GetTextLength() + 1;
+	FindData.lpstrText  = m_FindText;
+
+	long Index = m_ScriptText.FindTextA(FR_DOWN, &FindData);
+
+	if (Index < 0)
+	{
+		AfxMessageBox("Text not found!", MB_OK);
+		return;
+	}
+
+	m_LastFindIndex = Index;
+	m_ScriptText.SetSel(FindData.chrgText);
+}
+
+
+void CSrScriptView::OnScripttextmenuFindNext()
+{
+	if (m_pCurrentScript == NULL) return;
+
+	FINDTEXTEX FindData;
+
+	FindData.chrg.cpMin = m_LastFindIndex + m_FindText.GetLength();
+	FindData.chrg.cpMax = m_ScriptText.GetTextLength() + 1;
+	FindData.lpstrText  = m_FindText;
+
+	long Index = m_ScriptText.FindTextA(FR_DOWN, &FindData);
+
+	if (Index < 0)
+	{
+		AfxMessageBox("Text not found!", MB_OK);
+		m_LastFindIndex = -m_FindText.GetLength();
+		return;
+	}
+
+	m_LastFindIndex = Index;
+	m_ScriptText.SetSel(FindData.chrgText);
+}
+
+
+void CSrScriptView::OnScripttextmenuSelectAll()
+{
+	if (m_pCurrentScript == NULL) return;
+	m_ScriptText.SetSel(0, -1);
+}
+
+
+void CSrScriptView::OnUpdateScriptTextFind(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(m_pCurrentScript != NULL);
+}
+
+
+void CSrScriptView::OnUpdateScriptTextFindNext(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(m_pCurrentScript != NULL && !m_FindText.IsEmpty());
+}
+
+
+void CSrScriptView::OnUpdateScriptTextSelectAll(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(m_pCurrentScript != NULL);
+}
+
+
+void CSrScriptView::OnBnClickedFind()
+{
+	OnScripttextmenuFind();
+}
+
+
+void CSrScriptView::OnBnClickedFindnext()
+{
+	OnScripttextmenuFindNext();
+}

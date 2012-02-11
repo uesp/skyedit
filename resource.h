@@ -191,7 +191,6 @@
 #define IDC_LEVEL                       1045
 #define IDC_CASESENSITIVE_CHECK         1046
 #define IDC_CALCULATEEACH               1047
-#define IDC_CASESENSITIVE_CHECK2        1047
 #define IDC_FINDSCRIPTS_CHECK           1047
 #define IDC_FORMID_CHECK                1048
 #define IDC_USEALL                      1049
@@ -914,6 +913,9 @@
 #define IDC_COMPILESCRIPT               1768
 #define IDC_SAVESCRIPT                  1769
 #define IDC_SAVEASSCRIPT                1770
+#define IDC_COMPILESCRIPT2              1771
+#define IDC_FIND                        1771
+#define IDC_FINDNEXT                    1772
 #define IDC_PROPERTYLIST                1774
 #define IDC_PROPERTYDATALIST            1775
 #define IDC_PROPERTY_VALUE              1780
@@ -1210,6 +1212,9 @@
 #define ID_MENU_CHANGEMODINDEX          32960
 #define ID_MENU_CHANGEFORMID            32961
 #define ID_MENU_ASSIGNNEWFORMID         32962
+#define ID_SCRIPTTEXTMENU_FIND          32963
+#define ID_SCRIPTTEXTMENU_FINDNEXT      32965
+#define ID_SCRIPTTEXTMENU_SELECTALL     32966
 
 // Next default values for new objects
 // 
@@ -1217,7 +1222,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        244
-#define _APS_NEXT_COMMAND_VALUE         32963
+#define _APS_NEXT_COMMAND_VALUE         32968
 #define _APS_NEXT_CONTROL_VALUE         1794
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

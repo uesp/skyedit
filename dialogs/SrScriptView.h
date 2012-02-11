@@ -34,7 +34,6 @@ protected:
 	CFont					m_ScriptFont;
 	HACCEL					m_hAccelerator;
 
-	
 	HANDLE					m_hCompileStdOutRead;
 	HANDLE					m_hCompileStdOutWrite;
 	HANDLE					m_hCompileStdInRead;
@@ -42,6 +41,9 @@ protected:
 	SECURITY_ATTRIBUTES		m_CompileSecurityAttr; 
 	PROCESS_INFORMATION		m_piProcInfo; 
 	STARTUPINFO				m_siStartInfo;
+
+	CString					m_FindText;
+	int						m_LastFindIndex;
 
 public:
 	static srscriptoptions_t	s_ScriptOptions;
@@ -142,6 +144,14 @@ public:
 	afx_msg void OnDestroy();
 	afx_msg void OnScriptlistmenuTesttokens();
 	afx_msg void OnScriptlistmenuTestproperties();
+	afx_msg void OnScripttextmenuFind();
+	afx_msg void OnScripttextmenuFindNext();
+	afx_msg void OnScripttextmenuSelectAll();
+	afx_msg void OnUpdateScriptTextFind(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateScriptTextFindNext(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateScriptTextSelectAll(CCmdUI *pCmdUI);
+	afx_msg void OnBnClickedFind();
+	afx_msg void OnBnClickedFindnext();
 };
 
 
