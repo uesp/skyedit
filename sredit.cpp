@@ -56,7 +56,7 @@
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrEditApp, CWinAppEx)
 	ON_COMMAND(ID_APP_ABOUT, OnAppAbout)
-	ON_COMMAND(ID_FILE_NEW, CWinAppEx::OnFileNew)
+	ON_COMMAND(ID_FILE_NEW, OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, OnFileOpen)
 END_MESSAGE_MAP()
 /*===========================================================================
@@ -303,6 +303,59 @@ void CSrEditApp::OnFileOpen (void)
 }
 /*===========================================================================
  *		End of Class Event CSrEditApp::OnFileOpen()
+ *=========================================================================*/
+
+
+/*===========================================================================
+ *
+ * Class CSrEditApp Event - void OnFileNew (void);
+ *
+ *=========================================================================*/
+void CSrEditApp::OnFileNew (void) 
+{
+	CSrProgressDlg*     pProgressDlg;
+	CSrCallback			LoadCallback;
+	CDocument*			pDocument;
+	CSrLoadDlg          LoadDlg;
+	srfileloadinfo_t*   pLoadInfo;
+	CString				Buffer;
+	int                 Result;
+		
+		/* Prompt the user to select the files */
+	Result = LoadDlg.DoModalNew();
+	if (Result != IDOK) return;
+	
+	pLoadInfo = &LoadDlg.GetLoadInfo();
+	
+		/* Initialize the progress dialog */
+	pProgressDlg = ShowSrProgressDlg("Loading Plugins for New File", "Loading...");
+	LoadCallback.SetCallbackInterval(10000);
+	LoadCallback.SetFunction(SrEditDefaultProgressCallback);
+	LoadCallback.SetUserPtr((void *) pProgressDlg);
+	LoadCallback.Reset();
+		
+	Buffer.Format("noname%u", m_NewFileIndex++);
+	
+		/* Load the file */
+	m_pCurrentLoadInfo     = pLoadInfo;
+	m_pCurrentProgressDlg  = pProgressDlg;
+	m_pCurrentLoadCallback = &LoadCallback;
+	
+	pDocument = OpenDocumentFile(Buffer);
+	if (pDocument == NULL) return;
+
+	pDocument->SetModifiedFlag(TRUE);
+	
+	m_pCurrentLoadInfo     = NULL;
+	m_pCurrentProgressDlg  = NULL;
+	m_pCurrentLoadCallback = NULL;
+	
+	DestroySrProgressDlg(pProgressDlg);
+	
+	if (pDocument == NULL) SrEditShowLastError("Failed to create a new plugin file!");
+}
+/*===========================================================================
+ *		End of Class Event CSrEditApp::OnFileNew()
  *=========================================================================*/
 
 

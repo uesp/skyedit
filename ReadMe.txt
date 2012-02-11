@@ -178,7 +178,12 @@ can be found at:
 	  Note that with the current implementation these commands operate around a speed
 	  of 25 records/second so beware when selecting a large number of records to update.
 	- Fixed bad file record count in TES4 header when saving.
-		
+	- Changed how creating a new plugin works to be similar to opening a plugin. Skyrim.esm
+	  is automatically set as a master file by default. This should prevent people from 
+	  creating new plugins that don't have Skyrim.esm as a master file as most should.
+	- Resource and script information is now automatically loaded and initialized at startup
+	  as it is needed in a variety of places. It only takes 2-5 seconds and only has to 
+	  happen once until you close SkyEdit.
 
 0.05alpha - 17 January 2021
 	- New editable records: Sound Categories (SNCT), Sound Markers (SOPM), Outfits,

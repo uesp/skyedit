@@ -38,11 +38,9 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrLoadDlg, CDialog)
-	//{{AFX_MSG_MAP(CSrLoadDlg)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_FILE_LIST, OnColumnclickFileList)
 	ON_NOTIFY(NM_DBLCLK, IDC_FILE_LIST, OnDblclkFileList)
 	ON_BN_CLICKED(IDC_SETACTIVE, OnSetactive)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Class CSrLoadDlg Message Map
@@ -106,6 +104,7 @@ int CALLBACK l_FileListCompare (LPARAM lParam1, LPARAM lParam2, LPARAM lParamSor
  *=========================================================================*/
 CSrLoadDlg::CSrLoadDlg(CWnd* pParent) : CDialog(CSrLoadDlg::IDD, pParent) 
 {
+	m_IsFileNew = false;
 	m_LastSortReverse = false;
 	m_LastSortSubItem = SRFILELIST_FILENAME;
 	m_pLastActiveFile = NULL;
@@ -246,6 +245,8 @@ void CSrLoadDlg::DoDataExchange (CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 
 	DDX_Control(pDX, IDC_FILE_LIST, m_FileList);
+	DDX_Control(pDX, IDC_SETACTIVE, m_ActiveButton);
+	DDX_Control(pDX, IDC_LABEL, m_Label);
 }
 /*===========================================================================
  *		End of Class Method CSrLoadDlg::DoDataExchange()
@@ -259,29 +260,29 @@ void CSrLoadDlg::DoDataExchange (CDataExchange* pDX)
  *=========================================================================*/
 void CSrLoadDlg::FillFileList (void) 
 {
-  CSString DataPath;
-  CSString FileSpec;
-  bool     Result;
+	CSString DataPath;
+	CSString FileSpec;
+	bool     Result;
 
 		/* Clear the current contents */
-  m_FileList.DeleteAllItems();
-  m_FileInfos.Empty();
-  m_pLastActiveFile = NULL;
+	m_FileList.DeleteAllItems();
+	m_FileInfos.Empty();
+	m_pLastActiveFile = NULL;
 
 		/* Attempt to get Skyrim's data path */
-  Result = GetSrInstallPath(DataPath);
-  if (Result) DataPath += "data\\";
+	Result = GetSrInstallPath(DataPath);
+	if (Result) DataPath += "data\\";
 
 		/* Find all plugins in the game's \DATA path */
-  FillFileList(DataPath, "*.esp");
-  FillFileList(DataPath, "*.esm");
+	if (!m_IsFileNew) FillFileList(DataPath, "*.esp");
+	FillFileList(DataPath, "*.esm");
 
 		/* Find all plugins in the extra paths */
-  for (INT_PTR i = 0; i < s_ExtraFilePaths.GetSize(); ++i)
-  {
-		FillFileList(s_ExtraFilePaths[i], "*.esp");
+	for (INT_PTR i = 0; i < s_ExtraFilePaths.GetSize(); ++i)
+	{
+		if (!m_IsFileNew) FillFileList(s_ExtraFilePaths[i], "*.esp");
 		FillFileList(s_ExtraFilePaths[i], "*.esm");
-  }
+	}
 
 }
 /*===========================================================================
@@ -358,39 +359,44 @@ void CSrLoadDlg::OnColumnclickFileList(NMHDR* pNMHDR, LRESULT* pResult) {
  * Class CSrLoadDlg Event - void OnDblclkFileList (pNMHDR, pResult);
  *
  *=========================================================================*/
-void CSrLoadDlg::OnDblclkFileList (NMHDR* pNMHDR, LRESULT* pResult) {
-  srloaddlgfileinfo_t*	pFileData;
-  POSITION		ItemPos;
-  int			ListIndex;
-  
-	/* Get the first, and only, selected item */
-  ItemPos = m_FileList.GetFirstSelectedItemPosition();
-  if (ItemPos == NULL) return;
-  ListIndex = m_FileList.GetNextSelectedItem(ItemPos);
-  if (ListIndex < 0) return;
-  pFileData = (srloaddlgfileinfo_t *) m_FileList.GetItemData(ListIndex);
-  if (pFileData == NULL) return;
+void CSrLoadDlg::OnDblclkFileList (NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	srloaddlgfileinfo_t*	pFileData;
+	POSITION				ItemPos;
+	int						ListIndex;
+	   
+		/* Get the first, and only, selected item */
+	ItemPos = m_FileList.GetFirstSelectedItemPosition();
+	if (ItemPos == NULL) return;
+	ListIndex = m_FileList.GetNextSelectedItem(ItemPos);
+	if (ListIndex < 0) return;
+	pFileData = (srloaddlgfileinfo_t *) m_FileList.GetItemData(ListIndex);
+	if (pFileData == NULL) return;
 
-	/* Set the check state */
-  if (m_FileList.GetCheck(ListIndex)) {
-    m_FileList.SetCheck(ListIndex, FALSE);
+		/* Set the check state */
+	if (m_FileList.GetCheck(ListIndex)) 
+	{
+		m_FileList.SetCheck(ListIndex, FALSE);
 
-    if (pFileData->IsActive) { 
-      pFileData->IsActive = false; 
-      m_pLastActiveFile = NULL;
-    }
-  }
-  else {
-    m_FileList.SetCheck(ListIndex, TRUE);
+		if (pFileData->IsActive && !m_IsFileNew)
+		{
+			pFileData->IsActive = false; 
+			m_pLastActiveFile = NULL;
+		}
+	}
+	else 
+	{
+		m_FileList.SetCheck(ListIndex, TRUE);
 
-    if (m_pLastActiveFile == NULL && !pFileData->IsMaster) {
-      pFileData->IsActive = true;
-      m_pLastActiveFile = pFileData;
-    }
-  }
+		if (m_pLastActiveFile == NULL && !pFileData->IsMaster && !m_IsFileNew) 
+		{
+			pFileData->IsActive = true;
+			m_pLastActiveFile = pFileData;
+		}
+	}
 
-  UpdateFile(ListIndex, pFileData);
-  *pResult = 0;
+	UpdateFile(ListIndex, pFileData);
+	*pResult = 0;
 }
 /*===========================================================================
  *		End of Class Event CSrLoadDlg::OnDblclkFileList()
@@ -402,25 +408,48 @@ void CSrLoadDlg::OnDblclkFileList (NMHDR* pNMHDR, LRESULT* pResult) {
  * Class CSrLoadDlg Event - BOOL OnInitDialog ();
  *
  *=========================================================================*/
-BOOL CSrLoadDlg::OnInitDialog() {
-  srloadfilesortinfo_t SortData;
+BOOL CSrLoadDlg::OnInitDialog() 
+{
+	srloadfilesortinfo_t SortData;
 
-  CDialog::OnInitDialog();
+	CDialog::OnInitDialog();
 
-	/* Initialize the file list */
-  m_FileList.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | LVS_EX_CHECKBOXES );
-  m_FileList.InsertColumn(0, _T("Filename"),      LVCFMT_LEFT,   240, SRFILELIST_FILENAME);
-  m_FileList.InsertColumn(1, _T("Date"),          LVCFMT_CENTER, 120, SRFILELIST_DATE);
-  m_FileList.InsertColumn(2, _T("Size (bytes)"),  LVCFMT_CENTER,  75, SRFILELIST_SIZE);
-  m_FileList.InsertColumn(3, _T("Type"),          LVCFMT_CENTER,  90, SRFILELIST_DEFAULTSORT);
+	if (m_IsFileNew)
+	{
+		m_ActiveButton.ShowWindow(SW_HIDE);
+		m_Label.SetWindowTextA("When creating a new plugin you almost always want to select Skyrim.esm as a base master. Note that regular plugin files (ESP) cannot be used as dependants for other plugins.");
+		SetWindowText("New Plugin");
+	}
+	else
+	{
+		m_Label.SetWindowTextA("Select a plugin file (ESP) to load along with all of its base master files (ESM). Set a file to active if you wish to save changes to it.");
+		SetWindowText("Load Plugin");
+	}
 
-  FillFileList();
+		/* Initialize the file list */
+	m_FileList.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | LVS_EX_CHECKBOXES );
+	m_FileList.InsertColumn(0, _T("Filename"),      LVCFMT_LEFT,   240, SRFILELIST_FILENAME);
+	m_FileList.InsertColumn(1, _T("Date"),          LVCFMT_CENTER, 120, SRFILELIST_DATE);
+	m_FileList.InsertColumn(2, _T("Size (bytes)"),  LVCFMT_CENTER,  75, SRFILELIST_SIZE);
+	m_FileList.InsertColumn(3, _T("Type"),          LVCFMT_CENTER,  90, SRFILELIST_DEFAULTSORT);
 
-  SortData.Reverse  = false;
-  SortData.SortType = SRFILELIST_DEFAULTSORT;
-  m_FileList.SortItems(l_FileListCompare, (DWORD) &SortData);
+	FillFileList();
+
+		/* Set skyrim.esm to load for a new file by default */
+	if (m_IsFileNew)
+	{
+		FindSkyrimMaster(true);
+	}
+	else 
+	{		/* Also select skyrim.esm when opening a plugin for now to see how it works */
+		FindSkyrimMaster(true);
+	}
+
+	SortData.Reverse  = false;
+	SortData.SortType = SRFILELIST_DEFAULTSORT;
+	m_FileList.SortItems(l_FileListCompare, (DWORD) &SortData);
 	
-  return (TRUE);
+	return (TRUE);
 }
 /*===========================================================================
  *		End of Class Event CSrLoadDlg::OnInitDialog()
@@ -446,12 +475,15 @@ void CSrLoadDlg::OnOK (void) {
  * Class CSrLoadDlg Event - void OnSetactive ();
  *
  *=========================================================================*/
-void CSrLoadDlg::OnSetactive() {
+void CSrLoadDlg::OnSetactive() 
+{
   srloaddlgfileinfo_t*	pFileData;
-  POSITION		ItemPos;
-  LVFINDINFO		FindInfo;
-  int			ListIndex;
-  int			ActiveIndex;
+  POSITION				ItemPos;
+  LVFINDINFO			FindInfo;
+  int					ListIndex;
+  int					ActiveIndex;
+
+  if (m_IsFileNew) return;
   
 	/* Get the first, and only, selected item */
   ItemPos = m_FileList.GetFirstSelectedItemPosition();
@@ -525,3 +557,29 @@ void CSrLoadDlg::UpdateFile (const int ListIndex, srloaddlgfileinfo_t* pFileData
 /*===========================================================================
  *		End of Class Method CSrLoadDlg::UpdateFile()
  *=========================================================================*/
+
+
+int CSrLoadDlg::DoModalNew (void)
+{
+	m_IsFileNew = true;
+	return CDialog::DoModal();
+}
+
+
+int CSrLoadDlg::FindSkyrimMaster (const bool SetCheck)
+{
+	for (int i = 0; i < m_FileList.GetItemCount(); ++i)
+	{
+		srloaddlgfileinfo_t* pFileData = (srloaddlgfileinfo_t *) m_FileList.GetItemData(i);
+		if (pFileData == NULL) continue;
+
+		if (stricmp(pFileData->FindData.cFileName, "skyrim.esm") == 0)
+		{
+			if (SetCheck) m_FileList.SetCheck(i, true);			
+			return i;
+		}
+	}
+
+	return -1;
+}
+

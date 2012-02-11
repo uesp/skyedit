@@ -19,6 +19,7 @@
   #include "modfile/srespfile.h"
   #include "common/srutils.h"
   #include "modfile/srmultirecordhandler.h"
+#include "afxwin.h"
 /*===========================================================================
  *		End of Required Includes
  *=========================================================================*/
@@ -85,6 +86,7 @@ protected:
 
   srfileloadinfo_t		m_LoadInfo;
 
+  bool					m_IsFileNew;
   bool					m_LastSortReverse;
   int					m_LastSortSubItem;
 
@@ -102,6 +104,8 @@ protected:
   void AddFile      (const char* pPath, WIN32_FIND_DATA& FindData);
   void UpdateFile   (const int ListIndex, srloaddlgfileinfo_t* pFileData);
 
+  int FindSkyrimMaster (const bool SetCheck);
+
 	/* Create the loadinfo structure from the current list */
   void CreateLoadInfo (void);
 
@@ -115,39 +119,30 @@ public:
 	/* Get class members */
   srfileloadinfo_t& GetLoadInfo (void) { return (m_LoadInfo); }
 
-	/* Dialog Data */
-  //{{AFX_DATA(CSrLoadDlg)
+  int DoModalNew (void);
+
   enum { IDD = IDD_LOAD_DLG };
   CListCtrl	m_FileList;
-  //}}AFX_DATA
-
-	/* ClassWizard generated virtual function overrides */
-  //{{AFX_VIRTUAL(CSrLoadDlg)
-protected:
-  virtual void DoDataExchange(CDataExchange* pDX);
-  virtual void OnOK();
-  //}}AFX_VIRTUAL
 
 protected:
+	virtual void DoDataExchange(CDataExchange* pDX);
+	virtual void OnOK();
 
-	/* Generated message map functions */
-  //{{AFX_MSG(CSrLoadDlg)
-  virtual BOOL OnInitDialog();
-  afx_msg void OnColumnclickFileList(NMHDR* pNMHDR, LRESULT* pResult);
-  afx_msg void OnDblclkFileList(NMHDR* pNMHDR, LRESULT* pResult);
+protected:
+	virtual BOOL OnInitDialog();
+	afx_msg void OnColumnclickFileList(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnDblclkFileList(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnSetactive();
-	//}}AFX_MSG
 
-  DECLARE_MESSAGE_MAP();
+	DECLARE_MESSAGE_MAP();
 
+public:
+	CButton m_ActiveButton;
+	CStatic m_Label;
 };
 /*===========================================================================
  *		End of Class CSrLoadDlg Definition
  *=========================================================================*/
-
-
-//{{AFX_INSERT_LOCATION}}
-//}}AFX_INSERT_LOCATION
 
 
 #endif
