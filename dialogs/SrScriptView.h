@@ -73,13 +73,17 @@ protected:
 
 	void SetupScriptTabs (void);
 
+	
+
 	CSrScriptView();
 	virtual ~CSrScriptView();
 
 public:
 	enum { IDD = IDD_SCRIPT_VIEW };
 
-	bool AddScript (const char* pFilename);
+	bool AddScript         (const char* pFilename);
+	bool AddScriptFromData (const char* pFilename);
+	bool AddScriptAbsPath  (const char* pFilename);
 
 	bool CheckCanClose (void);
 

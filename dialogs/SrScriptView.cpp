@@ -87,9 +87,7 @@ void CSrScriptView::DoDataExchange(CDataExchange* pDX)
 
 bool CSrScriptView::AddScript (const char* pFilename)
 {
-	CSrScriptFile* pInfo;
-	CSString	   Filename;
-	bool	       Result;
+	CSString Filename;
 
 	if (pFilename == NULL) return false;
 
@@ -97,7 +95,16 @@ bool CSrScriptView::AddScript (const char* pFilename)
 	Filename += "data\\scripts\\source\\";
 	Filename += pFilename;
 
-	pInfo = FindScript(Filename);
+	return AddScriptAbsPath(Filename);
+}
+
+
+bool CSrScriptView::AddScriptAbsPath (const char* pFilename)
+{
+	CSrScriptFile* pInfo;
+	bool           Result;
+
+	pInfo = FindScript(pFilename);
 
 	if (pInfo != NULL)
 	{
@@ -107,14 +114,27 @@ bool CSrScriptView::AddScript (const char* pFilename)
 
 	CSrScriptFile* pNewScript = m_Scripts.AddNew();
 
-	Result = pNewScript->Load(Filename);
-	if (!Result) return SrEditShowError("Failed to load script file '%s'!", Filename);
+	Result = pNewScript->Load(pFilename);
+	if (!Result) return SrEditShowError("Failed to load script file '%s'!", pFilename);
 	
 	SetCurrentScript(pNewScript);
 	FillScriptList();
 	return true;
 }
 
+
+bool CSrScriptView::AddScriptFromData (const char* pFilename)
+{
+	CSString Filename;
+
+	if (pFilename == NULL) return false;
+
+	GetSrInstallPath(Filename);
+	Filename += "data\\";
+	Filename += pFilename;
+
+	return AddScriptAbsPath(Filename);
+}
 
 
 void CSrScriptView::SetCurrentScript (CSrScriptFile* pScript)

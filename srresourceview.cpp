@@ -987,7 +987,7 @@ bool CSrResourceView::EditItem (CSrResourceBase* pBase, const bool UseInternal)
 
 	if (pBase->IsScript())
 	{
-		GetSrEditApp().EditScript(pBase->GetFullName(), UseInternal);
+		GetSrEditApp().EditScriptFromData(pBase->GetFullName(), UseInternal);
 		return true;
 	}
 	else if (!UseInternal)
