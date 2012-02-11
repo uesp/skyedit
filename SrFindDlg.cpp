@@ -20,13 +20,7 @@
  * Begin Local Definitions
  *
  *=========================================================================*/
-//#ifdef _DEBUG
-//  #define new DEBUG_NEW
-//  #undef THIS_FILE
-//  static char THIS_FILE[] = __FILE__;
-//#endif
-
-  IMPLEMENT_DYNCREATE(CSrFindDlg, CSrRecordDialog);
+IMPLEMENT_DYNCREATE(CSrFindDlg, CSrRecordDialog);
 /*===========================================================================
  *		End of Local Definitions
  *=========================================================================*/
@@ -38,9 +32,7 @@
  *
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrFindDlg, CSrRecordDialog)
-	//{{AFX_MSG_MAP(CSrFindDlg)
 	ON_BN_CLICKED(ID_FIND_BUTTON, OnFindButton)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of Message Map
@@ -52,7 +44,8 @@ END_MESSAGE_MAP()
  * Begin List Columns
  *
  *=========================================================================*/
-static srreclistcolinit_t s_FindListInit[] = {
+static srreclistcolinit_t s_FindListInit[] = 
+{
 	{ SR_FIELD_EDITORID,	150,	LVCFMT_LEFT },
 	{ SR_FIELD_FORMID,	85,	LVCFMT_LEFT },
 	{ SR_FIELD_FLAGS,	60,	LVCFMT_CENTER },
@@ -70,10 +63,8 @@ static srreclistcolinit_t s_FindListInit[] = {
  * Class CSrFindDlg Constructor
  *
  *=========================================================================*/
-CSrFindDlg::CSrFindDlg (CWnd* pParent) : CSrRecordDialog(CSrFindDlg::IDD) {
-	//{{AFX_DATA_INIT(CSrFindDlg)
-	//}}AFX_DATA_INIT
-
+CSrFindDlg::CSrFindDlg (CWnd* pParent) : CSrRecordDialog(CSrFindDlg::IDD) 
+{
   m_BinarySize  = 0;
   m_pBinaryData = NULL;
 
@@ -113,18 +104,18 @@ CSrFindDlg::~CSrFindDlg () {
  * Class CSrFindDlg Method - void DoDataExchange (pDX);
  *
  *=========================================================================*/
-void CSrFindDlg::DoDataExchange (CDataExchange* pDX) {
+void CSrFindDlg::DoDataExchange (CDataExchange* pDX) 
+{
 	CSrRecordDialog::DoDataExchange(pDX);
 
-	//{{AFX_DATA_MAP(CSrFindDlg)
 	DDX_Control(pDX, IDC_FIND_LABEL, m_FindLabel);
 	DDX_Control(pDX, IDC_CASESENSITIVE_CHECK, m_CaseSensitiveCheck);
 	DDX_Control(pDX, IDC_BINARY_CHECK, m_BinaryCheck);
 	DDX_Control(pDX, IDC_SEARCH_COMBO, m_SearchCombo);
 	DDX_Control(pDX, IDC_FIND_LIST, m_FindList);
-	//}}AFX_DATA_MAP
 	DDX_Control(pDX, IDC_FORMID_CHECK, m_FormIDCheck);
-}
+	DDX_Control(pDX, IDC_FINDSCRIPTS_CHECK, m_FindInScripts);
+ }
 /*===========================================================================
  *		End of Class Method CSrFindDlg::DoDataExchange()
  *=========================================================================*/
@@ -135,7 +126,8 @@ void CSrFindDlg::DoDataExchange (CDataExchange* pDX) {
  * Class CSrFindDlg Method - void ClearControlData (void);
  *
  *=========================================================================*/
-void CSrFindDlg::ClearControlData (void) {
+void CSrFindDlg::ClearControlData (void) 
+{
 
 }
 /*===========================================================================
@@ -195,6 +187,7 @@ void CSrFindDlg::GetControlData (void) {
   if (!m_BinaryCheck.GetCheck())       m_FindData.Flags |= SR_FIND_COMPARETEXT;
   if (m_CaseSensitiveCheck.GetCheck()) m_FindData.Flags |= SR_FIND_CASESENSITIVE;
   if (m_FormIDCheck.GetCheck())        m_FindData.Flags |= SR_FIND_FORMID;
+  if (m_FindInScripts.GetCheck())      m_FindData.Flags |= SR_FIND_INCLUDESCRIPTS;
 
 	/* Update the search text */
   m_SearchCombo.GetWindowText(m_TextData);
@@ -239,8 +232,8 @@ void CSrFindDlg::GetControlData (void) {
  * Class CSrFindDlg Method - bool IsEditRecord (pRecord);
  *
  *=========================================================================*/
-bool CSrFindDlg::IsEditRecord (CSrRecord* pRecord) {
-
+bool CSrFindDlg::IsEditRecord (CSrRecord* pRecord) 
+{
   return (false);
 }
 /*===========================================================================
@@ -253,7 +246,8 @@ bool CSrFindDlg::IsEditRecord (CSrRecord* pRecord) {
  * Class CSrFindDlg Event - void OnInitialUpdate (void);
  *
  *=========================================================================*/
-void CSrFindDlg::OnInitialUpdate (void) {
+void CSrFindDlg::OnInitialUpdate (void) 
+{
   CSrRecordDialog::OnInitialUpdate();
   
   m_FindList.SetListName("FindList");
@@ -347,10 +341,12 @@ void CSrFindDlg::OnFindButton() {
   m_FindData.GroupCount      = 0;
   m_FindData.RecordCount     = 0;
   m_FindData.SubrecordCount  = 0;
+  m_FindData.ScriptCount     = 0;
+  m_FindData.FoundScripts    = 0;
   m_FindData.pExcludeRecords = NULL;  
 
 		/* Create a progress dialog */
-  if (m_pRecordHandler->GetNumRecords() > 1000) 
+  if (m_pRecordHandler->GetNumRecords() > 1000 || (m_FindData.Flags & SR_FIND_INCLUDESCRIPTS) != 0) 
   {
     pProgressDlg = ShowSrProgressDlg(_T("Finding..."), _T("Finding data..."));
 
@@ -365,16 +361,29 @@ void CSrFindDlg::OnFindButton() {
 	/* Perform the find */
   SrStartTimer(Timer);
   ResultCount = m_pRecordHandler->Search(m_FindData, pCallback);
-  DeltaTime = SrEndTimer(Timer);
+  
+  if ((m_FindData.Flags & SR_FIND_INCLUDESCRIPTS) != 0)
+  {
+	  ResultCount += GetSrEditApp().FindInScripts(m_FindData, pCallback);
+  }
   
   DestroySrProgressDlg(pProgressDlg);
-
-	/* Update the list */
-  m_FindList.SetItemCountEx(m_FindData.pFindRecords->GetSize());
-  m_FindList.RedrawWindow();
+  DeltaTime = SrEndTimer(Timer);
 
 	/* Update the find label */
-  Buffer.Format("Found %u matches in %u records (%.3f seconds).", ResultCount, m_FindData.RecordCount, DeltaTime);
+  if ((m_FindData.Flags & SR_FIND_INCLUDESCRIPTS) != 0)
+  {
+	  Buffer.Format("Found %u matches in %u records/scripts (%.3f seconds).", ResultCount, m_FindData.RecordCount + m_FindData.ScriptCount, DeltaTime);
+	  //m_FindList.SetItemCountEx(m_FindData.pFindRecords->GetSize() + m_FindData.FindScripts.GetSize());
+	  m_FindList.SetItemCountEx(m_FindData.pFindRecords->GetSize());
+  }
+  else
+  {
+	  Buffer.Format("Found %u matches in %u records (%.3f seconds).", ResultCount, m_FindData.RecordCount, DeltaTime);
+	  m_FindList.SetItemCountEx(m_FindData.pFindRecords->GetSize());
+  }  
+
+  m_FindList.RedrawWindow();
   m_FindLabel.SetWindowText(Buffer);
 }
 /*===========================================================================

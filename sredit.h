@@ -80,6 +80,7 @@ protected:
   CSrResourceHandler	m_ResourceHandler;
   CSrBsaFileArray		m_BsaFiles;
   bool					m_InitResourceHandler;
+  bool					m_LoadAllScripts;
 
 public:
 	bool	m_EditScriptExternalByDefault;
@@ -96,12 +97,19 @@ public:
 
 	bool CreateNewScript (CString& ScriptName);
 
-	bool EditScript           (const char* pFilename, const bool UseInternal);
-	bool EditScript           (const char* pFilename);
-	bool EditScriptExternal   (const char* pFilename);
-	bool EditScriptName       (const char* pScriptName, const bool UseInternal);
+	bool LoadAllScripts (void);
+
+	bool EditScriptFromData			(const char* pFilename, const bool UseInternal);
+	bool EditScript					(const char* pFilename, const bool UseInternal);
+	bool EditScript					(const char* pFilename);
+	bool EditScriptExternal			(const char* pFilename);
+	bool EditScriptFromData			(const char* pFilename);
+	bool EditScriptExternalFromData (const char* pFilename);
+	bool EditScriptName				(const char* pScriptName, const bool UseInternal);
 
 	bool EditResourceExternal (const char* pFilename);
+
+	dword FindInScripts (srfinddata_t& FindData, CSrCallback* pCallback);
 
 		/* Get class members */
 	srfileloadinfo_t*  GetCurrentLoadInfo     (void) { return (m_pCurrentLoadInfo); }

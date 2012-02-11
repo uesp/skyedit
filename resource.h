@@ -191,6 +191,8 @@
 #define IDC_LEVEL                       1045
 #define IDC_CASESENSITIVE_CHECK         1046
 #define IDC_CALCULATEEACH               1047
+#define IDC_CASESENSITIVE_CHECK2        1047
+#define IDC_FINDSCRIPTS_CHECK           1047
 #define IDC_FORMID_CHECK                1048
 #define IDC_USEALL                      1049
 #define IDC_COUNT                       1050

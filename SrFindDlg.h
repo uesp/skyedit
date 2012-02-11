@@ -75,33 +75,25 @@ public:
 	/* Conver the current text data to binary */
   bool ConvertBinaryData (void);
 
-  //{{AFX_DATA(CSrFindDlg)
   enum { IDD = IDD_FIND_DLG };
   CStatic	m_FindLabel;
   CButton	m_CaseSensitiveCheck;
   CButton			m_BinaryCheck;
   CComboBox			m_SearchCombo;
   CSrRecordVirtualListCtrl	m_FindList;
-  //}}AFX_DATA
 
-	/* ClassWizard generated virtual function overrides */
-  //{{AFX_VIRTUAL(CSrFindDlg)
 protected:
   virtual void DoDataExchange(CDataExchange* pDX);
   virtual void OnInitialUpdate();
-  //}}AFX_VIRTUAL
 
 protected:
-
-	/* Generated message map functions */
-  //{{AFX_MSG(CSrFindDlg)
   afx_msg void OnFindButton();
-  //}}AFX_MSG
 
   DECLARE_MESSAGE_MAP();
 
 public:
 	CButton m_FormIDCheck;
+	CButton m_FindInScripts;
 };
 /*===========================================================================
  *		End of Class CSrFindDlg Definition

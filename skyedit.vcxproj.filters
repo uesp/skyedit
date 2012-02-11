@@ -983,6 +983,9 @@
     <ClCompile Include="dialogs\SrSelectScriptDlg.cpp">
       <Filter>Source Files\Forms</Filter>
     </ClCompile>
+    <ClCompile Include="..\tes5lib\scripts\SrScriptRecord.cpp">
+      <Filter>Source Files\ESP\Scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="devil\lib\DevIL.lib">

@@ -77,6 +77,7 @@ CSrEditApp::CSrEditApp()
 	m_NewFileIndex         = 1;
 	m_InitResourceHandler  = false;
 	m_pMainFrame           = NULL;
+	m_LoadAllScripts       = false;
 	
 	m_EditScriptExternalByDefault = false;
 }
@@ -188,17 +189,22 @@ BOOL CSrEditApp::InitInstance() {
 	/* The main window has been initialized, so show and update it. */
   pMainFrame->ShowWindow(m_nCmdShow);
   pMainFrame->UpdateWindow();
+ 
+	/* Resource handler and view initialization */
+  m_pCurrentProgressDlg = ShowSrProgressDlg("Resources", "Initializing Resource Information...");
+  m_pCurrentProgressDlg->Update(0);
+
+  InitResourceHandler();
+
+  DestroySrProgressDlg(m_pCurrentProgressDlg);
+  m_pCurrentProgressDlg = NULL;
+  //OpenResourceView();
+
+  LoadAllScripts();
 
 	/* Display the about box initially if required */
   m_ConfigFile.GetBoolean(Result, "DisplayAboutOnLoad", true);
   if (Result) OnAppAbout();
-
-  //SrLoadScriptFunctions("functions.dat");
-  //SystemLog.Printf("Loaded %u functions...", Functions.GetNumFunctions());
-  
-	/* Resource handler and view initialization */
-  //InitResourceHandler();
-  //OpenResourceView();
 
   return TRUE;
 }
@@ -673,48 +679,51 @@ void CSrEditApp::OpenResourceView (const char* pResource) {
  * Class CSrEditApp Method - CSrResourceView* CreateResourceView (void);
  *
  *=========================================================================*/
-CSrResourceView* CSrEditApp::CreateResourceView (void) {
-  CSrResourceView* pView;
-  CCreateContext   Context;
-  CFrameWnd*       pFrame;
-  CWnd*			   pWnd;
+CSrResourceView* CSrEditApp::CreateResourceView (void) 
+{
+	CSrResourceView* pView;
+	CCreateContext   Context;
+	CFrameWnd*       pFrame;
+	CWnd*			   pWnd;
 
-  if (m_pCurrentProgressDlg == NULL) {
-    m_pCurrentProgressDlg = ShowSrProgressDlg(_T("Resource Viewer"), _T("Initializing Resources..."));
-    m_pCurrentProgressDlg->Update(50);
-  }
+	if (m_pCurrentProgressDlg == NULL) 
+	{
+		m_pCurrentProgressDlg = ShowSrProgressDlg("Resource Viewer", "Initializing Resources...");
+		m_pCurrentProgressDlg->Update(50);
+	}
 
-	/* Initialize the context structure */
-  Context.m_pCurrentDoc     = NULL;
-  Context.m_pCurrentFrame   = NULL;
-  Context.m_pNewDocTemplate = NULL;
-  Context.m_pLastView       = NULL;
-  Context.m_pNewViewClass   = RUNTIME_CLASS(CSrResourceView);
+		/* Initialize the context structure */
+	Context.m_pCurrentDoc     = NULL;
+	Context.m_pCurrentFrame   = NULL;
+	Context.m_pNewDocTemplate = NULL;
+	Context.m_pLastView       = NULL;
+	Context.m_pNewViewClass   = RUNTIME_CLASS(CSrResourceView);
 
-	/* Create the dialog parent frame */  
-  pFrame = (CFrameWnd *) RUNTIME_CLASS(CChildFrame)->CreateObject();
-  ASSERT_KINDOF(CFrameWnd, pFrame);
+		/* Create the dialog parent frame */  
+	pFrame = (CFrameWnd *) RUNTIME_CLASS(CChildFrame)->CreateObject();
+	ASSERT_KINDOF(CFrameWnd, pFrame);
 
-	/* Create new form view from resource */
-  pFrame->LoadFrame(IDD_RESOURCE_VIEW, WS_OVERLAPPEDWINDOW, m_pMainWnd, &Context);
-  pFrame->SetIcon(LoadIcon(MAKEINTRESOURCE(IDR_RESOURCE_VIEW)), false);
+		/* Create new form view from resource */
+	pFrame->LoadFrame(IDD_RESOURCE_VIEW, WS_OVERLAPPEDWINDOW, m_pMainWnd, &Context);
+	pFrame->SetIcon(LoadIcon(MAKEINTRESOURCE(IDR_RESOURCE_VIEW)), false);
 
-  	/* Attempt to initialize the new view */
-  pWnd = pFrame->GetDescendantWindow(AFX_IDW_PANE_FIRST, TRUE);
+  		/* Attempt to initialize the new view */
+	pWnd = pFrame->GetDescendantWindow(AFX_IDW_PANE_FIRST, TRUE);
 
-  if (pWnd != NULL && pWnd->IsKindOf(RUNTIME_CLASS(CSrResourceView))) {
-    pView = (CSrResourceView *) pWnd;
-    pView->SetResourceHandler(&m_ResourceHandler);
-    pView->SetBsaFileArray(&m_BsaFiles);
-  }
+	if (pWnd != NULL && pWnd->IsKindOf(RUNTIME_CLASS(CSrResourceView))) 
+	{
+		pView = (CSrResourceView *) pWnd;
+		pView->SetResourceHandler(&m_ResourceHandler);
+		pView->SetBsaFileArray(&m_BsaFiles);
+	}
   
-  if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(75);
+	if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(75);
 
-  pFrame->InitialUpdateFrame(NULL, TRUE);
-  pFrame->ActivateFrame(SW_SHOWNORMAL);
-  pFrame->SetWindowText(_T("Resource Viewer"));
+	pFrame->InitialUpdateFrame(NULL, TRUE);
+	pFrame->ActivateFrame(SW_SHOWNORMAL);
+	pFrame->SetWindowText("Resource Viewer");
 
-  return (pView);
+	return (pView);
 }
 /*===========================================================================
  *		End of Class Method CSrEditApp::CreateResourceView()
@@ -726,38 +735,42 @@ CSrResourceView* CSrEditApp::CreateResourceView (void) {
  * Class CSrEditApp Method - CSrResourceView* OpenResourceView (void);
  *
  *=========================================================================*/
-CSrResourceView* CSrEditApp::OpenResourceView (void) {
-  CSrResourceView* pView = NULL;
-  CFrameWnd*       pFrame;
-  CWnd*            pWnd;
+CSrResourceView* CSrEditApp::OpenResourceView (void) 
+{
+	CSrResourceView* pView = NULL;
+	CFrameWnd*       pFrame;
+	CWnd*            pWnd;
   
-	/* Force the initialization of the resource handler if required */
-  if (!m_InitResourceHandler) {
-    m_pCurrentProgressDlg = ShowSrProgressDlg(_T("Resource Viewer"), _T("Initializing Resources..."));
-    m_pCurrentProgressDlg->Update(0);
+		/* Force the initialization of the resource handler if required */
+	if (!m_InitResourceHandler) 
+	{
+		m_pCurrentProgressDlg = ShowSrProgressDlg("Resource Viewer", "Initializing Resources...");
+		m_pCurrentProgressDlg->Update(0);
     
-    InitResourceHandler();
-  }
+		InitResourceHandler();
+	}
 
-	/* Find an already open view */
-  pFrame = FindResourceView();
+		/* Find an already open view */
+	pFrame = FindResourceView();
 
-  if (pFrame != NULL) {
-    pFrame->ActivateFrame(SW_RESTORE);
+	if (pFrame != NULL) 
+	{
+		pFrame->ActivateFrame(SW_RESTORE);
+		pWnd = pFrame->GetDescendantWindow(AFX_IDW_PANE_FIRST, TRUE);
+		if (pWnd != NULL && pWnd->IsKindOf(RUNTIME_CLASS(CSrResourceView))) pView = (CSrResourceView *) pWnd;
+	}
+	else 
+	{
+		pView = CreateResourceView();
+	}
 
-    pWnd = pFrame->GetDescendantWindow(AFX_IDW_PANE_FIRST, TRUE);
-    if (pWnd != NULL && pWnd->IsKindOf(RUNTIME_CLASS(CSrResourceView))) pView = (CSrResourceView *) pWnd;
-  }
-  else {
-    pView = CreateResourceView();
-  }
+	if (m_pCurrentProgressDlg) 
+	{
+		DestroySrProgressDlg(m_pCurrentProgressDlg);
+		m_pCurrentProgressDlg = NULL;
+	}
 
-  if (m_pCurrentProgressDlg) {
-    DestroySrProgressDlg(m_pCurrentProgressDlg);
-    m_pCurrentProgressDlg = NULL;
-  }
-
-  return (pView);
+	return (pView);
 }
 /*===========================================================================
  *		End of Class Method CSrEditApp::OpenResourceView()
@@ -794,7 +807,7 @@ bool CSrEditApp::InitResourceHandler (void) {
   m_ResourceHandler.AddPathContents(Buffer, false);
   if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(10);
   
-  SrEndTimer(Timer, "Added resource \\data path contents in ");
+  SrEndTimer(Timer, "Added resources under 'data\\' path contents in");
 
 		/* Add known BSA files for now */
   Filename = Buffer + "Skyrim - Animations.bsa";
@@ -832,6 +845,8 @@ bool CSrEditApp::InitResourceHandler (void) {
   Filename = Buffer + "Skyrim - VoicesExtra.bsa";
   AddBsaFile(Filename);
   if (m_pCurrentProgressDlg) m_pCurrentProgressDlg->Update(80);
+
+  SrEndTimer(Timer, "Added all resource contents in");
   
   m_InitResourceHandler = true;
   return (true);
@@ -1321,6 +1336,16 @@ bool CSrEditApp::EditScriptName (const char* pScriptName, const bool UseInternal
 }
 
 
+bool CSrEditApp::EditScriptFromData (const char* pFilename, const bool UseInternal)
+{
+	bool UseInt = UseInternal;
+	if (m_EditScriptExternalByDefault) UseInt = !UseInt;
+
+	if (UseInt) return EditScriptFromData(pFilename);
+	return EditScriptExternalFromData(pFilename);
+}
+
+
 bool CSrEditApp::EditScript (const char* pFilename, const bool UseInternal)
 {
 	bool UseInt = UseInternal;
@@ -1328,6 +1353,16 @@ bool CSrEditApp::EditScript (const char* pFilename, const bool UseInternal)
 
 	if (UseInt) return EditScript(pFilename);
 	return EditScriptExternal(pFilename);
+}
+
+
+bool CSrEditApp::EditScriptFromData (const char* pFilename)
+{
+	CSrScriptView* pScriptView = OpenScriptsView();
+	if (pScriptView == NULL) return false;
+
+	pScriptView->AddScriptFromData(pFilename);
+	return true;
 }
 
 
@@ -1342,6 +1377,21 @@ bool CSrEditApp::EditScript (const char* pFilename)
 
 
 bool CSrEditApp::EditScriptExternal (const char* pFilename)
+{
+	CString  Buffer;
+	CSString Path;
+
+	GetSrInstallPath(Path);
+	Path += "\\data\\";
+	Buffer.Format("%s%s", Path, pFilename);
+
+	ShellExecute(NULL, "Open", Buffer, NULL, NULL, SW_SHOW);
+
+	return true;
+}
+
+
+bool CSrEditApp::EditScriptExternalFromData (const char* pFilename)
 {
 	CString  Buffer;
 	CSString Path;
@@ -1457,4 +1507,111 @@ bool CSrEditApp::UpdateScriptView (const char* pScriptName)
 	if (pScriptView == NULL) return false;
 
 	return pScriptView->UpdateScriptView(pScriptName);
+}
+
+
+bool CSrEditApp::LoadAllScripts (void)
+{
+	CSrResourceFolder*	pFolder;
+	MAPPOSITION			Position;
+	CSString			InstallPath;
+	CString				BaseScriptPath;
+	CString				Filename;
+	dword				LoadCount = 0;
+	srtimer_t			Timer;
+	bool				NetResult = true;
+
+		/* Only load all once */
+	if (m_LoadAllScripts) return true;
+
+	GetSrInstallPath(InstallPath);
+	BaseScriptPath = InstallPath;
+	BaseScriptPath += "data\\scripts\\source\\";
+
+	m_pCurrentProgressDlg = ShowSrProgressDlg("Loading Scripts", "Loading all scripts...");
+	m_pCurrentProgressDlg->Update(0);
+
+	if (!m_InitResourceHandler) InitResourceHandler();
+
+	pFolder = m_ResourceHandler.GetScriptsFolder();
+
+	if (pFolder == NULL)
+	{	
+		DestroySrProgressDlg(m_pCurrentProgressDlg);
+		m_pCurrentProgressDlg = NULL;
+		return false;
+	}
+
+	CSrResourceBase* pBase = pFolder->GetResources().GetFirstRecord(Position);
+	dword Counter = 0;
+	SrStartTimer(Timer);
+
+	while (pBase)
+	{
+		if (Counter % 100 == 0) m_pCurrentProgressDlg->Update((float) Counter / (float) pFolder->GetNumResources() * 100.0f);
+		++Counter;
+
+		if (pBase->IsScript() && pBase->GetScriptFile() != NULL)
+		{
+			if (!pBase->GetScriptFile()->IsLoaded())
+			{
+				Filename = BaseScriptPath;
+				Filename += pBase->GetName();
+				NetResult &= pBase->GetScriptFile()->Load(Filename);
+				++LoadCount;
+			}
+		}
+
+		pBase = pFolder->GetResources().GetNextRecord(Position);
+	}
+
+	DestroySrProgressDlg(m_pCurrentProgressDlg);
+	m_pCurrentProgressDlg = NULL;
+
+	SrEndTimer(Timer, "Loaded all scripts in");
+	m_LoadAllScripts = true;
+	return NetResult;
+}
+
+
+dword CSrEditApp::FindInScripts (srfinddata_t& FindData, CSrCallback* pCallback) 
+{
+	CSrResourceBase*   pBase;
+	CSrResourceFolder* pScriptFolder = m_ResourceHandler.GetScriptsFolder();
+	srtimer_t          Timer;
+	MAPPOSITION        Position;
+	dword			   CountResult = 0;
+	dword              Counter = 0;
+
+	if (pScriptFolder == NULL) return 0;
+
+	if (pCallback)
+	{
+		pCallback->SetTotalRecords(pScriptFolder->GetNumResources());
+		pCallback->SetLabel("Searching Scripts...");
+		pCallback->UpdateCallback(0);
+	}
+
+	pBase = pScriptFolder->GetResources().GetFirstRecord(Position);
+	
+	SrStartTimer(Timer);
+
+	while (pBase)
+	{
+		if (Counter % 100 == 0 && pCallback) pCallback->UpdateCallback(Counter);
+		++Counter;
+
+		if (pBase->IsScript() && pBase->GetScriptFile() != NULL)
+		{
+			if (pBase->GetScriptFile()->IsLoaded())
+			{
+				CountResult += pBase->GetScriptFile()->Find(FindData);
+			}
+		}
+
+		pBase = pScriptFolder->GetResources().GetNextRecord(Position);
+	}
+
+	SrEndTimer(Timer, "Searched scripts in ");
+	return CountResult;
 }

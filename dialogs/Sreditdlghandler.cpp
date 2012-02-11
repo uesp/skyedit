@@ -371,6 +371,13 @@ bool CSrEditDlgHandler::EditRecord (sreditrecinfo_t& EditInfo) {
 
 	/* Ignore invalid input */
   if (EditInfo.pOldRecord == NULL) return (true);
+  
+  if (EditInfo.pOldRecord->GetRecordType() == SR_NAME_SCRI)
+  {
+	  CSrScriptRecord* pScript = SrCastClass(CSrScriptRecord, EditInfo.pOldRecord);
+	  if (pScript == NULL) return false;
+	  return GetSrEditApp().EditScriptName(pScript->GetScriptName(), true);
+  }
 
 	/* See if record is already being edited */
   pDlgInfo = FindOpenDlg(EditInfo.pOldRecord);
