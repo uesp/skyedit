@@ -514,6 +514,7 @@
 #define IDC_FLICKERSLOW                 1333
 #define IDC_BODYPARTS                   1334
 #define IDC_EDIT_ART1                   1335
+#define IDC_BODYPARTS2                  1335
 #define IDC_ENCHANTING                  1336
 #define IDC_UNKNOWN18                   1337
 #define IDC_RACEUNKNOWN18               1338

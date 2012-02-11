@@ -123,7 +123,9 @@ public:
 	afx_msg void OnArmamenuEditBase();
 	afx_msg void OnArmamenuDelete();
 	afx_msg void OnUpdateArmamenuEdit(CCmdUI *pCmdUI);
-	afx_msg void OnContextMenu(CWnd* /*pWnd*/, CPoint /*point*/);
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint Point);
+	afx_msg void OnBnClickedBounds();
+	CButton	m_Bounds;
 };
 /*===========================================================================
  *		End of Class CSrArmoView Definition

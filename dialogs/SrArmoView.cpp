@@ -109,6 +109,7 @@ BEGIN_SRRECUIFIELDS(CSrArmoView)
 	ADD_SRRECUIFIELDS( SR_FIELD_PLAYABLE,		IDC_PLAYABLE,		128,	0)
 	ADD_SRRECUIFIELDS( SR_FIELD_IMPACTDATA,		IDC_IMPACTDATA,		128,	0)
 	ADD_SRRECUIFIELDS( SR_FIELD_BODYPARTS,		IDC_BODYPARTS,		256,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_BOUNDS,			IDC_BOUNDS,			256,	0)
 END_SRRECUIFIELDS()
 /*===========================================================================
  *		End of UI Field Map
@@ -174,7 +175,8 @@ void CSrArmoView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BODYPARTS, m_BodyParts);
 	DDX_Control(pDX, IDC_ARMAMODELS, m_ArmaModels);
 	DDX_Control(pDX, IDC_SCRIPT_LIST, m_ScriptList);
- }
+	DDX_Control(pDX, IDC_BOUNDS, m_Bounds);
+}
 /*===========================================================================
  *		End of Class Method CSrArmoView::DoDataExchange()
  *=========================================================================*/
@@ -498,3 +500,4 @@ void CSrArmoView::OnContextMenu(CWnd* pWnd, CPoint Point)
 		CSrRecordDialog::OnContextMenu(pWnd, Point);
 	}
 }
+
