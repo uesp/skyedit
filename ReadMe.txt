@@ -1,5 +1,5 @@
  
-	              ackage: SkyEdit v0.050 alpha, 17 January 2012
+	              ackage: SkyEdit v0.060 alpha, 11 February 2012
 	               Author: Dave Humphrey, dave@uesp.net
                   Website: www.uesp.net/wiki/Tes5Mod:SkyEdit
 
@@ -14,9 +14,9 @@ basic set of features is included.
   Important Release Notes
 =======================================
 
-  - As a first release there may, or will, be bugs present that may affect any saved
-    plugins. As with any third party utility, keep regular backups of plugins. SkyEdit
-	automatically backs up plugins when saved (unless disabled).
+  - As an early alpha release there may, or will, be bugs present that may affect any 
+    saved plugins. As with any third party utility, keep regular backups of plugins. 
+	SkyEdit automatically backs up plugins when saved (unless disabled).
   - One main purpose for this release is to receive feedback from the modding community.
     Feedback may be given at:
                http://www.uesp.net/wiki/Tes5Mod:SkyEdit/Feedback
@@ -26,7 +26,7 @@ basic set of features is included.
   - Another major purpose of this release is for more extensive testing. The more people
     use it and the more different systems it is used on the more bugs can be found and
 	fixed.
-  - A minimum of 1GB of RAM is recommended for usable performance. Loading of 
+  - A minimum of 1GB of RAM is recommended for usable performance as loading of 
     Skyrim.esm uses around 500MB of memory. Plugins can also be edited without loading
 	the master files to save time/memory but this limits what editing can be done.
   - Some help and documentation can be found at:
@@ -63,12 +63,13 @@ basic set of features is included.
 The basic capabilities of the editor in this release include:
 
   - Load plugins with multiple master files
-  - Edit a few record types
-  - Basic find text feature
+  - Edit several basic record types
+  - Basic find text and binary data feature
   - Viewing/selection of resources in Data path and in BSA files
-  - Import/export from/to CSV files
+  - Import/export basic data to *and* from CSV files
   - Simple undo system
-  - Automatic backup when saving plugins
+  - Batch editing of multiple records for simple fields
+  - Automatic backup when saving most files
   - View raw data/hex of all records
 
 
@@ -76,8 +77,7 @@ The basic capabilities of the editor in this release include:
 =======================================
 Some notable lack of features in the current release are:
 
-  - Cannot edit or view most record types yet
-  - No editing/compiling of scripts
+  - Cannot edit or view all record types yet
   - No cell view or preview windows
   - No use info display
 
@@ -127,17 +127,19 @@ can be found at:
   - Drag-and-drop operations are supported in more locations
   - Tooltips for most controls
   - View raw data/hex display of records
+  - Quickly view only active records or records with a matching editor ID
 
       Resource Viewer
   ---------------------------
   - Seperate window for viewing and selecting game resources (textures, meshes,
     sounds, icons, etc...)
   - View resources in DATA path as well as within known BSA files.
+  - Basic script editor and compiler using the official Papyrus compiler.
   
       Import/Export
   ---------------------------
   - Import/export most records from/to CSV (Comma Seperated Value) files
-  - Most records fields supported
+  - Most basic records fields supported
   - Existing records are automatically updated/overwritten when importing
   - Formids automatically assigned to new imported records
 
@@ -152,12 +154,25 @@ can be found at:
 
   Version History
 =======================================
-0.06alpha - ? January 2021
-	- Scripts and script properties are now editable with a simple built-in editor or 
-	  an external program (click on the Script icon in the toolbar or from the View menu).
-    - Compiling using the command line official Papyrus compiler is supported. 
-	- Script information can be copy/pasted between objects (right-click on selected
-	  scripts in the record dialog).
+0.06alpha - 11 February 2021
+	- Basic script editing has been added!
+		- NOTE: This requires the installation of the CK for the script sources and
+		  the script compiler.
+		- Basic built-in script editor. Click on the Script icon in the toolbar or
+		  from under the View menu. No syntax highlighting (yet)
+		- Use an external editor by Ctrl + double-clicking on a script. It uses whatever
+		  editor is opened when you double-click a PSC file in Windows Explorer.
+		- By default the internal script editor is used. If you change 
+		  "EditScriptExternalByDefault" in SkyEdit.ini to "true" the external editor
+		  is used by default.
+		- Script compiling is done using the official command line Papyrus compiler. 
+		- Script and property information can be copy/pasted between objects 
+		  (right-click on selected scripts in the record dialog).
+		- Searching in scripts has been added. Check the "include scripts" in the find
+		  dialog.
+		- Script files are backed up when saving (PSC) or compiling (PEX). This is more
+		  important now as there is no version control for scripts unless otherwise 
+		  implemented by the user.
 	- New editable records: Actor Values (AVIF).
 	- Fixed bug when creating a copy of a record.
 	- Redid Perks: Should be 100% supported, needs testing.
@@ -183,7 +198,7 @@ can be found at:
 	  creating new plugins that don't have Skyrim.esm as a master file as most should.
 	- Resource and script information is now automatically loaded and initialized at startup
 	  as it is needed in a variety of places. It only takes 2-5 seconds and only has to 
-	  happen once until you close SkyEdit.
+	  occur once until you restart SkyEdit.
 
 0.05alpha - 17 January 2021
 	- New editable records: Sound Categories (SNCT), Sound Markers (SOPM), Outfits,

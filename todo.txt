@@ -14,6 +14,11 @@ v0.050a
 	- Save as/set as ESM
 	- Backup PSC/PEX script files
 	- Load resources in background thread at startup	
+	- Better backup code
+		- Seperate into own class/function set instead of in document
+		- Keep directory structure instead of backing up into a single path
+	- Popup tips?
+	- Script property auto fill and auto fill all commands
 
 v0.046a
 	- Conditions: Batch edit? drag-and-drop?
