@@ -13,7 +13,7 @@ v0.050a
 	- Cleaned records don't all "disappear" when "active only" is checked.
 	- Save as/set as ESM
 	- Backup PSC/PEX script files
-	- Find strings in scripts
+	- Load resources in background thread at startup	
 
 v0.046a
 	- Conditions: Batch edit? drag-and-drop?
