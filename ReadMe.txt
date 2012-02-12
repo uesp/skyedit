@@ -156,6 +156,11 @@ can be found at:
 =======================================
 0.07alpha - ? February 2012
 	- Redid Magic Effects
+	- Redid Enchantments. A few important notes:
+		- AutoCalc does not change the cost/charge as I don't know the exact formula used.
+		- It does not currently limit the types of effects which can be created like the
+		  CK does. Using a bad type (like a contact effect type on an armor piece) has
+		  unknown consequences within the game at the moment.
 	- Scripts and string files are backed up according to their directory instead of
 	  all being put into the backup root path. For example, script text files are
 	  backed up into "backup\scripts\source\...".

@@ -170,6 +170,8 @@ public:
 	afx_msg void OnUpdateConditionPastecondition(CCmdUI *pCmdUI);
 	afx_msg void OnConditionDuplicate();
 	afx_msg void OnUpdateConditionDuplicate(CCmdUI *pCmdUI);
+	CButton m_MoveUpButton;
+	CButton m_MoveDownButton;
 };
 /*===========================================================================
  *		End of Class CSrConditionDlg Definition

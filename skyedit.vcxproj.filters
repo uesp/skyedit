@@ -2130,5 +2130,6 @@
     </None>
     <None Include="res\resourceview.ico" />
     <None Include="res\icon1.ico" />
+    <None Include="res\ico00001.ico" />
   </ItemGroup>
 </Project>

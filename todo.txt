@@ -9,6 +9,13 @@ v0.060a
 		- List entries
 	- Script editor doesn't resize properly at startup
 	- Actor value global definitions
+	- Generic global clipboard for objects
+		- Scripts
+		- Conditions
+		- Perk sections
+		- General records.subrecords?
+		- Effect entries
+	- Custom context menu for editor ID fields, new entry to clear/delete
 
 v0.050a
 	- Context menu in resource viewer: extract all BSA resources to individual files

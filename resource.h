@@ -140,6 +140,7 @@
 #define IDD_NEWSCRIPT_DLG               241
 #define IDR_ARMORARMA_MENU              242
 #define IDD_SELECTSCRIPT_DLG            242
+#define IDI_UPARROW                     244
 #define IDC_RECORDTREE                  1000
 #define IDC_RESOURCE_TREE               1001
 #define IDC_RECORDLIST                  1002
@@ -266,8 +267,10 @@
 #define IDC_MODEL                       1106
 #define IDC_BASEWEAPON                  1107
 #define IDC_TINTINDEX                   1107
+#define IDC_INVENTORYICON               1107
 #define IDC_DESTROYMODEL                1108
 #define IDC_TINTTINP                    1108
+#define IDC_MESSAGEICON                 1108
 #define IDC_EDIT_BASEWEAPON             1109
 #define IDC_FLICKERTYPE                 1110
 #define IDC_REDSPIN                     1111
@@ -307,6 +310,7 @@
 #define IDC_SKILLLEVEL                  1141
 #define IDC_DESCRIPTION                 1142
 #define IDC_STAFFMOD                    1143
+#define IDC_CHARGETIME                  1143
 #define IDC_QUESTITEM                   1144
 #define IDC_FUNCTION_TEXT               1145
 #define IDC_CASTTIME                    1146
@@ -361,6 +365,7 @@
 #define IDC_SELECTPARAM3_BUTTON         1178
 #define IDC_SELECTSOUND_BUTTON          1179
 #define IDC_SELECTVALUE_BUTTON          1179
+#define IDC_SELECT_EQUIPSLOT            1179
 #define IDC_SELECT_STATICMODEL          1180
 #define IDC_SELECT_BLOODFX              1181
 #define IDC_PARAM2_LABEL                1182
@@ -443,16 +448,23 @@
 #define IDC_AUTOCALC                    1252
 #define IDC_DELIVERYTYPE                1252
 #define IDC_ACTORVALUE                  1253
+#define IDC_EXTENDDURATION              1253
+#define IDC_FOOD                        1253
 #define IDC_CASTANIM                    1254
 #define IDC_EFFECTTYPE                  1254
+#define IDC_MEDICINE                    1254
 #define IDC_TYPEA                       1255
 #define IDC_SOUNDVOLUME                 1255
+#define IDC_AUTOCALC4                   1255
+#define IDC_POISON                      1255
 #define IDC_UNKNOWNCHECK8               1256
 #define IDC_UNKNOWN1                    1257
 #define IDC_TYPEB                       1258
 #define IDC_ATTACKEVENT                 1258
+#define IDC_TARGETTYPE                  1258
 #define IDC_DROPSOUND                   1259
 #define IDC_TYPEC                       1260
+#define IDC_ENCHANTTYPE                 1260
 #define IDC_RACE                        1261
 #define IDC_UNKNOWN5                    1262
 #define IDC_TYPED                       1263
@@ -478,7 +490,9 @@
 #define IDC_ALTERATION                  1283
 #define IDC_SELECT_MODEL                1284
 #define IDC_UNKNOWN10                   1285
+#define IDC_SELECT_INVENTORYICON        1285
 #define IDC_BLOCK                       1286
+#define IDC_SELECT_MESSAGEICON          1286
 #define IDC_PICKUPSOUND                 1287
 #define IDC_UNKNOWN4                    1288
 #define IDC_MATERIAL                    1289
@@ -1286,9 +1300,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        244
+#define _APS_NEXT_RESOURCE_VALUE        245
 #define _APS_NEXT_COMMAND_VALUE         32968
-#define _APS_NEXT_CONTROL_VALUE         1806
+#define _APS_NEXT_CONTROL_VALUE         1808
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

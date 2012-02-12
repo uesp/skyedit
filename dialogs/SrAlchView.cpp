@@ -54,6 +54,15 @@ BEGIN_MESSAGE_MAP(CSrAlchView, CSrRecordDialog)
 	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_PASTE, OnUpdateConditionrecordPaste)
 	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_DELETEALL, OnUpdateConditionrecordDeleteAll)
 	ON_WM_CONTEXTMENU()
+	ON_BN_CLICKED(IDC_SELECT_INVENTORYICON, &CSrAlchView::OnBnClickedSelectInventoryicon)
+	ON_BN_CLICKED(IDC_SELECT_MESSAGEICON, &CSrAlchView::OnBnClickedSelectMessageicon)
+	ON_BN_CLICKED(IDC_EDIT_EQUIPSLOT, &CSrAlchView::OnBnClickedEditEquipslot)
+	ON_BN_CLICKED(IDC_SELECT_EQUIPSLOT, &CSrAlchView::OnBnClickedSelectEquipslot)
+	ON_NOTIFY(ID_SRRESOURCE_CHECKDROP, IDC_INVENTORYICON, OnDropInventoryIcon)
+	ON_NOTIFY(ID_SRRESOURCE_DROP, IDC_INVENTORYICON, OnDropInventoryIcon)
+	ON_NOTIFY(ID_SRRESOURCE_CHECKDROP, IDC_MESSAGEICON, OnDropMessageIcon)
+	ON_NOTIFY(ID_SRRESOURCE_DROP, IDC_MESSAGEICON, OnDropMessageIcon)
+	ON_MESSAGE(ID_SRRECORDLIST_ACTIVATE, OnEditEffectMsg)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrAlchView Message Map
@@ -65,7 +74,8 @@ END_MESSAGE_MAP()
  * Begin List Column Definitions
  *
  *=========================================================================*/
-static srreclistcolinit_t s_EffectListInit[] = {
+static srreclistcolinit_t s_EffectListInit[] = 
+{
 	{ SR_FIELD_EFFECTNAME,		180,	LVCFMT_CENTER },
 	{ SR_FIELD_EFFECTID,		5,		LVCFMT_CENTER },
 	{ SR_FIELD_MAGNITUDE,		50,		LVCFMT_CENTER },
@@ -75,7 +85,8 @@ static srreclistcolinit_t s_EffectListInit[] = {
 	{ SR_FIELD_NONE, 0, 0 }
  };
 
-static srrecfield_t s_EffectFields[] = {
+static srrecfield_t s_EffectFields[] = 
+{
 	{ "Effect",		SR_FIELD_EFFECTNAME,		0, NULL },
 	{ "FormID",		SR_FIELD_EFFECTID,			0, NULL },
 	{ "Magnitude",	SR_FIELD_MAGNITUDE,			0, NULL },
@@ -102,11 +113,17 @@ BEGIN_SRRECUIFIELDS(CSrAlchView)
 	ADD_SRRECUIFIELDS( SR_FIELD_PICKUPSOUND,		IDC_PICKUPSOUND,		128,	0)
 	ADD_SRRECUIFIELDS( SR_FIELD_DROPSOUND,			IDC_DROPSOUND,			128,	0)
 	ADD_SRRECUIFIELDS( SR_FIELD_USESOUND,			IDC_USESOUND,			128,	0)
-	ADD_SRRECUIFIELDS( SR_FIELD_TYPE,				IDC_POTIONTYPE,			32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_EQUIPSLOT,			IDC_EQUIPSLOT,			128,	0)
 	ADD_SRRECUIFIELDS( SR_FIELD_VALUE,				IDC_VALUE,				32,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_WEIGHT,				IDC_WEIGHT,				32,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_KEYWORDS,			IDC_KEYWORDS,			128,	0)
-	ADD_SRRECUIFIELDS( SR_FIELD_MODEL,				IDC_MODEL,				128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_MODEL,				IDC_MODEL,				256,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_ICON,				IDC_INVENTORYICON,		256,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_MESSAGEICON,		IDC_MESSAGEICON,		256,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_AUTOCALC,			IDC_AUTOCALC,			8,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_FOOD,				IDC_FOOD,				8,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_MEDICINE,			IDC_MEDICINE,			8,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_POISON,				IDC_POISON,				8,		0)
 END_SRRECUIFIELDS()
 /*===========================================================================
  *		End of UI Field Map
@@ -120,9 +137,9 @@ END_SRRECUIFIELDS()
  *=========================================================================*/
 CSrAlchView::CSrAlchView() : CSrRecordDialog(CSrAlchView::IDD) 
 {
-  m_InitialSetData = false;
-  m_IsInitialized = false;
-  m_pCurrentEffect = NULL;
+	m_InitialSetData = false;
+	m_IsInitialized = false;
+	m_pCurrentEffect = NULL;
 }
 /*===========================================================================
  *		End of Class CSrAlchView Constructor
@@ -162,7 +179,6 @@ void CSrAlchView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_MAGNITUDE, m_Magnitude);
 	DDX_Control(pDX, IDC_AREA, m_Area);
 	DDX_Control(pDX, IDC_DURATION, m_Duration);
-	DDX_Control(pDX, IDC_POTIONTYPE, m_PotionType);
 	DDX_Control(pDX, IDC_VALUE, m_Value);
 	DDX_Control(pDX, IDC_WEIGHT, m_Weight);
 	DDX_Control(pDX, IDC_PICKUPSOUND, m_PickupSound);
@@ -170,6 +186,13 @@ void CSrAlchView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_USESOUND, m_UseSound);
 	DDX_Control(pDX, IDC_KEYWORDS, m_Keywords);
 	DDX_Control(pDX, IDC_MODEL, m_Model);
+	DDX_Control(pDX, IDC_EQUIPSLOT, m_EquipSlot);
+	DDX_Control(pDX, IDC_INVENTORYICON, m_InventoryIcon);
+	DDX_Control(pDX, IDC_MESSAGEICON, m_MessageIcon);
+	DDX_Control(pDX, IDC_AUTOCALC, m_AutoCalc);
+	DDX_Control(pDX, IDC_FOOD, m_Food);
+	DDX_Control(pDX, IDC_MEDICINE, m_Medicine);
+	DDX_Control(pDX, IDC_POISON, m_Poison);
 }
 /*===========================================================================
  *		End of Class Method CSrAlchView::DoDataExchange()
@@ -182,16 +205,8 @@ void CSrAlchView::DoDataExchange (CDataExchange* pDX)
  *
  *=========================================================================*/
 #ifdef _DEBUG
-
-void CSrAlchView::AssertValid() const {
-  CSrRecordDialog::AssertValid();
-}
-
-
-void CSrAlchView::Dump(CDumpContext& dc) const {
-  CSrRecordDialog::Dump(dc);
-}
-
+	void CSrAlchView::AssertValid() const { CSrRecordDialog::AssertValid(); }
+	void CSrAlchView::Dump(CDumpContext& dc) const { CSrRecordDialog::Dump(dc); }
 #endif
 /*===========================================================================
  *		End of CSrAlchView Diagnostics
@@ -222,8 +237,6 @@ void CSrAlchView::OnInitialUpdate (void)
 	
 	CreateEffectArray();
 
-	::SrFillComboList(m_PotionType, s_SrPotionTypes, 0);
-  
 	SetControlData();
 	m_IsInitialized = true;
 }
@@ -846,6 +859,25 @@ void CSrAlchView::OnDropUseSound (NMHDR* pNotifyStruct, LRESULT* pResult)
 }
 
 
+void CSrAlchView::OnBnClickedEditEquipslot()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_EquipSlot, SR_NAME_EQUP);
+}
+
+
+void CSrAlchView::OnBnClickedSelectEquipslot()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_EquipSlot, SR_NAME_EQUP, &CSrEqupRecord::s_FieldMap);
+}
+
+
+void CSrAlchView::OnDropEquipSlot (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	*pResult = DropRecordHelper(pDropItems, &m_EquipSlot, SR_NAME_EQUP, 1);
+}
+
+
 void CSrAlchView::OnConditionrecordCopy()
 {
 	if (m_pCurrentEffect == NULL) return;
@@ -950,4 +982,63 @@ void CSrAlchView::OnContextMenu(CWnd* pWnd, CPoint Point)
 	{
 		CSrRecordDialog::OnContextMenu(pWnd, Point);
 	}
+}
+
+
+void CSrAlchView::OnBnClickedSelectInventoryicon()
+{
+	m_pDlgHandler->SelectResourceHelper(&m_InventoryIcon, SRRESOURCE_PATH_TEXTURES);
+}
+
+
+void CSrAlchView::OnBnClickedSelectMessageicon()
+{
+	m_pDlgHandler->SelectResourceHelper(&m_MessageIcon, SRRESOURCE_PATH_TEXTURES);
+}
+
+
+void CSrAlchView::OnDropInventoryIcon (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srresourcedropinfo_t* pDropInfo = (srresourcedropinfo_t *) pNotifyStruct;
+	*pResult = SRRESOURCE_DROPCHECK_ERROR;
+
+	if (pDropInfo->pResourceFile == NULL) return;
+	if (pDropInfo->pResourceFile->GetResourceType() != SR_RESOURCETYPE_IMAGE) return;
+
+		/* If we're just checking or not */
+	if (pDropInfo->Notify.code == ID_SRRESOURCE_DROP) 
+	{
+		m_InventoryIcon.SetWindowText(pDropInfo->pResourceFile->GetCSName());    
+	}
+
+	*pResult = SRRESOURCE_DROPCHECK_OK;
+}
+
+
+void CSrAlchView::OnDropMessageIcon (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srresourcedropinfo_t* pDropInfo = (srresourcedropinfo_t *) pNotifyStruct;
+	*pResult = SRRESOURCE_DROPCHECK_ERROR;
+
+	if (pDropInfo->pResourceFile == NULL) return;
+	if (pDropInfo->pResourceFile->GetResourceType() != SR_RESOURCETYPE_IMAGE) return;
+	
+		/* If we're just checking or not */
+	if (pDropInfo->Notify.code == ID_SRRESOURCE_DROP) 
+	{
+		m_MessageIcon.SetWindowText(pDropInfo->pResourceFile->GetCSName());    
+	}
+
+  *pResult = SRRESOURCE_DROPCHECK_OK;
+}
+
+
+LRESULT CSrAlchView::OnEditEffectMsg (WPARAM wParam, LPARAM lParam) 
+{
+	if (m_Effects[lParam] == NULL) return -1;
+	if (m_Effects[lParam]->pEffect == NULL) return -2;
+	
+	m_pDlgHandler->EditRecord(m_Effects[lParam]->pEffect->GetValue());
+
+	return 0;
 }

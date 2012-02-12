@@ -184,6 +184,8 @@ void CSrConditionDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SWAPSUBJECT_CHECK, m_FlagSwapSubject);
 	DDX_Control(pDX, IDC_RUNON_LIST, m_RunOnList);
 	DDX_Control(pDX, IDC_SELECTVALUE_BUTTON, m_ValueButton);
+	DDX_Control(pDX, ID_MOVEUP_BUTTON, m_MoveUpButton);
+	DDX_Control(pDX, ID_MOVEDOWN_BUTTON, m_MoveDownButton);
 }
 /*===========================================================================
  *		End of Class CSrConditionDlg::DoDataExchange()

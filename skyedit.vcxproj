@@ -2356,6 +2356,7 @@
     <None Include="res\file.bmp" />
     <None Include="res\find_dlg.ico" />
     <None Include="res\folder.bmp" />
+    <None Include="res\ico00001.ico" />
     <None Include="res\icon1.ico" />
     <None Include="res\idr_main.ico" />
     <None Include="res\resourceview.ico" />

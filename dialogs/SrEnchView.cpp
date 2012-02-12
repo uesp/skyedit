@@ -58,6 +58,8 @@ BEGIN_MESSAGE_MAP(CSrEnchView, CSrRecordDialog)
 	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_PASTE, OnUpdateConditionrecordPaste)
 	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_DELETEALL, OnUpdateConditionrecordDeleteAll)
 	ON_WM_CONTEXTMENU()
+	ON_BN_CLICKED(IDC_AUTOCALC, &CSrEnchView::OnBnClickedAutocalc)
+	ON_MESSAGE(ID_SRRECORDLIST_ACTIVATE, OnEditEffectMsg)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrEnchView Message Map
@@ -69,7 +71,8 @@ END_MESSAGE_MAP()
  * Begin List Column Definitions
  *
  *=========================================================================*/
-static srreclistcolinit_t s_EffectListInit[] = {
+static srreclistcolinit_t s_EffectListInit[] = 
+{
 	{ SR_FIELD_EFFECTNAME,		180,	LVCFMT_CENTER },
 	{ SR_FIELD_EFFECTID,		5,		LVCFMT_CENTER },
 	{ SR_FIELD_MAGNITUDE,		50,		LVCFMT_CENTER },
@@ -79,7 +82,8 @@ static srreclistcolinit_t s_EffectListInit[] = {
 	{ SR_FIELD_NONE, 0, 0 }
  };
 
-static srrecfield_t s_EffectFields[] = {
+static srrecfield_t s_EffectFields[] = 
+{
 	{ "Effect",		SR_FIELD_EFFECTNAME,		0, NULL },
 	{ "FormID",		SR_FIELD_EFFECTID,			0, NULL },
 	{ "Magnitude",	SR_FIELD_MAGNITUDE,			0, NULL },
@@ -104,13 +108,14 @@ BEGIN_SRRECUIFIELDS(CSrEnchView)
 	ADD_SRRECUIFIELDS( SR_FIELD_ITEMNAME,			IDC_ITEMNAME,			128,	IDS_TT_FULLNAME)
 	ADD_SRRECUIFIELDS( SR_FIELD_BASEENCHANT,		IDC_BASEENCHANTMENT,	128,	0)
 	ADD_SRRECUIFIELDS( SR_FIELD_ITEMTYPES,			IDC_ITEMTYPES,			128,	0)
-	ADD_SRRECUIFIELDS( SR_FIELD_ENCHANTCOST,		IDC_COST,				8,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_CHARGE,				IDC_CHARGE,				8,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_TYPEA,				IDC_TYPEA,				8,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_TYPEB,				IDC_TYPEB,				8,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_TYPEC,				IDC_TYPEC,				8,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_TYPED,				IDC_TYPED,				8,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_STAFFMOD,			IDC_STAFFMOD,			8,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_ENCHANTCOST,		IDC_COST,				10,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_CHARGE,				IDC_CHARGE,				10,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_CHARGETIME,			IDC_CHARGETIME,			10,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_CASTTYPE,			IDC_CASTTYPE,			32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_ENCHANTTYPE,		IDC_ENCHANTTYPE,		32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_DELIVERYTYPE,		IDC_TARGETTYPE,			32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_AUTOCALC,			IDC_AUTOCALC,			8,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_EXTENDDURATION,		IDC_EXTENDDURATION,		8,		0)
 END_SRRECUIFIELDS()
 /*===========================================================================
  *		End of UI Field Map
@@ -170,12 +175,13 @@ void CSrEnchView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DURATION, m_Duration);
 	DDX_Control(pDX, IDC_CHARGE, m_Charge);
 	DDX_Control(pDX, IDC_COST, m_Cost);
-	DDX_Control(pDX, IDC_STAFFMOD, m_StaffMod);
-	DDX_Control(pDX, IDC_TYPEA, m_TypeA);
-	DDX_Control(pDX, IDC_TYPEB, m_TypeB);
-	DDX_Control(pDX, IDC_TYPEC, m_TypeC);
-	DDX_Control(pDX, IDC_TYPED, m_TypeD);
- }
+	DDX_Control(pDX, IDC_CHARGETIME, m_ChargeTime);
+	DDX_Control(pDX, IDC_CASTTYPE, m_CastType);
+	DDX_Control(pDX, IDC_ENCHANTTYPE, m_EnchantType);
+	DDX_Control(pDX, IDC_TARGETTYPE, m_DeliveryType);
+	DDX_Control(pDX, IDC_AUTOCALC, m_AutoCalc);
+	DDX_Control(pDX, IDC_EXTENDDURATION, m_ExtendDuration);
+}
 /*===========================================================================
  *		End of Class Method CSrEnchView::DoDataExchange()
  *=========================================================================*/
@@ -187,16 +193,8 @@ void CSrEnchView::DoDataExchange (CDataExchange* pDX)
  *
  *=========================================================================*/
 #ifdef _DEBUG
-
-void CSrEnchView::AssertValid() const {
-  CSrRecordDialog::AssertValid();
-}
-
-
-void CSrEnchView::Dump(CDumpContext& dc) const {
-  CSrRecordDialog::Dump(dc);
-}
-
+	void CSrEnchView::AssertValid() const { CSrRecordDialog::AssertValid(); }
+	void CSrEnchView::Dump(CDumpContext& dc) const { CSrRecordDialog::Dump(dc); }
 #endif
 /*===========================================================================
  *		End of CSrEnchView Diagnostics
@@ -215,7 +213,7 @@ void CSrEnchView::OnInitialUpdate (void)
 
 	CSrRecordDialog::OnInitialUpdate();
 
-	m_EffectList.SetListName("EffectList");
+	m_EffectList.SetListName("EnchantEffectList");
 	m_EffectList.SetDragEnable(true);
 	m_EffectList.DefaultSettings();
 	m_EffectList.SetupCustomList(s_EffectListInit, NULL, s_EffectFields);
@@ -223,14 +221,12 @@ void CSrEnchView::OnInitialUpdate (void)
 	m_EffectList.SetColorEnable(false);
 	m_EffectList.SetDragType(SR_RLDRAG_CUSTOM);
 	m_EffectList.SetSortEnable(false);
-	//m_ComponentList.SetActivateType(SR_RLACTIVATE_NONE);
 	
 	CreateEffectArray();
 
-	SrFillComboList(m_TypeA, s_SrEnchantTypeA, 0);
-	SrFillComboList(m_TypeB, s_SrEnchantTypeB, 0);
-	SrFillComboList(m_TypeC, s_SrEnchantTypeC, 0);
-	SrFillComboList(m_TypeD, s_SrEnchantTypeD, 0);
+	SrFillComboList(m_CastType, s_SrEffectCastTypes, 0);
+	SrFillComboList(m_EnchantType, s_SrEnchantmentTypes, 0);
+	SrFillComboList(m_DeliveryType, s_SrMagicDeliveryTypes, 0);
   
 	SetControlData();
 	m_IsInitialized = true;
@@ -299,6 +295,7 @@ void CSrEnchView::SetControlData (void)
 {
 	CSrRecordDialog::SetControlData();
 	SetEffectList();
+	UpdateAutoCalcControls();
 }
 
 
@@ -524,7 +521,11 @@ void CSrEnchView::GetCurrentEffect (void)
 {	
 	CString Buffer;
 
-	if (m_pCurrentEffect == NULL) return;
+	if (m_pCurrentEffect == NULL) 
+	{
+		//ComputeAutoCost(); /* Disable for now */
+		return;
+	}
 
 	if (m_pCurrentEffect->pEffectData) 
 	{
@@ -576,6 +577,7 @@ void CSrEnchView::GetCurrentEffect (void)
 		break;
 	}
 	
+	//ComputeAutoCost(); /* Disable for now */
 }
 
 
@@ -734,7 +736,6 @@ void CSrEnchView::OnBnClickedDeleteButton2()
 		SetCurrentEffect(m_Effects[Index]);	
 	}
 }
-
 
 
 /*===========================================================================
@@ -1045,4 +1046,77 @@ void CSrEnchView::OnContextMenu(CWnd* pWnd, CPoint Point)
 	{
 		CSrRecordDialog::OnContextMenu(pWnd, Point);
 	}
+}
+
+
+void CSrEnchView::ComputeAutoCost()
+{
+	bool IsAutoCalc = m_AutoCalc.GetCheck() != 0;
+	if (!IsAutoCalc) return;
+
+	CSrRecord*     pRecord;
+	CString		   Buffer;
+	CSrMgefRecord* pMgef;
+	dword          Cost = 0;
+	dword		   Duration;
+	float		   Magnitude;
+	dword		   Area;
+	double		   EffectCost;
+
+	for (dword i = 0; i < m_Effects.GetSize(); ++i)
+	{
+		srench_effectdata_t* pEffect = m_Effects[i];
+		if (pEffect == NULL) continue;
+		if (pEffect->pEffect == NULL) continue;
+		if (pEffect->pEffectData == NULL) continue;
+
+		pRecord = m_pRecordHandler->FindFormID(pEffect->pEffect->GetValue());
+		pMgef = SrCastClassNull(CSrMgefRecord, pRecord);
+		if (pMgef == NULL) continue;
+
+		Duration  = pEffect->pEffectData->GetEffectData().Duration;
+		Magnitude = pEffect->pEffectData->GetEffectData().Magnitude;
+		Area      = pEffect->pEffectData->GetEffectData().Area;
+		if (Duration  <  1) Duration = 1;
+		if (Magnitude <= 0) Magnitude = 1;
+		if (Area      <  1) Area = 1;
+
+		EffectCost = pow((double) pMgef->GetEffectData().BaseCost * Duration*Magnitude*Area, 1.100793579) * 0.3939184269;
+		Cost += (dword) EffectCost;
+	}
+
+	Buffer.Format("%u", Cost);
+	m_Cost.SetWindowTextA(Buffer);
+	m_Charge.SetWindowTextA(Buffer);
+}
+
+
+void CSrEnchView::UpdateAutoCalcControls()
+{
+		/* Disable for now */
+	return;
+
+	bool IsAutoCalc = m_AutoCalc.GetCheck() != 0;
+
+	m_Cost.EnableWindow(!IsAutoCalc);
+	m_Charge.EnableWindow(!IsAutoCalc);
+
+	GetCurrentEffect();
+}
+
+
+void CSrEnchView::OnBnClickedAutocalc()
+{
+	UpdateAutoCalcControls();
+}
+
+
+LRESULT CSrEnchView::OnEditEffectMsg (WPARAM wParam, LPARAM lParam) 
+{
+	if (m_Effects[lParam] == NULL) return -1;
+	if (m_Effects[lParam]->pEffect == NULL) return -2;
+	
+	m_pDlgHandler->EditRecord(m_Effects[lParam]->pEffect->GetValue());
+
+	return 0;
 }

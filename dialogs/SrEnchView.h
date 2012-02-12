@@ -25,6 +25,11 @@
  *=========================================================================*/
 
 
+/*===========================================================================
+ *
+ * Begin Type Definitions
+ *
+ *=========================================================================*/
 struct srench_effectdata_t
 {
 	CSrFormidSubrecord*	pEffect;
@@ -45,6 +50,9 @@ struct srench_effectdata_t
 };
 
 typedef CSrPtrArray<srench_effectdata_t> CSrEnchEffectArray;
+/*===========================================================================
+ *		End of Type Definitions
+ *=========================================================================*/
 
 
 /*===========================================================================
@@ -61,8 +69,7 @@ class CSrEnchView : public CSrRecordDialog
 protected:
 	CSrEnchEffectArray		m_Effects;
 	srench_effectdata_t*	m_pCurrentEffect;
-	bool					m_IsInitialized;
-	
+	bool					m_IsInitialized;	
 
 
   /*---------- Begin Protected Class Methods ---------------------*/
@@ -102,6 +109,9 @@ public:
 
 	virtual int  OnPreSaveRecord   (void);
 
+	void UpdateAutoCalcControls();
+	void ComputeAutoCost();
+
 protected:
 	virtual void OnInitialUpdate();
 	virtual void DoDataExchange(CDataExchange* pDX);
@@ -117,12 +127,6 @@ protected:
 public:
 	CEdit m_BaseEnchantment;
 	CEdit m_ItemTypes;
-	afx_msg void OnBnClickedEditBaseenchant();
-	afx_msg void OnBnClickedSelectbaseenchantButton();
-	afx_msg void OnBnClickedEditItemtypes();
-	afx_msg void OnBnClickedSelectitemtypesButton();
-	CSrRecordListCtrl m_EffectList;
-	afx_msg void OnLvnItemchangedEffectList(NMHDR *pNMHDR, LRESULT *pResult);
 	CEdit m_EffectName;
 	CButton m_SelectEffectButton;
 	CButton m_EditEffectButton;
@@ -130,19 +134,26 @@ public:
 	CEdit m_Magnitude;
 	CEdit m_Area;
 	CEdit m_Duration;
+	CEdit m_Charge;
+	CEdit m_Cost;
+	CEdit m_ChargeTime;
+	CComboBox m_CastType;
+	CComboBox m_EnchantType;
+	CComboBox m_DeliveryType;	
+	CButton m_AutoCalc;
+	CButton m_ExtendDuration;
+	CSrRecordListCtrl m_EffectList;
+
+	afx_msg void OnBnClickedEditBaseenchant();
+	afx_msg void OnBnClickedSelectbaseenchantButton();
+	afx_msg void OnBnClickedEditItemtypes();
+	afx_msg void OnBnClickedSelectitemtypesButton();
+	afx_msg void OnLvnItemchangedEffectList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedConditionButton();
 	afx_msg void OnBnClickedEditEffect();
 	afx_msg void OnBnClickedSelecteffectButton();
 	afx_msg void OnBnClickedAddButton();
 	afx_msg void OnBnClickedDeleteButton2();
-	CEdit m_Charge;
-	CEdit m_Cost;
-	CEdit m_StaffMod;
-	CComboBox m_TypeA;
-	CComboBox m_TypeB;
-	CComboBox m_TypeC;
-	CComboBox m_TypeD;
-
 	afx_msg void OnConditionrecordCopy();
 	afx_msg void OnConditionrecordPaste();
 	afx_msg void OnConditionrecordDeleteAll();
@@ -150,6 +161,8 @@ public:
 	afx_msg void OnUpdateConditionrecordPaste(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateConditionrecordDeleteAll(CCmdUI *pCmdUI);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint Point);
+	afx_msg void OnBnClickedAutocalc();
+	afx_msg LRESULT OnEditEffectMsg (WPARAM wParam, LPARAM lParam);
 };
 /*===========================================================================
  *		End of Class CSrEnchView Definition

@@ -80,10 +80,6 @@ protected:
 	void GetCurrentEffect (void);
 	void SetCurrentEffect (sralch_effectdata_t* pEffectData);
 	void EnableEffectControls (const bool Enable);
-		
-	void OnDropEffectList (NMHDR* pNotifyStruct, LRESULT* pResult);
-	int  OnDropCustomEffectData (srrldroprecords_t& DropItems);  
-	void OnDropEffect (NMHDR* pNotifyStruct, LRESULT* pResult);
   
 
   /*---------- Begin Public Class Methods ------------------------*/
@@ -101,7 +97,6 @@ public:
 	CEdit		m_Magnitude;
 	CEdit		m_Area;
 	CEdit		m_Duration;
-	CComboBox	m_PotionType;
 	CEdit		m_Value;
 	CEdit		m_Weight;
 	CEdit		m_PickupSound;
@@ -109,9 +104,15 @@ public:
 	CEdit		m_UseSound;
 	CListBox	m_Keywords;
 	CEdit		m_Model;
+	CEdit		m_EquipSlot;
+	CEdit		m_InventoryIcon;
+	CEdit		m_MessageIcon;
+	CButton		m_AutoCalc;
+	CButton		m_Food;
+	CButton		m_Medicine;
+	CButton		m_Poison;
 
 public:
-
 	virtual void  GetControlData   (void);
 	virtual void  SetControlData   (void);
 	virtual int   OnPreSaveRecord  (void);
@@ -139,9 +140,9 @@ public:
 	afx_msg void OnBnClickedAddButton();
 	afx_msg void OnBnClickedDeleteButton();	
 	afx_msg void OnDropUseSound (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnDropEquipSlot (NMHDR* pNotifyStruct, LRESULT* pResult);
 	afx_msg void OnBnClickedEditUsesound();
 	afx_msg void OnBnClickedSelectusesoundButton();
-
 	afx_msg void OnConditionrecordCopy();
 	afx_msg void OnConditionrecordPaste();
 	afx_msg void OnConditionrecordDeleteAll();
@@ -149,6 +150,17 @@ public:
 	afx_msg void OnUpdateConditionrecordPaste(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateConditionrecordDeleteAll(CCmdUI *pCmdUI);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint Point);
+	afx_msg void OnBnClickedSelectInventoryicon();
+	afx_msg void OnBnClickedSelectMessageicon();
+	afx_msg void OnBnClickedEditEquipslot();
+	afx_msg void OnBnClickedSelectEquipslot();
+	afx_msg void OnDropInventoryIcon (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnDropMessageIcon (NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnDropEffectList (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg int  OnDropCustomEffectData (srrldroprecords_t& DropItems);  
+	afx_msg void OnDropEffect (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg	LRESULT OnEditEffectMsg (WPARAM wParam, LPARAM lParam);
 };
 /*===========================================================================
  *		End of Class CSrAlchView Definition
