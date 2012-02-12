@@ -2075,7 +2075,7 @@ void CSrRecordDialog::OnEditBaseKeyword()
 	pList = static_cast<CListBox *>(pWnd);
 	if (pList == NULL) return;
 
-	m_pDlgHandler->EditRecordHelper(*pList, SR_NAME_KWDA);
+	m_pDlgHandler->EditRecordHelper(*pList, SR_NAME_KYWD);
 }
 
 
