@@ -8,6 +8,7 @@ v0.060a
 		- Effect sections
 		- List entries
 	- Script editor doesn't resize properly at startup
+	- Actor value global definitions
 
 v0.050a
 	- Context menu in resource viewer: extract all BSA resources to individual files
