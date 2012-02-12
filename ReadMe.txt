@@ -154,7 +154,15 @@ can be found at:
 
   Version History
 =======================================
-0.06alpha - 11 February 2021
+0.07alpha - ? February 2012
+	- Redid Magic Effects
+	- Scripts and string files are backed up according to their directory instead of
+	  all being put into the backup root path. For example, script text files are
+	  backed up into "backup\scripts\source\...".
+	- Fixed a few places where keywords weren't able to be selected properly.
+
+
+0.06alpha - 11 February 2012
 	- Basic script editing has been added!
 		- NOTE: This requires the installation of the CK for the script sources and
 		  the script compiler.
