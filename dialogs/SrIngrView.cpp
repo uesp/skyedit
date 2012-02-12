@@ -50,6 +50,17 @@ BEGIN_MESSAGE_MAP(CSrIngrView, CSrRecordDialog)
 	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_PASTE, OnUpdateConditionrecordPaste)
 	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_DELETEALL, OnUpdateConditionrecordDeleteAll)
 	ON_WM_CONTEXTMENU()
+	ON_BN_CLICKED(IDC_EDIT_EQUIPSLOT, &CSrIngrView::OnBnClickedEditEquipslot)
+	ON_BN_CLICKED(IDC_SELECT_EQUIPSLOT, &CSrIngrView::OnBnClickedSelectEquipslot)
+	ON_BN_CLICKED(IDC_SELECT_INVENTORYICON, &CSrIngrView::OnBnClickedSelectInventoryicon)
+	ON_BN_CLICKED(IDC_SELECT_MESSAGEICON, &CSrIngrView::OnBnClickedSelectMessageicon)
+	ON_NOTIFY(ID_SRRESOURCE_CHECKDROP, IDC_INVENTORYICON, OnDropInventoryIcon)
+	ON_NOTIFY(ID_SRRESOURCE_DROP, IDC_INVENTORYICON, OnDropInventoryIcon)
+	ON_NOTIFY(ID_SRRESOURCE_CHECKDROP, IDC_MESSAGEICON, OnDropMessageIcon)
+	ON_NOTIFY(ID_SRRESOURCE_DROP, IDC_MESSAGEICON, OnDropMessageIcon)
+	ON_MESSAGE(ID_SRRECORDLIST_ACTIVATE, OnEditEffectMsg)
+	ON_NOTIFY(ID_SRRESOURCE_CHECKDROP, IDC_EQUIPSLOT, OnDropEquipSlot)
+	ON_NOTIFY(ID_SRRESOURCE_DROP, IDC_EQUIPSLOT, OnDropEquipSlot)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrIngrView Message Map
@@ -61,7 +72,8 @@ END_MESSAGE_MAP()
  * Begin List Column Definitions
  *
  *=========================================================================*/
-static srreclistcolinit_t s_EffectListInit[] = {
+static srreclistcolinit_t s_EffectListInit[] = 
+{
 	{ SR_FIELD_EFFECTNAME,		180,	LVCFMT_CENTER },
 	{ SR_FIELD_EFFECTID,		5,		LVCFMT_CENTER },
 	{ SR_FIELD_MAGNITUDE,		50,		LVCFMT_CENTER },
@@ -71,7 +83,8 @@ static srreclistcolinit_t s_EffectListInit[] = {
 	{ SR_FIELD_NONE, 0, 0 }
  };
 
-static srrecfield_t s_EffectFields[] = {
+static srrecfield_t s_EffectFields[] = 
+{
 	{ "Effect",		SR_FIELD_EFFECTNAME,		0, NULL },
 	{ "FormID",		SR_FIELD_EFFECTID,			0, NULL },
 	{ "Magnitude",	SR_FIELD_MAGNITUDE,			0, NULL },
@@ -97,10 +110,16 @@ BEGIN_SRRECUIFIELDS(CSrIngrView)
 	ADD_SRRECUIFIELDS( SR_FIELD_PICKUPSOUND,		IDC_PICKUPSOUND,		128,	0)
 	ADD_SRRECUIFIELDS( SR_FIELD_DROPSOUND,			IDC_DROPSOUND,			128,	0)
 	ADD_SRRECUIFIELDS( SR_FIELD_VALUE,				IDC_VALUE,				32,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN1,			IDC_UNKNOWN,			32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_BASECOST,			IDC_BASECOST,			32,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_WEIGHT,				IDC_WEIGHT,				32,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_KEYWORDS,			IDC_KEYWORDS,			128,	0)
-	ADD_SRRECUIFIELDS( SR_FIELD_MODEL,				IDC_MODEL,				128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_MODEL,				IDC_MODEL,				256,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_ICON,				IDC_INVENTORYICON,		256,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_MESSAGEICON,		IDC_MESSAGEICON,		256,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_EQUIPSLOT,			IDC_EQUIPSLOT,			128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_AUTOCALC,			IDC_AUTOCALC,			8,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_FOOD,				IDC_FOOD,				8,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_REFERENCEPERSIST,	IDC_REFERENCEPERSIST,	8,		0)
 END_SRRECUIFIELDS()
 /*===========================================================================
  *		End of UI Field Map
@@ -163,9 +182,16 @@ void CSrIngrView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DROPSOUND, m_DropSound);
 	DDX_Control(pDX, IDC_KEYWORDS, m_Keywords);
 	DDX_Control(pDX, IDC_MODEL, m_Model);
-	DDX_Control(pDX, IDC_UNKNOWN, m_Unknown);
+	DDX_Control(pDX, IDC_BASECOST, m_BaseCost);
 	DDX_Control(pDX, IDC_SCRIPT_LIST, m_Scripts);
- }
+	DDX_Control(pDX, IDC_AUTOCALC, m_AutoCalc);
+	DDX_Control(pDX, IDC_FOOD, m_Food);
+	DDX_Control(pDX, IDC_REFERENCEPERSIST, m_ReferencePersist);
+	DDX_Control(pDX, IDC_DESTRUCTDATA, m_DestructData);
+	DDX_Control(pDX, IDC_EQUIPSLOT, m_EquipSlot);
+	DDX_Control(pDX, IDC_INVENTORYICON, m_InventoryIcon);
+	DDX_Control(pDX, IDC_MESSAGEICON, m_MessageIcon);
+}
 /*===========================================================================
  *		End of Class Method CSrIngrView::DoDataExchange()
  *=========================================================================*/
@@ -893,4 +919,82 @@ void CSrIngrView::OnContextMenu(CWnd* pWnd, CPoint Point)
 	{
 		CSrRecordDialog::OnContextMenu(pWnd, Point);
 	}
+}
+
+
+void CSrIngrView::OnBnClickedEditEquipslot()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_EquipSlot, SR_NAME_EQUP);
+}
+
+
+void CSrIngrView::OnBnClickedSelectEquipslot()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_EquipSlot, SR_NAME_EQUP, &CSrEqupRecord::s_FieldMap);
+}
+
+
+void CSrIngrView::OnDropEquipSlot (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	*pResult = DropRecordHelper(pDropItems, &m_EquipSlot, SR_NAME_EQUP, 1);
+}
+
+
+void CSrIngrView::OnBnClickedSelectInventoryicon()
+{
+	m_pDlgHandler->SelectResourceHelper(&m_InventoryIcon, SRRESOURCE_PATH_TEXTURES);
+}
+
+
+void CSrIngrView::OnBnClickedSelectMessageicon()
+{
+	m_pDlgHandler->SelectResourceHelper(&m_MessageIcon, SRRESOURCE_PATH_TEXTURES);
+}
+
+
+void CSrIngrView::OnDropInventoryIcon (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srresourcedropinfo_t* pDropInfo = (srresourcedropinfo_t *) pNotifyStruct;
+	*pResult = SRRESOURCE_DROPCHECK_ERROR;
+
+	if (pDropInfo->pResourceFile == NULL) return;
+	if (pDropInfo->pResourceFile->GetResourceType() != SR_RESOURCETYPE_IMAGE) return;
+
+		/* If we're just checking or not */
+	if (pDropInfo->Notify.code == ID_SRRESOURCE_DROP) 
+	{
+		m_InventoryIcon.SetWindowText(pDropInfo->pResourceFile->GetCSName());    
+	}
+
+	*pResult = SRRESOURCE_DROPCHECK_OK;
+}
+
+
+void CSrIngrView::OnDropMessageIcon (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srresourcedropinfo_t* pDropInfo = (srresourcedropinfo_t *) pNotifyStruct;
+	*pResult = SRRESOURCE_DROPCHECK_ERROR;
+
+	if (pDropInfo->pResourceFile == NULL) return;
+	if (pDropInfo->pResourceFile->GetResourceType() != SR_RESOURCETYPE_IMAGE) return;
+	
+		/* If we're just checking or not */
+	if (pDropInfo->Notify.code == ID_SRRESOURCE_DROP) 
+	{
+		m_MessageIcon.SetWindowText(pDropInfo->pResourceFile->GetCSName());    
+	}
+
+  *pResult = SRRESOURCE_DROPCHECK_OK;
+}
+
+
+LRESULT CSrIngrView::OnEditEffectMsg (WPARAM wParam, LPARAM lParam) 
+{
+	if (m_Effects[lParam] == NULL) return -1;
+	if (m_Effects[lParam]->pEffect == NULL) return -2;
+	
+	m_pDlgHandler->EditRecord(m_Effects[lParam]->pEffect->GetValue());
+
+	return 0;
 }

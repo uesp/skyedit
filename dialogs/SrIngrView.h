@@ -107,9 +107,17 @@ public:
 	CEdit		m_DropSound;
 	CListBox	m_Keywords;
 	CEdit		m_Model;
+	CEdit		m_BaseCost;
+	CButton		m_AutoCalc;
+	CButton		m_Food;
+	CButton		m_ReferencePersist;
+	CButton		m_DestructData;
+	CEdit		m_EquipSlot;
+	CEdit		m_InventoryIcon;
+	CEdit		m_MessageIcon;
+	CListBox	m_Scripts;
 
 public:
-
 	virtual void  GetControlData   (void);
 	virtual void  SetControlData   (void);
 	virtual int   OnPreSaveRecord  (void);
@@ -128,24 +136,29 @@ protected:
 
   DECLARE_MESSAGE_MAP();
 
-public:
-	
+public:	
 	afx_msg void OnLvnItemchangedEffectList(NMHDR *pNMHDR, LRESULT *pResult);	
 	afx_msg void OnBnClickedConditionButton();
 	afx_msg void OnBnClickedEditEffect();
 	afx_msg void OnBnClickedSelecteffectButton();
 	afx_msg void OnBnClickedAddButton();
 	afx_msg void OnBnClickedDeleteButton();	
-	CEdit m_Unknown;
-	CListBox m_Scripts;
-
 	afx_msg void OnConditionrecordCopy();
 	afx_msg void OnConditionrecordPaste();
 	afx_msg void OnConditionrecordDeleteAll();
 	afx_msg void OnUpdateConditionrecordCopy(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateConditionrecordPaste(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateConditionrecordDeleteAll(CCmdUI *pCmdUI);
-	afx_msg void OnContextMenu(CWnd* pWnd, CPoint Point);
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint Point);	
+	afx_msg void OnBnClickedEditEquipslot();
+	afx_msg void OnBnClickedSelectEquipslot();
+	afx_msg void OnBnClickedSelectInventoryicon();
+	afx_msg void OnBnClickedSelectMessageicon();
+	afx_msg LRESULT OnEditEffectMsg (WPARAM wParam, LPARAM lParam);
+	afx_msg void OnDropInventoryIcon (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnDropMessageIcon (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnDropEquipSlot (NMHDR* pNotifyStruct, LRESULT* pResult);
+	
 };
 /*===========================================================================
  *		End of Class CSrIngrView Definition

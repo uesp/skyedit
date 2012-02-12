@@ -453,9 +453,9 @@
 #define IDC_CASTANIM                    1254
 #define IDC_EFFECTTYPE                  1254
 #define IDC_MEDICINE                    1254
+#define IDC_REFERENCEPERSIST            1254
 #define IDC_TYPEA                       1255
 #define IDC_SOUNDVOLUME                 1255
-#define IDC_AUTOCALC4                   1255
 #define IDC_POISON                      1255
 #define IDC_UNKNOWNCHECK8               1256
 #define IDC_UNKNOWN1                    1257
@@ -1017,6 +1017,8 @@
 #define IDC_MAGICFLAGS                  1803
 #define IDC_DISPELEFFECTS               1804
 #define IDC_EFFECTOBJECTLABEL           1805
+#define IDC_BUTTON1                     1809
+#define IDC_DESTRUCTDATA                1809
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -1302,7 +1304,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        245
 #define _APS_NEXT_COMMAND_VALUE         32968
-#define _APS_NEXT_CONTROL_VALUE         1808
+#define _APS_NEXT_CONTROL_VALUE         1810
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
