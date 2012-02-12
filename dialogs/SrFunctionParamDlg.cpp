@@ -298,7 +298,7 @@ bool CSrFunctionParamDlg::SetupListType (void)
 		case SR_FUNCPARAM_CRITICALSTAGE	 :
 			m_pStringValues = s_SrCriticalStageTypes;
 			return true;
-		case SR_FUNCPARAM_KEYWORD		 : m_pRecordType = &SR_NAME_KWDA; return true;
+		case SR_FUNCPARAM_KEYWORD		 : m_pRecordType = &SR_NAME_KYWD; return true;
 		case SR_FUNCPARAM_LOCREFTYPE	 : m_pRecordType = &SR_NAME_LCRT; return true;
 		case SR_FUNCPARAM_LOCATION		 : m_pRecordType = &SR_NAME_LCTN; return true;
 		case SR_FUNCPARAM_FORM			 : return false;
