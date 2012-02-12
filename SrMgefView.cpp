@@ -21,30 +21,62 @@
  * Begin Local Definitions
  *
  *=========================================================================*/
-	IMPLEMENT_DYNCREATE(CSrMgefView, CSrRecordDialog);
+IMPLEMENT_DYNCREATE(CSrMgefView, CSrRecordDialog);
+
+const srmgeftypedlginfo_t g_EffectTypeDlgInfos[] =
+{
+	{ SR_NAME_NULL, 1, -1 }, //0
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_NULL, 1, -1 },
+	{ SR_NAME_NULL, 2, -1 },
+	{ SR_NAME_NULL, 0,  0 },	//Agression
+	{ SR_NAME_NULL, 0,  1 },	//Confidence
+	{ SR_NAME_NULL, 0,  0 },	//Agression
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_NULL, 0, -1 }, //10
+	{ SR_NAME_NULL, 0, 54 },	//Invisibility
+	{ SR_NAME_LIGH, 0, -1 },
+	{ SR_NAME_NULL, 0, -1 }, //Unused
+	{ SR_NAME_NULL, 0, -1 }, //Unused
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_WEAP, 0, -1 },
+	{ SR_NAME_NPC_, 0, -1 },
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_NULL, 0, -1 }, //20
+	{ SR_NAME_NULL, 0, 53 },	//Paralysis
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_NULL, 0,  1 },	//Confidence
+	{ SR_NAME_HAZD, 0, -1 },	
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_NULL, 0, -1 }, //30
+	{ SR_NAME_NULL, 1, -1 },
+	{ SR_NAME_NULL, 1, -1 },
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_KYWD, 1, -1 }, //No weight?
+	{ SR_NAME_SPEL, 0, -1 },
+	{ SR_NAME_RACE, 0, -1 },
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_NULL, 0,  1 },	//Confidence
+	{ SR_NAME_ENCH, 0, -1 },
+	{ SR_NAME_HAZD, 0, -1 }, //40
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_NULL, 0,  1 },	//Confidence
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_NULL, 0, -1 },
+	{ SR_NAME_NULL, 0, -1 }
+};
+		
+const dword g_EffectTypeDlgInfoCount = sizeof(g_EffectTypeDlgInfos) / sizeof(g_EffectTypeDlgInfos[0]);
+
 /*===========================================================================
  *		End of Local Definitions
- *=========================================================================*/
-
-
-/*===========================================================================
- *
- * Begin List Column Definitions
- *
- *=========================================================================*/
-static srreclistcolinit_t s_SoundListInit[] = {
-	{ SR_FIELD_SOUND,		180,	LVCFMT_CENTER },
-	{ SR_FIELD_VALUE,		50,		LVCFMT_CENTER },
-	{ SR_FIELD_NONE, 0, 0 }
- };
-
-static srrecfield_t s_SoundFields[] = {
-	{ "Sound",		SR_FIELD_SOUND,		0, NULL },
-	{ "Value",		SR_FIELD_VALUE,		0, NULL },	
-	{ NULL,			SR_FIELD_NONE,		0, NULL }
- };
-/*===========================================================================
- *		End of List Column Definitions
  *=========================================================================*/
 
 
@@ -55,9 +87,12 @@ static srrecfield_t s_SoundFields[] = {
  *=========================================================================*/
 BEGIN_MESSAGE_MAP(CSrMgefView, CSrRecordDialog)
 	ON_WM_CONTEXTMENU()
-	ON_MESSAGE(ID_SRRECORDLIST_ACTIVATE, OnEditSoundMsg)
+
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_KEYWORDS, OnDropKeywords)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_KEYWORDS, OnDropKeywords)
+
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_COUNTEREFFECTS, OnDropCounterEffects)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_COUNTEREFFECTS, OnDropCounterEffects)
 
 	ON_BN_CLICKED(IDC_EDIT_LIGHT, OnBnClickedEditLight)
 	ON_BN_CLICKED(IDC_SELECT_LIGHT, OnBnClickedSelectLight)
@@ -79,63 +114,95 @@ BEGIN_MESSAGE_MAP(CSrMgefView, CSrRecordDialog)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_DUALCAST, OnDropDualCast)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_DUALCAST, OnDropDualCast)
 
-	ON_BN_CLICKED(IDC_EDIT_SECONDSPELL, OnBnClickedEditSecondSpell)
-	ON_BN_CLICKED(IDC_SELECT_SECONDSPELL, OnBnClickedSelectSecondSpell)
-	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_SECONDSPELL, OnDropSecondSpell)
-	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_SECONDSPELL, OnDropSecondSpell)
+	ON_BN_CLICKED(IDC_EDIT_EFFECTOBJECT, OnBnClickedEditEffectObject)
+	ON_BN_CLICKED(IDC_SELECT_EFFECTOBJECT, OnBnClickedSelectEffectObject)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EFFECTOBJECT, OnDropEffectObject)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EFFECTOBJECT, OnDropEffectObject)
 
 	ON_BN_CLICKED(IDC_EDIT_EXPLOSION, OnBnClickedEditExplosion)
 	ON_BN_CLICKED(IDC_SELECT_EXPLOSION, OnBnClickedSelectExplosion)
 	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EXPLOSION, OnDropExplosion)
 	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EXPLOSION, OnDropExplosion)
 
-	ON_BN_CLICKED(IDC_EDIT_ART1, OnBnClickedEditArt1)
-	ON_BN_CLICKED(IDC_SELECT_ART1, OnBnClickedSelectArt1)
-	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_ART1, OnDropArt1)
-	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_ART1, OnDropArt1)
+	ON_BN_CLICKED(IDC_EDIT_HITEFFECTART, OnBnClickedEditHitEffectArt)
+	ON_BN_CLICKED(IDC_SELECT_HITEFFECTART, OnBnClickedSelectHitEffectArt)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_HITEFFECTART, OnDropHitEffectArt)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_HITEFFECTART, OnDropHitEffectArt)
 
-	ON_BN_CLICKED(IDC_EDIT_ART2, OnBnClickedEditArt2)
-	ON_BN_CLICKED(IDC_SELECT_ART2, OnBnClickedSelectArt2)
-	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_ART2, OnDropArt2)
-	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_ART2, OnDropArt2)
+	ON_BN_CLICKED(IDC_EDIT_CASTINGART, OnBnClickedEditCastingArt)
+	ON_BN_CLICKED(IDC_SELECT_CASTINGART, OnBnClickedSelectCastingArt)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_CASTINGART, OnDropCastingArt)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_CASTINGART, OnDropCastingArt)
 
-	ON_BN_CLICKED(IDC_EDIT_ART3, OnBnClickedEditArt3)
-	ON_BN_CLICKED(IDC_SELECT_ART3, OnBnClickedSelectArt3)
-	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_ART3, OnDropArt3)
-	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_ART3, OnDropArt3)
+	ON_BN_CLICKED(IDC_EDIT_ENCHANTART, OnBnClickedEditEnchantArt)
+	ON_BN_CLICKED(IDC_SELECT_ENCHANTART, OnBnClickedSelectEnchantArt)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_ENCHANTART, OnDropEnchantArt)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_ENCHANTART, OnDropEnchantArt)
 
-	ON_BN_CLICKED(IDC_EDIT_ART4, OnBnClickedEditArt4)
-	ON_BN_CLICKED(IDC_SELECT_ART4, OnBnClickedSelectArt4)
-	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_ART4, OnDropArt4)
-	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_ART4, OnDropArt4)
+	ON_BN_CLICKED(IDC_EDIT_EQUIPABILITY, OnBnClickedEditEquipAbility)
+	ON_BN_CLICKED(IDC_SELECT_EQUIPABILITY, OnBnClickedSelectEquipAbility)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_EQUIPABILITY, OnDropEquipAbility)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_EQUIPABILITY, OnDropEquipAbility)
 
-	ON_BN_CLICKED(IDC_EDIT_SHADER1, OnBnClickedEditShader1)
-	ON_BN_CLICKED(IDC_SELECT_SHADER1, OnBnClickedSelectShader1)
-	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_SHADER1, OnDropShader1)
-	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_SHADER1, OnDropShader1)
+	ON_BN_CLICKED(IDC_EDIT_HITSHADER, OnBnClickedEditHitShader)
+	ON_BN_CLICKED(IDC_SELECT_HITSHADER, OnBnClickedSelectHitShader)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_HITSHADER, OnDropHitShader)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_HITSHADER, OnDropHitShader)
 
-	ON_BN_CLICKED(IDC_EDIT_SHADER2, OnBnClickedEditShader2)
-	ON_BN_CLICKED(IDC_SELECT_SHADER2, OnBnClickedSelectShader2)
-	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_SHADER2, OnDropShader2)
-	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_SHADER2, OnDropShader2)
+	ON_BN_CLICKED(IDC_EDIT_ENCHANTSHADER, OnBnClickedEditEnchantShader)
+	ON_BN_CLICKED(IDC_SELECT_ENCHANTSHADER, OnBnClickedSelectEnchantShader)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_ENCHANTSHADER, OnDropEnchantShader)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_ENCHANTSHADER, OnDropEnchantShader)
 
-	ON_BN_CLICKED(IDC_EDIT_IMPACTSET1, OnBnClickedEditImpactSet1)
-	ON_BN_CLICKED(IDC_SELECT_IMPACTSET1, OnBnClickedSelectImpactSet1)
-	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_IMPACTSET1, OnDropImpactSet1)
-	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_IMPACTSET1, OnDropImpactSet1)
+	ON_BN_CLICKED(IDC_EDIT_IMPACTSET, OnBnClickedEditImpactSet)
+	ON_BN_CLICKED(IDC_SELECT_IMPACTSET, OnBnClickedSelectImpactSet)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_IMPACTSET, OnDropImpactSet)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_IMPACTSET, OnDropImpactSet)
 
-	ON_BN_CLICKED(IDC_EDIT_IMPACTSET2, OnBnClickedEditImpactSet2)
-	ON_BN_CLICKED(IDC_SELECT_IMPACTSET2, OnBnClickedSelectImpactSet2)
-	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_IMPACTSET2, OnDropImpactSet2)
-	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_IMPACTSET2, OnDropImpactSet2)
+	ON_BN_CLICKED(IDC_EDIT_IMAGESPACEMOD, OnBnClickedEditImageSpaceMod)
+	ON_BN_CLICKED(IDC_SELECT_IMAGESPACEMOD, OnBnClickedSelectImageSpaceMod)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_IMAGESPACEMOD, OnDropImageSpaceMod)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_IMAGESPACEMOD, OnDropImageSpaceMod)
 
-	ON_BN_CLICKED(IDC_DELETESOUND, &CSrMgefView::OnBnClickedDeletesound)
-	ON_COMMAND(ID_SNDDLIST_DELETE, &CSrMgefView::OnBnClickedDeletesound)
+	ON_BN_CLICKED(IDC_EDIT_MENU, OnBnClickedEditMenu)
+	ON_BN_CLICKED(IDC_SELECT_MENU, OnBnClickedSelectMenu)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_MENU, OnDropMenu)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_MENU, OnDropMenu)
 
-	ON_BN_CLICKED(IDC_ADDSOUND, &CSrMgefView::OnBnClickedAddsound)
-	ON_COMMAND(ID_SNDDLIST_ADD, &CSrMgefView::OnBnClickedAddsound)
-	ON_COMMAND(ID_SNDDLIST_EDITRECORD, &CSrMgefView::OnSnddlistEditrecord)
-	ON_COMMAND(ID_SNDDLIST_EDIT, &CSrMgefView::OnSnddlistEdit)
+	ON_BN_CLICKED(IDC_EDIT_SOUNDDRAW, OnBnClickedEditDrawSound)
+	ON_BN_CLICKED(IDC_SELECT_SOUNDDRAW, OnBnClickedSelectDrawSound)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_SOUNDDRAW, OnDropDrawSound)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_SOUNDDRAW, OnDropDrawSound)
+
+	ON_BN_CLICKED(IDC_EDIT_SOUNDCHARGE, OnBnClickedEditChargeSound)
+	ON_BN_CLICKED(IDC_SELECT_SOUNDCHARGE, OnBnClickedSelectChargeSound)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_SOUNDCHARGE, OnDropChargeSound)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_SOUNDCHARGE, OnDropChargeSound)
+
+	ON_BN_CLICKED(IDC_EDIT_SOUNDREADY, OnBnClickedEditReadySound)
+	ON_BN_CLICKED(IDC_SELECT_SOUNDREADY, OnBnClickedSelectReadySound)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_SOUNDREADY, OnDropReadySound)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_SOUNDREADY, OnDropReadySound)
+
+	ON_BN_CLICKED(IDC_EDIT_SOUNDRELEASE, OnBnClickedEditReleaseSound)
+	ON_BN_CLICKED(IDC_SELECT_SOUNDRELEASE, OnBnClickedSelectReleaseSound)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_SOUNDRELEASE, OnDropReleaseSound)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_SOUNDRELEASE, OnDropReleaseSound)
+
+	ON_BN_CLICKED(IDC_EDIT_SOUNDCASTLOOP, OnBnClickedEditCastLoopSound)
+	ON_BN_CLICKED(IDC_SELECT_SOUNDCASTLOOP, OnBnClickedSelectCastLoopSound)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_SOUNDCASTLOOP, OnDropCastLoopSound)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_SOUNDCASTLOOP, OnDropCastLoopSound)
+
+	ON_BN_CLICKED(IDC_EDIT_SOUNDONHIT, OnBnClickedEditOnHitSound)
+	ON_BN_CLICKED(IDC_SELECT_SOUNDONHIT, OnBnClickedSelectOnHitSound)
+	ON_NOTIFY(ID_SRRECORDLIST_CHECKDROP, IDC_SOUNDONHIT, OnDropOnHitSound)
+	ON_NOTIFY(ID_SRRECORDLIST_DROP, IDC_SOUNDONHIT, OnDropOnHitSound)
+
+	ON_BN_CLICKED(IDC_ADD_COUNTEREFFECTS, &CSrMgefView::OnBnClickedAddCountereffects)
+	ON_BN_CLICKED(IDC_EDIT_COUNTEREFFECTS, &CSrMgefView::OnBnClickedEditCountereffects)
+	ON_BN_CLICKED(IDC_DEL_COUNTEREFFECTS, &CSrMgefView::OnBnClickedDelCountereffects)
+	ON_CBN_SELCHANGE(IDC_EFFECTTYPE, &CSrMgefView::OnCbnSelchangeEffecttype)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrMgefView Message Map
@@ -153,63 +220,49 @@ BEGIN_SRRECUIFIELDS(CSrMgefView)
 	ADD_SRRECUIFIELDS( SR_FIELD_DESCRIPTION,		IDC_DNAME,				256,	IDS_TT_DESCRIPTION)
 	ADD_SRRECUIFIELDS( SR_FIELD_KEYWORDS,			IDC_KEYWORDS,			0,		IDS_TT_KEYWORDS)
 	ADD_SRRECUIFIELDS( SR_FIELD_ITEMNAME,			IDC_ITEMNAME,			256,	IDS_TT_FULLNAME)
-	ADD_SRRECUIFIELDS( SR_FIELD_SCHOOL,				IDC_SCHOOLLIST,			64,		IDS_TT_SCHOOL)
-	ADD_SRRECUIFIELDS( SR_FIELD_EFFECTTYPE,			IDC_TYPELIST,			64,		IDS_TT_EFFECTTYPE)
 	ADD_SRRECUIFIELDS( SR_FIELD_CONDITIONCOUNT,		IDC_CONDITION_BUTTON,	64,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_SKILLLEVEL,			IDC_SKILLLEVEL,			10,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_BASECOST,			IDC_BASECOST,			10,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_CASTINGDELAY,		IDC_CASTINGDELAY,		10,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_AREA,				IDC_AREA,				10,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_DUALCASTSCALE,		IDC_DUALCASTSCALE,		10,		0)
 
-	ADD_SRRECUIFIELDS( SR_FIELD_EFFECTPLAYRATE,		IDC_EFFECTPLAYRATE,		10,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_ACTORVALUE,			IDC_ACTORVALUE,			10,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_CASTTYPE,			IDC_CASTTYPE,			10,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_SKILLUSAGEMULT,		IDC_SKILLUSAGEMULT,		10,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_ACTORVALUE,			IDC_ACTORVALUE,			64,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_ACTORVALUE2,		IDC_ACTORVALUE2,		64,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_SECONDAVWEIGHT,		IDC_SECONDAVWEIGHT,		10,		0)
 
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN1,			IDC_UNKNOWN1,			10,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN2,			IDC_UNKNOWN2,			10,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN3,			IDC_UNKNOWN3,			10,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN4,			IDC_UNKNOWN4,			10,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN5,			IDC_UNKNOWN5,			10,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN6,			IDC_UNKNOWN6,			10,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN7,			IDC_UNKNOWN7,			10,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN8,			IDC_UNKNOWN8,			10,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN9,			IDC_UNKNOWN9,			10,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN10,			IDC_UNKNOWN10,			10,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN13,			IDC_UNKNOWN13,			10,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN14,			IDC_UNKNOWN14,			10,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWN15,			IDC_UNKNOWN15,			10,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_SCHOOL,				IDC_SCHOOLLIST,			64,		IDS_TT_SCHOOL)
+	ADD_SRRECUIFIELDS( SR_FIELD_RESISTTYPE,			IDC_RESISTLIST,			64,		IDS_TT_EFFECTTYPE)
+	ADD_SRRECUIFIELDS( SR_FIELD_CASTTYPE,			IDC_CASTTYPE,			64,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_DELIVERYTYPE,		IDC_DELIVERYTYPE,		64,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_EFFECTTYPE,			IDC_EFFECTTYPE,			64,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_SOUNDVOLUME,		IDC_SOUNDVOLUME,		64,		0)
+
+	ADD_SRRECUIFIELDS( SR_FIELD_TAPERCURVE,			IDC_TAPERCURVE,			10,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_TAPERDURATION,		IDC_TAPERDURATION,		10,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_TAPERWEIGHT,		IDC_TAPERWEIGHT,		10,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_SCRIPTAIDATASCORE,	IDC_SCRIPTAIDATASCORE,	10,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_SCRIPTAIDATADELAY,	IDC_SCRIPTAIDATADELAY,	10,		0)
+
+	ADD_SRRECUIFIELDS( SR_FIELD_DISPELEFFECTS,		IDC_DISPELEFFECTS,		10,		0)
 
 	ADD_SRRECUIFIELDS( SR_FIELD_LIGHT,				IDC_LIGHT,				200,	0)
-	ADD_SRRECUIFIELDS( SR_FIELD_SHADER1,			IDC_SHADER1,			200,	0)
-	ADD_SRRECUIFIELDS( SR_FIELD_SHADER2,			IDC_SHADER2,			200,	0)
-	ADD_SRRECUIFIELDS( SR_FIELD_ART1,				IDC_ART1,				200,	0)
-	ADD_SRRECUIFIELDS( SR_FIELD_ART2,				IDC_ART2,				200,	0)
-	ADD_SRRECUIFIELDS( SR_FIELD_ART3,				IDC_ART3,				200,	0)
-	ADD_SRRECUIFIELDS( SR_FIELD_ART4,				IDC_ART4,				200,	0)
-	ADD_SRRECUIFIELDS( SR_FIELD_IMPACTSET1,			IDC_IMPACTSET1,			200,	0)
-	ADD_SRRECUIFIELDS( SR_FIELD_IMPACTSET2,			IDC_IMPACTSET2,			200,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_HITSHADER,			IDC_HITSHADER,			200,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_ENCHANTSHADER,		IDC_ENCHANTSHADER,		200,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_CASTINGART,			IDC_CASTINGART,			200,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_HITEFFECTART,		IDC_HITEFFECTART,		200,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_ENCHANTART,			IDC_ENCHANTART,			200,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_EQUIPABILITY,		IDC_EQUIPABILITY,		200,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_IMPACTSET,			IDC_IMPACTSET,			200,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_IMAGESPACEMOD,		IDC_IMAGESPACEMOD,		200,	0)
 	ADD_SRRECUIFIELDS( SR_FIELD_PERK,				IDC_PERK,				200,	0)
 	ADD_SRRECUIFIELDS( SR_FIELD_EXPLOSION,			IDC_EXPLOSION,			200,	0)
 	ADD_SRRECUIFIELDS( SR_FIELD_DUALCAST,			IDC_DUALCAST,			200,	0)
-	ADD_SRRECUIFIELDS( SR_FIELD_SECONDSPELL,		IDC_SECONDSPELL,		200,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_EFFECTOBJECT,		IDC_EFFECTOBJECT,		200,	0)
 	ADD_SRRECUIFIELDS( SR_FIELD_PROJECTILE,			IDC_PROJECTILE,			200,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_MENU,				IDC_MENU,				200,	0)
 
-	ADD_SRRECUIFIELDS( SR_FIELD_HOSTILE,			IDC_HOSTILECHECK,		0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_RECOVER,			IDC_RECOVERCHECK,		0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_DETRIMENTAL,		IDC_DETRIMENTALCHECK,	0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_PERCENTMAG,			IDC_PERCENTMAGCHECK,	0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_NOAREA,				IDC_NOAREACHECK,		0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_SELFONLY,			IDC_SELFONLYCHECK,		0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_FXPERSIST,			IDC_FXPERSISTCHECK,		0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_BOUND,				IDC_BOUNDCHECK,			0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_WARD,				IDC_WARDCHECK,			0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWNFLAG1,		IDC_UNKNOWNCHECK1,		0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWNFLAG2,		IDC_UNKNOWNCHECK2,		0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWNFLAG3,		IDC_UNKNOWNCHECK3,		0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWNFLAG4,		IDC_UNKNOWNCHECK4,		0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWNFLAG5,		IDC_UNKNOWNCHECK5,		0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWNFLAG6,		IDC_UNKNOWNCHECK6,		0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWNFLAG7,		IDC_UNKNOWNCHECK7,		0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWNFLAG8,		IDC_UNKNOWNCHECK8,		0,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_UNKNOWNFLAG9,		IDC_UNKNOWNCHECK9,		0,		0)
 END_SRRECUIFIELDS()
 /*===========================================================================
  *		End of UI Field Map
@@ -254,71 +307,68 @@ CSrMgefView::~CSrMgefView()
 void CSrMgefView::DoDataExchange (CDataExchange* pDX) {
 	CSrRecordDialog::DoDataExchange(pDX);
 
-	DDX_Control(pDX, IDC_DNAME, m_DName);
+	DDX_Control(pDX, IDC_DNAME, m_Description);
 	DDX_Control(pDX, IDC_ITEMNAME, m_ItemName);
 	DDX_Control(pDX, IDC_EDITORID, m_EditorID);
 	DDX_Control(pDX, IDC_FORMID, m_FormID);
 	DDX_Control(pDX, IDC_KEYWORDS, m_Keywords);
-	DDX_Control(pDX, IDC_SCHOOLLIST, m_SchoolList);
-	DDX_Control(pDX, IDC_TYPELIST, m_TypeList);
+
 	DDX_Control(pDX, IDC_CONDITION_BUTTON, m_Conditions);
 	DDX_Control(pDX, IDC_BASECOST, m_BaseCost);
 	DDX_Control(pDX, IDC_SKILLLEVEL, m_SkillLevel);
-	DDX_Control(pDX, IDC_HOSTILECHECK, m_HostileCheck);
-	DDX_Control(pDX, IDC_RECOVERCHECK, m_RecoverCheck);
-	DDX_Control(pDX, IDC_DETRIMENTALCHECK, m_DetrimentalCheck);
-	DDX_Control(pDX, IDC_PERCENTMAGCHECK, m_PercentMagCheck);
-	DDX_Control(pDX, IDC_SELFONLYCHECK, m_SelfCheck);
-	DDX_Control(pDX, IDC_FXPERSISTCHECK, m_FXPersistCheck);
-	DDX_Control(pDX, IDC_BOUNDCHECK, m_BoundCheck);
 
-	DDX_Control(pDX, IDC_EFFECTPLAYRATE,	m_EffectPlayRate);
+	DDX_Control(pDX, IDC_SKILLUSAGEMULT,	m_SkillUsageMult);
 	DDX_Control(pDX, IDC_ACTORVALUE,		m_ActorValue);
-	DDX_Control(pDX, IDC_CASTTYPE,			m_CastType);
+	DDX_Control(pDX, IDC_ACTORVALUE2,		m_ActorValue2);
+	DDX_Control(pDX, IDC_SECONDAVWEIGHT,	m_SecondAVWeight);
 
-	DDX_Control(pDX, IDC_UNKNOWN1,			m_Unknown1);
-	DDX_Control(pDX, IDC_UNKNOWN2,			m_Unknown2);
-	DDX_Control(pDX, IDC_UNKNOWN3,			m_Unknown3);
-	DDX_Control(pDX, IDC_UNKNOWN4,			m_Unknown4);
-	DDX_Control(pDX, IDC_UNKNOWN5,			m_Unknown5);
-	DDX_Control(pDX, IDC_UNKNOWN6,			m_Unknown6);
-	DDX_Control(pDX, IDC_UNKNOWN7,			m_Unknown7);
-	DDX_Control(pDX, IDC_UNKNOWN8,			m_Unknown8);
-	DDX_Control(pDX, IDC_UNKNOWN9,			m_Unknown9);
-	DDX_Control(pDX, IDC_UNKNOWN10,			m_Unknown10);
-	DDX_Control(pDX, IDC_UNKNOWN13,			m_Unknown13);
-	DDX_Control(pDX, IDC_UNKNOWN14,			m_Unknown14);
-	DDX_Control(pDX, IDC_UNKNOWN15,			m_Unknown15);
+	DDX_Control(pDX, IDC_SCHOOLLIST,	m_SchoolList);
+	DDX_Control(pDX, IDC_RESISTLIST,	m_ResistList);
+	DDX_Control(pDX, IDC_CASTTYPE,		m_CastType);
+	DDX_Control(pDX, IDC_DELIVERYTYPE,	m_DeliveryType);
+	DDX_Control(pDX, IDC_EFFECTTYPE,	m_EffectType);
+	DDX_Control(pDX, IDC_SOUNDVOLUME,	m_SoundVolume);
+	DDX_Control(pDX, IDC_DUALCASTSCALE,	m_DualCastScale);
+	DDX_Control(pDX, IDC_CASTINGDELAY,	m_CastingDelay);
+	DDX_Control(pDX, IDC_AREA,	m_Area);
+
+	DDX_Control(pDX, IDC_TAPERCURVE,			m_TaperCurve);
+	DDX_Control(pDX, IDC_TAPERDURATION,			m_TaperDuration);
+	DDX_Control(pDX, IDC_TAPERWEIGHT,			m_TaperWeight);
+	DDX_Control(pDX, IDC_SCRIPTAIDATASCORE,		m_ScriptAIDataScore);
+	DDX_Control(pDX, IDC_SCRIPTAIDATADELAY,		m_ScriptAIDataDelay);
 
 	DDX_Control(pDX, IDC_LIGHT,				m_Light);
-	DDX_Control(pDX, IDC_SHADER1,			m_Shader1);
-	DDX_Control(pDX, IDC_SHADER2,			m_Shader2);
-	DDX_Control(pDX, IDC_ART1,				m_Art1);
-	DDX_Control(pDX, IDC_ART2,				m_Art2);
-	DDX_Control(pDX, IDC_ART3,				m_Art3);
-	DDX_Control(pDX, IDC_ART4,				m_Art4);
-	DDX_Control(pDX, IDC_IMPACTSET1,		m_ImpactSet1);
-	DDX_Control(pDX, IDC_IMPACTSET2,		m_ImpactSet2);
+	DDX_Control(pDX, IDC_HITSHADER,			m_HitShader);
+	DDX_Control(pDX, IDC_ENCHANTSHADER,		m_EnchantShader);
+	DDX_Control(pDX, IDC_CASTINGART,		m_CastingArt);
+	DDX_Control(pDX, IDC_HITEFFECTART,		m_HitEffectArt);
+	DDX_Control(pDX, IDC_ENCHANTART,		m_EnchantArt);
+	DDX_Control(pDX, IDC_EQUIPABILITY,		m_EquipAbility);
+	DDX_Control(pDX, IDC_IMPACTSET,			m_ImpactSet);
+	DDX_Control(pDX, IDC_IMAGESPACEMOD,		m_ImageSpaceMod);
 	DDX_Control(pDX, IDC_PERK,				m_Perk);
 	DDX_Control(pDX, IDC_EXPLOSION,			m_Explosion);
 	DDX_Control(pDX, IDC_DUALCAST,			m_DualCast);
-	DDX_Control(pDX, IDC_SECONDSPELL,		m_SecondSpell);
+	DDX_Control(pDX, IDC_EFFECTOBJECT,		m_EffectObject);
+	DDX_Control(pDX, IDC_MENU,				m_Menu);
 	DDX_Control(pDX, IDC_PROJECTILE,		m_Projectile);
 
-	DDX_Control(pDX, IDC_WARDCHECK,			m_WardCheck);
-	DDX_Control(pDX, IDC_NOAREACHECK,		m_NoAreaCheck);
-	DDX_Control(pDX, IDC_UNKNOWNCHECK1,		m_UnknownCheck1);
-	DDX_Control(pDX, IDC_UNKNOWNCHECK2,		m_UnknownCheck2);
-	DDX_Control(pDX, IDC_UNKNOWNCHECK3,		m_UnknownCheck3);
-	DDX_Control(pDX, IDC_UNKNOWNCHECK4,		m_UnknownCheck4);
-	DDX_Control(pDX, IDC_UNKNOWNCHECK5,		m_UnknownCheck5);
-	DDX_Control(pDX, IDC_UNKNOWNCHECK6,		m_UnknownCheck6);
-	DDX_Control(pDX, IDC_UNKNOWNCHECK7,		m_UnknownCheck7);
-	DDX_Control(pDX, IDC_UNKNOWNCHECK8,		m_UnknownCheck8);
-	DDX_Control(pDX, IDC_UNKNOWNCHECK9,		m_UnknownCheck9);
-	DDX_Control(pDX, IDC_SOUND_LIST,		m_Sounds);
 	DDX_Control(pDX, IDC_SCRIPT_LIST, m_Scripts);
- }
+	DDX_Control(pDX, IDC_DELIVERYTYPE, m_DeliveryType);
+	DDX_Control(pDX, IDC_MAGICFLAGS, m_MagicFlags);
+	DDX_Control(pDX, IDC_COUNTEREFFECTS, m_CounterEffects);
+	DDX_Control(pDX, IDC_DISPELEFFECTS, m_DispelEffectsCheck);
+	DDX_Control(pDX, IDC_SOUNDDRAW, m_DrawSound);
+	DDX_Control(pDX, IDC_SOUNDCHARGE, m_ChargeSound);
+	DDX_Control(pDX, IDC_SOUNDREADY, m_ReadySound);
+	DDX_Control(pDX, IDC_SOUNDRELEASE, m_ReleaseSound);
+	DDX_Control(pDX, IDC_SOUNDCASTLOOP, m_CastLoopSound);
+	DDX_Control(pDX, IDC_SOUNDONHIT, m_OnHitSound);
+	DDX_Control(pDX, IDC_EDIT_EFFECTOBJECT, m_EditEffectObject);
+	DDX_Control(pDX, IDC_SELECT_EFFECTOBJECT, m_SelectEffectObject);
+	DDX_Control(pDX, IDC_EFFECTOBJECTLABEL, m_EffectObjectLabel);
+}
 /*===========================================================================
  *		End of Class Method CSrMgefView::DoDataExchange()
  *=========================================================================*/
@@ -330,20 +380,38 @@ void CSrMgefView::DoDataExchange (CDataExchange* pDX) {
  *
  *=========================================================================*/
 #ifdef _DEBUG
-
-void CSrMgefView::AssertValid() const {
-  CSrRecordDialog::AssertValid();
-}
-
-
-void CSrMgefView::Dump(CDumpContext& dc) const {
-  CSrRecordDialog::Dump(dc);
-}
-
+	void CSrMgefView::AssertValid() const { CSrRecordDialog::AssertValid(); }
+	void CSrMgefView::Dump(CDumpContext& dc) const { CSrRecordDialog::Dump(dc); }
 #endif
 /*===========================================================================
  *		End of CSrMgefView Diagnostics
  *=========================================================================*/
+
+
+void CSrMgefView::FillMagicFlagList (void)
+{	
+	m_MagicFlags.ResetContent();
+
+	SrAddListBoxItem(m_MagicFlags, "Hostile",					SR_MGEFFLAG_HOSTILE);
+	SrAddListBoxItem(m_MagicFlags, "Recover",					SR_MGEFFLAG_RECOVER);
+	SrAddListBoxItem(m_MagicFlags, "Detrimental",				SR_MGEFFLAG_DETRIMENTAL);
+	SrAddListBoxItem(m_MagicFlags, "Snap To Navmesh",			SR_MGEFFLAG_SNAPTONAVMESH);
+	SrAddListBoxItem(m_MagicFlags, "No Hit Event",				SR_MGEFFLAG_NOHITEVENT);
+	SrAddListBoxItem(m_MagicFlags, "No Duration",				SR_MGEFFLAG_NODURATION);
+	SrAddListBoxItem(m_MagicFlags, "No Magnitude",				SR_MGEFFLAG_NOMAGNITUDE);
+	SrAddListBoxItem(m_MagicFlags, "No Area",					SR_MGEFFLAG_NOAREA);
+	SrAddListBoxItem(m_MagicFlags, "Effects Persist",			SR_MGEFFLAG_FXPERSIST);
+	SrAddListBoxItem(m_MagicFlags, "No Recast",					SR_MGEFFLAG_NORECAST);
+	SrAddListBoxItem(m_MagicFlags, "Gory Visual",				SR_MGEFFLAG_GORYVISUAL);
+	SrAddListBoxItem(m_MagicFlags, "Hide In Interface",			SR_MGEFFLAG_HIDEINUI);
+	SrAddListBoxItem(m_MagicFlags, "Power Affects Magnitude",	SR_MGEFFLAG_POWERMAGNITUDE);
+	SrAddListBoxItem(m_MagicFlags, "Power Affects Duration",	SR_MGEFFLAG_POWERDURATION);
+	SrAddListBoxItem(m_MagicFlags, "Painless",					SR_MGEFFLAG_PAINLESS);
+	SrAddListBoxItem(m_MagicFlags, "No Hit Effect",				SR_MGEFFLAG_NOHITEFFECT);
+	SrAddListBoxItem(m_MagicFlags, "No Death Dispell",			SR_MGEFFLAG_NODEATHDISPELL);
+	SrAddListBoxItem(m_MagicFlags, "0x40000000",				SR_MGEFFLAG_WARD);
+	SrAddListBoxItem(m_MagicFlags, "0x80000000",				SR_MGEFFLAG_80000000);
+}
 
 
 /*===========================================================================
@@ -357,23 +425,15 @@ void CSrMgefView::OnInitialUpdate (void)
 	CSrRecordDialog::OnInitialUpdate();
 
 	SrFillComboList(m_SchoolList,	s_SrMagicSchools,		0);
-	SrFillComboList(m_TypeList,		s_SrMagicTypes,			0);
+	SrFillComboList(m_ResistList,	s_SrMagicResistTypes,	0);
 	SrFillComboList(m_CastType,		s_SrEffectCastTypes,	0);
 	SrFillComboList(m_ActorValue,	s_SrActorValues,		0);
-	SrFillComboList(m_Unknown7,		s_SrEffectLinkTypes,	0);
+	SrFillComboList(m_ActorValue2,	s_SrActorValues,		0);
+	SrFillComboList(m_EffectType,	s_SrMagicEffectTypes,	0);
+	SrFillComboList(m_DeliveryType,	s_SrMagicDeliveryTypes,	0);
+	SrFillComboList(m_SoundVolume,	s_SrSoundVolumes,		0);
 
-	CSrMgefRecord* pMgef = SrCastClassNull(CSrMgefRecord, GetInputRecord());
-	if (pMgef != NULL && pMgef->GetSoundArray()) m_SoundCopy = *pMgef->GetSoundArray();
-
-	m_Sounds.SetListName("EffectSoundList");
-	m_Sounds.SetDragEnable(true);
-	m_Sounds.DefaultSettings();
-	m_Sounds.SetupCustomList(s_SoundListInit, NULL, s_SoundFields);
-	m_Sounds.SetOwner(this);
-	m_Sounds.SetColorEnable(false);
-	m_Sounds.SetDragType(SR_RLDRAG_CUSTOM);
-	m_Sounds.SetSortEnable(false);
-	m_Sounds.SetActivateType(SR_RLACTIVATE_RECORD);
+	FillMagicFlagList();
 	
 	SetControlData();
 	m_IsInitialized = true;
@@ -390,96 +450,256 @@ void CSrMgefView::GetControlData (void)
 	CSrMgefRecord* pMgef = SrCastClassNull(CSrMgefRecord, GetOutputRecord());
 	if (pMgef == NULL) return;
 
-	pMgef->SetSounds(m_SoundCopy);
-	
+	pMgef->GetEffectData().Flags = GetMagicFlags();
+	GetCounterEffects(pMgef);
+	GetEffectSounds(pMgef);
 }
 
 
 void CSrMgefView::SetControlData (void)
 {
 	CSrRecordDialog::SetControlData();
+	UpdateEffectTypeControls();
 
 	CSrMgefRecord* pMgef = SrCastClassNull(CSrMgefRecord, GetInputRecord());
-	if (pMgef == NULL) return;	
+	if (pMgef == NULL) return;
 
-	SetSoundList();
+	SetMagicFlags(pMgef->GetEffectData().Flags);
+	SetCounterEffects(pMgef);
+	SetEffectSounds(pMgef);
 }
 
 
-void CSrMgefView::SetSoundList (void)
+void CSrMgefView::SetMagicFlags (const dword Flags)
 {
-	m_Sounds.DeleteAllItems();
-	
-	for (dword i = 0; i < m_SoundCopy.GetSize(); ++i) 
+	dword FlagValue;
+
+	for (int i = 0; i < m_MagicFlags.GetCount(); ++i)
 	{
-		AddSoundList(&m_SoundCopy[i]);
+		FlagValue = m_MagicFlags.GetItemData(i);
+		m_MagicFlags.SetSel(i, ((Flags & FlagValue) != 0));
 	}
 
-	m_Sounds.SelectRecord(0);
 }
 
 
-/*===========================================================================
- *
- * Class CSrMgefView Method - int AddSoundList (pSoundData);
- *
- *=========================================================================*/
-int CSrMgefView::AddSoundList (srmgefsndddata_t* pSoundData) 
+void CSrMgefView::GetCounterEffects (CSrMgefRecord* pEffect)
 {
-	srrlcustomdata_t CustomData;
+	CSrSubrecord*		pSubrecord;
+	CSrFormidSubrecord* pFormid;
+	CString				Buffer;
+	srformid_t			FormID;
+
+	if (pEffect == NULL) return;
+
+	pEffect->DeleteSubrecords(SR_NAME_ESCE);
+
+	for (int i = 0; i < m_CounterEffects.GetCount(); ++i)
+	{
+		m_CounterEffects.GetText(i, Buffer);
+
+		FormID = m_pRecordHandler->FindGeneralFormID(Buffer);
+		if (FormID == 0) continue;
+
+		pSubrecord = pEffect->AddInitNewSubrecord(SR_NAME_ESCE);
+		pFormid = SrCastClassNull(CSrFormidSubrecord, pSubrecord);
+		if (pFormid) pFormid->SetValue(FormID);
+	}
+
+}
+
+
+void CSrMgefView::SetCounterEffects (CSrMgefRecord* pEffect)
+{
+	CSrSubrecord*		pSubrecord;
+	CSrFormidSubrecord* pFormid;
+	CString				Buffer;
+	int					Position;
+
+	if (pEffect == NULL)
+	{
+		m_CounterEffects.ResetContent();
+		return;
+	}
+
+	pSubrecord = pEffect->FindFirstSubrecord(SR_NAME_ESCE, Position);
+
+	while (pSubrecord)
+	{
+		pFormid = SrCastClass(CSrFormidSubrecord, pSubrecord);
+
+		if (pFormid)
+		{
+			const char* pString = m_pRecordHandler->GetEditorID(pFormid->GetValue());
+
+			if (pString) 
+			{
+				SrAddListBoxItem(m_CounterEffects, pString, pFormid->GetValue());
+			}
+			else
+			{
+				Buffer.Format("0x%08X", pFormid->GetValue());
+				SrAddListBoxItem(m_CounterEffects, Buffer, pFormid->GetValue());
+			}
+		}
+
+		pSubrecord = pEffect->FindNextSubrecord(SR_NAME_ESCE, Position);
+	}
+
+}
+
+
+void CSrMgefView::GetEffectSounds (CSrMgefRecord* pEffect)
+{
+	CSrMgefSnddArray Sounds;
+	srmgefsndddata_t Data;
 	CString          Buffer;
-	int				 ListIndex;
-	
-	CustomData.pRecord   = GetInputRecord();
-	CustomData.pUserData = (void *) pSoundData;
-	    
-	ListIndex = m_Sounds.AddCustomRecord(CustomData);
-	if (ListIndex < 0) return (-1);
-	
-	UpdateSoundList(ListIndex, false);
-	return (ListIndex);
+	srformid_t		 FormID;
+
+	if (pEffect == NULL) return;
+
+	m_DrawSound.GetWindowTextA(Buffer);
+	Buffer.Trim(" ");
+
+	if (!Buffer.IsEmpty())
+	{
+		FormID = m_pRecordHandler->FindGeneralFormID(Buffer);
+		Data.SoundID = FormID;
+		Data.Type    = SR_MAGICSOUND_SHEATH;
+		if (FormID != 0) Sounds.Add(Data);
+	}
+
+	m_ChargeSound.GetWindowTextA(Buffer);
+	Buffer.Trim(" ");
+
+	if (!Buffer.IsEmpty())
+	{
+		FormID = m_pRecordHandler->FindGeneralFormID(Buffer);
+		Data.SoundID = FormID;
+		Data.Type    = SR_MAGICSOUND_CHARGE;
+		if (FormID != 0) Sounds.Add(Data);
+	}
+
+	m_ReadySound.GetWindowTextA(Buffer);
+	Buffer.Trim(" ");
+
+	if (!Buffer.IsEmpty())
+	{
+		FormID = m_pRecordHandler->FindGeneralFormID(Buffer);
+		Data.SoundID = FormID;
+		Data.Type    = SR_MAGICSOUND_READY;
+		if (FormID != 0) Sounds.Add(Data);
+	}
+
+	m_ReleaseSound.GetWindowTextA(Buffer);
+	Buffer.Trim(" ");
+
+	if (!Buffer.IsEmpty())
+	{
+		FormID = m_pRecordHandler->FindGeneralFormID(Buffer);
+		Data.SoundID = FormID;
+		Data.Type    = SR_MAGICSOUND_RELEASE;
+		if (FormID != 0) Sounds.Add(Data);
+	}
+
+	m_CastLoopSound.GetWindowTextA(Buffer);
+	Buffer.Trim(" ");
+
+	if (!Buffer.IsEmpty())
+	{
+		FormID = m_pRecordHandler->FindGeneralFormID(Buffer);
+		Data.SoundID = FormID;
+		Data.Type    = SR_MAGICSOUND_CASTLOOP;
+		if (FormID != 0) Sounds.Add(Data);
+	}
+
+	m_OnHitSound.GetWindowTextA(Buffer);
+	Buffer.Trim(" ");
+
+	if (!Buffer.IsEmpty())
+	{
+		FormID = m_pRecordHandler->FindGeneralFormID(Buffer);
+		Data.SoundID = FormID;
+		Data.Type    = SR_MAGICSOUND_ONHIT;
+		if (FormID != 0) Sounds.Add(Data);
+	}
+
+	pEffect->SetSounds(Sounds);
 }
-/*===========================================================================
- *		End of Class Method CSrMgefView::AddSoundList()
- *=========================================================================*/
 
 
-/*===========================================================================
- *
- * Class CSrMgefView Method - void UpdateSoundList (ListIndex, Update);
- *
- *=========================================================================*/
-void CSrMgefView::UpdateSoundList (const int ListIndex, const bool Update)
+void CSrMgefView::SetEffectSounds (CSrMgefRecord* pEffect)
 {
-	srrlcustomdata_t* pCustomData;
-	srmgefsndddata_t* pSoundData;
-	CString		      Buffer;
+	const char* pString;
+	CString     Buffer;
 
-	if (GetInputRecord() == NULL) return;
+	if (pEffect == NULL || pEffect->GetSoundArray() == NULL)  
+	{
+		m_DrawSound.SetWindowTextA("");
+		m_ChargeSound.SetWindowTextA("");
+		m_ReadySound.SetWindowTextA("");
+		m_ReleaseSound.SetWindowTextA("");
+		m_CastLoopSound.SetWindowTextA("");		
+		m_OnHitSound.SetWindowTextA("");
+		return;
+	}
 
-	pCustomData = m_Sounds.GetCustomData(ListIndex);
-	if (pCustomData == NULL) return;
-	if (Update) m_Sounds.UpdateRecord(ListIndex);
+	CSrMgefSnddArray* pSounds = pEffect->GetSoundArray();
+	
+	for (dword i = 0; i < pSounds->GetSize(); ++i)
+	{
+		pString = m_pRecordHandler->GetEditorID((*pSounds)[i].SoundID);
 
-	pSoundData = (srmgefsndddata_t *) pCustomData->pUserData;
-	if (pSoundData == NULL) return;
+		if (pString == NULL)
+		{
+			Buffer.Format("0x%08X", (*pSounds)[i].SoundID);
+			pString = Buffer;
+		}
 
-	m_Sounds.SetCustomField(ListIndex, SR_FIELD_SOUND,  GetInputRecord()->GetParent()->GetEditorID(pSoundData->SoundID));
-		
-	Buffer.Format("%d", pSoundData->Value);
-	m_Sounds.SetCustomField(ListIndex, SR_FIELD_VALUE, Buffer);  
+		switch ((*pSounds)[i].Type)
+		{
+			case SR_MAGICSOUND_SHEATH:
+				m_DrawSound.SetWindowTextA(pString);
+				break;
+			case SR_MAGICSOUND_CHARGE:	
+				m_ChargeSound.SetWindowTextA(pString);
+				break;
+			case SR_MAGICSOUND_READY:
+				m_ReadySound.SetWindowTextA(pString);
+				break;
+			case SR_MAGICSOUND_RELEASE:
+				m_ReleaseSound.SetWindowTextA(pString);
+				break;
+			case SR_MAGICSOUND_CASTLOOP:
+				m_CastLoopSound.SetWindowTextA(pString);
+				break;
+			case SR_MAGICSOUND_ONHIT:
+				m_OnHitSound.SetWindowTextA(pString);
+				break;
+		}
+	}
+
+	 
 }
-/*===========================================================================
- *		End of Class Method CSrMgefView::UpdateSoundList()
- *=========================================================================*/
 
 
-/*===========================================================================
- *
- * Class CSrMgefView Event - void OnDropKeywords (pNotifyStruct, pResult);
- *
- *=========================================================================*/
-void CSrMgefView::OnDropKeywords (NMHDR* pNotifyStruct, LRESULT* pResult) {
+dword CSrMgefView::GetMagicFlags (void)
+{
+	dword Flags = 0;
+
+	if (m_DispelEffectsCheck.GetCheck()) Flags = SR_MGEFFLAG_DISPELLEFFECTS;
+
+	for (int i = 0; i < m_MagicFlags.GetCount(); ++i)
+	{
+		if (m_MagicFlags.GetSel(i)) Flags |= m_MagicFlags.GetItemData(i);
+	}
+
+	return Flags;
+}
+
+
+void CSrMgefView::OnDropKeywords (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
   srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
   CSrRecord*	     pRecord;
   CSrKywdRecord*     pKeyword;
@@ -503,10 +723,6 @@ void CSrMgefView::OnDropKeywords (NMHDR* pNotifyStruct, LRESULT* pResult) {
 
   *pResult = SRRL_DROPCHECK_OK;
 }
-/*===========================================================================
- *		End of Class Event CSrMgefView::OnDropKeywords()
- *=========================================================================*/
-
 
 
 void CSrMgefView::OnBnClickedEditPerk()
@@ -585,51 +801,44 @@ void CSrMgefView::OnDropExplosion (NMHDR* pNotifyStruct, LRESULT* pResult)
 }
 
 
-void CSrMgefView::OnBnClickedEditSecondSpell()
+void CSrMgefView::OnBnClickedEditEffectObject()
 {
-	CString Buffer;
-	int     Unknown7 = 0;
+	int     ListIndex = m_EffectType.GetCurSel();
+	int     EffectType = 0;
 
 	if (m_pDlgHandler == NULL) return;
 
-	m_Unknown7.GetWindowText(Buffer);
-	GetSrEffectLinkTypeValue(Unknown7, Buffer);
+	if (ListIndex >= 0) EffectType = m_EffectType.GetItemData(ListIndex);
+	if (EffectType < 0 || EffectType >= g_EffectTypeDlgInfoCount) return;
 
-	srrectype_t RecType = CSrMgefRecord::GetSecondRecordType(Unknown7);
-	m_pDlgHandler->EditRecordHelper(&m_SecondSpell, RecType);
+	srrectype_t RecType = CSrMgefRecord::GetEffectObjectRecordType(EffectType);
+	m_pDlgHandler->EditRecordHelper(&m_EffectObject, RecType);
 }
 
 
-void CSrMgefView::OnBnClickedSelectSecondSpell()
+void CSrMgefView::OnBnClickedSelectEffectObject()
 {
-	CString Buffer;
-	int     Unknown7 = 0;
+	int     ListIndex = m_EffectType.GetCurSel();
+	int     EffectType = 0;
 
 	if (m_pDlgHandler == NULL) return;
 
-	m_Unknown7.GetWindowText(Buffer);
-	GetSrEffectLinkTypeValue(Unknown7, Buffer);
+	if (ListIndex >= 0) EffectType = m_EffectType.GetItemData(ListIndex);
+	if (EffectType < 0 || EffectType >= g_EffectTypeDlgInfoCount) return;
 
-	srrectype_t RecType = CSrMgefRecord::GetSecondRecordType(Unknown7);
+	srrectype_t RecType = CSrMgefRecord::GetEffectObjectRecordType(EffectType);
 
-	if (RecType == SR_NAME_NULL)
+	switch (EffectType)
 	{
-		Buffer.Format("A value of LinkRecType=%d doesn't have an associated record type to select!", Unknown7);
-		MessageBox(Buffer, "Warning", MB_OK);
-		return;
-	}
-
-	switch (Unknown7)
-	{
-		case 12: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrLighRecord::s_FieldMap); break;
-		case 17: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrWeapRecord::s_FieldMap); break;
-		case 18: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrNpc_Record::s_FieldMap); break;
-		case 25: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrHazdRecord::s_FieldMap); break;
-		case 34: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrKywdRecord::s_FieldMap); break;
-		case 35: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrSpelRecord::s_FieldMap); break;
-		case 36: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrRaceRecord::s_FieldMap); break;
-		case 39: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrEnchRecord::s_FieldMap); break;
-		case 40: m_pDlgHandler->SelectRecordHelper(&m_SecondSpell, RecType, &CSrHazdRecord::s_FieldMap); break;
+		case 12: m_pDlgHandler->SelectRecordHelper(&m_EffectObject, RecType, &CSrLighRecord::s_FieldMap); break;
+		case 17: m_pDlgHandler->SelectRecordHelper(&m_EffectObject, RecType, &CSrWeapRecord::s_FieldMap); break;
+		case 18: m_pDlgHandler->SelectRecordHelper(&m_EffectObject, RecType, &CSrNpc_Record::s_FieldMap); break;
+		case 25: m_pDlgHandler->SelectRecordHelper(&m_EffectObject, RecType, &CSrHazdRecord::s_FieldMap); break;
+		case 34: m_pDlgHandler->SelectRecordHelper(&m_EffectObject, RecType, &CSrKywdRecord::s_FieldMap); break;
+		case 35: m_pDlgHandler->SelectRecordHelper(&m_EffectObject, RecType, &CSrSpelRecord::s_FieldMap); break;
+		case 36: m_pDlgHandler->SelectRecordHelper(&m_EffectObject, RecType, &CSrRaceRecord::s_FieldMap); break;
+		case 39: m_pDlgHandler->SelectRecordHelper(&m_EffectObject, RecType, &CSrEnchRecord::s_FieldMap); break;
+		case 40: m_pDlgHandler->SelectRecordHelper(&m_EffectObject, RecType, &CSrHazdRecord::s_FieldMap); break;
 		default:
 			break;
 	}
@@ -638,18 +847,18 @@ void CSrMgefView::OnBnClickedSelectSecondSpell()
 }
 
 
-void CSrMgefView::OnDropSecondSpell (NMHDR* pNotifyStruct, LRESULT* pResult) 
+void CSrMgefView::OnDropEffectObject (NMHDR* pNotifyStruct, LRESULT* pResult) 
 {
-	CString Buffer;
-	int     Unknown7 = 0;
+	int     ListIndex = m_EffectType.GetCurSel();
+	int     EffectType = 0;
 
 	if (m_pDlgHandler == NULL) return;
 
-	m_Unknown7.GetWindowText(Buffer);
-	GetSrEffectLinkTypeValue(Unknown7, Buffer);
-
+	if (ListIndex >= 0) EffectType = m_EffectType.GetItemData(ListIndex);
+	if (EffectType < 0 || EffectType >= g_EffectTypeDlgInfoCount) return;
+		
 	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
-	*pResult = DropRecordHelper(pDropItems, &m_SecondSpell, CSrMgefRecord::GetSecondRecordType(Unknown7), 1);
+	*pResult = DropRecordHelper(pDropItems, &m_EffectObject, CSrMgefRecord::GetEffectObjectRecordType(EffectType), 1);
 }
 
 
@@ -672,236 +881,295 @@ void CSrMgefView::OnDropDualCast (NMHDR* pNotifyStruct, LRESULT* pResult)
 }
 
 
-void CSrMgefView::OnBnClickedEditArt1()
+void CSrMgefView::OnBnClickedEditCastingArt()
 {
-	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_Art1, SR_NAME_ARTO);
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_CastingArt, SR_NAME_ARTO);
 }
 
 
-void CSrMgefView::OnBnClickedSelectArt1()
+void CSrMgefView::OnBnClickedSelectCastingArt()
 {
-	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_Art1, SR_NAME_ARTO, &CSrArtoRecord::s_FieldMap);
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_CastingArt, SR_NAME_ARTO, &CSrArtoRecord::s_FieldMap);
 }
 
 
-void CSrMgefView::OnDropArt1 (NMHDR* pNotifyStruct, LRESULT* pResult) 
+void CSrMgefView::OnDropCastingArt (NMHDR* pNotifyStruct, LRESULT* pResult) 
 {
   srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
-  *pResult = DropRecordHelper(pDropItems, &m_Art1, SR_NAME_ARTO, 1);
+  *pResult = DropRecordHelper(pDropItems, &m_CastingArt, SR_NAME_ARTO, 1);
 }
 
 
-void CSrMgefView::OnBnClickedEditArt2()
+void CSrMgefView::OnBnClickedEditHitEffectArt()
 {
-	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_Art2, SR_NAME_ARTO);
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_HitEffectArt, SR_NAME_ARTO);
 }
 
 
-void CSrMgefView::OnBnClickedSelectArt2()
+void CSrMgefView::OnBnClickedSelectHitEffectArt()
 {
-	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_Art2, SR_NAME_ARTO, &CSrArtoRecord::s_FieldMap);
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_HitEffectArt, SR_NAME_ARTO, &CSrArtoRecord::s_FieldMap);
 }
 
 
-void CSrMgefView::OnDropArt2 (NMHDR* pNotifyStruct, LRESULT* pResult) 
-{
-  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
-  *pResult = DropRecordHelper(pDropItems, &m_Art2, SR_NAME_ARTO, 1);
-}
-
-
-void CSrMgefView::OnBnClickedEditArt3()
-{
-	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_Art3, SR_NAME_ARTO);
-}
-
-
-void CSrMgefView::OnBnClickedSelectArt3()
-{
-	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_Art3, SR_NAME_ARTO, &CSrArtoRecord::s_FieldMap);
-}
-
-
-void CSrMgefView::OnDropArt3 (NMHDR* pNotifyStruct, LRESULT* pResult) 
+void CSrMgefView::OnDropHitEffectArt (NMHDR* pNotifyStruct, LRESULT* pResult) 
 {
   srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
-  *pResult = DropRecordHelper(pDropItems, &m_Art3, SR_NAME_ARTO, 1);
+  *pResult = DropRecordHelper(pDropItems, &m_HitEffectArt, SR_NAME_ARTO, 1);
 }
 
 
-void CSrMgefView::OnBnClickedEditArt4()
+void CSrMgefView::OnBnClickedEditEnchantArt()
 {
-	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_Art4, SR_NAME_ARTO);
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_EnchantArt, SR_NAME_ARTO);
 }
 
 
-void CSrMgefView::OnBnClickedSelectArt4()
+void CSrMgefView::OnBnClickedSelectEnchantArt()
 {
-	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_Art4, SR_NAME_ARTO, &CSrArtoRecord::s_FieldMap);
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_EnchantArt, SR_NAME_ARTO, &CSrArtoRecord::s_FieldMap);
 }
 
 
-void CSrMgefView::OnDropArt4 (NMHDR* pNotifyStruct, LRESULT* pResult) 
-{
-  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
-  *pResult = DropRecordHelper(pDropItems, &m_Art4, SR_NAME_ARTO, 1);
-}
-
-
-void CSrMgefView::OnBnClickedEditImpactSet1()
-{
-	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_ImpactSet1, SR_NAME_IPDS);
-}
-
-
-void CSrMgefView::OnBnClickedSelectImpactSet1()
-{
-	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_ImpactSet1, SR_NAME_IPDS, &CSrIpdsRecord::s_FieldMap);
-}
-
-
-void CSrMgefView::OnDropImpactSet1 (NMHDR* pNotifyStruct, LRESULT* pResult) 
+void CSrMgefView::OnDropEnchantArt (NMHDR* pNotifyStruct, LRESULT* pResult) 
 {
   srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
-  *pResult = DropRecordHelper(pDropItems, &m_ImpactSet1, SR_NAME_IPDS, 1);
+  *pResult = DropRecordHelper(pDropItems, &m_EnchantArt, SR_NAME_ARTO, 1);
 }
 
 
-void CSrMgefView::OnBnClickedEditImpactSet2()
+void CSrMgefView::OnBnClickedEditEquipAbility()
 {
-	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_ImpactSet2, SR_NAME_IPDS);
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_EquipAbility, SR_NAME_SPEL);
 }
 
 
-void CSrMgefView::OnBnClickedSelectImpactSet2()
+void CSrMgefView::OnBnClickedSelectEquipAbility()
 {
-	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_ImpactSet2, SR_NAME_IPDS, &CSrIpdsRecord::s_FieldMap);
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_EquipAbility, SR_NAME_SPEL, &CSrSpelRecord::s_FieldMap);
 }
 
 
-void CSrMgefView::OnDropImpactSet2 (NMHDR* pNotifyStruct, LRESULT* pResult) 
-{
-  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
-  *pResult = DropRecordHelper(pDropItems, &m_ImpactSet2, SR_NAME_IPDS, 1);
-}
-
-
-void CSrMgefView::OnBnClickedEditShader1()
-{
-	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_Shader1, SR_NAME_EFSH);
-}
-
-
-void CSrMgefView::OnBnClickedSelectShader1()
-{
-	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_Shader1, SR_NAME_EFSH, &CSrEfshRecord::s_FieldMap);
-}
-
-
-void CSrMgefView::OnDropShader1 (NMHDR* pNotifyStruct, LRESULT* pResult) 
+void CSrMgefView::OnDropEquipAbility (NMHDR* pNotifyStruct, LRESULT* pResult) 
 {
   srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
-  *pResult = DropRecordHelper(pDropItems, &m_Shader1, SR_NAME_EFSH, 1);
+  *pResult = DropRecordHelper(pDropItems, &m_EquipAbility, SR_NAME_SPEL, 1);
 }
 
 
-void CSrMgefView::OnBnClickedEditShader2()
+void CSrMgefView::OnBnClickedEditImpactSet()
 {
-	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_Shader2, SR_NAME_EFSH);
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_ImpactSet, SR_NAME_IPDS);
 }
 
 
-void CSrMgefView::OnBnClickedSelectShader2()
+void CSrMgefView::OnBnClickedSelectImpactSet()
 {
-	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_Shader2, SR_NAME_EFSH, &CSrEfshRecord::s_FieldMap);
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_ImpactSet, SR_NAME_IPDS, &CSrIpdsRecord::s_FieldMap);
 }
 
 
-void CSrMgefView::OnDropShader2 (NMHDR* pNotifyStruct, LRESULT* pResult) 
+void CSrMgefView::OnDropImpactSet (NMHDR* pNotifyStruct, LRESULT* pResult) 
 {
   srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
-  *pResult = DropRecordHelper(pDropItems, &m_Shader2, SR_NAME_EFSH, 1);
+  *pResult = DropRecordHelper(pDropItems, &m_ImpactSet, SR_NAME_IPDS, 1);
 }
 
 
-void CSrMgefView::OnBnClickedDeletesound()
+void CSrMgefView::OnBnClickedEditImageSpaceMod()
 {
-	int ListIndex = m_Sounds.GetSelectedItem();
-
-	if (ListIndex < 0) return;
-
-	m_SoundCopy.Delete(ListIndex);
-	m_Sounds.DeleteItem(ListIndex);
-	m_Sounds.SelectRecord(ListIndex - 1);
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_ImageSpaceMod, SR_NAME_IMAD);
 }
 
 
-void CSrMgefView::OnBnClickedAddsound()
+void CSrMgefView::OnBnClickedSelectImageSpaceMod()
 {
-	srmgefsndddata_t NewData = { 0, 0 };
-	m_SoundCopy.Add(NewData);
-	AddSoundList(&m_SoundCopy[m_SoundCopy.GetSize() - 1]);
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_ImageSpaceMod, SR_NAME_IMAD, &CSrImadRecord::s_FieldMap);
 }
 
 
-LRESULT CSrMgefView::OnEditSoundMsg (WPARAM wParam, LPARAM lParam) 
+void CSrMgefView::OnDropImageSpaceMod (NMHDR* pNotifyStruct, LRESULT* pResult) 
 {
-	srmgefsndddata_t*	pSoundData;
-	srrlcustomdata_t*	pCustomData;
-	int					ListIndex;
-	int					Result;
-
-	ListIndex = m_Sounds.GetSelectedItem();
-	if (ListIndex < 0) return -1;
-
-	pCustomData = m_Sounds.GetCustomData(ListIndex);
-	if (pCustomData == NULL) return -1;
-
-	pSoundData = (srmgefsndddata_t *) pCustomData->pUserData;
-	if (pSoundData == NULL) return -1;
-	
-	Result = SrEditMgefSnddDlg (pSoundData, m_pRecordHandler, GetInputRecord()->GetFormID());
-	if (Result == SR_MGEFSNDDEDITDLG_RESULT_CANCEL) return -1;
-
-	if (Result == SR_MGEFSNDDEDITDLG_RESULT_DELETE) 
-	{
-		m_SoundCopy.Delete(ListIndex);
-		m_Sounds.RemoveItem(ListIndex);
-		return -1;
-	}
-  
-	UpdateSoundList(ListIndex, true);
-	return (0);
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  *pResult = DropRecordHelper(pDropItems, &m_ImageSpaceMod, SR_NAME_IMAD, 1);
 }
 
 
-void CSrMgefView::OnSnddlistEditrecord()
+void CSrMgefView::OnBnClickedEditHitShader()
 {
-	srmgefsndddata_t*	pSoundData;
-	srrlcustomdata_t*	pCustomData;
-	int					ListIndex;
-
-	if (m_pDlgHandler == NULL || GetInputRecord()->GetParent() == NULL) return;
-
-	ListIndex = m_Sounds.GetSelectedItem();
-	if (ListIndex < 0) return;
-
-	pCustomData = m_Sounds.GetCustomData(ListIndex);
-	if (pCustomData == NULL) return;
-
-	pSoundData = (srmgefsndddata_t *) pCustomData->pUserData;
-	if (pSoundData == NULL) return;
-	
-	CSrRecord* pRecord = GetInputRecord()->GetParent()->FindFormID(pSoundData->SoundID);
-	if (pRecord == NULL) return;
-
-	m_pDlgHandler->EditRecord(pRecord);
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_HitShader, SR_NAME_EFSH);
 }
 
 
-void CSrMgefView::OnSnddlistEdit()
+void CSrMgefView::OnBnClickedSelectHitShader()
 {
-	OnEditSoundMsg(0, 0);
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_HitShader, SR_NAME_EFSH, &CSrEfshRecord::s_FieldMap);
+}
+
+
+void CSrMgefView::OnDropHitShader (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  *pResult = DropRecordHelper(pDropItems, &m_HitShader, SR_NAME_EFSH, 1);
+}
+
+
+void CSrMgefView::OnBnClickedEditEnchantShader()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_EnchantShader, SR_NAME_EFSH);
+}
+
+
+void CSrMgefView::OnBnClickedSelectEnchantShader()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_EnchantShader, SR_NAME_EFSH, &CSrEfshRecord::s_FieldMap);
+}
+
+
+void CSrMgefView::OnDropEnchantShader (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  *pResult = DropRecordHelper(pDropItems, &m_EnchantShader, SR_NAME_EFSH, 1);
+}
+
+
+void CSrMgefView::OnBnClickedEditMenu()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_Menu, SR_NAME_STAT);
+}
+
+
+void CSrMgefView::OnBnClickedSelectMenu()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_Menu, SR_NAME_STAT, &CSrStatRecord::s_FieldMap);
+}
+
+
+void CSrMgefView::OnDropMenu (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  *pResult = DropRecordHelper(pDropItems, &m_Menu, SR_NAME_STAT, 1);
+}
+
+
+void CSrMgefView::OnDropCounterEffects (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  *pResult = DropRecordHelper(pDropItems, &m_CounterEffects, SR_NAME_MGEF, 1);
+}
+
+
+void CSrMgefView::OnBnClickedEditDrawSound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_DrawSound, SR_NAME_SNDR);
+}
+
+
+void CSrMgefView::OnBnClickedSelectDrawSound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_DrawSound, SR_NAME_SNDR, &CSrSndrRecord::s_FieldMap);
+}
+
+
+void CSrMgefView::OnDropDrawSound (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  *pResult = DropRecordHelper(pDropItems, &m_DrawSound, SR_NAME_SNDR, 1);
+}
+
+
+void CSrMgefView::OnBnClickedEditChargeSound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_ChargeSound, SR_NAME_SNDR);
+}
+
+
+void CSrMgefView::OnBnClickedSelectChargeSound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_ChargeSound, SR_NAME_SNDR, &CSrSndrRecord::s_FieldMap);
+}
+
+
+void CSrMgefView::OnDropChargeSound (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  *pResult = DropRecordHelper(pDropItems, &m_ChargeSound, SR_NAME_SNDR, 1);
+}
+
+
+void CSrMgefView::OnBnClickedEditReadySound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_ReadySound, SR_NAME_SNDR);
+}
+
+
+void CSrMgefView::OnBnClickedSelectReadySound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_ReadySound, SR_NAME_SNDR, &CSrSndrRecord::s_FieldMap);
+}
+
+
+void CSrMgefView::OnDropReadySound (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  *pResult = DropRecordHelper(pDropItems, &m_ReadySound, SR_NAME_SNDR, 1);
+}
+
+
+void CSrMgefView::OnBnClickedEditReleaseSound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_ReleaseSound, SR_NAME_SNDR);
+}
+
+
+void CSrMgefView::OnBnClickedSelectReleaseSound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_ReleaseSound, SR_NAME_SNDR, &CSrSndrRecord::s_FieldMap);
+}
+
+
+void CSrMgefView::OnDropReleaseSound (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  *pResult = DropRecordHelper(pDropItems, &m_ReleaseSound, SR_NAME_SNDR, 1);
+}
+
+
+void CSrMgefView::OnBnClickedEditCastLoopSound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_CastLoopSound, SR_NAME_SNDR);
+}
+
+
+void CSrMgefView::OnBnClickedSelectCastLoopSound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_CastLoopSound, SR_NAME_SNDR, &CSrSndrRecord::s_FieldMap);
+}
+
+
+void CSrMgefView::OnDropCastLoopSound (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  *pResult = DropRecordHelper(pDropItems, &m_CastLoopSound, SR_NAME_SNDR, 1);
+}
+
+
+void CSrMgefView::OnBnClickedEditOnHitSound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_OnHitSound, SR_NAME_SNDR);
+}
+
+
+void CSrMgefView::OnBnClickedSelectOnHitSound()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_OnHitSound, SR_NAME_SNDR, &CSrSndrRecord::s_FieldMap);
+}
+
+
+void CSrMgefView::OnDropOnHitSound (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+  srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+  *pResult = DropRecordHelper(pDropItems, &m_OnHitSound, SR_NAME_SNDR, 1);
 }
 
 
@@ -912,26 +1180,105 @@ void CSrMgefView::OnSnddlistEdit()
  *=========================================================================*/
 void CSrMgefView::OnContextMenu (CWnd* pWnd, CPoint Point) 
 {
-  CMenu  Menu;
-  CMenu* pSubMenu;
-  int    Result;
-
-  if (pWnd->GetDlgCtrlID() == IDC_SOUND_LIST) 
-  {
-    Result = Menu.LoadMenu(IDR_MGEFSOUNDLIST_MENU);
-    if (!Result) return;
-
-    pSubMenu = Menu.GetSubMenu(0);
-    if (pSubMenu == NULL) return;
-
-    pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, Point.x, Point.y, this, NULL);
-  }
-  else
-  {
     CSrRecordDialog::OnContextMenu(pWnd, Point);
-  }
-    
 }
 /*===========================================================================
  *		End of Class Event CSrMgefView::OnContextMenu()
  *=========================================================================*/
+
+
+void CSrMgefView::OnBnClickedAddCountereffects()
+{
+	CString    Buffer;
+	bool		Result;
+	 
+	Result = m_pDlgHandler->SelectRecord(Buffer, SR_NAME_MGEF, &CSrMgefRecord::s_FieldMap);
+	if (!Result) return;
+
+	CSrRecord* pRecord = m_pRecordHandler->FindEditorID(Buffer);
+	SrAddListBoxItem(m_CounterEffects, Buffer, pRecord ? pRecord->GetFormID() : 0);
+}
+
+
+void CSrMgefView::OnBnClickedEditCountereffects()
+{
+	CString		Buffer;
+	int			ListIndex = m_CounterEffects.GetCurSel();
+	bool		Result;
+
+	if (ListIndex >= 0) m_CounterEffects.GetText(ListIndex, Buffer);
+	 
+	Result = m_pDlgHandler->SelectRecord(Buffer, SR_NAME_MGEF, &CSrMgefRecord::s_FieldMap);
+	if (!Result) return;
+
+	CSrRecord* pRecord = m_pRecordHandler->FindEditorID(Buffer);
+
+	if (ListIndex < 0)
+	{
+		SrAddListBoxItem(m_CounterEffects, Buffer, pRecord ? pRecord->GetFormID() : 0);
+	}
+	else
+	{
+		m_CounterEffects.DeleteString(ListIndex);
+		ListIndex = m_CounterEffects.InsertString(ListIndex, Buffer);
+		m_CounterEffects.SetItemData(ListIndex, pRecord ? pRecord->GetFormID() : 0);	
+	}
+
+}
+
+
+void CSrMgefView::OnBnClickedDelCountereffects()
+{
+	int	ListIndex = m_CounterEffects.GetCurSel();
+	if (ListIndex < 0) return; 
+
+	m_CounterEffects.DeleteString(ListIndex);
+
+	if (ListIndex > 0)
+		m_CounterEffects.SetCurSel(ListIndex - 1);
+	else
+		m_CounterEffects.SetCurSel(0);
+}
+
+
+void CSrMgefView::OnCbnSelchangeEffecttype()
+{
+	UpdateEffectTypeControls();
+}
+
+
+void CSrMgefView::UpdateEffectTypeControls (void)
+{
+	int ListIndex = m_EffectType.GetCurSel();
+	if (ListIndex < 0) return;
+
+	int EffectType = m_EffectType.GetItemData(ListIndex);
+	if (EffectType < 0 || EffectType >= g_EffectTypeDlgInfoCount) return;
+
+	if (g_EffectTypeDlgInfos[EffectType].RecordType != SR_NAME_NULL)
+	{
+		m_EffectObject.EnableWindow(true);
+		m_EditEffectObject.EnableWindow(true);
+		m_SelectEffectObject.EnableWindow(true);
+		m_EffectObjectLabel.SetWindowTextA(GetSrRecTypeName(g_EffectTypeDlgInfos[EffectType].RecordType));
+	}
+	else
+	{
+		m_EffectObject.EnableWindow(false);
+		m_EditEffectObject.EnableWindow(false);
+		m_SelectEffectObject.EnableWindow(false);
+		m_EffectObjectLabel.SetWindowTextA("<none>");
+	}
+
+	bool EnableAV1 = g_EffectTypeDlgInfos[EffectType].NumAV > 0;
+	bool EnableAV2 = g_EffectTypeDlgInfos[EffectType].NumAV > 1;
+
+	m_ActorValue.EnableWindow(EnableAV1);
+	m_ActorValue2.EnableWindow(EnableAV2);
+	m_SecondAVWeight.EnableWindow(EnableAV2);
+
+	if (g_EffectTypeDlgInfos[EffectType].ForceAV1 >= 0)
+	{
+		FindComboBoxItemData(m_ActorValue, g_EffectTypeDlgInfos[EffectType].ForceAV1, true);
+	}
+}

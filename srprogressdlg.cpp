@@ -241,6 +241,8 @@ void CSrProgressDlg::SetProgress (const float Progress) {
 
   m_ProgressCtrl.UpdateWindow();
   m_PercentLabel.UpdateWindow();
+
+  m_CancelButton.ShowWindow(m_AllowCancel ? SW_SHOW : SW_HIDE);
 }
 /*===========================================================================
  *		End of Class Method CSrProgressDlg::SetProgress()
@@ -252,9 +254,11 @@ void CSrProgressDlg::SetProgress (const float Progress) {
  * Class CSrProgressDlg Method - void UpdateControls (void);
  *
  *=========================================================================*/
-void CSrProgressDlg::UpdateControls (void) {
+void CSrProgressDlg::UpdateControls (void) 
+{
   SetWindowText(m_Title);
   m_LabelText.SetWindowText(m_Label);
+  m_CancelButton.ShowWindow(m_AllowCancel ? SW_SHOW : SW_HIDE);
 }
 /*===========================================================================
  *		End of Class Method CSrProgressDlg::UpdateControls()
@@ -297,8 +301,10 @@ void CSrProgressDlg::UpdateTitle (const TCHAR* pString) {
  * waiting messages.
  *
  *=========================================================================*/
-void CSrProgressDlg::Update (const float Percent) {
+void CSrProgressDlg::Update (const float Percent) 
+{
   SetProgress(Percent);
+  m_CancelButton.ShowWindow(m_AllowCancel ? SW_SHOW : SW_HIDE);
 
   Pump();
 }

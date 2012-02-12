@@ -192,7 +192,7 @@ void CSrMgefSnddEditDlg::GetControlData (void)
 
   m_Value.GetWindowText(Buffer);
   Result = SrFieldConvertInt(Buffer, Value);
-  if (Result) m_pSoundData->Value = Value;
+  if (Result) m_pSoundData->Type = Value;
   
   m_pSoundData->SoundID = m_ObjectFormID;
 }
@@ -358,7 +358,7 @@ void CSrMgefSnddEditDlg::SetControlData (void)
 
   if (m_pSoundData == NULL) return;
 
-  Buffer.Format(_T("%u"), (dword) m_pSoundData->Value);
+  Buffer.Format(_T("%u"), (dword) m_pSoundData->Type);
   m_Value.SetWindowText(Buffer);
 
   m_ObjectFormID = m_pSoundData->SoundID;

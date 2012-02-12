@@ -193,6 +193,7 @@ BOOL CSrEditApp::InitInstance() {
  
 	/* Resource handler and view initialization */
   m_pCurrentProgressDlg = ShowSrProgressDlg("Resources", "Initializing Resource Information...");
+  m_pCurrentProgressDlg->SetAllowCancel(false);
   m_pCurrentProgressDlg->Update(0);
 
   InitResourceHandler();
@@ -799,7 +800,8 @@ CSrResourceView* CSrEditApp::OpenResourceView (void)
 	if (!m_InitResourceHandler) 
 	{
 		m_pCurrentProgressDlg = ShowSrProgressDlg("Resource Viewer", "Initializing Resources...");
-		m_pCurrentProgressDlg->Update(0);
+		m_pCurrentProgressDlg->SetAllowCancel(false);
+		m_pCurrentProgressDlg->Update(0);		
     
 		InitResourceHandler();
 	}
@@ -1583,6 +1585,7 @@ bool CSrEditApp::LoadAllScripts (void)
 	BaseScriptPath += "data\\scripts\\source\\";
 
 	m_pCurrentProgressDlg = ShowSrProgressDlg("Loading Scripts", "Loading all scripts...");
+	m_pCurrentProgressDlg->SetAllowCancel(false);
 	m_pCurrentProgressDlg->Update(0);
 
 	if (!m_InitResourceHandler) InitResourceHandler();

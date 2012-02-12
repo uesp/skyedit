@@ -2048,7 +2048,7 @@ void CSrRecordDialog::OnDropPickupSound (NMHDR* pNotifyStruct, LRESULT* pResult)
 	 
 	 Index = pList->AddString(Buffer);
 	 pList->SetCurSel(Index);
- }
+}
 /*===========================================================================
  *		End of Class Event CSrRecordDialog::OnBnClickedAddkeywordButton()
  *=========================================================================*/

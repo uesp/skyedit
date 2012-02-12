@@ -24,132 +24,122 @@
  *=========================================================================*/
 
 
+struct srmgeftypedlginfo_t
+{
+	srrectype_t	RecordType;
+	int			NumAV;
+	int			ForceAV1;
+};
+
+
 /*===========================================================================
  *
  * Begin Class CSrMgefView Definition
  *
  *=========================================================================*/
-class CSrMgefView : public CSrRecordDialog {
-  DECLARE_DYNCREATE(CSrMgefView);
-  DECLARE_SRRECUIFIELDS();
+class CSrMgefView : public CSrRecordDialog 
+{
+	DECLARE_DYNCREATE(CSrMgefView);
+	DECLARE_SRRECUIFIELDS();
 
   /*---------- Begin Protected Class Members ---------------------*/
 protected:
-	CSrMgefSnddArray	m_SoundCopy;
 	bool				m_IsInitialized;
 	
-
 
   /*---------- Begin Protected Class Methods ---------------------*/
 protected:
 
-	/* Protected constructor used by dynamic creation */
-  CSrMgefView();
-
-  void OnDropKeywords (NMHDR* pNotifyStruct, LRESULT* pResult);
+		/* Protected constructor used by dynamic creation */
+	CSrMgefView();
   
 
   /*---------- Begin Public Class Methods ------------------------*/
 public:
-
-
-  //{{AFX_DATA(CSrMgefView)
-  enum { IDD = IDD_MGEF_VIEW };
-  CEdit		m_EditorID;
-  CEdit		m_ItemName;
-  CEdit		m_DName;
-  CEdit		m_FormID;
-  CListBox  m_Keywords;
-  CComboBox m_SchoolList;
-  CComboBox m_TypeList;
-  CButton   m_Conditions;
-  //}}AFX_DATA
+	enum { IDD = IDD_MGEF_VIEW };
+	CEdit		m_EditorID;
+	CEdit		m_ItemName;
+	CEdit		m_Description;
+	CEdit		m_FormID;
+	CListBox	m_Keywords;
+	CComboBox	m_SchoolList;
+	CComboBox	m_ResistList;
+	CButton		m_Conditions;
 
 public:
-
 	virtual void  GetControlData   (void);
 	virtual void  SetControlData   (void);
-	void SetSoundList (void);
-	int AddSoundList (srmgefsndddata_t* pSoundData);
-	void UpdateSoundList (const int ListIndex, const bool Update);
 
-	/* ClassWizard generated virtual function overrides */
-  //{{AFX_VIRTUAL(CSrMgefView)
-protected:
-  virtual void OnInitialUpdate();
-  virtual void DoDataExchange(CDataExchange* pDX);
-  //}}AFX_VIRTUAL
+	void FillMagicFlagList (void);
+	void SetMagicFlags (const dword Flags);
+	dword GetMagicFlags (void);
+
+	void GetCounterEffects (CSrMgefRecord* pEffect);
+	void SetCounterEffects (CSrMgefRecord* pEffect);
+
+	void GetEffectSounds (CSrMgefRecord* pEffect);
+	void SetEffectSounds (CSrMgefRecord* pEffect);
+
+	void UpdateEffectTypeControls (void);
 
 protected:
-  virtual ~CSrMgefView();
+	virtual void OnInitialUpdate();
+	virtual void DoDataExchange(CDataExchange* pDX);
+	virtual ~CSrMgefView();
 
 #ifdef _DEBUG
-  virtual void AssertValid() const;
-  virtual void Dump(CDumpContext& dc) const;
+	virtual void AssertValid() const;
+	virtual void Dump(CDumpContext& dc) const;
 #endif
+	DECLARE_MESSAGE_MAP();
 
-	/* Generated message map functions */
-  //{{AFX_MSG(CSrMgefView)
-  //}}AFX_MSG
-
-  DECLARE_MESSAGE_MAP();
-
-public:
-	
-	
+public:	
 	CEdit m_BaseCost;
 	CEdit m_SkillLevel;
-	CButton m_HostileCheck;
-	CButton m_RecoverCheck;
-	CButton m_DetrimentalCheck;
-	CButton m_PercentMagCheck;
-	CButton m_SelfCheck;
-	CButton m_NoAreaCheck;
-	CButton m_FXPersistCheck;
-	CButton m_BoundCheck;
-	CEdit m_EffectPlayRate;
+	CEdit m_SkillUsageMult;
 	CComboBox m_ActorValue;
+	CComboBox m_ActorValue2;
+	CEdit m_SecondAVWeight;
 	CComboBox m_CastType;
-	
-	CEdit m_Unknown1;
-	CEdit m_Unknown2;
-	CEdit m_Unknown3;
-	CEdit m_Unknown4;
-	CEdit m_Unknown5;
-	CEdit m_Unknown6;
-	CComboBox m_Unknown7;
-	CEdit m_Unknown8;
-	CEdit m_Unknown9;
-	CEdit m_Unknown10;
-	CEdit m_Unknown13;
-	CEdit m_Unknown14;
-	CEdit m_Unknown15;
+	CComboBox m_EffectType;
+	CComboBox m_ResistType;
+	CComboBox m_DeliveryType;
+	CComboBox m_School;
+	CComboBox m_SoundVolume;
+
+	CEdit m_Area;
+	CEdit m_DualCastScale;
+	CEdit m_CastingDelay;
+
+	CEdit m_TaperCurve;
+	CEdit m_TaperWeight;
+	CEdit m_TaperDuration;
+	CEdit m_ScriptAIDataScore;
+	CEdit m_ScriptAIDataDelay;
 	
 	CEdit m_Light;
-	CEdit m_Shader1;
-	CEdit m_Shader2;
-	CEdit m_Art1;
-	CEdit m_Art2;
-	CEdit m_Art3;
-	CEdit m_Art4;
-	CEdit m_ImpactSet1;
-	CEdit m_ImpactSet2;
+	CEdit m_HitShader;
+	CEdit m_EnchantShader;
+	CEdit m_CastingArt;
+	CEdit m_HitEffectArt;
+	CEdit m_EnchantArt;
+	CEdit m_EquipAbility;
+	CEdit m_ImpactSet;
+	CEdit m_ImageSpaceMod;
 	CEdit m_Perk;
 	CEdit m_Explosion;
 	CEdit m_DualCast;
-	CEdit m_SecondSpell;
+	CEdit m_EffectObject;
 	CEdit m_Projectile;
-	
-	CButton m_WardCheck;
-	CButton	m_UnknownCheck1;
-	CButton m_UnknownCheck2;
-	CButton m_UnknownCheck3;
-	CButton m_UnknownCheck4;
-	CButton m_UnknownCheck5;
-	CButton m_UnknownCheck6;
-	CButton m_UnknownCheck7;
-	CButton m_UnknownCheck8;
-	CButton m_UnknownCheck9;
+	CEdit m_Menu;
+
+	CListBox m_Scripts;
+	CListBox m_MagicFlags;
+	CListBox m_CounterEffects;
+	CButton m_DispelEffectsCheck;
+
+	void OnDropKeywords (NMHDR* pNotifyStruct, LRESULT* pResult);
+	void OnDropCounterEffects (NMHDR* pNotifyStruct, LRESULT* pResult);
 
 	afx_msg void OnBnClickedEditPerk();
 	afx_msg void OnBnClickedSelectPerk();
@@ -163,9 +153,9 @@ public:
 	afx_msg void OnBnClickedSelectLight();
 	afx_msg void OnDropLight (NMHDR* pNotifyStruct, LRESULT* pResult);
 
-	afx_msg void OnBnClickedEditSecondSpell();
-	afx_msg void OnBnClickedSelectSecondSpell();
-	afx_msg void OnDropSecondSpell (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnBnClickedEditEffectObject();
+	afx_msg void OnBnClickedSelectEffectObject();
+	afx_msg void OnDropEffectObject (NMHDR* pNotifyStruct, LRESULT* pResult);
 
 	afx_msg void OnBnClickedEditExplosion();
 	afx_msg void OnBnClickedSelectExplosion();
@@ -175,58 +165,86 @@ public:
 	afx_msg void OnBnClickedSelectProjectile();
 	afx_msg void OnDropProjectile (NMHDR* pNotifyStruct, LRESULT* pResult);
 
-	afx_msg void OnBnClickedEditArt1();
-	afx_msg void OnBnClickedSelectArt1();
-	afx_msg void OnDropArt1 (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnBnClickedEditCastingArt();
+	afx_msg void OnBnClickedSelectCastingArt();
+	afx_msg void OnDropCastingArt (NMHDR* pNotifyStruct, LRESULT* pResult);
 
-	afx_msg void OnBnClickedEditArt2();
-	afx_msg void OnBnClickedSelectArt2();
-	afx_msg void OnDropArt2 (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnBnClickedEditHitEffectArt();
+	afx_msg void OnBnClickedSelectHitEffectArt();
+	afx_msg void OnDropHitEffectArt (NMHDR* pNotifyStruct, LRESULT* pResult);
 
-	afx_msg void OnBnClickedEditArt3();
-	afx_msg void OnBnClickedSelectArt3();
-	afx_msg void OnDropArt3 (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnBnClickedEditEnchantArt();
+	afx_msg void OnBnClickedSelectEnchantArt();
+	afx_msg void OnDropEnchantArt (NMHDR* pNotifyStruct, LRESULT* pResult);
 
-	afx_msg void OnBnClickedEditArt4();
-	afx_msg void OnBnClickedSelectArt4();
-	afx_msg void OnDropArt4 (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnBnClickedEditEquipAbility();
+	afx_msg void OnBnClickedSelectEquipAbility();
+	afx_msg void OnDropEquipAbility (NMHDR* pNotifyStruct, LRESULT* pResult);
 
-	afx_msg void OnBnClickedEditImpactSet1();
-	afx_msg void OnBnClickedSelectImpactSet1();
-	afx_msg void OnDropImpactSet1 (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnBnClickedEditImpactSet();
+	afx_msg void OnBnClickedSelectImpactSet();
+	afx_msg void OnDropImpactSet(NMHDR* pNotifyStruct, LRESULT* pResult);
 
-	afx_msg void OnBnClickedEditImpactSet2();
-	afx_msg void OnBnClickedSelectImpactSet2();
-	afx_msg void OnDropImpactSet2 (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnBnClickedEditImageSpaceMod();
+	afx_msg void OnBnClickedSelectImageSpaceMod();
+	afx_msg void OnDropImageSpaceMod(NMHDR* pNotifyStruct, LRESULT* pResult);
 
-	afx_msg void OnBnClickedEditShader1();
-	afx_msg void OnBnClickedSelectShader1();
-	afx_msg void OnDropShader1 (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnBnClickedEditHitShader();
+	afx_msg void OnBnClickedSelectHitShader();
+	afx_msg void OnDropHitShader(NMHDR* pNotifyStruct, LRESULT* pResult);
 
-	afx_msg void OnBnClickedEditShader2();
-	afx_msg void OnBnClickedSelectShader2();
-	afx_msg void OnDropShader2 (NMHDR* pNotifyStruct, LRESULT* pResult);
+	afx_msg void OnBnClickedEditEnchantShader();
+	afx_msg void OnBnClickedSelectEnchantShader();
+	afx_msg void OnDropEnchantShader(NMHDR* pNotifyStruct, LRESULT* pResult);
 
-	afx_msg LRESULT OnEditSoundMsg (WPARAM wParam, LPARAM lParam);
+	afx_msg void OnBnClickedEditMenu();
+	afx_msg void OnBnClickedSelectMenu();
+	afx_msg void OnDropMenu(NMHDR* pNotifyStruct, LRESULT* pResult);
 
-	CButton m_SoundButton;
-	CSrRecordListCtrl m_Sounds;
+	afx_msg void OnBnClickedEditDrawSound();
+	afx_msg void OnBnClickedSelectDrawSound();
+	afx_msg void OnDropDrawSound(NMHDR* pNotifyStruct, LRESULT* pResult);
 
-	afx_msg void OnBnClickedDeletesound();
-	afx_msg void OnBnClickedAddsound();
-	afx_msg void OnSnddlistAdd();
-	afx_msg void OnSnddlistEditrecord();
-	afx_msg void OnSnddlistEdit();
+	afx_msg void OnBnClickedEditReadySound();
+	afx_msg void OnBnClickedSelectReadySound();
+	afx_msg void OnDropReadySound(NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditChargeSound();
+	afx_msg void OnBnClickedSelectChargeSound();
+	afx_msg void OnDropChargeSound(NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditReleaseSound();
+	afx_msg void OnBnClickedSelectReleaseSound();
+	afx_msg void OnDropReleaseSound(NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditCastLoopSound();
+	afx_msg void OnBnClickedSelectCastLoopSound();
+	afx_msg void OnDropCastLoopSound(NMHDR* pNotifyStruct, LRESULT* pResult);
+
+	afx_msg void OnBnClickedEditOnHitSound();
+	afx_msg void OnBnClickedSelectOnHitSound();
+	afx_msg void OnDropOnHitSound(NMHDR* pNotifyStruct, LRESULT* pResult);
+
 	afx_msg void OnContextMenu (CWnd* pWnd, CPoint Point);
-	CListBox m_Scripts;
+	
+	afx_msg void OnBnClickedAddCountereffects();
+	afx_msg void OnBnClickedEditCountereffects();
+	afx_msg void OnBnClickedDelCountereffects();
+	
+	afx_msg void OnCbnSelchangeEffecttype();
+	CEdit m_DrawSound;
+	CEdit m_ChargeSound;
+	CEdit m_ReadySound;
+	CEdit m_ReleaseSound;
+	CEdit m_CastLoopSound;
+	CEdit m_OnHitSound;
+	CButton m_EditEffectObject;
+	CButton m_SelectEffectObject;
+	CStatic m_EffectObjectLabel;
 };
 /*===========================================================================
  *		End of Class CSrMgefView Definition
  *=========================================================================*/
-
-
-//{{AFX_INSERT_LOCATION}}
-//}}AFX_INSERT_LOCATION
 
 
 #endif
