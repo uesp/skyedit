@@ -438,9 +438,12 @@
 #define IDC_EDIT_PERK                   1242
 #define IDC_SELECTPERK_BUTTON           1243
 #define IDC_UNKNOWNCHECK4               1244
+#define IDC_INVENTORYMODEL              1244
 #define IDC_SELECTEQUIPSLO_BUTTON       1245
 #define IDC_UNKNOWNCHECK5               1246
+#define IDC_EDIT_INVENTORYMODEL         1246
 #define IDC_SPELLFLAGS                  1247
+#define IDC_SELECT_INVENTORYMODEL       1247
 #define IDC_UNKNOWNCHECK6               1248
 #define IDC_SPELLTYPE                   1249
 #define IDC_UNKNOWNCHECK7               1250
@@ -450,14 +453,18 @@
 #define IDC_ACTORVALUE                  1253
 #define IDC_EXTENDDURATION              1253
 #define IDC_FOOD                        1253
+#define IDC_PCSTARTSPELL                1253
 #define IDC_CASTANIM                    1254
 #define IDC_EFFECTTYPE                  1254
 #define IDC_MEDICINE                    1254
 #define IDC_REFERENCEPERSIST            1254
+#define IDC_AREAIGNORESLOS              1254
 #define IDC_TYPEA                       1255
 #define IDC_SOUNDVOLUME                 1255
 #define IDC_POISON                      1255
+#define IDC_IGNORERESISTANCE            1255
 #define IDC_UNKNOWNCHECK8               1256
+#define IDC_NOABSORBREFLECT             1256
 #define IDC_UNKNOWN1                    1257
 #define IDC_TYPEB                       1258
 #define IDC_ATTACKEVENT                 1258
@@ -1017,8 +1024,10 @@
 #define IDC_MAGICFLAGS                  1803
 #define IDC_DISPELEFFECTS               1804
 #define IDC_EFFECTOBJECTLABEL           1805
-#define IDC_BUTTON1                     1809
 #define IDC_DESTRUCTDATA                1809
+#define IDC_RANGE                       1810
+#define IDC_NODUALCASTMODS              1811
+#define IDC_CASTDURATION                1812
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -1304,7 +1313,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        245
 #define _APS_NEXT_COMMAND_VALUE         32968
-#define _APS_NEXT_CONTROL_VALUE         1810
+#define _APS_NEXT_CONTROL_VALUE         1813
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

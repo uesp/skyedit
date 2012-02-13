@@ -84,6 +84,7 @@ protected:
 	void OnDropEffectList (NMHDR* pNotifyStruct, LRESULT* pResult);
 	int  OnDropCustomEffectData (srrldroprecords_t& DropItems);  
 
+	void OnDropInventoryModel (NMHDR* pNotifyStruct, LRESULT* pResult);
 	void OnDropEquipSlot (NMHDR* pNotifyStruct, LRESULT* pResult);
 	void OnDropPerk (NMHDR* pNotifyStruct, LRESULT* pResult);
 	void OnDropEffect (NMHDR* pNotifyStruct, LRESULT* pResult);
@@ -91,44 +92,33 @@ protected:
 
   /*---------- Begin Public Class Methods ------------------------*/
 public:
-
-  //{{AFX_DATA(CSrSpelView)
-  enum { IDD = IDD_SPEL_VIEW };
-  CEdit		m_EditorID;
-  CEdit		m_FormID;
-  CEdit		m_ItemName;
-  //}}AFX_DATA
+	enum { IDD = IDD_SPEL_VIEW };
+	CEdit		m_EditorID;
+	CEdit		m_FormID;
+	CEdit		m_ItemName;
 
 public:
-
 	virtual void  GetControlData   (void);
 	virtual void  SetControlData   (void);
-
 	virtual int  OnPreSaveRecord   (void);
 
 protected:
-  virtual void OnInitialUpdate();
-  virtual void DoDataExchange(CDataExchange* pDX);
-
+	virtual void OnInitialUpdate();
+	virtual void DoDataExchange(CDataExchange* pDX);
 
 protected:
-  virtual ~CSrSpelView();
+	virtual ~CSrSpelView();
 
 #ifdef _DEBUG
-  virtual void AssertValid() const;
-  virtual void Dump(CDumpContext& dc) const;
+	virtual void AssertValid() const;
+	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-  DECLARE_MESSAGE_MAP();
+	DECLARE_MESSAGE_MAP();
 
-public:
-	
-		
+public:	
 	CEdit m_EquipSlot;
-	afx_msg void OnBnClickedEditEquipSlot();
-	afx_msg void OnBnClickedSelectequipslotButton();
 	CSrRecordListCtrl m_EffectList;
-	afx_msg void OnLvnItemchangedEffectList(NMHDR *pNMHDR, LRESULT *pResult);
 	CEdit m_EffectName;
 	CButton m_SelectEffectButton;
 	CButton m_EditEffectButton;
@@ -136,33 +126,47 @@ public:
 	CEdit m_Magnitude;
 	CEdit m_Area;
 	CEdit m_Duration;
-	afx_msg void OnBnClickedConditionButton();
-	afx_msg void OnBnClickedEditEffect();
-	afx_msg void OnBnClickedSelecteffectButton();
-	afx_msg void OnBnClickedAddButton();
-	afx_msg void OnBnClickedDeleteButton();
 	CEdit m_Charge;
 	CEdit m_Cost;
 	CEdit m_Description;
 	CEdit m_Perk;
-	afx_msg void OnBnClickedEditPerk();
-	afx_msg void OnBnClickedSelectperkButton();
 	CEdit m_SpellFlags;
+	CEdit m_Range;
+	CEdit m_ChargeTime;
+	CEdit m_CastDuration;
 	CComboBox m_SpellType;
 	CComboBox m_CastType;
-	CComboBox m_CastAnim;
-	CEdit m_CastTime;
-	CEdit m_Unknown1;
-	CEdit m_Unknown2;
+	CComboBox m_DeliveryType;
 	CButton m_AutoCalc;
+	CButton m_PCStartSpell;
+	CButton m_AreaIgnoresLOS;
+	CButton m_IgnoreResistance;
+	CButton m_NoAbsorbReflect;
+	CButton m_NoDualCastMods;
+	CComboBox m_TargetType;
+	CEdit m_InventoryModel;
 
+	afx_msg void OnBnClickedEditEquipSlot();
+	afx_msg void OnBnClickedSelectequipslotButton();
+	afx_msg void OnLvnItemchangedEffectList(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedEditPerk();
+	afx_msg void OnBnClickedSelectperkButton();
 	afx_msg void OnConditionrecordCopy();
 	afx_msg void OnConditionrecordPaste();
 	afx_msg void OnConditionrecordDeleteAll();
 	afx_msg void OnUpdateConditionrecordCopy(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateConditionrecordPaste(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateConditionrecordDeleteAll(CCmdUI *pCmdUI);
-	afx_msg void OnContextMenu(CWnd* pWnd, CPoint Point);
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint Point);	
+	afx_msg void OnBnClickedEditInventorymodel();
+	afx_msg void OnBnClickedSelectInventorymodel();
+	afx_msg void OnBnClickedConditionButton();
+	afx_msg void OnBnClickedEditEffect();
+	afx_msg void OnBnClickedSelecteffectButton();
+	afx_msg void OnBnClickedAddButton();
+	afx_msg void OnBnClickedDeleteButton();
+	afx_msg LRESULT OnEditEffectMsg (WPARAM wParam, LPARAM lParam);
+	
 };
 /*===========================================================================
  *		End of Class CSrSpelView Definition

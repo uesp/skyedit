@@ -225,8 +225,8 @@ void CSrScrlView::OnInitialUpdate (void)
 	
 	CreateEffectArray();
 
-	::SrFillComboList(m_CastType, s_SrSpellCastTypes, 0);
-	::SrFillComboList(m_CastAnim, s_SrSpellCastAnims, 0);
+	//::SrFillComboList(m_CastType, s_SrSpellCastTypes, 0);
+	//::SrFillComboList(m_CastAnim, s_SrSpellCastAnims, 0);
   
 	SetControlData();
 	m_IsInitialized = true;
