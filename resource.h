@@ -1028,6 +1028,10 @@
 #define IDC_RANGE                       1810
 #define IDC_NODUALCASTMODS              1811
 #define IDC_CASTDURATION                1812
+#define IDC_AUTOCALC1                   1813
+#define IDC_SCRIPTALWAYSAPPLIES         1815
+#define IDC_AUTOCALC5                   1817
+#define IDC_FORCEEXPLODE                1817
 #define IDS_TT_EDITORID                 15000
 #define IDS_TT_FULLNAME                 15001
 #define IDS_TT_FORMID                   15002
@@ -1313,7 +1317,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        245
 #define _APS_NEXT_COMMAND_VALUE         32968
-#define _APS_NEXT_CONTROL_VALUE         1813
+#define _APS_NEXT_CONTROL_VALUE         1814
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

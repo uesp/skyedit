@@ -54,8 +54,8 @@ typedef CSrPtrArray<srscrl_effectdata_t> CSrScrlEffectArray;
  *=========================================================================*/
 class  CSrScrlView: public CSrRecordDialog 
 {
-  DECLARE_DYNCREATE(CSrScrlView);
-  DECLARE_SRRECUIFIELDS();
+	DECLARE_DYNCREATE(CSrScrlView);
+	DECLARE_SRRECUIFIELDS();
 
   /*---------- Begin Protected Class Members ---------------------*/
 protected:
@@ -91,7 +91,6 @@ protected:
 
   /*---------- Begin Public Class Methods ------------------------*/
 public:
-
 	enum { IDD = IDD_SCRL_VIEW };
 	CEdit		m_EditorID;
 	CEdit		m_FormID;
@@ -107,10 +106,8 @@ public:
 	CEdit		m_Cost;
 	CEdit		m_Description;
 	CComboBox	m_CastType;
-	CComboBox	m_CastAnim;
-	CEdit		m_CastTime;
-	CSrRecordListCtrl m_EffectList;
-  
+	CEdit		m_ChargeTime;
+	CSrRecordListCtrl m_EffectList;  
 
 public:
 
@@ -119,43 +116,54 @@ public:
 	virtual int  OnPreSaveRecord   (void);
 
 protected:
-  virtual void OnInitialUpdate();
-  virtual void DoDataExchange(CDataExchange* pDX);
+	virtual void OnInitialUpdate();
+	virtual void DoDataExchange(CDataExchange* pDX);
 
 protected:
-  virtual ~CSrScrlView();
+	virtual ~CSrScrlView();
 
 #ifdef _DEBUG
-  virtual void AssertValid() const;
-  virtual void Dump(CDumpContext& dc) const;
+	virtual void AssertValid() const;
+	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-  DECLARE_MESSAGE_MAP();
+	DECLARE_MESSAGE_MAP();
 
 public:
+	CEdit m_CastDuration;
+	CEdit m_Range;
+	CButton m_DestructData;
+	CButton m_AutoCalc;
+	CButton m_AreaIgnoresLOS;
+	CButton m_ScriptAlwaysApplies;
+	CButton m_NoAbsorbReflect;
+	CButton m_ForceExplode;
+	CEdit m_Value;
+	CEdit m_Weight;
+	CListBox m_Keywords;
+	CEdit m_Model;
+	CComboBox m_DeliveryType;
+	CEdit m_InventoryModel;
 	
 	afx_msg void OnBnClickedEditEquipSlot();
 	afx_msg void OnBnClickedSelectequipslotButton();
 	afx_msg void OnLvnItemchangedEffectList(NMHDR *pNMHDR, LRESULT *pResult);
-
 	afx_msg void OnBnClickedConditionButton();
 	afx_msg void OnBnClickedEditEffect();
 	afx_msg void OnBnClickedSelecteffectButton();
 	afx_msg void OnBnClickedAddButton();
 	afx_msg void OnBnClickedDeleteButton();
-	
-	CEdit m_Value;
-	CEdit m_Weight;
-	CListBox m_Keywords;
-	CEdit m_Model;
-
 	afx_msg void OnConditionrecordCopy();
 	afx_msg void OnConditionrecordPaste();
 	afx_msg void OnConditionrecordDeleteAll();
 	afx_msg void OnUpdateConditionrecordCopy(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateConditionrecordPaste(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateConditionrecordDeleteAll(CCmdUI *pCmdUI);
-	afx_msg void OnContextMenu(CWnd* pWnd, CPoint Point);
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint Point);	
+	afx_msg void OnBnClickedEditInventorymodel();
+	afx_msg void OnBnClickedSelectInventorymodel();
+	afx_msg LRESULT OnEditEffectMsg (WPARAM wParam, LPARAM lParam);
+	afx_msg void OnDropInventoryModel (NMHDR* pNotifyStruct, LRESULT* pResult);
 };
 /*===========================================================================
  *		End of Class CSrScrlView Definition

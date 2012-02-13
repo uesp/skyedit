@@ -54,6 +54,9 @@ BEGIN_MESSAGE_MAP(CSrScrlView, CSrRecordDialog)
 	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_PASTE, OnUpdateConditionrecordPaste)
 	ON_UPDATE_COMMAND_UI(ID_CONDITIONRECORD_DELETEALL, OnUpdateConditionrecordDeleteAll)
 	ON_WM_CONTEXTMENU()
+	ON_BN_CLICKED(IDC_EDIT_INVENTORYMODEL, &CSrScrlView::OnBnClickedEditInventorymodel)
+	ON_BN_CLICKED(IDC_SELECT_INVENTORYMODEL, &CSrScrlView::OnBnClickedSelectInventorymodel)
+	ON_MESSAGE(ID_SRRECORDLIST_ACTIVATE, OnEditEffectMsg)
 END_MESSAGE_MAP()
 /*===========================================================================
  *		End of CSrScrlView Message Map
@@ -65,7 +68,8 @@ END_MESSAGE_MAP()
  * Begin List Column Definitions
  *
  *=========================================================================*/
-static srreclistcolinit_t s_EffectListInit[] = {
+static srreclistcolinit_t s_EffectListInit[] = 
+{
 	{ SR_FIELD_EFFECTNAME,		180,	LVCFMT_CENTER },
 	{ SR_FIELD_EFFECTID,		5,		LVCFMT_CENTER },
 	{ SR_FIELD_MAGNITUDE,		50,		LVCFMT_CENTER },
@@ -75,7 +79,8 @@ static srreclistcolinit_t s_EffectListInit[] = {
 	{ SR_FIELD_NONE, 0, 0 }
  };
 
-static srrecfield_t s_EffectFields[] = {
+static srrecfield_t s_EffectFields[] = 
+{
 	{ "Effect",		SR_FIELD_EFFECTNAME,		0, NULL },
 	{ "FormID",		SR_FIELD_EFFECTID,			0, NULL },
 	{ "Magnitude",	SR_FIELD_MAGNITUDE,			0, NULL },
@@ -99,14 +104,22 @@ BEGIN_SRRECUIFIELDS(CSrScrlView)
 	ADD_SRRECUIFIELDS( SR_FIELD_FORMID,				IDC_FORMID,				128,	IDS_TT_FORMID)
 	ADD_SRRECUIFIELDS( SR_FIELD_ITEMNAME,			IDC_ITEMNAME,			128,	IDS_TT_FULLNAME)
 	ADD_SRRECUIFIELDS( SR_FIELD_EQUIPSLOT,			IDC_EQUIPSLOT,			128,	0)
-	ADD_SRRECUIFIELDS( SR_FIELD_COST,				IDC_COST,				8,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_BASECOST,			IDC_COST,				8,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_DESCRIPTION,		IDC_DESCRIPTION,		256,	IDS_TT_DESCRIPTION)
-	ADD_SRRECUIFIELDS( SR_FIELD_CASTTIME,			IDC_CASTTIME,			32,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_CASTTYPE,			IDC_CASTTYPE,			32,		0)
-	ADD_SRRECUIFIELDS( SR_FIELD_CASTANIM,			IDC_CASTANIM,			32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_CHARGETIME,			IDC_CHARGETIME,			32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_CASTTIME,			IDC_CASTDURATION,		32,		0)
+	//ADD_SRRECUIFIELDS( SR_FIELD_CASTTYPE,			IDC_CASTTYPE,			32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_DELIVERYTYPE,		IDC_DELIVERYTYPE,		32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_RANGE,				IDC_RANGE,				32,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_VALUE,				IDC_VALUE,				32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_AUTOCALC,			IDC_AUTOCALC1,			32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_AREAIGNORESLOS,		IDC_AREAIGNORESLOS,		32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_SCRIPTALWAYSAPPLIES,IDC_SCRIPTALWAYSAPPLIES,32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_NOABSORBREFLECT,	IDC_NOABSORBREFLECT,	32,		0)
+	ADD_SRRECUIFIELDS( SR_FIELD_FORCEEXPLODE,		IDC_FORCEEXPLODE,		32,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_WEIGHT,				IDC_WEIGHT,				32,		0)
 	ADD_SRRECUIFIELDS( SR_FIELD_KEYWORDS,			IDC_KEYWORDS,			128,	0)
+	ADD_SRRECUIFIELDS( SR_FIELD_INVENTORYMODEL,		IDC_INVENTORYMODEL,		128,	0)
 	ADD_SRRECUIFIELDS( SR_FIELD_MODEL,				IDC_MODEL,				200,	0)
 END_SRRECUIFIELDS()
 /*===========================================================================
@@ -167,12 +180,23 @@ void CSrScrlView::DoDataExchange (CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COST, m_Cost);
 	DDX_Control(pDX, IDC_DESCRIPTION, m_Description);
 	DDX_Control(pDX, IDC_CASTTYPE, m_CastType);
-	DDX_Control(pDX, IDC_CASTANIM, m_CastAnim);
-	DDX_Control(pDX, IDC_CASTTIME, m_CastTime);
+	DDX_Control(pDX, IDC_DELIVERYTYPE, m_DeliveryType);
+	DDX_Control(pDX, IDC_CASTDURATION, m_CastDuration);
+	DDX_Control(pDX, IDC_CHARGETIME, m_ChargeTime);
 	DDX_Control(pDX, IDC_VALUE, m_Value);
 	DDX_Control(pDX, IDC_WEIGHT, m_Weight);
 	DDX_Control(pDX, IDC_KEYWORDS, m_Keywords);
 	DDX_Control(pDX, IDC_MODEL, m_Model);
+	DDX_Control(pDX, IDC_DELIVERYTYPE, m_DeliveryType);
+	DDX_Control(pDX, IDC_INVENTORYMODEL, m_InventoryModel);
+	DDX_Control(pDX, IDC_CASTDURATION, m_CastDuration);
+	DDX_Control(pDX, IDC_RANGE, m_Range);
+	DDX_Control(pDX, IDC_DESTRUCTDATA, m_DestructData);
+	DDX_Control(pDX, IDC_AUTOCALC1, m_AutoCalc);
+	DDX_Control(pDX, IDC_AREAIGNORESLOS, m_AreaIgnoresLOS);
+	DDX_Control(pDX, IDC_SCRIPTALWAYSAPPLIES, m_ScriptAlwaysApplies);
+	DDX_Control(pDX, IDC_NOABSORBREFLECT, m_NoAbsorbReflect);
+	DDX_Control(pDX, IDC_FORCEEXPLODE, m_ForceExplode);
 }
 /*===========================================================================
  *		End of Class Method CSrScrlView::DoDataExchange()
@@ -185,16 +209,8 @@ void CSrScrlView::DoDataExchange (CDataExchange* pDX)
  *
  *=========================================================================*/
 #ifdef _DEBUG
-
-void CSrScrlView::AssertValid() const {
-  CSrRecordDialog::AssertValid();
-}
-
-
-void CSrScrlView::Dump(CDumpContext& dc) const {
-  CSrRecordDialog::Dump(dc);
-}
-
+	void CSrScrlView::AssertValid() const { CSrRecordDialog::AssertValid(); }
+	void CSrScrlView::Dump(CDumpContext& dc) const { CSrRecordDialog::Dump(dc); }
 #endif
 /*===========================================================================
  *		End of CSrScrlView Diagnostics
@@ -225,8 +241,8 @@ void CSrScrlView::OnInitialUpdate (void)
 	
 	CreateEffectArray();
 
-	//::SrFillComboList(m_CastType, s_SrSpellCastTypes, 0);
-	//::SrFillComboList(m_CastAnim, s_SrSpellCastAnims, 0);
+	//SrFillComboList(m_CastType, s_SrEffectCastTypes, 0);
+	SrFillComboList(m_DeliveryType, s_SrMagicDeliveryTypes, 0);
   
 	SetControlData();
 	m_IsInitialized = true;
@@ -989,4 +1005,34 @@ void CSrScrlView::OnContextMenu(CWnd* pWnd, CPoint Point)
 	{
 		CSrRecordDialog::OnContextMenu(pWnd, Point);
 	}
+}
+
+
+void CSrScrlView::OnBnClickedEditInventorymodel()
+{
+	if (m_pDlgHandler) m_pDlgHandler->EditRecordHelper(&m_InventoryModel, SR_NAME_STAT);
+}
+
+
+void CSrScrlView::OnBnClickedSelectInventorymodel()
+{
+	if (m_pDlgHandler) m_pDlgHandler->SelectRecordHelper(&m_InventoryModel, SR_NAME_STAT, &CSrStatRecord::s_FieldMap);
+}
+
+
+void CSrScrlView::OnDropInventoryModel (NMHDR* pNotifyStruct, LRESULT* pResult) 
+{
+	srrldroprecords_t* pDropItems = (srrldroprecords_t *) pNotifyStruct;
+	*pResult = 0;
+	DropRecordHelper(pDropItems, &m_InventoryModel, SR_NAME_STAT, 1);
+}
+
+
+LRESULT CSrScrlView::OnEditEffectMsg (WPARAM wParam, LPARAM lParam) 
+{
+	if (m_Effects[lParam] == NULL) return -1;
+	if (m_Effects[lParam]->pEffect == NULL) return -2;
+	
+	m_pDlgHandler->EditRecord(m_Effects[lParam]->pEffect->GetValue());
+	return 0;
 }
