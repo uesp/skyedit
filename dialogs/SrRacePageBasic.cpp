@@ -117,8 +117,7 @@ void CSrRacePageBasic::GetControlData (void)
 
 	pRace->DeleteSubrecords(SR_NAME_SPLO);
 	pRace->DeleteSubrecords(SR_NAME_SPCT);
-	if (m_SpellList.GetCount() == 0) return;
-
+	
 	for (int i = 0; i < m_SpellList.GetCount(); ++i)
 	{
 		m_SpellList.GetText(i, Buffer);
@@ -158,6 +157,8 @@ void CSrRacePageBasic::SetControlData (void)
 		m_SpellList.AddString(m_pParent->m_pRecordHandler->GetEditorID(pFormid->GetValue()));
 		pSubrecord = pRace->FindNextSubrecord(SR_NAME_SPLO, Position);
 	}
+
+	m_EquipSlots.ResetContent();
 
 	for (dword i = 0; i < m_RaceInfo.EquipSlots.GetSize(); ++i)
 	{
