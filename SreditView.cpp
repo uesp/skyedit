@@ -302,14 +302,15 @@ void CSrEditView::OnFileExportCsvexteriorlocations() {
  * Class CSrEditView Event - void OnFileExportCsvExtMapMarkers ();
  *
  *=========================================================================*/
-void CSrEditView::OnFileExportCsvExtMapMarkers() {
-  srexportinfo_t ExportInfo = g_ExportCsvMapMarkers;
-  CString        Buffer;
+void CSrEditView::OnFileExportCsvExtMapMarkers() 
+{
+	srexportinfo_t ExportInfo = g_ExportCsvMapMarkers;
+	CString        Buffer;
   
-  Buffer.Format(_T("Select CSV File to Export Exterior Map Markers..."));
-  ExportInfo.GroupFormID = 0;
+	Buffer.Format(_T("Select CSV File to Export Exterior Map Markers..."));
+	ExportInfo.GroupFormID = 0;
 
-  OnCsvExport(ExportInfo, Buffer);
+	OnCsvExport(ExportInfo, Buffer);
 }
 /*===========================================================================
  *		End of Class Event CSrEditView::OnFileExportCsvExtMapMarkers()
@@ -321,22 +322,24 @@ void CSrEditView::OnFileExportCsvExtMapMarkers() {
  * Class CSrEditView Event - bool OnCsvExport (ExportInfo, pDialogTitle);
  *
  *=========================================================================*/
-bool CSrEditView::OnCsvExport (srexportinfo_t& ExportInfo, const TCHAR* pDialogTitle) {
-  CFileDialog  OpenDlg(FALSE, SREDIT_CSV_EXT, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, SREDIT_CSV_FILTER, this);
-  int          Result;
+bool CSrEditView::OnCsvExport (srexportinfo_t& ExportInfo, const TCHAR* pDialogTitle) 
+{
+	CFileDialog  OpenDlg(FALSE, SREDIT_CSV_EXT, NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, SREDIT_CSV_FILTER, this);
+	int          Result;
 
-	/* Prompt user for output filename */
-  if (pDialogTitle != NULL) OpenDlg.m_ofn.lpstrTitle = pDialogTitle;
-  Result = OpenDlg.DoModal();
-  if (Result != IDOK) return (true);
+		/* Prompt user for output filename */
+	if (pDialogTitle != NULL) OpenDlg.m_ofn.lpstrTitle = pDialogTitle;
+	Result = OpenDlg.DoModal();
+	if (Result != IDOK) return (true);
 
-  Result = SrCsvExport(OpenDlg.GetPathName(), GetDocument()->GetActiveFile(), ExportInfo);
+	Result = SrCsvExport(OpenDlg.GetPathName(), GetDocument()->GetActiveFile(), ExportInfo);
 
-  if (Result != 0) {
-    SrEditShowError(_T("CSV Error"), _T("Error exporting records to the CSV file '%s'!"), OpenDlg.GetPathName());
-  }
+	if (!Result) 
+	{
+		SrEditShowError(_T("CSV Error"), _T("Error exporting records to the CSV file '%s'!"), OpenDlg.GetPathName());
+	}
 
-  return (Result != 0);
+	return (Result != 0);
 }
 /*===========================================================================
  *		End of Class Event CSrEditView::OnCsvExport()

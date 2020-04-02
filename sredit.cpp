@@ -196,13 +196,13 @@ BOOL CSrEditApp::InitInstance() {
   m_pCurrentProgressDlg->SetAllowCancel(false);
   m_pCurrentProgressDlg->Update(0);
 
-  InitResourceHandler();
+  //InitResourceHandler();
 
   DestroySrProgressDlg(m_pCurrentProgressDlg);
   m_pCurrentProgressDlg = NULL;
   //OpenResourceView();
 
-  LoadAllScripts();
+  //LoadAllScripts();
 
 	/* Display the about box initially if required */
   m_ConfigFile.GetBoolean(Result, "DisplayAboutOnLoad", true);
@@ -926,6 +926,7 @@ bool CSrEditApp::AddBsaFile (const char* pFilename) {
   m_BsaFiles.Add(pBsaFile);
 
   SrStartTimer(Timer);
+  SystemLog.Printf("Loading BSA file '%s'...", pFilename);
   Result = pBsaFile->Load(pFilename);
   SrEndTimer(Timer, "Loaded BSA file in ");
 

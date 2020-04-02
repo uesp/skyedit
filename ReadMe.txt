@@ -161,10 +161,12 @@ can be found at:
 		- It does not currently limit the types of effects which can be created like the
 		  CK does. Using a bad type (like a contact effect type on an armor piece) has
 		  unknown consequences within the game at the moment.
+	- Redid Potions, Ingrediants, Spells and Scrolls
 	- Scripts and string files are backed up according to their directory instead of
 	  all being put into the backup root path. For example, script text files are
 	  backed up into "backup\scripts\source\...".
 	- Fixed a few places where keywords weren't able to be selected properly.
+	- Fixed a bug in races with equip slots not saving properly.
 
 
 0.06alpha - 11 February 2012

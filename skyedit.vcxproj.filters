@@ -1845,9 +1845,6 @@
     <ClInclude Include="..\tes5lib\modfile\subrecords\srcrdtsubrecord.h">
       <Filter>Header Files\ESP.\Subrecords.</Filter>
     </ClInclude>
-    <ClInclude Include="..\tes5lib\modfile\subrecords\sractidestsubrecord.h">
-      <Filter>Header Files\ESP.\Subrecords.</Filter>
-    </ClInclude>
     <ClInclude Include="dialogs\SrActiView.h">
       <Filter>Header Files\Forms.\Dialogs.</Filter>
     </ClInclude>
@@ -2072,6 +2069,9 @@
     </ClInclude>
     <ClInclude Include="..\tes5lib\common\srbackup.h">
       <Filter>Header Files\Common.</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tes5lib\modfile\subrecords\srdestsubrecord.h">
+      <Filter>Header Files\ESP.\Subrecords.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

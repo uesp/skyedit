@@ -555,6 +555,13 @@ DisplayFilter
 	RecName = PROJ
 	Parent = NoEdit
 End	
+DisplayFilter
+	ID = "Tree"
+	DisplayName = "Tree"
+	RecName = TREE
+	Parent = NoEdit
+End	
+
 #
 # NoEdit Refs
 #
